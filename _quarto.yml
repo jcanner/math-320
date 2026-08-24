@@ -39,7 +39,7 @@ website:
       - href: prep-materials/intro-to-quarto.qmd
         text: "Introduction to Quarto"
       - href: prep-materials/install-r.qmd
-        text: "Optional: Install R and RStudio"   
+        text: "Install R and RStudio"   
       # - href: 
       #   text: "R Code Style Guide"
       # - href: 

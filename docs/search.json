@@ -1,0 +1,174 @@
+[
+  {
+    "objectID": "prep-materials/rstudio-orientation.html",
+    "href": "prep-materials/rstudio-orientation.html",
+    "title": "RStudio Orientation",
+    "section": "",
+    "text": "Let’s start working in R! 🥳\n\n\n\nIntroduction to R\nR is a statistical programming language. Unlike more general-purpose languages, R is optimized for working with data and doing statistics. R was created by Ross Ihaka and Robert Gentleman in 1993 (hence “R”) and was formally released by the R Core Group in 1997 (a group of 20-ish volunteers who are the only people who can change the base (built-in) functionality of R). If you want to build an independent, standalone graphical interface, or run a web server, R is probably not the ideal language to use (you might want C / Python or PHP / Python, respectively). If you want to vacuum up a bunch of data, fit several regression models, and then compare the models, R is a great option and will be faster than working in a more general-purpose language like C or base Python.\nIn general, R is…\n\nvector-based\n1 indexed (start counting 1, 2, 3, …)\na scripting language (R code does not have to be compiled before it is run)\n\nOne thing to know about R is that it is open-source. This means that no company owns R (like there is for SAS or Matlab) and that developers cannot charge for the use of their R software. This does not mean that all of your code needs to be public (you can keep your code private), but it is important to be a good open-source citizen by sharing your code publicly when possible (later we will learn about GitHub), contributing to public projects and packages, creating your own packages, and using R for ethical and respectful projects.\n\n📖 Suggested Reading: Basics of R\n\n\n\n\n\n\nNoteThe History of R\n\n\n\nIf you would like to learn more about the history of R, here is an excellent article written by Roger Peng.\n\n\n\n\n💻 Useful Tutorial: R Programming Basics\n\n\n\n\n\n\nNoteProgramming in R\n\n\n\nThis tutorial gives you an overview of the foundations that make up the R programming language, including:\n\nfunctions and their arguments\naccessing help files\nmaking code comments\nobject types (e.g., vectors, lists, )\ndata types (e.g., numeric, integer, double, character)\nR’s package system\n\n\n\n\n\n\nIntroduction to RStudio\n\n📖 Optional Reading: A tour of RStudio\n\nClick Here to download a “cheatsheet” (easy reference page) for navigating the RStudio IDE.\n\n\n\nNavigating RStudio\n\n\n\nThe RStudio window will look something like this.\n\n\n\n\nExploring the Panes\n\nTop-leftTop-rightBottom-leftBottom-right\n\n\nIncludes the text editor. This is where you’ll do most of your work.\n\nThe logo on the script file indicates the file type. When an R file is open, there are Run and Source buttons on the top which allow you to run selected lines of code (Run) or source (run) the entire file. Code line numbers are provided on the left (this is a handy way to see where in the code the errors occur), and you can see line:character numbers at the bottom left. At the bottom right, there is another indicator of what type of file Rstudio thinks this is.\n\n\nIn the top right, you’ll find the environment, history, and connections tabs. The environment tab shows you the objects available in R (variables, data files, etc.), the history tab shows you what code you’ve run recently, and the connections tab is useful for setting up database connections.\n\n\nOn the bottom left is the console. There are also other tabs to give you a terminal (command line) prompt, and a jobs tab to monitor progress of long-running jobs. In this class we’ll primarily use the console tab.\n\n\n\nOn the bottom right, there are a set of tabs:\n\nfiles (to give you an idea of where you are working, and what files are present),\n\n\n\nplots (which will be self-explanatory),\npackages (which extensions to R are installed and loaded),\n\n\n\nthe help tab (where documentation will show up), and\n\n\n\nthe viewer window, which is used for interactive graphics or previewing HTML documents.\n\n\n\n\n\n\n\nInstalling Packages\n\n📽️ Recommended Video: Installing R Packages (4 minutes)\n\n\nInstall / Update the ggformula, mosaic, and tidyverse\n\n\n\n\n\n\nImportantWorking on the R Server\n\n\n\nIf you are using the R Server (Cal ICOR Hub) these packages are already installed and do not need to be installed again.\n\n\nNow that you have the hang of working in RStudio, let’s install / update the packages we will use in the course. In this course, we will make heavy use of the tidyverse suite of packages.\nIf you have not used the tidyverse before, type the following into your console or use the drop down menu in the Packages tab (as seen in the video above):\n\ninstall.packages(\"tidyverse\")\n\nIf you have used the tidyverse before, you only need to update packages.\nType the following into your console:\n\nlibrary(tidyverse)\ntidyverse_update()\n\nThen follow the instructions that print out to update a few of your tidyverse packages.\nIn addition, install the packages we used throughout our course.\n\ninstall.packages(c(\"ggformula\", \"mosaic\"))",
+    "crumbs": [
+      "Getting Started with R",
+      "RStudio Orientation"
+    ]
+  },
+  {
+    "objectID": "prep-materials/install-r.html",
+    "href": "prep-materials/install-r.html",
+    "title": "Optional: Installing R and RStudio",
+    "section": "",
+    "text": "For our class we do not need to install R and RStudio as we will be using the CSUMB Cal ICOR Hub R Server.\nAfter you leave CSUMB, though, you will want to be able to access R and RStudio on your own computer. We are going to learn about / refresh our memory on R and RStudio to make sure you have a local installations of both R and RStudio on your computer.",
+    "crumbs": [
+      "Getting Started with R",
+      "Install R and RStudio"
+    ]
+  },
+  {
+    "objectID": "prep-materials/install-r.html#updating-your-version-of-r",
+    "href": "prep-materials/install-r.html#updating-your-version-of-r",
+    "title": "Optional: Installing R and RStudio",
+    "section": "Updating Your Version of R",
+    "text": "Updating Your Version of R\nIf you already have R downloaded, you need to confirm that you have the most up to date version of R. Do not ignore these instructions. If you neglect to update your version of R, you may find that updating a package will make it so your code will not run.\n\nStep 1: Open RStudio\nStep 2: At the top of the the Console it will say what version of R you are using\n\n\nIf the version is not 4.5.1 (like the image above), you need to update your version of R! The simplest way to do this is to follow the instructions below to install R.",
+    "crumbs": [
+      "Getting Started with R",
+      "Install R and RStudio"
+    ]
+  },
+  {
+    "objectID": "prep-materials/install-r.html#installing-r",
+    "href": "prep-materials/install-r.html#installing-r",
+    "title": "Optional: Installing R and RStudio",
+    "section": "Installing R",
+    "text": "Installing R\nDownload and install R by going to https://cloud.r-project.org/. Here, you will find three options for installing R—click on the option for your computer’s operating system.\n\n📽️ Useful Video: Installing R and RStudio - Windows\n\n\n📽️ Useful Video: Installing R and RStudio - Mac\n\n\nIf you are a Windows user:\n\nClick on “Download R for Windows”\nClick on “base”\nClick on the Download link.\nWhen you open the execution file (.exe) you will be prompted with a variety of questions about installing R. Feel free to use the default features / settings that come with R (continue to click “Ok” until the download starts).\n\n\n\n\n\n\n\nWarningMultiple Versions of R\n\n\n\nBeware that if you had a previous version of R downloaded on your PC, that old version will not be deleted when you download the most recent version of R. We do not want to have two versions of R installed, as your computer can get confused what version of R to use. So, you need to remove the old version of R.\nTo do this you need to:\n\nNavigate to your computer’s settings\nClick on the “Apps” option on the left-hand panel\nSearch for or scroll down to R\nFind the older version of R\n\n\n\nClick on the ... on the right side\nSelect “Uninstall”\n\n\n\n\n\n\nIf you are macOS user:\n\nClick on “Download R for (Mac) OS X”\nUnder “Latest release:” click on R-X.X.X.pkg, where R-X.X.X is the version number. For example, the latest version of R as of October 31, 2024 was R-4.4.2 (Pile of Leaves).\nWhen installing, use the default features / settings that come with R (click Ok until the download starts).\n\n\n\n\n\n\n\nTipTroubleshooting for Macs\n\n\n\nFirst, identify which version of OSx you are running. How-to\nNext, find out which version of R your computer can run. Link\nIf this version is 3.6 or later, download the latest version that your computer can handle.\nIf this version is 3.4 or earlier, you’re going to run in to some trouble. I recommend updating your version of OSx, if you are willing. If you can’t, then you can use Posit Cloud to run R and RStudio on a free server. However, I recommend strongly against this option; your files will not be saved indefinitely, you will have limited hours to complete your work, your computing power will be limited, and you will need an internet connection at all times to do your work.\n\n\n\n\nIf you are a Linux user:\nClick on “Download R for Linux” and choose your distribution for more information on installing R for your setup.",
+    "crumbs": [
+      "Getting Started with R",
+      "Install R and RStudio"
+    ]
+  },
+  {
+    "objectID": "prep-materials/install-r.html#updating-your-version-of-rstudio",
+    "href": "prep-materials/install-r.html#updating-your-version-of-rstudio",
+    "title": "Optional: Installing R and RStudio",
+    "section": "Updating Your Version of RStudio",
+    "text": "Updating Your Version of RStudio\nIf you already have RStudio, you need to double check if you have the most recent version. You will not have access to the newest features for Quarto documents unless you have the most recent version of RStudio.\n\nStep 1: Open RStudio\nStep 2: Click on “Help” in the upper menu\nStep 3: Click on “Check for Updates”\n\nIf there are no updates to RStudio since you installed it, you are good to go! If you need to update RStudio, you will be sent to Posit (the parent company) to download the most recent version of RStudio desktop.",
+    "crumbs": [
+      "Getting Started with R",
+      "Install R and RStudio"
+    ]
+  },
+  {
+    "objectID": "prep-materials/install-r.html#installing-rstudio",
+    "href": "prep-materials/install-r.html#installing-rstudio",
+    "title": "Optional: Installing R and RStudio",
+    "section": "Installing RStudio",
+    "text": "Installing RStudio\nDownloading the most recent version of RStudio works the same way regardless of whether you’ve never downloaded RStudio before or if you just need to update your version of RStudio.\nWhen you navigate to the RStudio download page (https://rstudio.com/products/rstudio/download/), the website should automatically detect your computer’s operating system. So, you should be able to simply click the blue “Download RStudio Desktop for [insert operating system here]” button.\nClicking the button will begin installing RStudio. Once the download has completed, you will need to open the application file (on a Mac this is a .dmg file, on Windows this is an exe file).",
+    "crumbs": [
+      "Getting Started with R",
+      "Install R and RStudio"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 320: Applied Probability and Statistics",
+    "section": "",
+    "text": "This website provides interactive note outlines, assinments, and other resources for MATH 320: Applied Probability and Statistics at California State University, Monterey Bay. It uses the following packages:\n\nggformula\n\nmosaic\n\ntidyverse\n\nstats",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "instructions/common-errors.html",
+    "href": "instructions/common-errors.html",
+    "title": "common-errors",
+    "section": "",
+    "text": "One of the most frustrating parts for people learning R is troubleshooting errors. R is incredibly powerful, but it is dumb. It can’t guess what you meant, nor add in a comma that you forgot to type. Read Chapter 6: Deciphering Common R Errors (5 min) which covers the most common errors in R and how to decipher them. R errors aren’t always clear to new users, but they almost always will direct you to where the problem occurs. Sometimes that is just telling you that it can’t find the file or object you are trying to point it to. Other times, it will repeat your code right up to the point where it didn’t understand. That helps focus your attention when searching for errors."
+  },
+  {
+    "objectID": "instructions/common-errors.html#part-4-r-grammer-errors",
+    "href": "instructions/common-errors.html#part-4-r-grammer-errors",
+    "title": "common-errors",
+    "section": "",
+    "text": "One of the most frustrating parts for people learning R is troubleshooting errors. R is incredibly powerful, but it is dumb. It can’t guess what you meant, nor add in a comma that you forgot to type. Read Chapter 6: Deciphering Common R Errors (5 min) which covers the most common errors in R and how to decipher them. R errors aren’t always clear to new users, but they almost always will direct you to where the problem occurs. Sometimes that is just telling you that it can’t find the file or object you are trying to point it to. Other times, it will repeat your code right up to the point where it didn’t understand. That helps focus your attention when searching for errors."
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html",
+    "href": "prep-materials/code-style-guide.html",
+    "title": "CSUMB R Style Guide",
+    "section": "",
+    "text": "Use &lt;-, not =, for assignment for new data, variables, or objects\n\n#| label: empty\nnew_data &lt;- read_csv(\"a_data_set.csv\", show_col_types = FALSE)\n\n\n\n\nAdding extra spaces is ok if it improves alignment of = within functions or &lt;- for assignments.\nMost infix operators (==, +, -, &lt;-, =, etc.) should always be surrounded by spaces.\nMake sure a function name stays attached to the subsequent parenthesis with no space in between\nAlways put a space after a comma, never before, just like in regular English.\n\n\n\n\n\nIndentation and spacing are used consistently to maximize readability and long lines are broken into appropriate pieces.\nUse proper indentation. Use one line each for the function name, each argument, and the closing ).\n\n\n\n\n\nCode is separated into meaningful code chunks, such as Data Reading/Cleaning, Descriptive Statistics, Graphics/Visualizations, and Analysis\nName your code chunks with appropriate labels using kebab-case.\n\n\n```{r}\n#| label: read-study-data\nstudy &lt;- read_csv(\"study.csv\", show_col_types = FALSE) #stops some extra output\n```\n\n\nAlways load packages at the beginning of scripts or Quarto documents. In Quarto documents, set up the code chunk similar to the following example, labeling it as setup:\n\n\n```{r}\n#| label: setup\nlibrary(tidyverse)\nlibrary(mosaic)\nlibrary(ggformula)\n```"
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html#formatting",
+    "href": "prep-materials/code-style-guide.html#formatting",
+    "title": "CSUMB R Style Guide",
+    "section": "",
+    "text": "Use &lt;-, not =, for assignment for new data, variables, or objects\n\n#| label: empty\nnew_data &lt;- read_csv(\"a_data_set.csv\", show_col_types = FALSE)\n\n\n\n\nAdding extra spaces is ok if it improves alignment of = within functions or &lt;- for assignments.\nMost infix operators (==, +, -, &lt;-, =, etc.) should always be surrounded by spaces.\nMake sure a function name stays attached to the subsequent parenthesis with no space in between\nAlways put a space after a comma, never before, just like in regular English.\n\n\n\n\n\nIndentation and spacing are used consistently to maximize readability and long lines are broken into appropriate pieces.\nUse proper indentation. Use one line each for the function name, each argument, and the closing ).\n\n\n\n\n\nCode is separated into meaningful code chunks, such as Data Reading/Cleaning, Descriptive Statistics, Graphics/Visualizations, and Analysis\nName your code chunks with appropriate labels using kebab-case.\n\n\n```{r}\n#| label: read-study-data\nstudy &lt;- read_csv(\"study.csv\", show_col_types = FALSE) #stops some extra output\n```\n\n\nAlways load packages at the beginning of scripts or Quarto documents. In Quarto documents, set up the code chunk similar to the following example, labeling it as setup:\n\n\n```{r}\n#| label: setup\nlibrary(tidyverse)\nlibrary(mosaic)\nlibrary(ggformula)\n```"
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html#naming",
+    "href": "prep-materials/code-style-guide.html#naming",
+    "title": "CSUMB R Style Guide",
+    "section": "Naming",
+    "text": "Naming\n\nVariables, files, code chunks, and other objects are named appropriately and add to the scripts readability.\nVariable and function names should use only lowercase letters, numbers, and _. Use underscores (_) (so called snake_case) to separate words within a name.\nFile names should use only lowercase letters, numbers and -. Use dashes (-) (so called kebab-case) to separate words within a name."
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html#comments",
+    "href": "prep-materials/code-style-guide.html#comments",
+    "title": "CSUMB R Style Guide",
+    "section": "Comments",
+    "text": "Comments\n\nComments are used appropriately throughout the script to organize the script and clarify what particular (sets of) commands are meant to accomplish. It is not necessary to comment each line, but, at minimum, each code chunk should have a comment of the objective of the code chunk.\nDocumentation and comments that describe the purpose of the code and why it does things, rather than only stating obvious facts about what the code is doing."
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html#readability",
+    "href": "prep-materials/code-style-guide.html#readability",
+    "title": "CSUMB R Style Guide",
+    "section": "Readability",
+    "text": "Readability\n\nLoad packages all at once at the very beginning of the file in the setup code chunk.\nQuarto/RMarkdown is divided into sections using appropriate header sizes and titles.\nR Scripts and output are ordered and labeled as appropriate.\nThere is no unused or unnecessary output or code in the knitted document (e.g. printed data)"
+  },
+  {
+    "objectID": "prep-materials/code-style-guide.html#consistency",
+    "href": "prep-materials/code-style-guide.html#consistency",
+    "title": "CSUMB R Style Guide",
+    "section": "Consistency",
+    "text": "Consistency\n\nStylistic choices are used consistently throughout each script and follow commonly used conventions or agreed upon norms."
+  },
+  {
+    "objectID": "prep-materials/intro-to-quarto.html",
+    "href": "prep-materials/intro-to-quarto.html",
+    "title": "Introduction to Quarto",
+    "section": "",
+    "text": "The theme of this lesson is good management of your files and data. In part two of this week’s coursework you will learn how to identify folders and paths, and create Quarto documents.",
+    "crumbs": [
+      "Getting Started with R",
+      "Introduction to Quarto"
+    ]
+  },
+  {
+    "objectID": "prep-materials/intro-to-quarto.html#file-management",
+    "href": "prep-materials/intro-to-quarto.html#file-management",
+    "title": "Introduction to Quarto",
+    "section": "File Management",
+    "text": "File Management\nAs boring as it sounds, file management is arguably one of the most important skills a data scientist should have. The reproducibility of a project depends just as much on the way in which the project was stored as the computing tools used. While using R and Quarto make an important step in creating a reproducible analysis, there are other pieces that are arguably just as important—such as file management.\nBelieve it or not, your computer has multiple locations** where files can be stored. There has been a bit of a generational shift as computers have evolved: the “file system” metaphor itself is outdated because no one uses physical files anymore.\n[This article]((https://futurism.com/the-byte/gen-z-kids-file-systems) makes the argument that with modern search capabilities, most people use their computers as a laundry hamper instead of as a nice, organized filing cabinet. However, the laundry hamper approach doesn’t play nicely with working in R and creating Quarto documents.\nA good programmer will store files according to the Project TIER protocol. More specifically, you will have:\n\na “Stat 250” folder in your Documents folder, containing all your materials associated with STAT 250\na sub-folder for each week (e.g., Week 1, Week 2)\nseparate folders within each week for each assignment (e.g., Practice Activity, Lab)",
+    "crumbs": [
+      "Getting Started with R",
+      "Introduction to Quarto"
+    ]
+  },
+  {
+    "objectID": "prep-materials/intro-to-quarto.html#introduction-to-quarto",
+    "href": "prep-materials/intro-to-quarto.html#introduction-to-quarto",
+    "title": "Introduction to Quarto",
+    "section": "Introduction to Quarto",
+    "text": "Introduction to Quarto\n\n📖 Recommended Reading: Intro to Quarto\n\n\nHTML Documents\nWe will exclusively use HTML documents in this course. If you are interested in learning more about formatting options for Quarto HTML documents, I would recommend checking out:\n\na discussion of the basics of formatting HTML documents in Quarto\nthe list of all HTML Formatting options for Quarto documents\n\n\n\nGetting in the Details of Quarto\nThe following video goes into the details about the ways to adopt and work with Quarto documents to produce reproducible analyses.",
+    "crumbs": [
+      "Getting Started with R",
+      "Introduction to Quarto"
+    ]
+  }
+]
