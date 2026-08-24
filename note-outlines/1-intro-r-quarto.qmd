@@ -182,7 +182,7 @@ We need to fill in each piece into our template. So our code `goal (y ~ x , data
 ```{r}
 #| label: read-study2
 #| include: false
-study2 <- read_csv("study2.csv", show_col_types = FALSE)
+study2 <- read_csv("../note-outlines/1-intro-r-quarto/data/study2.csv", show_col_types = FALSE)
 ```
 
 ```{r}
@@ -208,12 +208,12 @@ Learning any new software can feel daunting, but referring back to this template
 
 The real power of R comes not from calculating values like a calculator, but in manipulating sets of data. ***Vectors*** are sets of data that are organized together. Groups of vectors that are associated are ***dataframes***.
 
-For example, we could load version of our data on hours spent studying in week 1 and week 2 that has three columns, one for day and one for each week. 
+For example, we could load a version of our data on hours spent studying in week 1 and week 2 that has three columns, one for day and one for each week. 
 
 ```{r}
 #| label: read-study
 #| echo: false
-study <- read_csv("study.csv", show_col_types = FALSE)
+study <- read_csv("../note-outlines/1-intro-r-quarto/data/study.csv", show_col_types = FALSE)
 study
 ```
 
@@ -795,6 +795,7 @@ Let's demonstrate with our small `study` dataset. First, we need to read in the 
 
 ```{r}
 #| echo: fenced
+#| eval: false
 #| label: read-study-data
 study <- read_csv("study.csv", show_col_types = FALSE) #stops some extra output
 ```

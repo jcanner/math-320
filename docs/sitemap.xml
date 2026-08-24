@@ -2,31 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jcanner.github.io/math-320/prep-materials/rstudio-orientation.html</loc>
-    <lastmod>2026-03-10T20:43:10.980Z</lastmod>
+    <lastmod>2026-08-24T21:29:59.510Z</lastmod>
   </url>
   <url>
     <loc>https://jcanner.github.io/math-320/prep-materials/install-r.html</loc>
     <lastmod>2026-03-10T20:43:10.976Z</lastmod>
   </url>
   <url>
-    <loc>https://jcanner.github.io/math-320/instructions/importing-exporting.html</loc>
-    <lastmod>2026-03-10T20:43:10.688Z</lastmod>
+    <loc>https://jcanner.github.io/math-320/prep-materials/common-errors.html</loc>
+    <lastmod>2026-03-10T20:43:10.686Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jcanner.github.io/math-320/note-outlines/1-intro-r-quarto.html</loc>
+    <lastmod>2026-08-24T21:54:42.837Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jcanner.github.io/math-320/about.html</loc>
+    <lastmod>2026-08-24T21:44:56.147Z</lastmod>
   </url>
   <url>
     <loc>https://jcanner.github.io/math-320/index.html</loc>
     <lastmod>2026-08-24T19:25:57.331Z</lastmod>
   </url>
   <url>
-    <loc>https://jcanner.github.io/math-320/about.html</loc>
-    <lastmod>2026-08-24T19:03:42.169Z</lastmod>
-  </url>
-  <url>
-    <loc>https://jcanner.github.io/math-320/instructions/common-errors.html</loc>
-    <lastmod>2026-03-10T20:43:10.686Z</lastmod>
-  </url>
-  <url>
     <loc>https://jcanner.github.io/math-320/prep-materials/code-style-guide.html</loc>
     <lastmod>2026-03-10T20:43:10.811Z</lastmod>
+  </url>
+  <url>
+    <loc>https://jcanner.github.io/math-320/prep-materials/importing-exporting.html</loc>
+    <lastmod>2026-03-10T20:43:10.688Z</lastmod>
   </url>
   <url>
     <loc>https://jcanner.github.io/math-320/prep-materials/intro-to-quarto.html</loc>

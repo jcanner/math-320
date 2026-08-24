@@ -47,10 +47,10 @@ website:
     - section: "Note Outlines"  
       aria-label: "Note Outline Menu"
       contents: 
-      - href: note-outlines/intro-r-quarto
+      - href: note-outlines/1-intro-r-quarto
         text: "Introduction to R and Quarto"      
-      - href: note-outlines/intro-probability-i
-        text: "Introduction to Probability I"
+      # - href: note-outlines/intro-probability-i
+      #   text: "Introduction to Probability I"
    
        
 format:
