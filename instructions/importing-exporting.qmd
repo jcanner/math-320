@@ -1,0 +1,8 @@
+---
+title: "Setting up and Finishing your Lab"
+format: html
+---
+
+## Lab Workflow
+
+<iframe src="https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=8d0b7971-422f-4e6a-9e8e-b344003ab2ae&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&captions=false&interactivity=all" height="338" width="600" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="R Server (Cal ICOR) Orientation" ></iframe>

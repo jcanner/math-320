@@ -1,21 +1,68 @@
 project:
   type: website
+  output-dir: docs
 
 website:
-  title: "math-320"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  page-navigation: true
+  title: "MATH 320: Applied Probability and Statistics"
+  description: "Notes and assignments for MATH 320"
+  site-url: "https://jcanner.github.io/math-320"
+  repo-url: https://github.com/jcanner/math-320
+  repo-actions: [issue]
 
+  page-footer:
+    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+    left: "&copy; Copyright 2025, Judith Canner"
+    background: "#D9E3E4"
+
+  sidebar:
+#    background: "#5D737E"
+    pinned: true
+    align: center
+    tools:
+      - icon: github
+        href: https://github.com/jcanner/math-320
+        text: "GitHub Organization"
+
+
+    style: "docked"
+    search: true
+    collapse-level: 1
+    contents:
+    - href: index.qmd
+      text: "Home"
+    - section: "Getting Started with R"
+      aria-label: "Gettings Started Menu"
+      contents:
+      - href: prep-materials/rstudio-orientation.qmd
+        text: "RStudio Orientation"    
+      - href: prep-materials/intro-to-quarto.qmd
+        text: "Introduction to Quarto"
+      - href: prep-materials/install-r.qmd
+        text: "Optional: Install R and RStudio"   
+      # - href: 
+      #   text: "R Code Style Guide"
+      # - href: 
+      #   text: "Common Errors"
+    - section: "Note Outlines"  
+      aria-label: "Note Outline Menu"
+      contents: 
+      - href: note-outlines/intro-probability-i
+        text: "Introduction to Probability I"
+   
+       
 format:
   html:
-    theme:
-      - cosmo
-      - brand
-    css: styles.css
+    lang: en
+    html-math-method: mathml
+    axe: true
+    theme: "minty"
+    mainfont: "sans-serif"
+    code-copy: true
+    code-overflow: wrap
     toc: true
+    css: styles.css  
+#    linkcolor: "#5D737E"
+#    highlight-style: a11y-dark
 
-
-
+editor: source

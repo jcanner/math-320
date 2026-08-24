@@ -1,0 +1,22 @@
+---
+title: "common-errors"
+format: html
+---
+
+## Part 4: R Grammer & Errors
+
+One of the most frustrating parts for people learning R is troubleshooting errors. R is incredibly powerful, but it is *dumb*. It can't guess what you meant, nor add in a comma that you forgot to type. Read [Chapter 6: Deciphering Common R Errors (5 min)](https://ismayc.github.io/rbasics-book/6-errors.html){target="_blank"} which covers the most common errors in R and how to decipher them. R errors aren't always clear to new users, but they almost always will direct you to where the problem occurs. Sometimes that is just telling you that it can't find the file or object you are trying to point it to. Other times, it will repeat your code right up to the point where it didn't understand. That helps focus your attention when searching for errors.
+
+
+### 4.1 Common Error: Package Not Loaded
+
+
+### 4.2 Common Error: Data Not Imported Correctly
+
+
+### 4.3 Common Error: Mispelled Object Name
+
+
+### 4.4 Common Error: 
+
+

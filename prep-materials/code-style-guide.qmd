@@ -1,0 +1,103 @@
+---
+title: "CSUMB R Style Guide"
+execute:
+  eval: false
+---
+
+
+```{r}
+#| label: setup-overall
+#| include: false
+library(tidyverse)
+```
+
+
+## Formatting
+
+### Assignment Statements
+
+- Use `<-`, not `=`, for assignment for new data, variables, or objects
+
+````
+#| label: empty
+new_data <- read_csv("a_data_set.csv", show_col_types = FALSE)
+````
+
+### Spacing
+
+- Adding extra spaces is ok if it improves alignment of `=` within functions or `<-` for assignments.
+
+- Most infix operators (`==`, `+`, `-`, `<-`, `=`, etc.) should always be surrounded by spaces.
+
+- Make sure a function name stays attached to the subsequent parenthesis with no space in between
+
+- Always put a space after a comma, never before, just like in regular English.
+
+### Indentation 
+
+- Indentation and spacing are used consistently to maximize readability and long lines are broken into appropriate pieces.
+
+- Use proper indentation. Use one line each for the function name, each argument, and the closing ). 
+
+### Organization
+
+- Code is separated into meaningful code chunks, such as Data Reading/Cleaning, Descriptive Statistics, Graphics/Visualizations, and Analysis
+
+- Name your code chunks with appropriate labels using kebab-case. 
+
+```{r}
+#| echo: fenced
+#| label: read-study-data
+study <- read_csv("study.csv", show_col_types = FALSE) #stops some extra output
+```
+
+
+- Always load packages at the beginning of scripts or Quarto documents. In Quarto documents, set up the code chunk similar to the following example, labeling it as `setup`:
+
+```{r}
+#| echo: fenced
+#| label: setup
+library(tidyverse)
+library(mosaic)
+library(ggformula)
+```
+
+
+## Naming
+
+- Variables, files, code chunks, and other objects are named appropriately and add to the scripts readability. 
+
+- Variable and function names should use only lowercase letters, numbers, and \_. Use underscores (\_) (so called snake_case) to separate words within a name.
+
+- File names should use only lowercase letters, numbers and \-. Use dashes (\-) (so called kebab-case) to separate words within a name.  
+
+
+
+
+
+
+
+## Comments
+
+- Comments are used appropriately throughout the script to organize the script and clarify what particular (sets of) commands are meant to accomplish. It is not necessary to comment each line, but, at minimum, each code chunk should have a comment of the objective of the code chunk.  
+
+- Documentation and comments that describe the purpose of the code and why it does things, rather than only stating obvious facts about what the code is doing.  
+
+
+## Readability 
+
+- Load packages all at once at the very beginning of the file in the `setup` code chunk.
+
+- Quarto/RMarkdown is divided into sections using appropriate header sizes and titles. 
+
+- R Scripts and output are ordered and labeled as appropriate. 
+
+- There is no unused or unnecessary output or code in the knitted document (e.g. printed data)
+
+## Consistency
+
+- Stylistic choices are used consistently throughout each script and follow commonly used conventions or agreed upon norms.
+
+
+
+

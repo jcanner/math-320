@@ -1,11 +1,11 @@
 ---
-title: "math-320"
+title: "MATH 320: APplied Probability and Statistics"
 ---
 
-This is a Quarto website.
+This website provides interactive note outlines, assinments, and other resources for MATH 320: Applied Probability and Statistics at California State University, Monterey Bay.  It uses the following packages:  
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+1. `ggformula`  
+2. `mosaic`  
+3. `tidyverse`  
+5. `stats`  
 
-```{r}
-1 + 1
-```

@@ -1,0 +1,77 @@
+---
+title: "Introduction to Quarto"
+format: html
+---
+
+The theme of this lesson is good management of your files and data. In part two
+of this week's coursework you will learn how to identify **folders** and
+**paths**, and create **Quarto documents**.
+
+
+# Principles of Reproducibility
+
+
+## File Management
+
+As boring as it sounds, file management is arguably one of the most important
+skills a data scientist should have. The reproducibility of a project depends
+just as much on the way in which the project was stored as the computing tools
+used. While using R and Quarto make an important step in creating a reproducible
+analysis, there are other pieces that are arguably just as important---such as 
+file management.
+
+Believe it or not, your computer has **multiple** locations\*\* where files can
+be stored. There has been a bit of a generational shift as computers have
+evolved: the "file system" metaphor itself is outdated because no one uses
+physical files anymore.  
+
+[This article]((https://futurism.com/the-byte/gen-z-kids-file-systems) makes the
+argument that with modern search capabilities, most people use their computers
+as a laundry hamper instead of as a nice, organized filing cabinet. However, the
+laundry hamper approach doesn't play nicely with working in R and creating
+Quarto documents.
+
+A good programmer will store files according to the 
+[Project TIER protocol](https://www.projecttier.org/tier-protocol/protocol-4-0/). 
+More specifically, you will have:
+
+-   a "Stat 250" folder in your Documents folder, containing **all** your
+materials associated with STAT 250
+-   a sub-folder for each week (e.g., Week 1, Week 2)
+-   separate folders within each week for each assignment (e.g., Practice
+Activity, Lab)
+
+# Reproducible Documents
+
+Over the last ten years, science has experienced a "reproducibility" crisis.
+Meaning, a substantial portion of scientific findings were unable to be
+recreated because people didn't sufficiently document the processes they used.
+As such, a foundational aspect of scientific research is using tools which allow
+others to reproduce your findings.
+
+Enter Quarto---a dynamic document that allows us to interweave R code and
+written text in the **same** document. Gone are the days of copying and pasting
+the results of your R code into a Word document---breaking the connection
+between your analysis and your report. Quarto is here to save the day!
+
+
+
+## Introduction to Quarto
+
+### 📖 [Recommended Reading: Intro to Quarto](https://r4ds.hadley.nz/quarto.html)
+
+### HTML Documents
+
+We will exclusively use HTML documents in this course. If you are interested in
+learning more about formatting options for Quarto HTML documents, I would
+recommend checking out:
+
+-   [a discussion of the basics of formatting HTML documents in Quarto](https://quarto.org/docs/output-formats/html-basics.html)
+
+-   [the list of all HTML Formatting options for Quarto documents](https://quarto.org/docs/reference/formats/html.html)
+
+### Getting in the Details of Quarto
+
+The following video goes into the details about the ways to adopt and work with Quarto documents to produce reproducible analyses.
+
+<iframe src="https://csumb.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=c8347496-cc96-4f7c-9ebe-b344004212af&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=false&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="Introduction to Quarto" ></iframe>

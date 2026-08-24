@@ -1,0 +1,150 @@
+---
+title: "RStudio Orientation"
+format: html
+---
+
+```{r}
+#| include: false
+#| label: packages-setup
+
+library(tidyverse)
+```
+
+
+
+# Let's start working in `R`! 🥳
+
+![](images/week-1/typing_R.gif){fig-alt="A video of Hadley Wickham (author of many R packages) pretending to type and saying 'just typing R code'."}
+
+# Introduction to R
+
+R is a statistical programming language. Unlike more general-purpose languages, R is optimized for working with data and doing statistics. R was created by Ross Ihaka and Robert Gentleman in 1993 (hence "R") and was formally released by the **R Core Group** in 1997 (a group of 20-ish volunteers who are the *only* people who can change the base (built-in) functionality of `R`). If you want to build an independent, standalone graphical interface, or run a web server, R is probably not the ideal language to use (you might want C / Python or PHP / Python, respectively). If you want to vacuum up a bunch of data, fit several regression models, and then compare the models, R is a great option and will be faster than working in a more general-purpose language like C or base Python.
+
+In general, R is...
+
+-   vector-based
+-   1 indexed (start counting 1, 2, 3, ...)
+-   a scripting language (R code does not have to be compiled before it is run)
+
+One thing to know about `R` is that it is **open-source**. This means that no company owns `R` (like there is for *SAS* or *Matlab*) and that developers cannot charge for the use of their R software. This does not mean that all of your code needs to be public (you can keep your code private), but it is important to be a good open-source citizen by sharing your code publicly when possible (later we will learn about *GitHub*), contributing to public projects and packages, creating your own packages, and using `R` for ethical and respectful projects.
+
+### 📖 [Suggested Reading: Basics of R](https://r4ds.hadley.nz/workflow-basics)
+
+::: callout-note
+# The History of `R`
+
+If you would like to learn more about the history of R, here is an [excellent article written by Roger Peng](https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html).
+:::
+
+### 💻 [Useful Tutorial: R Programming Basics](https://r-primers.andrewheiss.com/basics/02-programming-basics)
+
+::: callout-note
+# Programming in R
+
+This tutorial gives you an overview of the foundations that make up the R programming language, including:
+
+-   functions and their arguments
+-   accessing help files
+-   making code comments
+-   object types (e.g., vectors, lists, )
+-   data types (e.g., numeric, integer, double, character)
+-   R's package system
+:::
+
+# Introduction to RStudio
+
+### 📖 [Optional Reading: A tour of RStudio](https://rladiessydney.org/courses/ryouwithme/01-basicbasics-1/)
+
+-   [Click Here](https://github.com/rstudio/cheatsheets/blob/main/rstudio-ide.pdf) to download a "cheatsheet" (easy reference page) for navigating the RStudio IDE.
+
+### Navigating RStudio
+
+![The RStudio window will look something like this.](images/week-1/Rstudio-important-buttons.png)
+
+### Exploring the Panes
+
+::: panel-tabset
+## Top-left
+
+Includes the text editor. This is where you'll do most of your work.
+
+![](images/week-1/Rstudio-editor-pane-buttons.png)
+
+The logo on the script file indicates the file type. When an R file is open, there are Run and Source buttons on the top which allow you to run selected lines of code (Run) or source (run) the entire file. Code line numbers are provided on the left (this is a handy way to see where in the code the errors occur), and you can see line:character numbers at the bottom left. At the bottom right, there is another indicator of what type of file Rstudio thinks this is.
+
+## Top-right
+
+In the top right, you'll find the environment, history, and connections tabs. The environment tab shows you the objects available in R (variables, data files, etc.), the history tab shows you what code you've run recently, and the connections tab is useful for setting up database connections.
+
+## Bottom-left
+
+On the bottom left is the console. There are also other tabs to give you a terminal (command line) prompt, and a jobs tab to monitor progress of long-running jobs. In this class we'll primarily use the console tab.
+
+![](images/week-1/Rstudio-terminal-R.png)
+
+## Bottom-right
+
+On the bottom right, there are a set of tabs:
+
+-   **files** (to give you an idea of where you are working, and what files are present),
+
+![](images/week-1/Rstudio-file-tab.png)
+
+-   **plots** (which will be self-explanatory),
+
+-   **packages** (which extensions to R are installed and loaded),
+
+![](images/week-1/Rstudio-packages-tab.png)
+
+-   the **help** tab (where documentation will show up), and
+
+![](images/week-1/Rstudio-help-tab.png)
+
+-   the **viewer** window, which is used for interactive graphics or previewing HTML documents.
+:::
+
+# Installing Packages
+
+### 📽️ [Recommended Video: Installing R Packages (4 minutes)](http://youtu.be/tXZDoMlXfTE?hd=1)
+
+### Install / Update the `ggformula`, `mosaic`, and `tidyverse`
+
+::: {.callout-important}
+# Working on the R Server
+If you are using the R Server (Cal ICOR Hub) these packages are already installed and do not need to be installed again.
+
+:::
+
+
+Now that you have the hang of working in RStudio, let's install / update the packages we will use in the course. In this course, we will make heavy use of the **tidyverse** suite of packages.
+
+If you **have not** used the tidyverse before, type the following into your **console** or use the drop down menu in the **Packages** tab (as seen in the video above):
+
+```{r}
+#| eval: false
+#| label: installing-package
+
+install.packages("tidyverse")
+```
+
+If you **have** used the tidyverse before, you only need to update packages.\
+Type the following into your console:
+
+```{r}
+#| eval: false
+#| label: updating-package
+
+library(tidyverse)
+tidyverse_update()
+```
+
+Then follow the instructions that print out to update a few of your tidyverse packages.
+
+In addition, install the packages we used throughout our course.  
+
+```{r}
+#| eval: false
+#| label: installing-package-2
+
+install.packages(c("ggformula", "mosaic")) 
+```
