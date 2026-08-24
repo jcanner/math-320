@@ -1,0 +1,15 @@
+day,week,hours
+M,week1,1
+T,week1,1
+W,week1,2
+R,week1,2
+F,week1,0
+Sa,week1,1
+Su,week1,1
+M,week2,2
+T,week2,4
+W,week2,5
+R,week2,4
+F,week2,0
+Sa,week2,3
+Su,week2,3
