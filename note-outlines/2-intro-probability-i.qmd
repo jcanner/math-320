@@ -1,0 +1,509 @@
+---
+title: "Introduction to Probability Theory I"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      resources: 
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: true
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}} {{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+```
+
+## Sample Space
+
+In an experiment, and the set of all outcomes under consideration is referred to as the **sample space**.
+
+*Example:* When we toss a coin, the sample space is $\Omega = \{ h, t \}$ where $h$ denotes an outcome of head and $t$ denotes an outcome of tail.
+
+*Example:* In a random experiment\* of tossing a six-sided die, the sample space is $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$, the set of six possible outcomes.
+
+*Example:* In a random experiment\* of tossing a pair of six-sided dice, the sample space is $\Omega = \{ (1, 1), (1, 2), \dots, (6, 6) \}$, the set of 36 possible paired outcomes.
+
+::: callout-note
+## Definition of Experiment
+
+We will see the term "experiment" used in two different ways in this course. In the context of probability theory, *experiment* refers to the probability process by which data is generated. Once we learn more about the practice of statistics, *experiment* refers to a data collection method in which an individual is randomly assigned to a treatment group.
+:::
+
+#### Group Discussion
+
+What are some sample spaces we can define around characteristics of your classmates?'
+
+## Probability Model
+
+Given a sample space $\Omega$, a **probability model** is a function $P$: $\Omega \rightarrow \mathcal{R}$ which satisfies the two conditions:
+
+1.  $P(s) \ge 0$ for any $s \in \Omega$ .
+2.  $\sum_{ s \in \Omega } P(s) = 1$.
+
+*Example:* Given $\Omega = \{ h, t \}$ for tossing a coin, assume $P(h) = 0.8$ and $P(t) = 0.2$. It is a valid probability model because $P(h) \ge 0$ and $P(t) \ge 0$, and
+
+$$\sum_{ s \in \Omega } P(s) = P(t) + P(h) = 0.8 + 0.2 = 1 \, .$$
+
+In this case, we say that "the probability of $h$ is 0.8" and "the probability of $t$ is 0.2." Remember that a **probability model** is a function which satisfies the two conditions, and the **probability** of an outcome is a number between zero and one which quantifies the likelihood of the outcome.
+
+*Example:* Given $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die, assume all six outcomes are equally likely. The probability model which expresses this assumption can be written as $P(s) = \frac{1}{6}$ for $s = 1, 2, \dots, 6$. This probability model can be graphically represented as follows.
+
+```{webr}
+#| label: bar-plot
+#| fig-align: center
+#| fig-height: 4.5
+#| fig-width: 5
+#| out-height: "40%" 
+#| out-width: "40%"
+#| fig-alt: "Probability model of tossing a die"
+
+library(ggformula)
+omega <- c( 1, 2, 3, 4, 5, 6 )
+prob <- c( 1/6, 1/6, 1/6, 1/6, 1/6, 1/6 )
+gf_col(prob ~ factor(omega),
+         title = "Probability Model of Tossing A Die",
+         xlab = "Outcome",
+         ylab = "Probability") +
+  ylim(0, 0.5)
+```
+
+## Event
+
+Let $\Omega$ be a sample space. An **event** is a subset of $\Omega$.
+
+*Example:* Given $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die, $O = \{ 1, 3, 5 \}$ and $E = \{ 2, 4, 6 \}$ are events because $O \subseteq \Omega$ and $E \subseteq \Omega$ . If any outcome in an event occurred, we say that the event occurred. For example, if we toss a six-sided die and an outcome of 1 occurred, we say that the event $O$ occurred.
+
+The probability of $O$ is calculated as follows:
+
+$$P(O) = P(1) + P(3) + P(5) = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = 0.5 \, .$$
+
+Similarly, the probability of $E$ is $P(E) = 0.5$. Why?
+
+What do you notice about the relationship between $O$ and $E$ as they relate to the sample space?
+
+At the end of semester, suppose students earn one of the following letter grades: $\Omega = \{ a, b, c, d, f \}$. Historically, 15%, 20%, 30%, 20%, and 15% of students earned $a$, $b$, $c$, $d$, and $f$, respectively. The following probability model reflects this history: $P(a) = P(f) = 0.15$, $P(b) = P(d) = 0.2$, and $P(c) = 0.3$. It can be graphically expressed as follows.
+
+```{webr}
+#| label: bar-plot-grades
+#| fig-align: center
+#| fig-height: 4.5
+#| fig-width: 5
+#| out-height: "40%" 
+#| out-width: "40%"
+#| fig-alt: "Probability model of letter grades"
+
+omega <- c( "a", "b", "c", "d", "f" )
+prob <- c( 0.15, 0.2, 0.3, 0.2, 0.15 )
+gf_col(prob ~ omega, 
+         title = "Probability Model of Letter Grades",
+         xlab = "Letter Grade",
+         ylab = "Probability",
+         col = "white", 
+         ylim = c(0, 0.5) )
+```
+
+Let $G$ be the event of passing this course by earning $a$, $b$, or $c$. The probability of $G = \{ a, b, c \}$ is
+
+$$P(G) = P(a) + P(b) + P(c) = 0.15 + 0.2 + 0.3 = 0.65 \, .$$ Let $G^c$ be the event of not passing this course. In this case, $G^c = \{ d, f \}$, and we $G^c$ is called the **complementary** of $G$. We can calculate the probability of $G^c$ as
+
+$$ P(G^c) = P(d) + P(f) = 0.2 + 0.15 = 0.35 \, . $$
+
+Alternatively,
+
+$$P(G^c) = 1 - P(G) = 1 - 0.65 = 0.35 \, .$$
+
+**Note:** By convention, $P( \emptyset ) = 0$ where $\emptyset$ is the empty set. In words, the probability of no outcomes is zero.
+
+## Independence
+
+**Definition:** We say two events $A$ and $B$ are **independent** when $P(A \mid B) = P(A)$. In other words, $A$ and $B$ are independent when the condition of $B$ does not change the probability of $A$.
+
+**Definition:** We say two events $A$ and $B$ are **dependent** when $P(A \mid B) \ne P(A)$. In other words, $A$ and $B$ are dependent when the condition of $B$ changes the probability of $A$.
+
+**Example:** In the previous example of tossing a coin three times, $W$ and $O_1$ are dependent because $P(W \mid O_1) = 0.75$ is not equal to $P(W) = 0.5$. In words, observing a head in the first coin toss increases the chance of winning. In the same example, $W$ and $O_2$ are independent because $P(W \mid O_2) = 0.5$ is equal to $P(W) = 0.5$. In words, the chance of winning prior to the first coin toss, $P(W) = 0.5$, and the chance of winning given a head and a tail, $P(W \mid O_2) = 0.5$, are the same.
+
+## Conditional Probability
+
+### Conditional Probability Based on Data
+
+In basketball, we may consider six outcomes: missing a free throw ($s_1$), making a free throw ($s_2$), missing a two-pointer ($s_3$), making a two-pointer ($s_4$), missing a three-pointer ($s_5$), and making a three-pointer ($s_6$). Given the sample space $\Omega = \{ s_1, s_2, s_3, s_4, s_5, s_6 \}$, let $A_1 = \{ s_1, s_2 \}$, $A_2 = \{ s_3, s_4 \}$, $A_3 = \{ s_5, s_6 \}$, and $S = \{ s_2, s_4, s_6 \}$. In words, $A_1$ is a free throw attempt (whether it was a failure or a success), $A_2$ is a two-pointer attempt, and $A_3$ is a three-pointer attempt, $S$ is a shot made (a free throw, two-pointer, or three-pointer), and $S^c$ is a shot missed. @tbl-count is the contingency table by the shot type and shot result of Michael Jordan in the 1985 NBA Season. By dividing each cell of @tbl-count by the total number of attempts 2,423, @tbl-prob represents the contingency table in terms of probabilities.
+
+|      Event      | Free Throw ($A_1$) | 2-pointer ($A_2$) | 3-pointer ($A_3$) | Total |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|  Success ($S$)  |        630         |        837        |         9         | 1,476 |
+| Failure ($S^c$) |        116         |        788        |        43         |  947  |
+|      Total      |        746         |       1,625       |        52         | 2,423 |
+
+: Contingency table by count
+
+| Event | Free Throw ($A_1$) | 2-pointer ($A_2$) | 3-pointer ($A_3$) | Total |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| Success ($S$) | $\frac{630}{2423}$ | $\frac{837}{2423}$ | $\frac{9}{2423}$ | $\frac{1476}{2423}$ |
+| Failure ($S^c$) | $\frac{116}{2423}$ | $\frac{788}{2423}$ | $\frac{43}{2423}$ | $\frac{947}{2423}$ |
+| Total | $\frac{746}{2423}$ | $\frac{1625}{2423}$ | $\frac{52}{2423}$ | 1 |
+
+: Contingency table by probability
+
+There are two kinds of probability in @tbl-prob.
+
+- **Joint probability:** $P(A_1 \cap S) = \frac{630}{2423} = 0.260$ means 26.0% of his shots were free throws made, $P(A_3 \cap S^c) = \frac{43}{2423} = 0.018$ means 1.8% of his shots were three-pointers missed.
+
+- **Marginal probability:** $P(A_1) = \frac{746}{2423} = 0.308$ means 30.8% of his shots were free throws (whether it made or missed), $P(S) = \frac{1476}{2423} = 0.609$ means 60.9% of his shots were made (free throws, two-pointers, or three-pointers), and $P(S^c) = 1 - 0.609 = 0.391$ means 39.1% were missed.
+
+Based on a joint probability and marginal probability, we can calculate a conditional probability. For example,
+
+$$P( S \mid A_1 ) = \frac{ P( S \cap A_1 ) }{ P(A_1) } = \frac{630/2423}{746/2423} = \frac{630}{746} = 0.845 \, .$$
+
+In this case, we say that the conditional probability of $S$ (success) given $A_1$ (free throw) is 0.845, and it is interpreted as follows: 84.5% of free throws were successful (630 out of 746 as shown in @tbl-count). Here is another conditional probability.
+
+$$P( A_1 \mid S ) = \frac{ P( A_1 \cap S ) }{ P(S) } = \frac{630/2423}{1476/2423} = \frac{630}{1476} = 0.427 \, .$$
+
+In this case, we say that the conditional probability of $A_1$ given $S$ is 0.427, and it is interpreted as follows: 42.7% of shots he made were free throws (639 out of 1476 as shown in @tbl-count).
+
+**Definition:** For arbitrary events $A$ and $B$, the **conditional probability** of $A$ given $B$ is defined as
+
+$$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
+
+provided that $P(B) > 0$ (i.e., $B$ is a possible condition), and the conditional probability of $B$ given $A$ is defined as
+
+$$P(B \mid A) = \frac{ P( B \cap A ) }{ P(A) }$$
+
+provided that $P(A) > 0$.
+
+In practice, conditional probabilities can be calculated when count data are organized by a contingency table like in @tbl-count or @tbl-prob. In general, $P(A \mid B) \ne P(B \mid A)$.
+
+### Conditional Probability Based on Probability Model
+
+Let $h$ and $t$ denote head and tail, respectively, for a coin toss. Suppose a coin is tossed three times. The sample space is given by $\Omega = \{ hhh, hht, hth, htt, thh, tht, tth, ttt \}$. Assume all eight outcomes are equally likely so that the probability of each outcome is $\frac{1}{8}$. Suppose we need two or more heads to win, and this event can be written as $W = \{ hhh, hht, hth, thh \}$. Before tossing a coin, the probability of $W$ is
+
+$$\begin{aligned}
+P(W) & = P( \{ hhh, hht, hth, thh \} ) \\
+& = P(hhh) + P(hht) + P(hth) + P(thh) \\
+& = 0.125 + 0.125 + 0.125 + 0.125 \\
+& = 0.5 \, .
+\end{aligned}$$
+
+Suppose $h$ occurred for the first toss. Given this outcome, what is the probability of winning? The condition (\$h\$ for the first toss) can be written as $O_1 = \{ hhh, hht, hth, htt \}$. By the definition of conditional probability,
+
+$$\begin{aligned}
+P( W \mid O_1 ) & = \frac{ P( W \cap O_1 ) }{ P(O_1) } = \frac{ P( \{ hhh, hht, hth \} ) }{ P( \{ hhh, hht, hth, htt \} ) } = \frac{ 3/8 }{ 4/8 } = 0.75 \, . \notag
+\end{aligned}$$
+
+Now suppose $t$ occurred for the second toss. Given $O_2 = \{ hth, htt \}$, the conditional probability of $W$ is
+
+$$\begin{aligned}
+P( W \mid O_2 ) & = \frac{ P( W \cap O_2 ) }{ P(O_2) } = \frac{ P( \{ hth \} ) }{ P( \{ hth, htt \} ) } = \frac{ 1/8 }{ 2/8 } = 0.5 \, . \notag
+\end{aligned}$$
+
+As such, the probability of winning has changed as follows: $P(W) = 0.5$ prior to the first toss, $P(W \mid O_1) = 0.5$ after observing $h$ in the first toss, and $P(W \mid O_2) = 0.5$ after observing $t$ in the second toss.
+
+## Wrap-Up
+
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
+
+#### Problem 1.
+
+Fill in the blanks.
+
+a\. The set of all outcomes under consideration is called the \[s... s...\]
+
+```{r}
+#| label: wrap-1-a
+#| echo: false
+checkdown::check_question(answer = "sample space",
+          button_label = "Check Your Answer")
+```
+
+b\. A group of outcomes is called an \[e...\].
+
+```{r}
+#| label: wrap-1-b
+#| echo: false
+checkdown::check_question(answer = "event",
+          button_label = "Check Your Answer")
+```
+
+c\. A probability model is a \[f...\] which receives an outcome and returns a non-negative number.
+
+```{r}
+#| label: wrap-1-c
+#| echo: false
+checkdown::check_question(answer = "function",
+          button_label = "Check Your Answer")
+```
+
+d\. If $P(s) = t$, the number $t$ is called the \[p...\] of an outcome $s$.
+
+```{r}
+#| label: wrap-1-d
+#| echo: false
+checkdown::check_question(answer = "probability",
+          button_label = "Check Your Answer")
+```
+
+e\. The sum of the probabilities of all outcomes under consideration is equal to \[o...\].
+
+```{r}
+#| label: wrap-1-e
+#| echo: false
+checkdown::check_question(answer = "one",
+          button_label = "Check Your Answer")
+```
+
+#### Problem 2
+
+True or false?
+
+a\. An experiment must be repeated many times in order to observe the same outcome each time.
+
+```{r}
+#| label: wrap-2-a
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+b\. Let $E = \{ a, b, c \}$. We say the event $E$ occurred when **all** outcomes $a$, $b$, and $c$ occurred.
+
+```{r}
+#| label: wrap-2-b
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+c\. The probability of an event $A$ can be below zero if an outcome in $A$ is unlikely.
+
+```{r}
+#| label: wrap-2-c
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+d\. The probability of an event $B$ can be exceed one if there are a large number of outcomes in $B$ and all outcomes are highly likely.
+
+```{r}
+#| label: wrap-2-d
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+e\. The probability of an event is always between zero and one inclusive, $[0,1]$.
+
+```{r}
+#| label: wrap-2-e
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+#### Problem 3
+
+Let $\Omega = \{ h, t \}$. Calculate $P(h)$ under the given assumption.
+
+a\. $h$ and $t$ are equally likely.
+
+```{r}
+#| label: wrap-3-a
+#| echo: false
+checkdown::check_question(answer = 0.5,
+          button_label = "Check Your Answer")
+```
+
+b\. The probability of $h$ is 9 times of the probability of $t$.
+
+```{r}
+#| label: wrap-3-b
+#| echo: false
+checkdown::check_question(answer = 0.9,
+          button_label = "Check Your Answer")
+```
+
+c\. $h$ is impossible.
+
+```{r}
+#| label: wrap-3-c
+#| echo: false
+checkdown::check_question(answer = 0,
+          button_label = "Check Your Answer")
+```
+
+d\. $t$ is impossible.
+
+```{r}
+#| label: wrap-3-d
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
+
+#### Problem 4
+
+Let $\Omega = \{ 1, 2, 3, 4 \}$ and $P$ be the probability model such that $P(s) = c \cdot s$ for $s = 1, 2, 3, 4$. Calculate the following**.**
+
+a\. $c$
+
+```{r}
+#| label: wrap-4-a
+#| echo: false
+checkdown::check_question(answer = 0.1,
+          button_label = "Check Your Answer")
+```
+
+b\. $P(A)$ where $A = \{ 1, 3, 4 \}$
+
+```{r}
+#| label: wrap-4-b
+#| echo: false
+checkdown::check_question(answer = 0.8,
+          button_label = "Check Your Answer")
+```
+
+## Assignment
+
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
+
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
+
+#### Problem 1
+
+Let $\Omega = \{ a, b, c, d \}$ be the sample space. Assume $a$ and $d$ are equally likely outcomes, $b$ and $c$ are equally likely outcomes, and the likelihood of $b$ is four times of $a$. Calculate the following.
+
+a\. $P(a)$
+
+b\. $P(b)$
+
+c\. $P(c)$
+
+d\. $P(d)$
+
+e\. $P(a) + P(b) + P(c) + P(d)$
+
+#### Problem 2
+
+Suppose a computer randomly generates a lowercase alphabet (i.e., $\Omega = \{ a, b, \dots, z \}$ ). Let $V$ be the event of a vowel. Let $C$ be the event of a consonant. Assume all vowels are equally likely to be generated, all consonants are equally likely to be generated, and the likelihood of a vowel is twice of a consonant. Calculate the following.
+
+a\. $P(C)$
+
+b\. $P(V)$
+
+c\. $P(V^c)$
+
+d\. $P(C \cup V)$
+
+e\. $P(C \cap V)$
+
+#### Problem 3
+
+Let $\Omega = \{ a, b, c \}$ be the sample space. Let $A = \{ a, b \}$ and $B = \{ b, c \}$. Calculate $P(A \cap B)$ under the following assumption.
+
+a\. All outcomes in $\Omega$ are equally likely.
+
+b\. $P(A) = 0.7$ and $P(B) = 0.7$
+
+c\. $P(b) = 2 \cdot P(a)$ and $P(c) = 2 \cdot P(b)$
+
+#### Problem 4
+
+Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or above to apply to a university. The population of interest is all students who take Calculus I in the university. Let $G_i$ be the HS GPA group of $[i, i + 1)$ for $i = 0, 1, 2, 3, 4$ where $[a, b)$ is an interval between $a$ and $b$ including $a$ and excluding $b$. Let $A$, $B$, $C$, $D$, and $F$ be the groups of students who earned letter grades of A, B, C, D, and F in Calculus I, respectively. Answer the following question given the data in @tbl-gpa.
+
+| Event | $G_0$ | $G_1$ | $G_2$ | $G_3$ | $G_4$ | Total |
+|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+|  $A$  |   0   |   0   |  12   |  146  |  16   |  174  |
+|  $B$  |   0   |   0   |  43   |  216  |   9   |  268  |
+|  $C$  |   0   |   0   |  44   |  167  |   3   |  214  |
+|  $D$  |   0   |   0   |  33   |  48   |   1   |  82   |
+|  $F$  |   0   |   0   |  32   |  56   |   1   |  89   |
+| Total |   0   |   0   |  164  |  633  |  30   |  827  |
+
+: Contingency table of HS GPA and Calculus I grade (count)
+
+a\. Calculate the probability of earning an A in Calculus I.
+
+b\. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
+
+c\. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
+
+d\. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
+
+e\. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
+
+f\. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
+
+g\. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+
+h\. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
+
+#### Problem 5
+
+Autism is a developmental disorder. Autistic children have difficulties with social interactions, verbal and nonverbal communications, and repetitive behaviors. According to the Centers for Disease Control and Prevention (CDC) in 2021, about one in 27 boys and one in 116 girls are identified with autism in the United States. It is estimated that the ratio of boys is about 1.05 in the United States. Let $A$ be autism and $B$ be a boy.
+
+a\. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$.
+
+b\. Interpret the ratio of the two conditional probabilities in the context.
+
+c\. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
+
+| Event | $A$ | $A^c$ | Total  |
+|:-----:|:---:|:-----:|:------:|
+|  $B$  |  ?  |   ?   |   ?    |
+| $B^c$ |  ?  |   ?   |   ?    |
+| Total |  ?  |   ?   | 10,000 |
+
+: Contingency table of autism and sex (count)
+
+d\. If a child is autistic, calculate the probability that the child is a boy.
+
+e\. Are $A$ and $B$ independent? Justify.
