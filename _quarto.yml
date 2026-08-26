@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "!*-print.qmd"
+    - "*.qmd"
 
 website:
   page-navigation: true
@@ -47,10 +50,10 @@ website:
     - section: "Note Outlines"  
       aria-label: "Note Outline Menu"
       contents: 
-      - href: note-outlines/1-intro-r-quarto
+      - href: note-outlines/1-intro-r-quarto.qmd
         text: "Introduction to R and Quarto"      
-      # - href: note-outlines/intro-probability-i
-      #   text: "Introduction to Probability I"
+      - href: note-outlines/2-intro-probability-i.qmd
+        text: "Introduction to Probability I"
    
        
 format:
