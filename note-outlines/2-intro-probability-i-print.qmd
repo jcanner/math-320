@@ -139,7 +139,7 @@ $$P(G^c) = 1 - P(G) = 1 - 0.65 = 0.35 \, .$$
 
 ## Independence
 
-**Definition:** We say two events $A$ and $B$ are **independent** when $P(A \cap B) = P(A)P(B)$. In other words, $A$ and $B$ are independent when the probability of $B$ does not change the probability of $A$.
+**Definition:** If two events $A$ and $B$ are **independent** then $P(A \cap B) = P(A)P(B)$. In other words, $A$ and $B$ are independent when the probability of $B$ does not change the probability of $A$.
 
 **Definition:** We say two events $A$ and $B$ are **dependent** when $P(A \cap B) \ne P(A)P(B)$. In other words, $A$ and $B$ are dependent when the condition of $B$ changes the probability of $A$.
 
