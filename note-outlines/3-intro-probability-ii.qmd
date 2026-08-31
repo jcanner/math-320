@@ -975,7 +975,7 @@ props( ~survived, data = titanic) # proportions
 We can use the formula `~ x | z` to calculate conditional counts and proportions of `x` conditioned on `z`.  
 
 ```{webr}
-#| label: surival-sex
+#| label: survival-sex-demo
 
 ### count by groups
 counts(~ survived |sex, data = titanic )
@@ -986,22 +986,30 @@ props(~ survived | sex, data = titanic)
 
 The last R output can be interpreted as follows: about 27.5% of female passengers did not survive, about 72.5% of female passengers survived, about 79.9% of male passengers did not survive, and about 20.1% of male passengers survived.
 
-**Use the Law of Total Probability and the Multiplication Rule to calculate the probability of survival in three different ways.**
+**Use the Law of Total Probability and the Multiplication Rule to calculate the probability of survival in three different ways. Though the code helps make the calculations efficient, write out the mathematical notation each value and calculation represents.**
 
 a. Estimate the probability of passengers survived. Answer based on the partition by passenger class (first, second, and third).
 
 ```{webr}
-#| label: surival-class
+#| label: survival-class
 #| exercise: ex_class
 #| caption: Edit the code to calculate a each probability by replacing x and z
 
 ### calculate the probability of each class
 c <- props(~z, data = titanic)  #change this code
-c c #prints out answer
+c #prints out answer
 
 ### calculate the probability of  survival given class
 s_c <- props(~ x | z, data = titanic)  #change this code
-s_c c #prints out answer
+s_c #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_c * select(c, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_c * select(c, -response))
 ```
 
 
@@ -1021,6 +1029,14 @@ c #prints out answer
 ### calculate the probability of  survival given class
 s_c <- props(~ survived | class, data = titanic)  #change this code
 s_c #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_c * select(c, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_c * select(c, -response))
 ```
 
 :::
@@ -1032,17 +1048,8 @@ s_c #prints out answer
 gradethis::grade_this_code()
 ```
 
-Then you can calculate the joint and marginal probabilities like so
-```{webr}
-#| label: class-joint
 
-# joint probabilities
-s_c * select(c, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_c * select(c, -response))
-```
-If yo did the calculation by hand, you can check your answer here:  
+If you did the calculation by hand, you can check your answer here:  
 
 ```{r}
 #| label: asn-7-a
@@ -1055,6 +1062,147 @@ checkdown::check_question(answer = 0.3792,
 
 b. Estimate the probability of passengers survived. Answer based on the partition by age group (adult and child).
 
+```{webr}
+#| label: survival-age
+#| exercise: ex_age
+#| caption: Edit the code to calculate a each probability by replacing x and z
+
+### calculate the probability of each age
+a <- props(~z, data = titanic)  #change this code
+a #prints out answer
+
+### calculate the probability of  survival given age
+s_a <- props(~ x | z, data = titanic)  #change this code
+s_a #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_a * select(a, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_a * select(a, -response))
+```
+
+
+::: {.solution exercise="ex_age"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_age
+#| solution: true
+#| echo: false
+
+### calculate the probability of each age
+a <- props(~age, data = titanic)  #change this code
+a #prints out answer
+
+### calculate the probability of  survival given age
+s_a <- props(~ survived | age, data = titanic)  #change this code
+s_a #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_a * select(a, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_a * select(a, -response))
+```
+
+:::
+
+```{webr}
+#| exercise: ex_age
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+If you did the calculation by hand, you can check your answer here:  
+
+```{r}
+#| label: asn-7-b
+#| echo: false
+checkdown::check_question(answer = 0.3792,
+          button_label = "Check Your Answer")
+```
+
+
+
 c. Estimate the probability of passengers survived. Answer based on the partition by sex (female and male).
 
-d. Explain why the three estimates in parts a, b, and c are the same.
+```{webr}
+#| label: survival-sex
+#| exercise: ex_sex
+#| caption: Edit the code to calculate a each probability by replacing x and z
+
+### calculate the probability of each sex
+se <- props(~z, data = titanic)  #change this code
+se #prints out answer
+
+### calculate the probability of  survival given sex
+s_se <- props(~ x | z, data = titanic)  #change this code
+s_se #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_se * select(se, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_se * select(se, -response))
+```
+
+
+::: {.solution exercise="ex_sex"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_sex
+#| solution: true
+#| echo: false
+
+### calculate the probability of each sex
+se <- props(~sex, data = titanic)  #change this code
+se #prints out answer
+
+### calculate the probability of  survival given sex
+s_se <- props(~ survived | sex, data = titanic)  #change this code
+s_se #prints out answer
+
+## Do not adjust the code below ## 
+
+# joint probabilities
+s_se * select(se, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_se * select(se, -response))
+```
+
+:::
+
+```{webr}
+#| exercise: ex_sex
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+If you did the calculation by hand, you can check your answer here:  
+
+```{r}
+#| label: asn-7-c
+#| echo: false
+checkdown::check_question(answer = 0.3792,
+          button_label = "Check Your Answer")
+```
+
+
+d. Explain why the three estimates in parts a, b, and c are the same. 
+
+
