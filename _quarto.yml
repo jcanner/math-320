@@ -54,7 +54,7 @@ website:
         text: "Introduction to R and Quarto"      
       - href: note-outlines/2-intro-probability-i.qmd
         text: "Introduction to Probability I"
-      - href: note-outlines/3-intro-probability-i.qmd
+      - href: note-outlines/3-intro-probability-ii.qmd
         text: "Introduction to Probability II"
    
    
