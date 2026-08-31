@@ -349,13 +349,53 @@ Let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die. Assume all si
 
 a. $P(1)$
 
+```{r}
+#| label: wrap-2-a
+#| echo: false
+checkdown::check_question(answer = 0.1667,
+          button_label = "Check Your Answer")
+```
+
+
 b. $P(O)$
+
+```{r}
+#| label: wrap-2-b
+#| echo: false
+checkdown::check_question(answer = 0.5,
+          button_label = "Check Your Answer")
+```
+
 
 c. $P(A \mid O)$
 
+```{r}
+#| label: wrap-2-c
+#| echo: false
+checkdown::check_question(answer = 0.3333,
+          button_label = "Check Your Answer")
+```
+
+
 d. $P(A \mid E)$
 
+```{r}
+#| label: wrap-2-d
+#| echo: false
+checkdown::check_question(answer = 0,
+          button_label = "Check Your Answer")
+```
+
+
 e. $P(O \mid A )$
+
+```{r}
+#| label: wrap-2-e
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
+
 
 #### Problem 3
 
@@ -363,15 +403,75 @@ Let $A$ and $B$ be two events. True or false?
 
 a. $P(A \mid B) = P(B \mid A)$
 
+```{r}
+#| label: wrap-3-a
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 b. $P(A) \ge P(A \mid B)$
+
+```{r}
+#| label: wrap-3-b
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 c. $P(B) \ge P(A \mid B)$
 
+```{r}
+#| label: wrap-3-c
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 d. $P(A \mid B) \ge P(A \cap B)$
+
+```{r}
+#| label: wrap-3-d
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 e. $P(A) \ge P(A \cap B)$
 
+```{r}
+#| label: wrap-3-e
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 f. $P(A) + P(A^c) = 1$
+
+```{r}
+#| label: wrap-3-f
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 
 #### Problem 4
@@ -379,9 +479,33 @@ Let $\Omega$ be a sample space, and $A$, $B$, and $C$ be events. Fill in the bla
 
 a. If $A \cap B = \emptyset$, $A \cap C = \emptyset$, and $B \cap C = \emptyset$, we say that $A$, $B$, and $C$ are a \[p... d...\].
 
+
+```{r}
+#| label: wrap-4-a
+#| echo: false
+checkdown::check_question(answer = "pairwise disjoint",
+          button_label = "Check Your Answer")
+```
+
 b. If $A$, $B$, and $C$ are pairwise disjoint, and their union is $\Omega$, we say that $A$, $B$, and $C$ are a \[p...\] of $\Omega$.
 
+
+```{r}
+#| label: wrap-4-b
+#| echo: false
+checkdown::check_question(answer = "partition",
+          button_label = "Check Your Answer")
+```
+
 c. $A$ and $A^c$ are a \[p...\] of $\Omega$.
+
+
+```{r}
+#| label: wrap-4-c
+#| echo: false
+checkdown::check_question(answer = "partition",
+          button_label = "Check Your Answer")
+```
 
 
 #### Problem 5
@@ -389,21 +513,70 @@ Let $\Omega$ be a sample space, and $A$, $B$, and $C$ are a partition of $\Omega
 
 a. $P(A) + P(B) + P(C)$
 
+
+```{r}
+#| label: wrap-5-a
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
+
 b. $P(A) + P(A^c)$
+
+
+```{r}
+#| label: wrap-5-b
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
 
 #### Problem 6
 Suppose 47% of the population are female nonsmokers, 43% are male nonsmokers, 2% are female smokers, and 8% are male smokers. Suppose we randomly select a person from the population. Calculate:
 
 a. the probability of selecting a smoker
 
-b. the probability of selecting a male
+
+```{r}
+#| label: wrap-6-a
+#| echo: false
+checkdown::check_question(answer = 0.1,
+          button_label = "Check Your Answer")
+```
+
+b. the probability of selecting a male  
+
+
+```{r}
+#| label: wrap-6-b
+#| echo: false
+checkdown::check_question(answer = 0.51,
+          button_label = "Check Your Answer")
+```
 
 #### Problem 7
 It rains on Monday with a probability of 0.25. If it rains on Monday, it rains on Tuesday with a probability of 0.5. If it does not rain on Monday, it rains on Tuesday with a probability of 0.9. Calculate:
 
 a. the probability of raining on both Monday and Tuesday
 
+
+```{r}
+#| label: wrap-7-a
+#| echo: false
+checkdown::check_question(answer = 0.125,
+          button_label = "Check Your Answer")
+```
+
+
 b. the probability of raining on Tuesday
+
+
+```{r}
+#| label: wrap-7-b
+#| echo: false
+checkdown::check_question(answer = 0.8,
+          button_label = "Check Your Answer")
+```
 
 
 #### Problem 8
@@ -441,6 +614,13 @@ checkdown::check_question(answer = "weighted average",
 
 It is estimated that 40%, 11%, 45%, and 4% of Americans have blood type A, B, O, and AB, respectively. It is estimated that 7%, 8%, 9%, and 7% of blood type A, B, O, and AB, respectively, develop a certain disease. Calculate the prevalence of the disease in the population. In other words, if we randomly select an American, what is the probability that the subject has the disease?
 
+
+```{r}
+#| label: wrap-9
+#| echo: false
+checkdown::check_question(answer = 0.0801,
+          button_label = "Check Your Answer")
+```
 
 
 ## Assignment
