@@ -101,7 +101,7 @@ In words, $A_1$ is a free throw attempt (whether it was a failure or a success),
 
 ::: 
 
-::: {#tbl-prop}
+::: {#tbl-prob}
 
 +-----------------+--------------------+---------------------+-------------------+---------------------+
 | Event           | Free Throw         | 2-pointer           | 3-pointer         | Total               |
