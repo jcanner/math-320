@@ -647,72 +647,284 @@ Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or
 
 ::: 
 
-a\. Calculate the probability of earning an A in Calculus I.
+a. Calculate the probability of earning an A in Calculus I.
 
-b\. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
+```{r}
+#| label: asn-1-a
+#| echo: false
+checkdown::check_question(answer = 0.2104,
+          button_label = "Check Your Answer")
+```
 
-c\. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
+b. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
 
-d\. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
+```{r}
+#| label: asn-1-b
+#| echo: false
+checkdown::check_question(answer = 0.0732,
+          button_label = "Check Your Answer")
+```
 
-e\. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
+c. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
 
-f\. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
+```{r}
+#| label: asn-1-c
+#| echo: false
+checkdown::check_question(answer = 0.5333,
+          button_label = "Check Your Answer")
+```
 
-g\. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+d. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
 
-h\. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
+```{r}
+#| label: asn-1-d
+#| echo: false
+checkdown::check_question(answer = 0.7932,
+          button_label = "Check Your Answer")
+```
+
+e. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
+
+```{r}
+#| label: asn-1-e
+#| echo: false
+checkdown::check_question(answer = 0.6037,
+          button_label = "Check Your Answer")
+```
+
+f. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
+
+```{r}
+#| label: asn-1-f
+#| echo: false
+checkdown::check_question(answer = 0.9333,
+          button_label = "Check Your Answer")
+```
+
+g. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+
+```{r}
+#| label: asn-1-g
+#| echo: false
+checkdown::check_question(answer = 0.0667,
+          button_label = "Check Your Answer")
+```
+
+h. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
+
+```{r}
+#| label: asn-1-h
+#| echo: false
+checkdown::check_question(answer = 0.8491,
+          button_label = "Check Your Answer")
+```
 
 #### Problem 2
 
 Autism is a developmental disorder. Autistic children have difficulties with social interactions, verbal and nonverbal communications, and repetitive behaviors. According to the Centers for Disease Control and Prevention (CDC) in 2021, about one in 27 boys and one in 116 girls are identified with autism in the United States. It is estimated that the ratio of boys is about 1.05 in the United States. Let $A$ be autism and $B$ be a boy.
 
-a\. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$.
+a. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$ (called the odds).  
 
-b\. Interpret the ratio of the two conditional probabilities in the context.
+```{r}
+#| label: asn-2-a
+#| echo: false
+checkdown::check_question(answer = 4.2963,
+          button_label = "Check Your Answer")
+```
 
-c\. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
+b. Interpret the ratio of the two conditional probabilities in the context.
+
+
+<!-- According to the CDC estimate, the prevalence of autism among boys is about 4.3 times of -->
+<!-- the prevalence of autism among girls -->
+
+
+
+
+c. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
 
 ::: {#tbl-autism}
 
 | Event | $A$ | $A^c$ | Total  |
 |:-----:|:---:|:-----:|:------:|
-|  $B$  |  ?  |   ?   |   ?    |
-| $B^c$ |  ?  |   ?   |   ?    |
-| Total |  ?  |   ?   | 10,000 |
+|  $B$  |  i  |   ii   |   iii    |
+| $B^c$ |  iv  |   v   |   vi    |
+| Total |  vii  |   viii   | 10,000 |
 
 : Contingency table of autism and sex (count)
 
 :::
 
-d\. If a child is autistic, calculate the probability that the child is a boy.
+c.i.
+
+```{r}
+#| label: asn-2-c-i
+#| echo: false
+checkdown::check_question(answer = 190,
+          button_label = "Check Your Answer")
+```
+
+
+c.ii.
+
+```{r}
+#| label: asn-2-c-ii
+#| echo: false
+checkdown::check_question(answer = 4932,
+          button_label = "Check Your Answer")
+```
+
+c.iii.
+
+```{r}
+#| label: asn-2-c-iii
+#| echo: false
+checkdown::check_question(answer = 5122,
+          button_label = "Check Your Answer")
+```
+
+c.iv.
+
+```{r}
+#| label: asn-2-c-iv
+#| echo: false
+checkdown::check_question(answer = 42,
+          button_label = "Check Your Answer")
+```
+
+c.v.
+
+```{r}
+#| label: asn-2-c-v
+#| echo: false
+checkdown::check_question(answer = 4836,
+          button_label = "Check Your Answer")
+```
+
+c.vi.
+
+```{r}
+#| label: asn-2-c-vi
+#| echo: false
+checkdown::check_question(answer = 4878,
+          button_label = "Check Your Answer")
+```
+
+c.vii.
+
+```{r}
+#| label: asn-2-c-vii
+#| echo: false
+checkdown::check_question(answer = 232,
+          button_label = "Check Your Answer")
+```
+
+c.viii.
+
+```{r}
+#| label: asn-2-c-viii
+#| echo: false
+checkdown::check_question(answer = 9768,
+          button_label = "Check Your Answer")
+```
+
+
+d. If a child is autistic, calculate the probability that the child is a boy.
+
+```{r}
+#| label: asn-2-d
+#| echo: false
+checkdown::check_question(answer = 0.819,
+          button_label = "Check Your Answer")
+```
 
 e\. Are $A$ and $B$ independent? Justify.
+
+```{r}
+#| label: asn-2-e
+#| echo: false
+checkdown::check_question(answer = "dependent",
+                          options = c("independent",
+                                      "dependent"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 
 
 #### Problem 3
 
 Let $\Omega$ be a sample space. Let $A$ be an event, and suppose $C_1$, $C_2$, and $C_3$ are a partition of $\Omega$. Assume $P(A) = 0.5$. Calculate the following.
 
-a\. $P(\Omega)$
+a. $P(\Omega)$
 
-b\. $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
+```{r}
+#| label: asn-3-a
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
 
-c\. $P(C_1) + P(C_2) + P(C_3)$
+b. $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
 
-d\. $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
+```{r}
+#| label: asn-3-b
+#| echo: false
+checkdown::check_question(answer = 0.5,
+          button_label = "Check Your Answer")
+```
+
+c. $P(C_1) + P(C_2) + P(C_3)$
+
+```{r}
+#| label: asn-3-c
+#| echo: false
+checkdown::check_question(answer = 1,
+          button_label = "Check Your Answer")
+```
+
+d. $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
+
+```{r}
+#| label: asn-3-d
+#| echo: false
+checkdown::check_question(answer = 0.5,
+          button_label = "Check Your Answer")
+```
+
 
 #### Problem 4
 
 Suppose 2% of CSUMB students are Mathematics Majors. Among Mathematics Majors, 30% are seniors. What percent of CSUMB students are mathematics seniors? (Do not include the percent sign when you input the numeric answer.)
 
+```{r}
+#| label: asn-4
+#| echo: false
+checkdown::check_question(answer = 0.6,
+          button_label = "Check Your Answer")
+```
+
 #### Problem 5
 
-Among vaccinated people, 25% have the flu. Among nonvaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population?(Do not include the percent sign when you input the numeric answer.)
+Among vaccinated people, 25% have the flu. Among non-vaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population? (Do not include the percent sign when you input the numeric answer.)
+
+```{r}
+#| label: asn-5
+#| echo: false
+checkdown::check_question(answer = 90,
+          button_label = "Check Your Answer")
+```
 
 #### Problem 6
 
 If a woman smokes during pregnancy, the probability of a premature birth is 0.1. If a woman does not smoke during pregnancy, the probability of a premature birth is 0.05. If 7 in 100 pregnant women smoke on average, what is the probability of a premature birth in the population? (A probability is a number between zero and one.)
+
+```{r}
+#| label: asn-6
+#| echo: false
+checkdown::check_question(answer = 0.0535,
+          button_label = "Check Your Answer")
+```
 
 
 #### Problem 7
@@ -744,7 +956,7 @@ Then, we want to read in the data.
 ```{webr}
 #| label: read-data
 titanic <- read_csv( "titanic.csv",
-                     show_col_names = FALSE) ### read data
+                     show_col_types = FALSE) ### read data, hide messages about columns
 head(titanic, 5) ### print the top 5 lines of the data
 ```
 
@@ -757,27 +969,92 @@ count( ~survived, data = titanic ) #counts
 
 ```{webr}
 #| label: survival-props
-props( ~suvived, data = titanic) # proportions
+props( ~survived, data = titanic) # proportions
 ```
 
 We can use the formula `~ x | z` to calculate conditional counts and proportions of `x` conditioned on `z`.  
 
 ```{webr}
-#| label: surival-class
+#| label: surival-sex
 
 ### count by groups
-counts(~ survived | class, data = titanic )
+counts(~ survived |sex, data = titanic )
 
 ### proportions survived by groups
-props(~ survived | class, data = titanic)
+props(~ survived | sex, data = titanic)
 ```
 
 The last R output can be interpreted as follows: about 27.5% of female passengers did not survive, about 72.5% of female passengers survived, about 79.9% of male passengers did not survive, and about 20.1% of male passengers survived.
 
-a\. Estimate the probability of passengers survived. Answer based on the passenger class (first, second, and third).
+**Use the Law of Total Probability and the Multiplication Rule to calculate the probability of survival in three different ways.**
 
-b\. Estimate the probability of passengers survived. Answer based on the age group (adult and child).
+a. Estimate the probability of passengers survived. Answer based on the partition by passenger class (first, second, and third).
 
-c\. Estimate the probability of passengers survived. Answer based on the sex (female and male).
+```{webr}
+#| label: surival-class
+#| exercise: ex_class
+#| caption: Edit the code to calculate a each probability by replacing x and z
 
-d\. Explain why the three estimates in parts a, b, and c are the same.
+### calculate the probability of each class
+c <- props(~z, data = titanic)  #change this code
+c c #prints out answer
+
+### calculate the probability of  survival given class
+s_c <- props(~ x | z, data = titanic)  #change this code
+s_c c #prints out answer
+```
+
+
+::: {.solution exercise="ex_class"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_class
+#| solution: true
+#| echo: false
+
+### calculate the probability of each class
+c <- props(~class, data = titanic)  #change this code
+c #prints out answer
+
+### calculate the probability of  survival given class
+s_c <- props(~ survived | class, data = titanic)  #change this code
+s_c #prints out answer
+```
+
+:::
+
+```{webr}
+#| exercise: ex_class
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+Then you can calculate the joint and marginal probabilities like so
+```{webr}
+#| label: class-joint
+
+# joint probabilities
+s_c * select(c, -response) # removes the response column so element by element product is calculated
+
+# marginal probability of survival
+sum(s_c * select(c, -response))
+```
+If yo did the calculation by hand, you can check your answer here:  
+
+```{r}
+#| label: asn-7-a
+#| echo: false
+checkdown::check_question(answer = 0.3792,
+          button_label = "Check Your Answer")
+```
+
+
+
+b. Estimate the probability of passengers survived. Answer based on the partition by age group (adult and child).
+
+c. Estimate the probability of passengers survived. Answer based on the partition by sex (female and male).
+
+d. Explain why the three estimates in parts a, b, and c are the same.
