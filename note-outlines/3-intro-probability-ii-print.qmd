@@ -1,18 +1,6 @@
 ---
 title: "Introduction to Probability Theory II"
-format: 
-  live-html:
-    webr:
-      packages: 
-        - ggformula
-        - mosaic
-        - tidyverse
-      repos:
-        - https://projectmosaic.r-universe.dev
-      resources: 
-      cell-options:
-        warning: true
-        completion: false
+format: docx
 execute: 
   warning: false 
   message: false
@@ -24,21 +12,6 @@ toc: true
 number-sections: true
 css: ../styles.css
 ---
-
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}\
-{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
-
-```{webr}
-#| label: theme
-#| include: false
-#| edit: false
-library(ggplot2)
-theme_set(theme_light())
-options(ggplot2.continuous.color = scale_color_viridis_c, 
-        ggplot2.continuous.fill = scale_fill_viridis_c,
-        ggplot2.discrete.color = scale_color_viridis_d,
-        ggplot2.discrete.fill = scale_fill_viridis_d)
-```
 
 ```{r}
 #| label: setup-checkdown
@@ -55,7 +28,7 @@ Note that our previously discussed characteristic of Independence was incomplete
 
 **Definition:** If two events $A$ and $B$ are **independent** then $P(A \cap B) = P(A)P(B)$.
 
-Unfortunately, the converse is not true, so we need a better definition of **independent** events. To provide this we need to understand \*\*conditional probability.
+Unfortunately, the converse is not true, so we need a better definition of **independent** events. To provide this we need to understand **conditional probability**.
 
 ## Conditional Probability
 
@@ -72,13 +45,17 @@ In basketball, we may consider six outcomes:
 
 Given the sample space $\Omega = \{ s_1, s_2, s_3, s_4, s_5, s_6 \}$, let
 
-- $A_1 = \{ s_1, s_2 \}$,\
-- $A_2 = \{ s_3, s_4 \}$, $A_3 = \{ s_5, s_6 \}$, and\
-- $S = \{ s_2, s_4, s_6 \}$.
+- $A_1 = \{ s_1, s_2 \}$,  
+- $A_2 = \{ s_3, s_4 \}$,  
+- $A_3 = \{ s_5, s_6 \}$, and  
+- $S = \{ s_2, s_4, s_6 \}$.  
 
 In words, $A_1$ is a free throw attempt (whether it was a failure or a success), $A_2$ is a two-pointer attempt, and $A_3$ is a three-pointer attempt, $S$ is a shot made (a free throw, two-pointer, or three-pointer), and $S^c$ is a shot missed.
 
 @tbl-count is the contingency table by the shot type and shot result of Michael Jordan in the 1985 NBA Season. By dividing each cell of @tbl-count by the total number of attempts 2,423, @tbl-prob represents the contingency table in terms of probabilities.
+
+
+::: {#tbl-count}
 
 +-----------------+------------+------------+------------+------------+
 | Event           | Free Throw | 2-pointer  | 3-pointer  | Total      |
@@ -94,6 +71,10 @@ In words, $A_1$ is a free throw attempt (whether it was a failure or a success),
 
 : Contingency table by count
 
+::: 
+
+::: {#tbl-prob}
+
 +-----------------+--------------------+---------------------+-------------------+---------------------+
 | Event           | Free Throw         | 2-pointer           | 3-pointer         | Total               |
 |                 |                    |                     |                   |                     |
@@ -107,6 +88,8 @@ In words, $A_1$ is a free throw attempt (whether it was a failure or a success),
 +-----------------+--------------------+---------------------+-------------------+---------------------+
 
 : Contingency table by probability
+
+::: 
 
 There are two kinds of probability in @tbl-prob.
 
@@ -206,6 +189,8 @@ $$P(A)P(B) = P(A \cap B)$$
 
 The United States Senate consists of 100 Senators, and let $\Omega$ be the set of 100 Senators who can vote. On February 5, 2020, the Senators voted whether the President was guilty of abusing power (denoted by $G$) or not ($G^c$). @tbl-vote is the vote result by the three political parties: Democratic ($D$ ), Republican ($R$ ), and Independent ($I$).
 
+::: {#tbl-vote}
+
 +--------------------+------------------+-----------------+------------------+
 | Event              | **Demographic**  | **Republican**  | **Independent**  |
 |                    |                  |                 |                  |
@@ -217,6 +202,8 @@ The United States Senate consists of 100 Senators, and let $\Omega$ be the set o
 +--------------------+------------------+-----------------+------------------+
 
 : Vote result summary (count)
+
+:::
 
 Since a Senator must belong to one and only one party, $D \cap R = \emptyset$, $D \cap I = \emptyset$, and $R \cap I = \emptyset$. In this case, we say $D$, $R$, and $I$ are **pairwise disjoint**.
 
@@ -298,93 +285,93 @@ In your groups work on the following problems. You can check your answers below.
 
 #### Problem 1
 
-Let $A$ and $B$ be two events. Fill in the blanks.
+Let $A$ and $B$ be two events. Fill in the blanks.  
 
-a\. $P(A \cap B)$ is called the \[j... p...\] of $A$ and $B$.
+a. $P(A \cap B)$ is called the \[j... p...\] of $A$ and $B$.  
 
-b\. $P(A)$ is called the \[m... p...\] of $A$.
+b. $P(A)$ is called the \[m... p...\] of $A$.  
 
-c\. $P( B \mid A)$ is called the \[c... p...\] of the event $B$ given the possible condition $A$.
+c. $P( B \mid A)$ is called the \[c... p...\] of the event $B$ given the possible condition $A$.  
+
 
 #### Problem 2
 
-Let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die. Assume all six outcomes are equally likely. Let $A = \{ 1 \}$. Let $O$ be the event of observing an odd face. Let $E$ be the event of observing an even face. Calculate the following.
+Let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die. Assume all six outcomes are equally likely. Let $A = \{ 1 \}$. Let $O$ be the event of observing an odd face. Let $E$ be the event of observing an even face. Calculate the following.  
 
-a\. $P(1)$
+a. $P(1)$  
 
-b\. $P(O)$
+b. $P(O)$  
 
-c\. $P(A \mid O)$
+c. $P(A \mid O)$  
 
-d\. $P(A \mid E)$
+d. $P(A \mid E)$  
 
-e\. $P(O \mid A )$
+e. $P(O \mid A )$  
+
 
 #### Problem 3
 
 Let $A$ and $B$ be two events. True or false?
 
-a\. $P(A \mid B) = P(B \mid A)$
+a. $P(A \mid B) = P(B \mid A)$  
 
-b\. $P(A) \ge P(A \mid B)$
+b. $P(A) \ge P(A \mid B)$  
 
-c\. $P(B) \ge P(A \mid B)$
+c. $P(B) \ge P(A \mid B)$  
 
-d\. $P(A \mid B) \ge P(A \cap B)$
+d. $P(A \mid B) \ge P(A \cap B)$  
 
-e\. $P(A) \ge P(A \cap B)$
+e. $P(A) \ge P(A \cap B)$  
 
-f\. $P(A) + P(A^c) = 1$
-
+f. $P(A) + P(A^c) = 1$  
 
 #### Problem 4
 Let $\Omega$ be a sample space, and $A$, $B$, and $C$ be events. Fill in the blanks.
 
-a\. If $A \cap B = \emptyset$, $A \cap C = \emptyset$, and $B \cap C = \emptyset$, we say that $A$, $B$, and $C$ are a \[p... d...\].
+a. If $A \cap B = \emptyset$, $A \cap C = \emptyset$, and $B \cap C = \emptyset$, we say that $A$, $B$, and $C$ are a \[p... d...\].  
 
-b\. If $A$, $B$, and $C$ are pairwise disjoint, and their union is $\Omega$, we say that $A$, $B$, and $C$ are a \[p...\] of $\Omega$.
+b. If $A$, $B$, and $C$ are pairwise disjoint, and their union is $\Omega$, we say that $A$, $B$, and $C$ are a \[p...\] of $\Omega$.  
 
-c\. $A$ and $A^c$ are a \[p...\] of $\Omega$.
-
+c. $A$ and $A^c$ are a \[p...\] of $\Omega$.  
 
 #### Problem 5
 Let $\Omega$ be a sample space, and $A$, $B$, and $C$ are a partition of $\Omega$. Calculate the following.
 
-a\. $P(A) + P(B) + P(C)$
+a. $P(A) + P(B) + P(C)$  
 
-b\. $P(A) + P(A^c)$
+b. $P(A) + P(A^c)$  
+
 
 #### Problem 6
 Suppose 47% of the population are female nonsmokers, 43% are male nonsmokers, 2% are female smokers, and 8% are male smokers. Suppose we randomly select a person from the population. Calculate:
 
-a\. the probability of selecting a smoker
+a. the probability of selecting a smoker  
 
-b\. the probability of selecting a male
+b. the probability of selecting a male   
 
 #### Problem 7
-It rains on Monday with a probability of 0.25. If it rains on Monday, it rains on Tuesday with a probability of 0.5. If it does not rain on Monday, it rains on Tuesday with a probability of 0.9. Calculate:
+It rains on Monday with a probability of 0.25. If it rains on Monday, it rains on Tuesday with a probability of 0.5. If it does not rain on Monday, it rains on Tuesday with a probability of 0.9. Calculate:  
 
-a\. the probability of raining on both Monday and Tuesday
+a. the probability of raining on both Monday and Tuesday  
 
-b\. the probability of raining on Tuesday
+b. the probability of raining on Tuesday  
 
 
 #### Problem 8
 Fill in the blank.
 
-a\. The \[L... of T... P...\] is applied in Problems 6a and 6b.
+a. The \[L... of T... P...\] is applied in Problems 6a and 6b.  
 
-b\. The \[M... R...\] is applied in Problems 7a.
+b. The \[M... R...\] is applied in Problems 7a.  
 
-c\. The \[w... a...\] of two conditional probabilities is used in Problems 7b.
-
+c. The \[w... a...\] of two conditional probabilities is used in Problems 7b.   
 
 #### Problem 9
 
-**Problem 6.** It is estimated that 40%, 11%, 45%, and 4% of Americans have blood type A, B, O, and AB, respectively. It is estimated that 7%, 8%, 9%, and 7% of blood type A, B, O, and AB, respectively, develop a certain disease. Calculate the prevalence of the disease in the population. In other words, if we randomly select an American, what is the probability that the subject has the disease?
+It is estimated that 40%, 11%, 45%, and 4% of Americans have blood type A, B, O, and AB, respectively. It is estimated that 7%, 8%, 9%, and 7% of blood type A, B, O, and AB, respectively, develop a certain disease. Calculate the prevalence of the disease in the population. In other words, if we randomly select an American, what is the probability that the subject has the disease?
+
 
 ## Assignment
-
 Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
 
 Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
@@ -392,6 +379,8 @@ Though you are checking the numeric answers here, you should make sure your writ
 #### Problem 1
 
 Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or above to apply to a university. The population of interest is all students who take Calculus I in the university. Let $G_i$ be the HS GPA group of $[i, i + 1)$ for $i = 0, 1, 2, 3, 4$ where $[a, b)$ is an interval between $a$ and $b$ including $a$ and excluding $b$. Let $A$, $B$, $C$, $D$, and $F$ be the groups of students who earned letter grades of A, B, C, D, and F in Calculus I, respectively. Answer the following question given the data in @tbl-gpa.
+
+::: {#tbl-gpa}
 
 | Event | $G_0$ | $G_1$ | $G_2$ | $G_3$ | $G_4$ | Total |
 |:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
@@ -404,56 +393,76 @@ Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or
 
 : Contingency table of HS GPA and Calculus I grade (count)
 
-a\. Calculate the probability of earning an A in Calculus I.
+::: 
 
-b\. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
+a. Calculate the probability of earning an A in Calculus I.
 
-c\. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
+b. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
 
-d\. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
+c. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
 
-e\. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
+d. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
 
-f\. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
+e. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
 
-g\. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+f. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
 
-h\. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
+g. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+
+h. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
 
 #### Problem 2
 
 Autism is a developmental disorder. Autistic children have difficulties with social interactions, verbal and nonverbal communications, and repetitive behaviors. According to the Centers for Disease Control and Prevention (CDC) in 2021, about one in 27 boys and one in 116 girls are identified with autism in the United States. It is estimated that the ratio of boys is about 1.05 in the United States. Let $A$ be autism and $B$ be a boy.
 
-a\. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$.
+a. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$ (called the odds).  
 
-b\. Interpret the ratio of the two conditional probabilities in the context.
 
-c\. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
+b. Interpret the ratio of the two conditional probabilities in the context.
+
+
+<!-- According to the CDC estimate, the prevalence of autism among boys is about 4.3 times of -->
+<!-- the prevalence of autism among girls -->
+
+
+
+
+c. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
+
+::: {#tbl-autism}
 
 | Event | $A$ | $A^c$ | Total  |
 |:-----:|:---:|:-----:|:------:|
-|  $B$  |  ?  |   ?   |   ?    |
-| $B^c$ |  ?  |   ?   |   ?    |
-| Total |  ?  |   ?   | 10,000 |
+|  $B$  |  i  |   ii   |   iii    |
+| $B^c$ |  iv  |   v   |   vi    |
+| Total |  vii  |   viii   | 10,000 |
 
 : Contingency table of autism and sex (count)
 
-d\. If a child is autistic, calculate the probability that the child is a boy.
+:::
 
-e\. Are $A$ and $B$ independent? Justify.
+
+d. If a child is autistic, calculate the probability that the child is a boy.
+
+e. Are $A$ and $B$ independent? Justify.
+
 
 
 #### Problem 3
 
 Let $\Omega$ be a sample space. Let $A$ be an event, and suppose $C_1$, $C_2$, and $C_3$ are a partition of $\Omega$. Assume $P(A) = 0.5$. Calculate the following.
 
-a\. $P(\Omega)$
+a. $P(\Omega)$
 
-b\. $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
 
-c\. $P(C_1) + P(C_2) + P(C_3)$
+b. $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
 
-d\. $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
+
+c. $P(C_1) + P(C_2) + P(C_3)$
+
+
+d. $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
+
 
 #### Problem 4
 
@@ -461,7 +470,7 @@ Suppose 2% of CSUMB students are Mathematics Majors. Among Mathematics Majors, 3
 
 #### Problem 5
 
-Among vaccinated people, 25% have the flu. Among nonvaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population?(Do not include the percent sign when you input the numeric answer.)
+Among vaccinated people, 25% have the flu. Among non-vaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population? (Do not include the percent sign when you input the numeric answer.)
 
 #### Problem 6
 
@@ -470,7 +479,7 @@ If a woman smokes during pregnancy, the probability of a premature birth is 0.1.
 
 #### Problem 7
 
-**Problem 5.** Titanic was a British passenger liner. It sank in the North Atlantic Ocean in the morning of April 15, 1912. The cause was collision with an iceberg, and many passengers lost lives. **Titanic.csv** is a dataset which includes information about 1,316 passengers. There are five columns:
+Titanic was a British passenger liner. It sank in the North Atlantic Ocean in the morning of April 15, 1912. The cause was collision with an iceberg, and many passengers lost lives. **titanic.csv** is a dataset which includes information about 1,316 passengers. There are five columns:
 
 - **id**: passenger identification number
 
@@ -482,30 +491,66 @@ If a woman smokes during pregnancy, the probability of a premature birth is 0.1.
 
 - **survived**: passenger's survival status (no or yes)
 
-Below are the R code and outputs.
+To use R, first load the packages needed for data analysis. 
 
-```{r, warning = FALSE, message = FALSE}
-library(mosaic) ### load the mosaic package
-titanic < read.csv( "Data/Titanic.csv" ) ### read data
+```{r}
+#| label: setup-webr
+library(ggformula)  #graphics
+library(mosaic)   #summary statistics
+library(tidyverse) #data management
+```
+
+
+Then, we want to read in the data.
+
+```{r}
+#| label: read-data
+titanic <- read_csv( "3-intro-probability-ii/data/titanic.csv",
+                     show_col_types = FALSE) ### read data, hide messages about columns
 head(titanic, 5) ### print the top 5 lines of the data
+```
+
+We can use two functions: `count()` and `props()` to evaluate our specified categories, `~ x`.  
+
+```{r}
+#| label: survival-count
+count( ~survived, data = titanic ) #counts
+```
+
+```{r}
+#| label: survival-props
+props( ~survived, data = titanic) # proportions
+```
+
+We can use the formula `~ x | z` to calculate conditional counts and proportions of `x` conditioned on `z`.  
+
+```{r}
+#| label: survival-sex-demo
 
 ### count by groups
-tally( ~class, data = titanic )
-tally( ~age, data = titanic )
-tally( ~sex, data = titanic )
+counts(~ survived |sex, data = titanic )
 
-### survival proportion by groups
-mean( I( survived == "yes" ) ~ class, data = titanic )
-mean( I( survived == "yes" ) ~ age, data = titanic )
-mean( I( survived == "yes" ) ~ sex, data = titanic )
+### proportions survived by groups
+props(~ survived | sex, data = titanic)
 ```
 
 The last R output can be interpreted as follows: about 27.5% of female passengers did not survive, about 72.5% of female passengers survived, about 79.9% of male passengers did not survive, and about 20.1% of male passengers survived.
 
-a\. Estimate the probability of passengers survived. Answer based on the passenger class (first, second, and third).
+**Use the Law of Total Probability and the Multiplication Rule to calculate the probability of survival in three different ways. Though the code helps make the calculations efficient, write out the mathematical notation each value and calculation represents.**
 
-b\. Estimate the probability of passengers survived. Answer based on the age group (adult and child).
+a. Estimate the probability of passengers survived. Answer based on the partition by passenger class (first, second, and third).
 
-c\. Estimate the probability of passengers survived. Answer based on the sex (female and male).
 
-d\. Explain why the three estimates in parts a, b, and c are the same.
+
+
+b. Estimate the probability of passengers survived. Answer based on the partition by age group (adult and child).
+
+
+
+c. Estimate the probability of passengers survived. Answer based on the partition by sex (female and male).
+
+
+
+d. Explain why the three estimates in parts a, b, and c are the same. 
+
+

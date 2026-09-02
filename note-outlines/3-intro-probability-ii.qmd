@@ -964,7 +964,7 @@ We can use two functions: `count()` and `props()` to evaluate our specified cate
 
 ```{webr}
 #| label: survival-count
-count( ~survived, data = titanic ) #counts
+counts( ~survived, data = titanic ) #counts
 ```
 
 ```{webr}
