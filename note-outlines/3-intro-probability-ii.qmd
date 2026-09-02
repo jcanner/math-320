@@ -172,7 +172,7 @@ Now we can define **Independent Events** using conditional probability.
 
 **Definition:** We say two events $A$ and $B$ are **dependent** when $P(A \mid B) \ne P(A)$. In other words, $A$ and $B$ are dependent when the condition of $B$ changes the probability of $A$.
 
-*Example:* Suppose $t$ occurred for the second toss. Given $T_2 = \{ hth, htt \}$, the conditional probability of $W$ is
+*Example:* Suppose $t$ occurred for the second toss after $h$ occurs on the first toss. Given $T_2 = \{ hth, htt \}$, the conditional probability of $W$ is
 
 $$\begin{aligned}
 P( W \mid T_2 ) & = \frac{ P( W \cap T_2 ) }{ P(T_2) } = \frac{ P( \{ hth \} ) }{ P( \{ hth, htt \} ) } = \frac{ 1/8 }{ 2/8 } = 0.5 \, . \notag
@@ -220,7 +220,7 @@ The United States Senate consists of 100 Senators, and let $\Omega$ be the set o
 ::: {#tbl-vote}
 
 +--------------------+------------------+-----------------+------------------+
-| Event              | **Demographic**  | **Republican**  | **Independent**  |
+| Event              | **Democrat**     | **Republican**  | **Independent**  |
 |                    |                  |                 |                  |
 |                    | **(**$D$**)**    | **(**$R$**)**   | **(**$I$**)**    |
 +:==================:+:================:+:===============:+:================:+

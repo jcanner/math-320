@@ -26,7 +26,7 @@ number-sections: true
 css: ../styles.css
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}\
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}  
 {{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
 
 ```{webr}
@@ -57,213 +57,232 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
 
 ## Bayes' Theorem
 
-Some events are observable, while some are not. For example, we can observe whether a lie detector indicates positive or negative, but we never know whether the subject lied or not. Suppose a criminal suspect is under investigation. Let $B$ denote the event that the suspect lies (unknown) and $A$ denote the event that the lie detector indicates a lie (observable). Assume the following.
+Some events are observable, while some are not. For example, we can observe whether a lie detector indicates positive or negative, but we never know whether the subject lied or not. Suppose a criminal suspect is under investigation. Let $L$ denote the event that the suspect lies (unknown) and $D$ denote the event that the lie detector indicates a lie (observable). Assume the following.
 
 1.  If a suspect lies, the lie detector indicates that it is a lie with a probability of 0.8.
 2.  If a suspect tells truth, the lie detector indicates that it is a lie with a probability of 0.05.
 3.  A suspects lies with a probability of 0.9.
 
-Given the notations $A$ and $B$, the above assumptions can be expressed as
+Given the notations $L$ and $D$, the above assumptions can be expressed as
 
-- $P(A \mid B) = 0.8$,
+- $P(D \mid L) = 0.8$,
 
-- $P(A \mid B^c) = 0.05$, and
+- $P(D \mid L^c) = 0.05$, and
 
-- $P(B) = 0.9$.
+- $P(L) = 0.9$.
 
-If the investigator observes a lie signal, what is the probability that the suspect lied? In other words, what is $P(B \mid A)$?
+If the investigator observes a lie signal, what is the probability that the suspect lied? In other words, what is $P(L \mid D)$?
+
+<!--# Recall the multiplication rule - set it up for both conditional probabilities, set them equal and solve for the unknown probability -->
 
 **Theorem:** For two events $A$ and $B$, the conditional probability of $B$ given $A$ is
 
-$$P(B \mid A) = \frac{ P(A \mid B) }{ P(A) }$$
+$$P(B \mid A) = \frac{ P(A \mid B)\cdot P(B) }{ P(A) }$$
 
 provided that $P(A) > 0$. This statement is known as the **Bayes' Theorem**.
 
-**Note:** Since $B$ and $B^c$ are a partition of any sample space,
+**Recall:** Since $B$ and $B^c$ are a partition of any sample space,
 
 $$P(A) = P(A \mid B) \cdot P(B) + P(A \mid B^c) \cdot P(B^c) \, . $$ Therefore, the Bayes' Theorem can be also written as
 
 $$P(B \mid A) = \frac{ P(A \mid B) \cdot P(B) }{ P(A \mid B) \cdot P(B) + P(A \mid B^c) \cdot P(B^c) } \, .$$ {#eq-bayes}
 
-**Note:** Recall that $P(E^c) = 1 - P(E)$ for any event $E$. This property holds for a conditional probability. In other words, $P(E^c \mid C) = 1 - P(E \mid C)$ for any possible condition $C$. Therefore, @eq-bayes can be also written as
+**Recall**: $P(E^c) = 1 - P(E)$ for any event $E$.
+
+This property holds for a conditional probability. In other words, $P(E^c \mid C) = 1 - P(E \mid C)$ for any possible condition $C$.
+
+Therefore, @eq-bayes can be also written as
 
 $$ P(B \mid A) = \frac{ P(A \mid B) \cdot P(B) }{ P(A \mid B) \cdot P(B) + [1 - P(A^c \mid B^c)] \cdot [1 - P(B)] } \, . $$
 
-**Example:** Let us revisit the lie detector scenario. Under the assumptions of $P(A \mid B) = 0.8$, $P(A \mid B^c) = 0.05$, and $P(B) = 0.9$, we can apply the Bayes' Theorem (in the form of @eq-bayes) as follows:
+***Example*****:** Let us revisit the lie detector scenario. Under the assumptions of $P(D \mid L) = 0.8$, $P(D \mid L^c) = 0.05$, and $P(L) = 0.9$. Apply the Bayes' Theorem (in the form of @eq-bayes) to find the probability that the suspect is lying given the lie detector claims it is a lie, or $P(L \mid D)$:
 
-$$ P(B \mid A) = \frac{ (0.8)(0.9) }{ (0.8)(0.9) + (0.05)(1-0.9) } = 0.993 \, . $$
+<!-- $$ P(L \mid D) = \frac{ (0.8)(0.9) }{ (0.8)(0.9) + (0.05)(1-0.9) } = 0.993 \, . $$ -->
 
-In words, if the lie detector indicated that the suspect lied, there is a 0.993 probability that the suspect really lied.
+In words, if the lie detector indicated that the suspect lied, there is a ________ probability that the suspect really lied.
 
-In the context of the lie detector scenario, the conditional probability $P(A \mid B)$ is called the **sensitivity**. A high sensitivity implies a high chance of detecting a lie.
+### Sensitivity and Specificity
 
-The conditional probability $P(A^c \mid B^c)$ is called the **specificity**. A high specificity implies a high chance of detecting a truth.
+Bayes Theorem is commonly applied to scenarios where we only know the probability of a detection under a particular condition, but we need to know the probability fo the condition given a positive detection.  
 
-The probability $P(B)$ is called the **prevalence**, and the conditional probability $P(B \mid A)$ is called the **positive predictive value**. A high prevalence implies that subjects lie frequently. @eq-bayes informs that the reliability of a lie detector depends on the sensitivity and specificity (how good the lie detector is), but it also depends on the prevalence (how untruthful or truthful subjects are). Given the sensitivity ($\texttt{sens}$) and specificity ($\texttt{spec}$), the positive predictive value ($\texttt{ppv}$) is a function of the prevalence ($\texttt{ppv}$) as follows:
+- In the context of the lie detector scenario, the conditional probability $P(D \mid L)$ is called the **sensitivity**. A high sensitivity implies a high chance of detecting a lie.  
+
+- The conditional probability $P(D^c \mid L^c)$ is called the **specificity**. A high specificity implies a high chance of detecting a truth.  
+
+- The probability $P(L)$ is called the **prevalence**. A high prevalence implies that subjects lie frequently. 
+
+- The conditional probability $P(L \mid D)$ is called the **positive predictive value**. This is the value that tells us how good the lie detector really is!  
+
+
+@eq-bayes informs that the reliability of a lie detector depends on the sensitivity and specificity (how good the lie detector is), but it also depends on the prevalence (how untruthful or truthful subjects are).  
+ 
+Given the sensitivity ($\texttt{sens}$) and specificity ($\texttt{spec}$), the positive predictive value ($\texttt{ppv}$) is a function of the prevalence ($\texttt{ppv}$) as follows:
 
 $$\texttt{ppv} = \frac{ \texttt{sens} \cdot \texttt{prev} }{ \texttt{sens} \cdot \texttt{prev} + (1 - \texttt{spec}) \cdot (1 - \texttt{prev}) } \, .$$
 
-The below R code demonstrates the relationship between $\texttt{ppv}$ and $\texttt{prev}$ at $\texttt{sens} = 0.8$ and $\texttt{spec} = 0.95$. The graph demonstrates that the positive predictive value $P(B \mid A)$ increases with respect to the prevalence $P(B)$. In other words, we need frequent lies (i.e., $P(B)$ is high) in order for the lie detector predicts lies well (i.e., $P(B \mid A)$ is high).
+The below R code demonstrates the relationship between $\texttt{ppv}$ and $\texttt{prev}$ at $\texttt{sens} = 0.8$ and $\texttt{spec} = 0.95$. The graph demonstrates that the positive predictive value $P(B \mid A)$ increases with respect to the prevalence $P(B)$. In other words, we need frequent lies (i.e., $P(B)$ is high) in order for the lie detector to predict lies well (i.e., $P(L \mid D)$ is high).
 
-```{r, fig.height = 5, fig.width = 5, fig.alt = "The plot of positive predictive value as a function of prevalence."}
+```{webr}
+#| label: pos_pred_val
+### below is a created function, called pos_pred_val()
 ### input: sens, spec, prev
 ### output: ppv
 
 pos_pred_val <- function( sens, spec, prev ) {
-   num = sens * prev
-   den = sens * prev + ( 1 - spec ) * ( 1 - prev )
-   ppv = num / den
+   num <- sens * prev
+   den <- sens * prev + ( 1 - spec ) * ( 1 - prev )
+   ppv <- num / den
    ppv }
 
-pos_pred_val( sens = 0.8, spec = 0.95, prev = 0.1 ) ### returns ppv at given assumption
-pos_pred_val( sens = 0.8, spec = 0.95, prev = 0.001 ) ### returns ppv at given assumption
-
-est_prev <- seq( 0, 1, 0.001 ) ### prevalence from 0 to 1 with an increment of 0.001
-est_ppv <- pos_pred_val( sens = 0.8, spec = 0.95, prev = est_prev ) ### evaluate the function at the points
-
-gf_line( est_ppv ~ est_prev, 
-      title = "PPV vs. Prevalence",
-      xlab = "Prevalence", ylab = "PPV" ) ### plot
+pos_pred_val( sens = 0.8, spec = 0.95, prev = 0.1 ) ### returns ppv for given values
+pos_pred_val( sens = 0.8, spec = 0.95, prev = 0.001 ) ### returns ppv for given values
 ```
 
-**Example:** Let us continue from the previous example. If the lie detect is quiet (no indication of a lie), what is the probability that the suspect really did not lie? In other words, what is the conditional probability of $B^c$ given $A^c$? Applying the Bayes' Theorem.
 
-$$\begin{aligned}
-P(B^c \mid A^c) & = \frac{P(A^c \mid B^c) \cdot P(B^c)}{P(A^c)} \\
-& = \frac{P(A^c \mid B^c) \cdot P(B^c)}{P(A^c \mid B^c) \cdot P(B^c) + P(A^c \mid B) \cdot P(B)} \\
-& = \frac{(0.95)(0.1)}{(0.95)(1 - 0.9) + (1-0.8)(0.9)} \\
-& = 0.345 \, .
-\end{aligned}$$
+Notice how the positive predictive values ($\texttt{ppv}$) changes based on the prevalence of lies.  If the suspect is truthful (low prevalence) how does this affect the ability of the machine to detect a lie?  
+
+  
+    
+     
+
+Let's observe the positive predictive values across all possible prevalences.  
+
+```{webr}
+#| label: ppv-graph
+#| fig-height: 5
+#| fig-width: 5 
+#| fig-alt: "The plot of positive predictive value as a function of prevalence."
+
+est_prev <- seq( 0, 1, 0.001 ) ### creates vector of prevalences from 0 to 1 with an increment of 0.001
+est_ppv <- pos_pred_val( sens = 0.8, spec = 0.95, prev = est_prev ) ### calculates ppv across all points
+
+## plots the estimated ppv vs the prevalence as a curve
+gf_line( est_ppv ~ est_prev, 
+         title = "PPV vs. Prevalence",
+         xlab = "Prevalence of Lies", 
+         ylab = "Positive Predictive Values for Detection of a Lie" )
+```
+
+What do you notice about the performance of the lie detector?
+
+
+
+**Example:** Let us continue from the previous example. If the lie detect is quiet (no indication of a lie), what is the probability that the suspect really did not lie? In other words, what is the conditional probability of $L^c$ given $D^c$? Applying the Bayes' Theorem.  
+
+<!-- $$\begin{aligned} -->
+<!-- P(L^c \mid D^c) & = \frac{P(D^c \mid L^c) \cdot P(L^c)}{P(D^c)} \\ -->
+<!-- & = \frac{P(D^c \mid L^c) \cdot P(L^c)}{P(D^c \mid L^c) \cdot P(L^c) + P(D^c \mid L) \cdot P(L)} \\ -->
+<!-- & = \frac{(0.95)(0.1)}{(0.95)(1 - 0.9) + (1-0.8)(0.9)} \\ -->
+<!-- & = 0.345 \, . -->
+<!-- \end{aligned}$$ -->
 
 Such a low probability implies that we cannot trust the suspect when there is no indication of a lie by the lie detector. It is only useful when the lie detector indicates that it is a lie.
 
 
-## Prenatal Testing for Rare Diseases
 
-::: {.callout-note}
+### Prenatal Testing for Rare Diseases
+
+::: callout-note
 ## Context
+
 These are original, hypothetical exercises inspired by the article's discussion of prenatal genetic screening and false positives for rare conditions. A screening result estimates risk; it does not diagnose a condition. The numbers below are chosen for practice, not for medical decision-making.
 :::
 
-### Bayes' Theorem and Screening
+#### Bayes' Theorem and Screening
 
-Let \(C\) denote “the condition is present” and \(+\) denote “the screening test is positive.” Then
+Let (C) denote “the condition is present” and (+) denote “the screening test is positive.” Then
 
-$$
-P(C \mid +) =
+$$P(C \mid +) =
 \frac{P(+ \mid C)P(C)}
-{P(+ \mid C)P(C) + P(+ \mid \neg C)P(\neg C)}.
-$$
+{P(+ \mid C)P(C) + P(+ \mid \neg C)P(\neg C)}.$$
 
-### Rare-condition screening
+#### Rare-condition Screening{#rare-condition}
 
 A condition occurs in 1 out of every 2,000 pregnancies. A screening test detects the condition 95% of the time when it is present and has a 1% false-positive rate.
 
 If a patient receives a positive result, what is the probability that the fetus actually has the condition?
 
 ::: {.callout-tip collapse="true"}
-## 1. Rare-condition screening
+#### Rare-condition Screening Solution
 
-\[
-P(C \mid +) =
-\frac{(.95)(1/2000)}{(.95)(1/2000) + (.01)(1999/2000)}
-\approx 0.0454.
-\]
-
-The probability is approximately **4.54%**.
+$$P(C \mid +) = \frac{(.95)(1/2000)}{(.95)(1/2000) + (.01)(1999/2000)} \approx 0.0454.$$
 :::
 
-### Natural-frequency version
+#### Natural-frequency in the Population
 
-Use the information from Problem 1, but imagine 200,000 pregnancies.
+Use the information from @rare-condition, but imagine 200,000 pregnancies.
 
-- How many fetuses are expected to have the condition?
-- How many true positives will the test produce?
-- How many false positives will it produce?
-- Of all positive results, what percentage are true positives?
+- How many fetuses are expected to have the condition?  
+- How many true positives will the test produce?  
+- How many false positives will it produce?  
+- Of all positive results, what percentage are true positives?  
 
 ::: {.callout-tip collapse="true"}
-## 2. Natural-frequency version
+#### Natural-frequency in the Population Solutions
 
-Of 200,000 pregnancies, 100 are expected to have the condition. The test identifies \(0.95(100) = 95\) true positives.
+- Of $200,000$ pregnancies, $100$ are expected to have the condition.  
 
-Of the 199,900 pregnancies without the condition, 1% produce false positives: \(0.01(199,900) = 1,999\).
+- The test identifies $(0.95(100) = 95)$ true positives.
 
-Thus, there are \(95 + 1,999 = 2,094\) positive results, of which
+- Of the 199,900 pregnancies without the condition, $1%$ produce false positives: $(0.01(199,900) = 1,999)$.
 
-\[
-\frac{95}{2,094} \approx 4.54\%
-\]
-
-are true positives.
+- Thus, there are $(95 + 1,999 = 2,094)$ positive results, of which $\frac{95}{2,094} \approx 4.54% $ are true positives.
 :::
 
-### Comparing two conditions
+#### Comparing Two Conditions
 
 Test A screens for Condition A, which occurs in 1 in 100 pregnancies. Test B screens for Condition B, which occurs in 1 in 2,000 pregnancies. Both tests have 99% sensitivity and a 1% false-positive rate.
 
-For each test, calculate \(P(\text{condition} \mid \text{positive test})\). Why can equally accurate tests lead to very different interpretations of a positive result?
-
+For each test, calculate $P(\text{condition} \mid \text{positive test})$. Why can equally accurate tests lead to very different interpretations of a positive result?
 
 ::: {.callout-tip collapse="true"}
-## 3. Comparing two conditions
+#### Comparing Two Conditions
 
 For Condition A:
 
-\[
-\frac{(.99)(.01)}{(.99)(.01) + (.01)(.99)} = 0.50.
-\]
+$$\frac{(.99)(.01)}{(.99)(.01) + (.01)(.99)} = 0.50.$$
 
 So a positive test gives a **50%** probability that Condition A is present.
 
 For Condition B:
 
-\[
-\frac{(.99)(.0005)}{(.99)(.0005) + (.01)(.9995)} \approx 0.0472.
-\]
+$$\frac{(.99)(.0005)}{(.99)(.0005) + (.01)(.9995)} \approx 0.0472.$$
 
-So a positive test gives only about a **4.72%** probability that Condition B is present. The key difference is the base rate: Condition B is much rarer.
+So a positive test gives only about a **4.72%** probability that Condition B is present. The key difference is the prevalence: Condition B is much rarer.
+
 :::
 
+#### Different Risk Group
 
-### Different risk group
+In a higher-risk group, a condition occurs in 1 in 250 pregnancies. The same screening test from @rare-condition is used: 95% sensitivity and a 1% false-positive rate.
 
-In a higher-risk group, a condition occurs in 1 in 250 pregnancies. The same screening test from Problem 1 is used: 95% sensitivity and a 1% false-positive rate.
-
-What is the probability of the condition after a positive result? Compare it with your answer to Problem 1. What changed, and what stayed the same?
+What is the probability of the condition after a positive result? Compare it with your answer to @rare-condition. What changed, and what stayed the same?
 
 ::: {.callout-tip collapse="true"}
-## 4. Different risk group
+#### Different Risk Group Solution
 
-\[
-\frac{(.95)(.004)}{(.95)(.004) + (.01)(.996)}
-\approx 0.276.
-\]
+$$\frac{(.95)(.004)}{(.95)(.004) + (.01)(.996)} \approx 0.276.$$
 
-The probability after a positive result is about **27.6%**. The test's sensitivity and false-positive rate stayed the same; the prior probability increased.
+The probability after a positive result is about **27.6%**. The test's sensitivity and false-positive rate stayed the same; the prior probability (prevalence) increased.
 :::
 
-### A negative result
+#### A Negative Result
 
 A condition occurs in 1 in 500 pregnancies. A screening test has 98% sensitivity and a 2% false-positive rate.
 
 If the result is negative, what is the probability that the fetus still has the condition?
 
 ::: {.callout-tip collapse="true"}
-## 5. A negative result
+#### A Negative Result Solution
 
-The false-negative rate is \(1 - .98 = .02\). Therefore,
+The false-negative rate is $$(1 - .98 = .02)$$. Therefore,
 
-\[
-P(C \mid -) =
-\frac{(.02)(.002)}{(.02)(.002) + (.98)(.998)}
-\approx 0.0000409.
-\]
+$$P(C \mid -) = \frac{(.02)(.002)}{(.02)(.002) + (.98)(.998)} \approx 0.0000409.$$
 
 The probability is approximately **0.0041%**, or about 1 in 24,450.
 :::
 
-### An advertising claim
+#### An Advertising Claim
 
 A company advertises that its screening test is “99% accurate.” Suppose the condition occurs in 1 in 10,000 pregnancies, sensitivity is 99%, and specificity is 99%.
 
@@ -271,1084 +290,478 @@ A company advertises that its screening test is “99% accurate.” Suppose the 
 - Is “99% accurate” enough information to tell a patient the chance that a positive result is correct? Explain using Bayes' theorem.  
 
 ::: {.callout-tip collapse="true"}
-## 6. An advertising claim
+#### An Advertising Claim Solution
 
-\[
-P(C \mid +) =
-\frac{(.99)(.0001)}{(.99)(.0001) + (.01)(.9999)}
-\approx 0.0098.
-\]
+$$P(C \mid +) = \frac{(.99)(.0001)}{(.99)(.0001) + (.01)(.9999)} \approx 0.0098.$$
 
-The positive predictive value is about **0.98%**. No: a general accuracy claim omits the condition's prevalence, as well as the separate sensitivity and specificity values that Bayes' theorem requires.
+The positive predictive value is about **0.98%**.  
+
+No: a general accuracy claim omits the condition's prevalence, as well as the separate sensitivity and specificity values that Bayes' theorem requires.
 :::
 
-### A follow-up diagnostic test
+#### A Follow-up Diagnostic Test
 
 A screening test yields a 4% probability that a fetus has a condition after a positive result. A follow-up diagnostic test has 99.9% sensitivity and 99.9% specificity.
 
 Assuming the diagnostic test is positive, use Bayes' theorem to estimate the updated probability that the fetus has the condition. Explain why follow-up testing matters.
 
 ::: {.callout-tip collapse="true"}
-## 7. A follow-up diagnostic test
+#### A Follow-up Diagnostic Test Solution
 
-Treat the 4% result as the new prior probability:
+Treat the 4% result as the new prior probability, or $P(C)$:
 
-\[
-P(C \mid +) =
-\frac{(.999)(.04)}{(.999)(.04) + (.001)(.96)}
-\approx 0.9765.
-\]
+$$P(C \mid +) = \frac{(.999)(.04)}{(.999)(.04) + (.001)(.96)} \approx 0.9765.$$
 
 The updated probability is approximately **97.65%**. A highly accurate follow-up test can substantially reduce uncertainty after a screening result.
 :::
-
 
 #### Source context
 
 The problems are based on the general distinction between prenatal screening and diagnostic testing discussed in [the referenced New York Times article](https://www.nytimes.com/2022/01/01/upshot/pregnancy-birth-genetic-testing.html). For current clinical guidance, consult a qualified health-care professional.
 
-
 ## Bayes Theorem and Machine Learning
 
-### Example 1: A Naive Bayes spam classifier
+Bayes Theorem not only spurred a whole new philosophical approach towards statistical inference (called Bayesian Inference), in contrast to the Frequentist Inference approach we will focus on in our course, but it has also provided the foundation for many machine learning methods.  
+
+### Example 1: A Naive Bayes Spam Classifier
 
 A Naive Bayes classifier uses Bayes' theorem to estimate the probability that a message belongs to a class, such as *spam* or *not spam*, after observing its words. The word *naive* refers to an assumption: once the class is known, the model treats the observed word features as independent.
 
 Suppose that, in a training set:
 
-- 20% of emails are spam: \(P(S) = 0.20\);
-- 75% of spam emails contain the word “winner”: \(P(W \mid S) = 0.75\);
-- 5% of non-spam emails contain “winner”: \(P(W \mid \neg S) = 0.05\).
+- 20% of emails are spam: $(P(S) = 0.20)$;
+- 75% of spam emails contain the word “winner”: $(P(W \mid S) = 0.75)$;
+- 5% of non-spam emails contain “winner”: $(P(W \mid \neg S) = 0.05)$.
 
 For an email that contains “winner,” the classifier calculates
 
-\[
-P(S \mid W) =
-\frac{P(W \mid S)P(S)}
-{P(W \mid S)P(S) + P(W \mid \neg S)P(\neg S)}.
-\]
+$$P(S \mid W) = \frac{P(W \mid S)P(S)} {P(W \mid S)P(S) + P(W \mid \neg S)P(\neg S)}.$$
 
-\[
-P(S \mid W) =
-\frac{(.75)(.20)}{(.75)(.20) + (.05)(.80)}
-= \frac{.15}{.19}
-\approx 0.789.
-\]
+$$P(S \mid W) = \frac{(.75)(.20)}{(.75)(.20) + (.05)(.80)} = \frac{.15}{.19} \approx 0.789.$$
 
 So the model estimates a **78.9% probability** that the email is spam. In practice, it combines evidence from many words:
 
-\[
-P(S \mid w_1, \ldots, w_n) \propto P(S)\prod_{i=1}^{n}P(w_i \mid S).
-\]
+$$P(S \mid w_1, \ldots, w_n) \propto P(S)\prod_{i=1}^{n}P(w_i \mid S).$$
 
 The class with the larger posterior probability is the prediction. This is the same update as in the screening problems: begin with a prior probability, then revise it using evidence.
 
 ### Example 2: Bayesian A/B testing
 
-In a Bayesian A/B test, we treat each version's conversion rate as an unknown probability and update our beliefs as observations arrive. Unlike a classical A/B test, the central result can be stated directly as a probability about the two versions.
+A/B testing is used to identify the best versions/features to include on apps, websites, and other user interfaces. In a Bayesian A/B test, we have version A and version B, and we treat each version's conversion rate (getting the user to click on something) as an unknown probability and update our beliefs as observations arrive. Unlike a classical A/B test, the central result can be stated directly as a probability about the two versions.
 
-Suppose a website runs two versions of a sign-up page. Before collecting data, use a uniform prior for each conversion rate:
-
-\[
-p_A, p_B \sim \operatorname{Beta}(1,1).
-\]
+Suppose a website runs two versions of a sign-up page. Before collecting data, use a uniform prior for each conversion rate, that is both versions have the same probability of working. 
 
 After the experiment:
 
 | Version | Visitors | Sign-ups | Non-sign-ups |
-|---|---:|---:|---:|
-| A | 100 | 12 | 88 |
-| B | 100 | 18 | 82 |
+|---------|---------:|---------:|-------------:|
+| A       |      100 |       12 |           88 |
+| B       |      100 |       18 |           82 |
 
-With a Beta prior and binomial conversion data, the posterior distribution is
+We then take that data and update our assumption and find that 
 
-\[
-p \mid \text{data} \sim \operatorname{Beta}(\alpha + \text{sign-ups},\; \beta + \text{non-sign-ups}).
-\]
 
-Thus,
+The posterior means, $E$ or expected value, are
 
-\[
-p_A \mid \text{data} \sim \operatorname{Beta}(13,89),
-\qquad
-p_B \mid \text{data} \sim \operatorname{Beta}(19,83).
-\]
+$$E[p_A \mid \text{data}] = \frac{13}{102} \approx 12.7%$$ and
+$$E[p_B \mid \text{data}] = \frac{19}{102} \approx 18.6%. $$
 
-The posterior means are
-
-\[
-E[p_A \mid \text{data}] = \frac{13}{102} \approx 12.7\%,
-\qquad
-E[p_B \mid \text{data}] = \frac{19}{102} \approx 18.6\%.
-\]
-
-To make a decision, draw many samples from the two posterior distributions and count how often \(p_B > p_A\). That fraction estimates \(P(p_B > p_A \mid \text{data})\): the probability, given the model and observed data, that Version B has the higher conversion rate. This illustrates Bayes' theorem as a learning process—prior beliefs are updated to posterior beliefs as data accumulate.
-
-## Warm-up
-
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLScERQAIiFLzCohcg3cFH8HshlZ2eVvQutX6WOMZOZa0kZdtJg/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
-
-**Problem 1.** Assume $P(A \mid B) = 0.9$, $P(A \mid B^c) = 0.3$, and $P(B) = 0.7$. Calculate the following probabilities.
-
-a\. $P(B^c)$
-
-b\. $P(A)$
-
-c\. $P(A^c)$
-
-d\. $P(A^c \mid B)$
-
-e\. $P(A^c \mid B^c)$
-
-f\. $P(B \mid A)$
-
-g\. $P(B^c \mid A)$
-
-h\. $P(B^c \mid A^c)$
-
-i\. $P(B \mid A^c)$
-
-**Problem 2.** Suppose any news is good or bad. If there is good news in the morning, there is good news in the evening with a probability of 0.75. If there is bad news in the morning, there is bad news in the evening with a probability of 0.25. Assume morning news is good 51% of the time. Suppose we missed morning news today, and there is good news in the evening. What is the probability that today's morning was good?
-
-**Problem 3.** Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
-
-**Problem 4.** Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
-
-## Assignment
-
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfSTxrK_g-dmNXoRnAvlogHcSs6l7mZ3KPyC07r_BRGLVj7oA/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
-
-**Problem 1.** Assume $P(A) = 0.5$, $P(B \mid A) = 0.8$, and $P(B^c \mid A^c) = 0.7$. Calculate the following probabilities.
-
-a\. $P(A^c)$
-
-b\. $P(B)$
-
-c\. $P(B^c)$
-
-d\. $P(B \mid A^c)$
-
-e\. $P(B^c \mid A^c)$
-
-f\. $P(A \mid B)$
-
-g\. $P(A^c \mid B)$
-
-h\. $P(A \mid B^c)$
-
-i\. $P(A^c \mid B^c)$
-
-j\. $P(A \mid A^c)$
-
-k\. $P(A \mid A)$
-
-**Problem 2.** In an airport, a body scanner beeps when it detects a metal (a potential concealed weapon). If a traveler enters the body scanner with a metal, it beeps with a probability 0.999. If a traveler enters the body scanner without a metal, it beeps (false alarm) with a probability of 0.1.
-
-a\. Assume 0.01% of travelers (1 in 10,000) enter the body scanner with a metal. If a body scanner beeps, what is the probability that the traveler actually has a metal?
-
-b\. Repeat part a assuming 10% of travelers enter the body scanner with a metal.
-
-**Problem 3.** For fair criminal trials, defendants are assumed to be innocent until proven guilty, and prosecutors must provide sufficient evidence in order to conclude that defendants are guilty. Assume the following:
-
-- If a defendant is innocent, it is concluded that the defendant is guilty with a probability of 0.05.
-
-- If a defendant is guilty, it is concluded that the defendant is guilty with a probability of 0.9.
-
-As a hypothetical scenario, suppose prosecutors accuse any people so that 99% of defendants are innocent. If the conclusion is guilty, what is the probability that the defendant is truly guilty?
-
-**Problem 4.** Until 2013, all employees in Canadian workplaces were subject to drug test by a random selection.^1^ The drug test was intended to identify subjects who use illegal drugs, but it had been criticized that too many innocent employees were tested. In 2013, the Supreme Court of Canada ruled that there must be a reasonable cause (e.g., suspicious actions) to drug test an employee. This new policy would narrow the target population of drug test from all employees to suspicious employees. Let $U$ denote a drug use in a target population and $T$ denote a postive drug test result. Assume both sensitivity and specificity of the drug test have been constant at 0.95, and assume that only 5% are drug users among all employees and 95% are drug users among those who act suspiciously. Calculate the following.
-
-a\. $P(T \mid U)$
-
-b\. $P(T \mid U^c)$
-
-c\. $P(T^c \mid U^c)$
-
-d\. $P(T^c \mid U)$
-
-e\. $P(U)$ under the old policy (prior to 2013)
-
-f\. $P(U)$ under the new policy
-
-g\. Under the [old]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}? (i.e., accuse an innocent subject)
-
-h\. Under the [old]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}? (i.e., free a guilty subject)
-
-i\. Under the [new]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}?
-
-j\. Under the [new]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}?
-
-k\. Multiple-choice: All employees had been targeted under the old policy, and only suspicious employees have been targeted under the new policy. If the test result is negative, the subject is concluded to be clean, and will not be tested for the next three years. If the test result is positive, the subject is temporarily concluded to be a potential risk in the workplace, and will be observed until proven to be clean. According to the probability calculations in previous parts, the \[...\] policy raises the concern of safety in the workplace, and the \[...\] policy raises the concern of privacy.
-
-\(A\) old; old
-
-\(B\) old; new
-
-\(C\) new; old
-
-\(D\) new; new
-
-\(E\) both; both
-
-^1^ Hurley, W. J. (2015). Mandatory drug testing in the Canadian workplace: A note on the recent supreme court decision and its effect on the misclassification rate of non-drug users, Chance, 28(1), 21-26. \url{http://chance.amstat.org/2015/02/drug-testing/}
-
-## Assignment\*
-
-*You must submit hard copy. All answers must be explained using both notation and words in complete sentences. Lack of explanation, misuse of notation, or incomplete sentences will result in partial credits only.*
-
-**Problem 5.** Image you are the wife of a man who was in Titanic which sank in the morning of April 15, 1912. News on radio said 30% of all passengers survived, 25% were men among survivors, and 80% were men among non-survivors. You do not know whether your husband survived or not.
-
-a\. What percent of passengers were men?
-
-b\. What is the probability that your husband survived?
+To make a decision, draw many samples from the two posterior distributions and count how often $p_B > p_A$. That fraction estimates $P(p_B > p_A \mid \text{data})$: the probability, given the model and observed data, that Version B has the higher conversion rate. This illustrates Bayes' theorem as a learning process—prior beliefs are updated to posterior beliefs as data accumulate.
 
 ## Wrap-Up
 
 In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
 #### Problem 1
+Assume $P(A \mid B) = 0.9$, $P(A \mid B^c) = 0.3$, and $P(B) = 0.7$. Calculate the following probabilities.
 
-Let $A$ and $B$ be two events. Fill in the blanks.
-
-a.  $P(A \cap B)$ is called the \[j... p...\] of $A$ and $B$.
+a. $P(B^c)$  
 
 ```{r}
 #| label: wrap-1-a
 #| echo: false
-checkdown::check_question(answer = "joint probability",
+checkdown::check_question(answer = 0.3,
           button_label = "Check Your Answer")
 ```
 
-b.  $P(A)$ is called the \[m... p...\] of $A$.
+b. $P(A)$  
 
 ```{r}
 #| label: wrap-1-b
 #| echo: false
-checkdown::check_question(answer = "marginal probability",
+checkdown::check_question(answer = 0.72,
           button_label = "Check Your Answer")
 ```
 
-c.  $P( B \mid A)$ is called the \[c... p...\] of the event $B$ given the possible condition $A$.
+c. $P(A^c)$  
 
 ```{r}
 #| label: wrap-1-c
 #| echo: false
-checkdown::check_question(answer = "conditional probability",
+checkdown::check_question(answer = 0.28,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 2
-
-Let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die. Assume all six outcomes are equally likely. Let $A = \{ 1 \}$. Let $O$ be the event of observing an odd face. Let $E$ be the event of observing an even face. Calculate the following.
-
-a.  $P(1)$
+d. $P(A^c \mid B)$  
 
 ```{r}
-#| label: wrap-2-a
-#| echo: false
-checkdown::check_question(answer = 0.1667,
-          button_label = "Check Your Answer")
-```
-
-b.  $P(O)$
-
-```{r}
-#| label: wrap-2-b
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
-
-c.  $P(A \mid O)$
-
-```{r}
-#| label: wrap-2-c
-#| echo: false
-checkdown::check_question(answer = 0.3333,
-          button_label = "Check Your Answer")
-```
-
-d.  $P(A \mid E)$
-
-```{r}
-#| label: wrap-2-d
-#| echo: false
-checkdown::check_question(answer = 0,
-          button_label = "Check Your Answer")
-```
-
-e.  $P(O \mid A )$
-
-```{r}
-#| label: wrap-2-e
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
-
-#### Problem 3
-
-Let $A$ and $B$ be two events. True or false?
-
-a.  $P(A \mid B) = P(B \mid A)$
-
-```{r}
-#| label: wrap-3-a
-#| echo: false
-checkdown::check_question(answer = "False",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-b.  $P(A) \ge P(A \mid B)$
-
-```{r}
-#| label: wrap-3-b
-#| echo: false
-checkdown::check_question(answer = "False",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-c.  $P(B) \ge P(A \mid B)$
-
-```{r}
-#| label: wrap-3-c
-#| echo: false
-checkdown::check_question(answer = "False",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-d.  $P(A \mid B) \ge P(A \cap B)$
-
-```{r}
-#| label: wrap-3-d
-#| echo: false
-checkdown::check_question(answer = "True",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-e.  $P(A) \ge P(A \cap B)$
-
-```{r}
-#| label: wrap-3-e
-#| echo: false
-checkdown::check_question(answer = "True",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-f.  $P(A) + P(A^c) = 1$
-
-```{r}
-#| label: wrap-3-f
-#| echo: false
-checkdown::check_question(answer = "True",
-                          options = c("True",
-                                      "False"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-#### Problem 4
-
-Let $\Omega$ be a sample space, and $A$, $B$, and $C$ be events. Fill in the blanks.
-
-a.  If $A \cap B = \emptyset$, $A \cap C = \emptyset$, and $B \cap C = \emptyset$, we say that $A$, $B$, and $C$ are a \[p... d...\].
-
-```{r}
-#| label: wrap-4-a
-#| echo: false
-checkdown::check_question(answer = "pairwise disjoint",
-          button_label = "Check Your Answer")
-```
-
-b.  If $A$, $B$, and $C$ are pairwise disjoint, and their union is $\Omega$, we say that $A$, $B$, and $C$ are a \[p...\] of $\Omega$.
-
-```{r}
-#| label: wrap-4-b
-#| echo: false
-checkdown::check_question(answer = "partition",
-          button_label = "Check Your Answer")
-```
-
-c.  $A$ and $A^c$ are a \[p...\] of $\Omega$.
-
-```{r}
-#| label: wrap-4-c
-#| echo: false
-checkdown::check_question(answer = "partition",
-          button_label = "Check Your Answer")
-```
-
-#### Problem 5
-
-Let $\Omega$ be a sample space, and $A$, $B$, and $C$ are a partition of $\Omega$. Calculate the following.
-
-a.  $P(A) + P(B) + P(C)$
-
-```{r}
-#| label: wrap-5-a
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
-
-b.  $P(A) + P(A^c)$
-
-```{r}
-#| label: wrap-5-b
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
-
-#### Problem 6
-
-Suppose 47% of the population are female nonsmokers, 43% are male nonsmokers, 2% are female smokers, and 8% are male smokers. Suppose we randomly select a person from the population. Calculate:
-
-a.  the probability of selecting a smoker
-
-```{r}
-#| label: wrap-6-a
+#| label: wrap-1-d
 #| echo: false
 checkdown::check_question(answer = 0.1,
           button_label = "Check Your Answer")
 ```
 
-b.  the probability of selecting a male
+e. $P(A^c \mid B^c)$  
 
 ```{r}
-#| label: wrap-6-b
+#| label: wrap-1-e
 #| echo: false
-checkdown::check_question(answer = 0.51,
+checkdown::check_question(answer = 0.7,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 7
-
-It rains on Monday with a probability of 0.25. If it rains on Monday, it rains on Tuesday with a probability of 0.5. If it does not rain on Monday, it rains on Tuesday with a probability of 0.9. Calculate:
-
-a.  the probability of raining on both Monday and Tuesday
+f. $P(B \mid A)$  
 
 ```{r}
-#| label: wrap-7-a
+#| label: wrap-1-f
+#| echo: false
+checkdown::check_question(answer = 0.875,
+          button_label = "Check Your Answer")
+```
+
+g. $P(B^c \mid A)$  
+
+```{r}
+#| label: wrap-1-g
 #| echo: false
 checkdown::check_question(answer = 0.125,
           button_label = "Check Your Answer")
 ```
 
-b.  the probability of raining on Tuesday
+h. $P(B^c \mid A^c)$  
 
 ```{r}
-#| label: wrap-7-b
+#| label: wrap-1-h
 #| echo: false
-checkdown::check_question(answer = 0.8,
+checkdown::check_question(answer = 0.75,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 8
-
-Fill in the blank.
-
-a.  The \[L... of T... P...\] is applied in Problems 6a and 6b.
+i. $P(B \mid A^c)$  
 
 ```{r}
-#| label: wrap-8-a
+#| label: wrap-1-i
 #| echo: false
-checkdown::check_question(answer = "Law of Total Probability",
+checkdown::check_question(answer = 0.25,
           button_label = "Check Your Answer")
 ```
 
-b.  The \[M... R...\] is applied in Problems 7a.
+#### Problem 2
+Suppose any news is good or bad. If there is good news in the morning, there is good news in the evening with a probability of 0.75. If there is bad news in the morning, there is bad news in the evening with a probability of 0.25. Assume morning news is good 51% of the time. Suppose we missed morning news today, and there is good news in the evening. What is the probability that today's morning was good?
 
 ```{r}
-#| label: wrap-8-b
+#| label: wrap-2
 #| echo: false
-checkdown::check_question(answer = "Multiplication Rule",
+checkdown::check_question(answer = 0.51,
           button_label = "Check Your Answer")
 ```
 
-c.  The \[w... a...\] of two conditional probabilities is used in Problems 7b.
+#### Problem 3
+Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
 
 ```{r}
-#| label: wrap-8-c
+#| label: wrap-3
 #| echo: false
-checkdown::check_question(answer = "weighted average",
+checkdown::check_question(answer = 0.5238,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 9
-
-It is estimated that 40%, 11%, 45%, and 4% of Americans have blood type A, B, O, and AB, respectively. It is estimated that 7%, 8%, 9%, and 7% of blood type A, B, O, and AB, respectively, develop a certain disease. Calculate the prevalence of the disease in the population. In other words, if we randomly select an American, what is the probability that the subject has the disease?
+#### Problem 4
+Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
 
 ```{r}
-#| label: wrap-9
+#| label: wrap-4
 #| echo: false
-checkdown::check_question(answer = 0.0801,
+checkdown::check_question(answer = 0.0909,
           button_label = "Check Your Answer")
 ```
 
 ## Assignment
-
 Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
 
 Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
 #### Problem 1
+Assume $P(A) = 0.5$, $P(B \mid A) = 0.8$, and $P(B^c \mid A^c) = 0.7$. Calculate the following probabilities.
 
-Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or above to apply to a university. The population of interest is all students who take Calculus I in the university. Let $G_i$ be the HS GPA group of $[i, i + 1)$ for $i = 0, 1, 2, 3, 4$ where $[a, b)$ is an interval between $a$ and $b$ including $a$ and excluding $b$. Let $A$, $B$, $C$, $D$, and $F$ be the groups of students who earned letter grades of A, B, C, D, and F in Calculus I, respectively. Answer the following question given the data in @tbl-gpa.
-
-::: {#tbl-gpa}
-| Event | $G_0$ | $G_1$ | $G_2$ | $G_3$ | $G_4$ | Total |
-|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
-|  $A$  |   0   |   0   |  12   |  146  |  16   |  174  |
-|  $B$  |   0   |   0   |  43   |  216  |   9   |  268  |
-|  $C$  |   0   |   0   |  44   |  167  |   3   |  214  |
-|  $D$  |   0   |   0   |  33   |  48   |   1   |  82   |
-|  $F$  |   0   |   0   |  32   |  56   |   1   |  89   |
-| Total |   0   |   0   |  164  |  633  |  30   |  827  |
-
-: Contingency table of HS GPA and Calculus I grade (count)
-:::
-
-a.  Calculate the probability of earning an A in Calculus I.
+a. $P(A^c)$  
 
 ```{r}
 #| label: asn-1-a
 #| echo: false
-checkdown::check_question(answer = 0.2104,
+checkdown::check_question(answer = 0.5,
           button_label = "Check Your Answer")
 ```
 
-b.  If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
+b. $P(B)$  
 
 ```{r}
 #| label: asn-1-b
 #| echo: false
-checkdown::check_question(answer = 0.0732,
+checkdown::check_question(answer = 0.55,
           button_label = "Check Your Answer")
 ```
 
-c.  If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
+c. $P(B^c)$  
 
 ```{r}
 #| label: asn-1-c
 #| echo: false
-checkdown::check_question(answer = 0.5333,
+checkdown::check_question(answer = 0.45,
           button_label = "Check Your Answer")
 ```
 
-d.  Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
+d. $P(B \mid A^c)$  
 
 ```{r}
 #| label: asn-1-d
 #| echo: false
-checkdown::check_question(answer = 0.7932,
+checkdown::check_question(answer = 0.3,
           button_label = "Check Your Answer")
 ```
 
-e.  If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
+e. $P(B^c \mid A^c)$  
 
 ```{r}
 #| label: asn-1-e
 #| echo: false
-checkdown::check_question(answer = 0.6037,
+checkdown::check_question(answer = 0.7,
           button_label = "Check Your Answer")
 ```
 
-f.  If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
+f. $P(A \mid B)$  
 
 ```{r}
 #| label: asn-1-f
 #| echo: false
-checkdown::check_question(answer = 0.9333,
+checkdown::check_question(answer = 0.7273,
           button_label = "Check Your Answer")
 ```
 
-g.  If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
+g. $P(A^c \mid B)$  
 
 ```{r}
 #| label: asn-1-g
 #| echo: false
-checkdown::check_question(answer = 0.0667,
+checkdown::check_question(answer = 0.2727,
           button_label = "Check Your Answer")
 ```
 
-h.  If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
+
+h. $P(A \mid B^c)$  
 
 ```{r}
 #| label: asn-1-h
 #| echo: false
-checkdown::check_question(answer = 0.8491,
+checkdown::check_question(answer = 0.2222,
+          button_label = "Check Your Answer")
+```
+
+i. $P(A^c \mid B^c)$  
+
+```{r}
+#| label: asn-1-i
+#| echo: false
+checkdown::check_question(answer = 0.7778,
+          button_label = "Check Your Answer")
+```
+
+j. $P(A \mid A^c)$  
+
+```{r}
+#| label: asn-1-j
+#| echo: false
+checkdown::check_question(answer = 0,
+          button_label = "Check Your Answer")
+```
+
+k. $P(A \mid A)$  
+
+```{r}
+#| label: asn-1-k
+#| echo: false
+checkdown::check_question(answer = 1,
           button_label = "Check Your Answer")
 ```
 
 #### Problem 2
+In an airport, a body scanner beeps when it detects a metal (a potential concealed weapon). If a traveler enters the body scanner with a metal, it beeps with a probability 0.999. If a traveler enters the body scanner without a metal, it beeps (false alarm) with a probability of 0.1.
 
-Autism is a developmental disorder. Autistic children have difficulties with social interactions, verbal and nonverbal communications, and repetitive behaviors. According to the Centers for Disease Control and Prevention (CDC) in 2021, about one in 27 boys and one in 116 girls are identified with autism in the United States. It is estimated that the ratio of boys is about 1.05 in the United States. Let $A$ be autism and $B$ be a boy.
-
-a.  Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$ (called the odds).
+a. Assume 0.01% of travelers (1 in 10,000) enter the body scanner with a metal. If a body scanner beeps, what is the probability that the traveler actually has a metal?(Round to **6 decimal places** for your response.)  
 
 ```{r}
 #| label: asn-2-a
 #| echo: false
-checkdown::check_question(answer = 4.2963,
+checkdown::check_question(answer = 0.000998,
           button_label = "Check Your Answer")
 ```
 
-b.  Interpret the ratio of the two conditional probabilities in the context.
-
-<!-- According to the CDC estimate, the prevalence of autism among boys is about 4.3 times of -->
-
-<!-- the prevalence of autism among girls -->
-
-c.  @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in each cell. Round to whole numbers.
-
-::: {#tbl-autism}
-| Event | $A$ | $A^c$ | Total  |
-|:-----:|:---:|:-----:|:------:|
-|  $B$  |  i  |  ii   |  iii   |
-| $B^c$ | iv  |   v   |   vi   |
-| Total | vii | viii  | 10,000 |
-
-: Contingency table of autism and sex (count)
-:::
-
-c.i.
+b. Repeat part a assuming 10% of travelers enter the body scanner with a metal.  
 
 ```{r}
-#| label: asn-2-c-i
+#| label: asn-2-b
 #| echo: false
-checkdown::check_question(answer = 190,
+checkdown::check_question(answer = 0.526,
           button_label = "Check Your Answer")
 ```
 
-c.ii.
+#### Problem 3 
+For fair criminal trials, defendants are assumed to be innocent until proven guilty, and prosecutors must provide sufficient evidence in order to conclude that defendants are guilty. Assume the following:
+
+- If a defendant is innocent, it is concluded that the defendant is guilty with a probability of 0.05.  
+- If a defendant is guilty, it is concluded that the defendant is guilty with a probability of 0.9.  
+
+In a hypothetical scenario, suppose prosecutors accuse any people so that 99% of defendants are innocent. If the conclusion is guilty, what is the probability that the defendant is truly guilty?
 
 ```{r}
-#| label: asn-2-c-ii
+#| label: asn-3
 #| echo: false
-checkdown::check_question(answer = 4932,
+checkdown::check_question(answer = 0.1538,
           button_label = "Check Your Answer")
 ```
 
-c.iii.
+#### Problem 4 
+Until 2013, all employees in Canadian workplaces were subject to drug test by a random selection.^1^ The drug test was intended to identify subjects who use illegal drugs, but it had been criticized that too many innocent employees were tested. In 2013, the Supreme Court of Canada ruled that there must be a reasonable cause (e.g., suspicious actions) to drug test an employee. This new policy would narrow the target population of drug test from all employees to suspicious employees. Let $U$ denote a drug use in a target population and $T$ denote a postive drug test result. Assume both sensitivity and specificity of the drug test have been constant at 0.95, and assume that only 5% are drug users among all employees and 95% are drug users among those who act suspiciously. Calculate the following.
+
+a. $P(T \mid U)$  
 
 ```{r}
-#| label: asn-2-c-iii
+#| label: asn-4-a
 #| echo: false
-checkdown::check_question(answer = 5122,
+checkdown::check_question(answer = 0.95,
           button_label = "Check Your Answer")
 ```
 
-c.iv.
+b. $P(T \mid U^c)$  
 
 ```{r}
-#| label: asn-2-c-iv
+#| label: asn-4-ba
 #| echo: false
-checkdown::check_question(answer = 42,
+checkdown::check_question(answer = 0.05,
           button_label = "Check Your Answer")
 ```
 
-c.v.
+c. $P(T^c \mid U^c)$  
 
 ```{r}
-#| label: asn-2-c-v
+#| label: asn-4-c
 #| echo: false
-checkdown::check_question(answer = 4836,
+checkdown::check_question(answer = 0.95,
           button_label = "Check Your Answer")
 ```
 
-c.vi.
+d. $P(T^c \mid U)$  
 
 ```{r}
-#| label: asn-2-c-vi
+#| label: asn-4-d
 #| echo: false
-checkdown::check_question(answer = 4878,
+checkdown::check_question(answer = 0.05,
           button_label = "Check Your Answer")
 ```
 
-c.vii.
+e. $P(U)$ under the old policy (prior to 2013)  
 
 ```{r}
-#| label: asn-2-c-vii
+#| label: asn-4-e
 #| echo: false
-checkdown::check_question(answer = 232,
+checkdown::check_question(answer = 0.05,
           button_label = "Check Your Answer")
 ```
 
-c.viii.
+f. $P(U)$ under the new policy  
 
 ```{r}
-#| label: asn-2-c-viii
+#| label: asn-4-f
 #| echo: false
-checkdown::check_question(answer = 9768,
+checkdown::check_question(answer = 0.95,
           button_label = "Check Your Answer")
 ```
 
-d.  If a child is autistic, calculate the probability that the child is a boy.
+g. Under the [old]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}? (i.e., accuse an innocent subject)  
 
 ```{r}
-#| label: asn-2-d
-#| echo: false
-checkdown::check_question(answer = 0.819,
-          button_label = "Check Your Answer")
-```
-
-e\. Are $A$ and $B$ independent? Justify.
-
-```{r}
-#| label: asn-2-e
-#| echo: false
-checkdown::check_question(answer = "dependent",
-                          options = c("independent",
-                                      "dependent"),
-                          type = "select",
-                          button_label = "Check Your Answer")
-```
-
-#### Problem 3
-
-Let $\Omega$ be a sample space. Let $A$ be an event, and suppose $C_1$, $C_2$, and $C_3$ are a partition of $\Omega$. Assume $P(A) = 0.5$. Calculate the following.
-
-a.  $P(\Omega)$
-
-```{r}
-#| label: asn-3-a
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
-
-b.  $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
-
-```{r}
-#| label: asn-3-b
+#| label: asn-4-g
 #| echo: false
 checkdown::check_question(answer = 0.5,
           button_label = "Check Your Answer")
 ```
 
-c.  $P(C_1) + P(C_2) + P(C_3)$
+h. Under the [old]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}? (i.e., free a guilty subject)  
 
 ```{r}
-#| label: asn-3-c
+#| label: asn-4-h
 #| echo: false
-checkdown::check_question(answer = 1,
+checkdown::check_question(answer = 0.0028,
           button_label = "Check Your Answer")
 ```
 
-d.  $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
+i. Under the [new]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}?  
 
 ```{r}
-#| label: asn-3-d
+#| label: asn-4-i
+#| echo: false
+checkdown::check_question(answer = 0.0028,
+          button_label = "Check Your Answer")
+```
+
+j. Under the [new]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}?  
+
+```{r}
+#| label: asn-4-j
 #| echo: false
 checkdown::check_question(answer = 0.5,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 4
+k. Multiple-choice: All employees had been targeted under the old policy, and only suspicious employees have been targeted under the new policy. If the test result is negative, the subject is concluded to be clean, and will not be tested for the next three years. If the test result is positive, the subject is temporarily concluded to be a potential risk in the workplace, and will be observed until proven to be clean. According to the probability calculations in previous parts, the \[...\] policy raises the concern of safety in the workplace, and the \[...\] policy raises the concern of privacy.  
 
-Suppose 2% of CSUMB students are Mathematics Majors. Among Mathematics Majors, 30% are seniors. What percent of CSUMB students are mathematics seniors? (Do not include the percent sign when you input the numeric answer.)
 
 ```{r}
-#| label: asn-4
+#| label: asn-4-k
 #| echo: false
-checkdown::check_question(answer = 0.6,
+checkdown::check_question(answer = "new; old",
+                          options = c("old; old",
+                                      "old; new",
+                                      "new; old",
+                                      "new; new",
+                                      "both; both"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+
+^1^ Hurley, W. J. (2015). Mandatory drug testing in the Canadian workplace: A note on the recent supreme court decision and its effect on the misclassification rate of non-drug users, Chance, 28(1), 21-26. \url{http://chance.amstat.org/2015/02/drug-testing/}
+
+
+#### Problem 5 
+Imagine you are the wife of a man who was in Titanic which sank in the morning of April 15, 1912. News on radio said 30% of all passengers survived, 25% were men among survivors, and 80% were men among non-survivors. You do not know whether your husband survived or not.
+
+a. What percent of passengers were men?  
+
+```{r}
+#| label: asn-5-a
+#| echo: false
+checkdown::check_question(answer = 0.635,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 5
 
-Among vaccinated people, 25% have the flu. Among non-vaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population? (Do not include the percent sign when you input the numeric answer.)
+b. What is the probability that your husband survived?  
 
 ```{r}
-#| label: asn-5
+#| label: asn-5-b
 #| echo: false
-checkdown::check_question(answer = 90,
+checkdown::check_question(answer = 0.1181,
           button_label = "Check Your Answer")
 ```
 
-#### Problem 6
-
-If a woman smokes during pregnancy, the probability of a premature birth is 0.1. If a woman does not smoke during pregnancy, the probability of a premature birth is 0.05. If 7 in 100 pregnant women smoke on average, what is the probability of a premature birth in the population? (A probability is a number between zero and one.)
-
-```{r}
-#| label: asn-6
-#| echo: false
-checkdown::check_question(answer = 0.0535,
-          button_label = "Check Your Answer")
-```
-
-#### Problem 7
-
-Titanic was a British passenger liner. It sank in the North Atlantic Ocean in the morning of April 15, 1912. The cause was collision with an iceberg, and many passengers lost lives. **titanic.csv** is a dataset which includes information about 1,316 passengers. There are five columns:
-
-- **id**: passenger identification number
-
-- **class**: passenger class (first, second, or third)
-
-- **age**: passenger's age group (adult or child)
-
-- **sex**: passenger's sex (female or male)
-
-- **survived**: passenger's survival status (no or yes)
-
-To use R, first load the packages needed for data analysis.
-
-```{webr}
-#| label: setup-webr
-library(ggformula)  #graphics
-library(mosaic)   #summary statistics
-library(tidyverse) #data management
-```
-
-Then, we want to read in the data.
-
-```{webr}
-#| label: read-data
-titanic <- read_csv( "titanic.csv",
-                     show_col_types = FALSE) ### read data, hide messages about columns
-head(titanic, 5) ### print the top 5 lines of the data
-```
-
-We can use two functions: `count()` and `props()` to evaluate our specified categories, `~ x`.
-
-```{webr}
-#| label: survival-count
-counts( ~survived, data = titanic ) #counts
-```
-
-```{webr}
-#| label: survival-props
-props( ~survived, data = titanic) # proportions
-```
-
-We can use the formula `~ x | z` to calculate conditional counts and proportions of `x` conditioned on `z`.
-
-```{webr}
-#| label: survival-sex-demo
-
-### count by groups
-counts(~ survived |sex, data = titanic )
-
-### proportions survived by groups
-props(~ survived | sex, data = titanic)
-```
-
-The last R output can be interpreted as follows: about 27.5% of female passengers did not survive, about 72.5% of female passengers survived, about 79.9% of male passengers did not survive, and about 20.1% of male passengers survived.
-
-**Use the Law of Total Probability and the Multiplication Rule to calculate the probability of survival in three different ways. Though the code helps make the calculations efficient, write out the mathematical notation each value and calculation represents.**
-
-a.  Estimate the probability of passengers survived. Answer based on the partition by passenger class (first, second, and third).
-
-```{webr}
-#| label: survival-class
-#| exercise: ex_class
-#| caption: Edit the code to calculate a each probability by replacing x and z
-
-### calculate the probability of each class
-c <- props(~z, data = titanic)  #change this code
-c #prints out answer
-
-### calculate the probability of  survival given class
-s_c <- props(~ x | z, data = titanic)  #change this code
-s_c #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_c * select(c, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_c * select(c, -response))
-```
-
-::: {.solution exercise="ex_class"}
-##### Solution
-
-```{webr}
-#| exercise: ex_class
-#| solution: true
-#| echo: false
-
-### calculate the probability of each class
-c <- props(~class, data = titanic)  #change this code
-c #prints out answer
-
-### calculate the probability of  survival given class
-s_c <- props(~ survived | class, data = titanic)  #change this code
-s_c #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_c * select(c, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_c * select(c, -response))
-```
-:::
-
-```{webr}
-#| exercise: ex_class
-#| check: true
-#| echo: false
-gradethis::grade_this_code()
-```
-
-If you did the calculation by hand, you can check your answer here:
-
-```{r}
-#| label: asn-7-a
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
-
-b.  Estimate the probability of passengers survived. Answer based on the partition by age group (adult and child).
-
-```{webr}
-#| label: survival-age
-#| exercise: ex_age
-#| caption: Edit the code to calculate a each probability by replacing x and z
-
-### calculate the probability of each age
-a <- props(~z, data = titanic)  #change this code
-a #prints out answer
-
-### calculate the probability of  survival given age
-s_a <- props(~ x | z, data = titanic)  #change this code
-s_a #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_a * select(a, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_a * select(a, -response))
-```
-
-::: {.solution exercise="ex_age"}
-##### Solution
-
-```{webr}
-#| exercise: ex_age
-#| solution: true
-#| echo: false
-
-### calculate the probability of each age
-a <- props(~age, data = titanic)  #change this code
-a #prints out answer
-
-### calculate the probability of  survival given age
-s_a <- props(~ survived | age, data = titanic)  #change this code
-s_a #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_a * select(a, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_a * select(a, -response))
-```
-:::
-
-```{webr}
-#| exercise: ex_age
-#| check: true
-#| echo: false
-gradethis::grade_this_code()
-```
-
-If you did the calculation by hand, you can check your answer here:
-
-```{r}
-#| label: asn-7-b
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
-
-c.  Estimate the probability of passengers survived. Answer based on the partition by sex (female and male).
-
-```{webr}
-#| label: survival-sex
-#| exercise: ex_sex
-#| caption: Edit the code to calculate a each probability by replacing x and z
-
-### calculate the probability of each sex
-se <- props(~z, data = titanic)  #change this code
-se #prints out answer
-
-### calculate the probability of  survival given sex
-s_se <- props(~ x | z, data = titanic)  #change this code
-s_se #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_se * select(se, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_se * select(se, -response))
-```
-
-::: {.solution exercise="ex_sex"}
-##### Solution
-
-```{webr}
-#| exercise: ex_sex
-#| solution: true
-#| echo: false
-
-### calculate the probability of each sex
-se <- props(~sex, data = titanic)  #change this code
-se #prints out answer
-
-### calculate the probability of  survival given sex
-s_se <- props(~ survived | sex, data = titanic)  #change this code
-s_se #prints out answer
-
-## Do not adjust the code below ## 
-
-# joint probabilities
-s_se * select(se, -response) # removes the response column so element by element product is calculated
-
-# marginal probability of survival
-sum(s_se * select(se, -response))
-```
-:::
-
-```{webr}
-#| exercise: ex_sex
-#| check: true
-#| echo: false
-gradethis::grade_this_code()
-```
-
-If you did the calculation by hand, you can check your answer here:
-
-```{r}
-#| label: asn-7-c
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
-
-d.  Explain why the three estimates in parts a, b, and c are the same.
