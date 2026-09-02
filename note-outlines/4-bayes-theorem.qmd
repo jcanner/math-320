@@ -156,6 +156,7 @@ Let's observe the positive predictive values across all possible prevalences.
 est_prev <- seq( 0, 1, 0.001 ) ### creates vector of prevalences from 0 to 1 with an increment of 0.001
 est_ppv <- pos_pred_val( sens = 0.8, spec = 0.95, prev = est_prev ) ### calculates ppv across all points
 
+library(ggformula)
 ## plots the estimated ppv vs the prevalence as a curve
 gf_line( est_ppv ~ est_prev, 
          title = "PPV vs. Prevalence",
