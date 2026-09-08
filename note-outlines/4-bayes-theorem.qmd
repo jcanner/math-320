@@ -373,361 +373,440 @@ To make a decision, draw many samples from the two posterior distributions and c
 
 In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-#### Problem 1
+Problem 1
+
 Assume $P(A \mid B) = 0.9$, $P(A \mid B^c) = 0.3$, and $P(B) = 0.7$. Calculate the following probabilities.
 
-a. $P(B^c)$  
+a. $P(B^c)$
 
-```{r}
-#| label: wrap-1-a
-#| echo: false
-checkdown::check_question(answer = 0.3,
-          button_label = "Check Your Answer")
-```
 
-b. $P(A)$  
 
-```{r}
-#| label: wrap-1-b
-#| echo: false
-checkdown::check_question(answer = 0.72,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-c. $P(A^c)$  
+Answer
 
-```{r}
-#| label: wrap-1-c
-#| echo: false
-checkdown::check_question(answer = 0.28,
-          button_label = "Check Your Answer")
-```
+0.3
+:::
 
-d. $P(A^c \mid B)$  
+b. $P(A)$
 
-```{r}
-#| label: wrap-1-d
-#| echo: false
-checkdown::check_question(answer = 0.1,
-          button_label = "Check Your Answer")
-```
 
-e. $P(A^c \mid B^c)$  
 
-```{r}
-#| label: wrap-1-e
-#| echo: false
-checkdown::check_question(answer = 0.7,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-f. $P(B \mid A)$  
+Answer
 
-```{r}
-#| label: wrap-1-f
-#| echo: false
-checkdown::check_question(answer = 0.875,
-          button_label = "Check Your Answer")
-```
+0.72
+:::
 
-g. $P(B^c \mid A)$  
+c. $P(A^c)$
 
-```{r}
-#| label: wrap-1-g
-#| echo: false
-checkdown::check_question(answer = 0.125,
-          button_label = "Check Your Answer")
-```
 
-h. $P(B^c \mid A^c)$  
 
-```{r}
-#| label: wrap-1-h
-#| echo: false
-checkdown::check_question(answer = 0.75,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-i. $P(B \mid A^c)$  
+Answer
 
-```{r}
-#| label: wrap-1-i
-#| echo: false
-checkdown::check_question(answer = 0.25,
-          button_label = "Check Your Answer")
-```
+0.28
+:::
 
-#### Problem 2
+d. $P(A^c \mid B)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.1
+:::
+
+e. $P(A^c \mid B^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.7
+:::
+
+f. $P(B \mid A)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.875
+:::
+
+g. $P(B^c \mid A)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.125
+:::
+
+h. $P(B^c \mid A^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.75
+:::
+
+i. $P(B \mid A^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.25
+:::
+
+Problem 2
+
 Suppose any news is good or bad. If there is good news in the morning, there is good news in the evening with a probability of 0.75. If there is bad news in the morning, there is bad news in the evening with a probability of 0.25. Assume morning news is good 51% of the time. Suppose we missed morning news today, and there is good news in the evening. What is the probability that today's morning was good?
 
-```{r}
-#| label: wrap-2
-#| echo: false
-checkdown::check_question(answer = 0.51,
-          button_label = "Check Your Answer")
-```
 
-#### Problem 3
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.51
+:::
+
+Problem 3
+
 Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
 
-```{r}
-#| label: wrap-3
-#| echo: false
-checkdown::check_question(answer = 0.5238,
-          button_label = "Check Your Answer")
-```
 
-#### Problem 4
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.5238
+:::
+
+Problem 4
+
 Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
 
-```{r}
-#| label: wrap-4
-#| echo: false
-checkdown::check_question(answer = 0.0909,
-          button_label = "Check Your Answer")
-```
 
-## Assignment
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.0909
+:::
+
+Assignment
+
 Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
 
 Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
-#### Problem 1
+Problem 1
+
 Assume $P(A) = 0.5$, $P(B \mid A) = 0.8$, and $P(B^c \mid A^c) = 0.7$. Calculate the following probabilities.
 
-a. $P(A^c)$  
-
-```{r}
-#| label: asn-1-a
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
-
-b. $P(B)$  
-
-```{r}
-#| label: asn-1-b
-#| echo: false
-checkdown::check_question(answer = 0.55,
-          button_label = "Check Your Answer")
-```
-
-c. $P(B^c)$  
-
-```{r}
-#| label: asn-1-c
-#| echo: false
-checkdown::check_question(answer = 0.45,
-          button_label = "Check Your Answer")
-```
-
-d. $P(B \mid A^c)$  
-
-```{r}
-#| label: asn-1-d
-#| echo: false
-checkdown::check_question(answer = 0.3,
-          button_label = "Check Your Answer")
-```
-
-e. $P(B^c \mid A^c)$  
-
-```{r}
-#| label: asn-1-e
-#| echo: false
-checkdown::check_question(answer = 0.7,
-          button_label = "Check Your Answer")
-```
-
-f. $P(A \mid B)$  
-
-```{r}
-#| label: asn-1-f
-#| echo: false
-checkdown::check_question(answer = 0.7273,
-          button_label = "Check Your Answer")
-```
-
-g. $P(A^c \mid B)$  
-
-```{r}
-#| label: asn-1-g
-#| echo: false
-checkdown::check_question(answer = 0.2727,
-          button_label = "Check Your Answer")
-```
+a. $P(A^c)$
 
 
-h. $P(A \mid B^c)$  
 
-```{r}
-#| label: asn-1-h
-#| echo: false
-checkdown::check_question(answer = 0.2222,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-i. $P(A^c \mid B^c)$  
+Answer
 
-```{r}
-#| label: asn-1-i
-#| echo: false
-checkdown::check_question(answer = 0.7778,
-          button_label = "Check Your Answer")
-```
+0.5
+:::
 
-j. $P(A \mid A^c)$  
+b. $P(B)$
 
-```{r}
-#| label: asn-1-j
-#| echo: false
-checkdown::check_question(answer = 0,
-          button_label = "Check Your Answer")
-```
 
-k. $P(A \mid A)$  
 
-```{r}
-#| label: asn-1-k
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-#### Problem 2
+Answer
+
+0.55
+:::
+
+c. $P(B^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.45
+:::
+
+d. $P(B \mid A^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.3
+:::
+
+e. $P(B^c \mid A^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.7
+:::
+
+f. $P(A \mid B)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.7273
+:::
+
+g. $P(A^c \mid B)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.2727
+:::
+
+h. $P(A \mid B^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.2222
+:::
+
+i. $P(A^c \mid B^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.7778
+:::
+
+j. $P(A \mid A^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0
+:::
+
+k. $P(A \mid A)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+1
+:::
+
+Problem 2
+
 In an airport, a body scanner beeps when it detects a metal (a potential concealed weapon). If a traveler enters the body scanner with a metal, it beeps with a probability 0.999. If a traveler enters the body scanner without a metal, it beeps (false alarm) with a probability of 0.1.
 
-a. Assume 0.01% of travelers (1 in 10,000) enter the body scanner with a metal. If a body scanner beeps, what is the probability that the traveler actually has a metal?(Round to **6 decimal places** for your response.)  
+a. Assume 0.01% of travelers (1 in 10,000) enter the body scanner with a metal. If a body scanner beeps, what is the probability that the traveler actually has a metal?(Round to 6 decimal places for your response.)
 
-```{r}
-#| label: asn-2-a
-#| echo: false
-checkdown::check_question(answer = 0.000998,
-          button_label = "Check Your Answer")
-```
 
-b. Repeat part a assuming 10% of travelers enter the body scanner with a metal.  
 
-```{r}
-#| label: asn-2-b
-#| echo: false
-checkdown::check_question(answer = 0.526,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
-#### Problem 3 
+Answer
+
+0.000998
+:::
+
+b. Repeat part a assuming 10% of travelers enter the body scanner with a metal.
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.526
+:::
+
+Problem 3
+
 For fair criminal trials, defendants are assumed to be innocent until proven guilty, and prosecutors must provide sufficient evidence in order to conclude that defendants are guilty. Assume the following:
 
-- If a defendant is innocent, it is concluded that the defendant is guilty with a probability of 0.05.  
-- If a defendant is guilty, it is concluded that the defendant is guilty with a probability of 0.9.  
+If a defendant is innocent, it is concluded that the defendant is guilty with a probability of 0.05.
+
+If a defendant is guilty, it is concluded that the defendant is guilty with a probability of 0.9.
 
 In a hypothetical scenario, suppose prosecutors accuse any people so that 99% of defendants are innocent. If the conclusion is guilty, what is the probability that the defendant is truly guilty?
 
-```{r}
-#| label: asn-3
-#| echo: false
-checkdown::check_question(answer = 0.1538,
-          button_label = "Check Your Answer")
-```
 
-#### Problem 4 
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.1538
+:::
+
+Problem 4
+
 Until 2013, all employees in Canadian workplaces were subject to drug test by a random selection.^1^ The drug test was intended to identify subjects who use illegal drugs, but it had been criticized that too many innocent employees were tested. In 2013, the Supreme Court of Canada ruled that there must be a reasonable cause (e.g., suspicious actions) to drug test an employee. This new policy would narrow the target population of drug test from all employees to suspicious employees. Let $U$ denote a drug use in a target population and $T$ denote a postive drug test result. Assume both sensitivity and specificity of the drug test have been constant at 0.95, and assume that only 5% are drug users among all employees and 95% are drug users among those who act suspiciously. Calculate the following.
 
-a. $P(T \mid U)$  
-
-```{r}
-#| label: asn-4-a
-#| echo: false
-checkdown::check_question(answer = 0.95,
-          button_label = "Check Your Answer")
-```
-
-b. $P(T \mid U^c)$  
-
-```{r}
-#| label: asn-4-ba
-#| echo: false
-checkdown::check_question(answer = 0.05,
-          button_label = "Check Your Answer")
-```
-
-c. $P(T^c \mid U^c)$  
-
-```{r}
-#| label: asn-4-c
-#| echo: false
-checkdown::check_question(answer = 0.95,
-          button_label = "Check Your Answer")
-```
-
-d. $P(T^c \mid U)$  
-
-```{r}
-#| label: asn-4-d
-#| echo: false
-checkdown::check_question(answer = 0.05,
-          button_label = "Check Your Answer")
-```
-
-e. $P(U)$ under the old policy (prior to 2013)  
-
-```{r}
-#| label: asn-4-e
-#| echo: false
-checkdown::check_question(answer = 0.05,
-          button_label = "Check Your Answer")
-```
-
-f. $P(U)$ under the new policy  
-
-```{r}
-#| label: asn-4-f
-#| echo: false
-checkdown::check_question(answer = 0.95,
-          button_label = "Check Your Answer")
-```
-
-g. Under the [old]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}? (i.e., accuse an innocent subject)  
-
-```{r}
-#| label: asn-4-g
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
-
-h. Under the [old]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}? (i.e., free a guilty subject)  
-
-```{r}
-#| label: asn-4-h
-#| echo: false
-checkdown::check_question(answer = 0.0028,
-          button_label = "Check Your Answer")
-```
-
-i. Under the [new]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}?  
-
-```{r}
-#| label: asn-4-i
-#| echo: false
-checkdown::check_question(answer = 0.0028,
-          button_label = "Check Your Answer")
-```
-
-j. Under the [new]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}?  
-
-```{r}
-#| label: asn-4-j
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
-
-k. Multiple-choice: All employees had been targeted under the old policy, and only suspicious employees have been targeted under the new policy. If the test result is negative, the subject is concluded to be clean, and will not be tested for the next three years. If the test result is positive, the subject is temporarily concluded to be a potential risk in the workplace, and will be observed until proven to be clean. According to the probability calculations in previous parts, the \[...\] policy raises the concern of safety in the workplace, and the \[...\] policy raises the concern of privacy.  
+a. $P(T \mid U)$
 
 
-```{r}
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.95
+:::
+
+b. $P(T \mid U^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.05
+:::
+
+c. $P(T^c \mid U^c)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.95
+:::
+
+d. $P(T^c \mid U)$
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.05
+:::
+
+e. $P(U)$ under the old policy (prior to 2013)
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.05
+:::
+
+f. $P(U)$ under the new policy
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.95
+:::
+
+g. Under the [old]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}? (i.e., accuse an innocent subject)
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.5
+:::
+
+h. Under the [old]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}? (i.e., free a guilty subject)
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.0028
+:::
+
+i. Under the [new]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}?
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.0028
+:::
+
+j. Under the [new]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}?
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.5
+:::
+
+k. Multiple-choice: All employees had been targeted under the old policy, and only suspicious employees have been targeted under the new policy. If the test result is negative, the subject is concluded to be clean, and will not be tested for the next three years. If the test result is positive, the subject is temporarily concluded to be a potential risk in the workplace, and will be observed until proven to be clean. According to the probability calculations in previous parts, the [...] policy raises the concern of safety in the workplace, and the [...] policy raises the concern of privacy.
+
 #| label: asn-4-k
 #| echo: false
 checkdown::check_question(answer = "new; old",
@@ -738,31 +817,31 @@ checkdown::check_question(answer = "new; old",
                                       "both; both"),
                           button_label = "Check Your Answer", 
                           type = "radio")
-```
-
 
 ^1^ Hurley, W. J. (2015). Mandatory drug testing in the Canadian workplace: A note on the recent supreme court decision and its effect on the misclassification rate of non-drug users, Chance, 28(1), 21-26. \url{http://chance.amstat.org/2015/02/drug-testing/}
 
+Problem 5
 
-#### Problem 5 
 Imagine you are the wife of a man who was in Titanic which sank in the morning of April 15, 1912. News on radio said 30% of all passengers survived, 25% were men among survivors, and 80% were men among non-survivors. You do not know whether your husband survived or not.
 
-a. What percent of passengers were men?  
-
-```{r}
-#| label: asn-5-a
-#| echo: false
-checkdown::check_question(answer = 0.635,
-          button_label = "Check Your Answer")
-```
+a. What percent of passengers were men?
 
 
-b. What is the probability that your husband survived?  
 
-```{r}
-#| label: asn-5-b
-#| echo: false
-checkdown::check_question(answer = 0.1181,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
 
+Answer
+
+0.635
+:::
+
+b. What is the probability that your husband survived?
+
+
+
+:::{.callout-tip collapse="true"}
+
+Answer
+
+0.1181
+:::

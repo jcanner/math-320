@@ -8,3 +8,4 @@
 *.docx
 *-print.qmd
 *.pdf
+/quiz/

@@ -349,52 +349,50 @@ Let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$ for tossing a six-sided die. Assume all si
 
 a. $P(1)$
 
-```{r}
-#| label: wrap-2-a
-#| echo: false
-checkdown::check_question(answer = 0.1667,
-          button_label = "Check Your Answer")
-```
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1667
+:::
 
 
 b. $P(O)$
 
-```{r}
-#| label: wrap-2-b
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
 
 
 c. $P(A \mid O)$
 
-```{r}
-#| label: wrap-2-c
-#| echo: false
-checkdown::check_question(answer = 0.3333,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3333
+:::
 
 
 d. $P(A \mid E)$
 
-```{r}
-#| label: wrap-2-d
-#| echo: false
-checkdown::check_question(answer = 0,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0
+:::
 
 
 e. $P(O \mid A )$
 
-```{r}
-#| label: wrap-2-e
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 
 #### Problem 3
@@ -514,22 +512,22 @@ Let $\Omega$ be a sample space, and $A$, $B$, and $C$ are a partition of $\Omega
 a. $P(A) + P(B) + P(C)$
 
 
-```{r}
-#| label: wrap-5-a
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 b. $P(A) + P(A^c)$
 
 
-```{r}
-#| label: wrap-5-b
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 #### Problem 6
 Suppose 47% of the population are female nonsmokers, 43% are male nonsmokers, 2% are female smokers, and 8% are male smokers. Suppose we randomly select a person from the population. Calculate:
@@ -537,22 +535,22 @@ Suppose 47% of the population are female nonsmokers, 43% are male nonsmokers, 2%
 a. the probability of selecting a smoker
 
 
-```{r}
-#| label: wrap-6-a
-#| echo: false
-checkdown::check_question(answer = 0.1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1
+:::
 
 b. the probability of selecting a male  
 
 
-```{r}
-#| label: wrap-6-b
-#| echo: false
-checkdown::check_question(answer = 0.51,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.51
+:::
 
 #### Problem 7
 It rains on Monday with a probability of 0.25. If it rains on Monday, it rains on Tuesday with a probability of 0.5. If it does not rain on Monday, it rains on Tuesday with a probability of 0.9. Calculate:
@@ -560,23 +558,23 @@ It rains on Monday with a probability of 0.25. If it rains on Monday, it rains o
 a. the probability of raining on both Monday and Tuesday
 
 
-```{r}
-#| label: wrap-7-a
-#| echo: false
-checkdown::check_question(answer = 0.125,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.125
+:::
 
 
 b. the probability of raining on Tuesday
 
 
-```{r}
-#| label: wrap-7-b
-#| echo: false
-checkdown::check_question(answer = 0.8,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.8
+:::
 
 
 #### Problem 8
@@ -615,12 +613,12 @@ checkdown::check_question(answer = "weighted average",
 It is estimated that 40%, 11%, 45%, and 4% of Americans have blood type A, B, O, and AB, respectively. It is estimated that 7%, 8%, 9%, and 7% of blood type A, B, O, and AB, respectively, develop a certain disease. Calculate the prevalence of the disease in the population. In other words, if we randomly select an American, what is the probability that the subject has the disease?
 
 
-```{r}
-#| label: wrap-9
-#| echo: false
-checkdown::check_question(answer = 0.0801,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0801
+:::
 
 
 ## Assignment
@@ -649,75 +647,75 @@ Suppose a student must earn a high school grade point average (HS GPA) of 2.0 or
 
 a. Calculate the probability of earning an A in Calculus I.
 
-```{r}
-#| label: asn-1-a
-#| echo: false
-checkdown::check_question(answer = 0.2104,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.2104
+:::
 
 b. If a student's HS GPA is between 2 and 2.99, calculate the probability of earning an A in Calculus I.
 
-```{r}
-#| label: asn-1-b
-#| echo: false
-checkdown::check_question(answer = 0.0732,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0732
+:::
 
 c. If a student's HS GPA is 4 or above, calculate the probability of earning an A in Calculus I.
 
-```{r}
-#| label: asn-1-c
-#| echo: false
-checkdown::check_question(answer = 0.5333,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5333
+:::
 
 d. Suppose a passing grade is A, B, or C. Calculate the probability of passing Calculus I.
 
-```{r}
-#| label: asn-1-d
-#| echo: false
-checkdown::check_question(answer = 0.7932,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.7932
+:::
 
 e. If a student's HS GPA is between 2 and 2.99, calculate the probability of passing Calculus I.
 
-```{r}
-#| label: asn-1-e
-#| echo: false
-checkdown::check_question(answer = 0.6037,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.6037
+:::
 
 f. If a student's HS GPA is 4 or above, calculate the probability of passing passing Calculus I.
 
-```{r}
-#| label: asn-1-f
-#| echo: false
-checkdown::check_question(answer = 0.9333,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.9333
+:::
 
 g. If a student's HS GPA is 4 or above, calculate the probability of not passing passing Calculus I.
 
-```{r}
-#| label: asn-1-g
-#| echo: false
-checkdown::check_question(answer = 0.0667,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0667
+:::
 
 h. If a student passed Calculus I, calculate the probability that the student's HS GPA is 3 or above.
 
-```{r}
-#| label: asn-1-h
-#| echo: false
-checkdown::check_question(answer = 0.8491,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.8491
+:::
 
 #### Problem 2
 
@@ -725,12 +723,12 @@ Autism is a developmental disorder. Autistic children have difficulties with soc
 
 a. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$ (called the odds).  
 
-```{r}
-#| label: asn-2-a
-#| echo: false
-checkdown::check_question(answer = 4.2963,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4.2963
+:::
 
 b. Interpret the ratio of the two conditional probabilities in the context.
 
@@ -757,86 +755,86 @@ c. @tbl-autism is a contingency table of 10,000 hypothetical children. Fill in e
 
 c.i.
 
-```{r}
-#| label: asn-2-c-i
-#| echo: false
-checkdown::check_question(answer = 190,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+190
+:::
 
 
 c.ii.
 
-```{r}
-#| label: asn-2-c-ii
-#| echo: false
-checkdown::check_question(answer = 4932,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4932
+:::
 
 c.iii.
 
-```{r}
-#| label: asn-2-c-iii
-#| echo: false
-checkdown::check_question(answer = 5122,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+5122
+:::
 
 c.iv.
 
-```{r}
-#| label: asn-2-c-iv
-#| echo: false
-checkdown::check_question(answer = 42,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+42
+:::
 
 c.v.
 
-```{r}
-#| label: asn-2-c-v
-#| echo: false
-checkdown::check_question(answer = 4836,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4836
+:::
 
 c.vi.
 
-```{r}
-#| label: asn-2-c-vi
-#| echo: false
-checkdown::check_question(answer = 4878,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4878
+:::
 
 c.vii.
 
-```{r}
-#| label: asn-2-c-vii
-#| echo: false
-checkdown::check_question(answer = 232,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+232
+:::
 
 c.viii.
 
-```{r}
-#| label: asn-2-c-viii
-#| echo: false
-checkdown::check_question(answer = 9768,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+9768
+:::
 
 
 d. If a child is autistic, calculate the probability that the child is a boy.
 
-```{r}
-#| label: asn-2-d
-#| echo: false
-checkdown::check_question(answer = 0.819,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.819
+:::
 
 e\. Are $A$ and $B$ independent? Justify.
 
@@ -858,73 +856,73 @@ Let $\Omega$ be a sample space. Let $A$ be an event, and suppose $C_1$, $C_2$, a
 
 a. $P(\Omega)$
 
-```{r}
-#| label: asn-3-a
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 b. $P(A \cap C_1) + P(A \cap C_2) + P(A \cap C_3)$
 
-```{r}
-#| label: asn-3-b
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
 
 c. $P(C_1) + P(C_2) + P(C_3)$
 
-```{r}
-#| label: asn-3-c
-#| echo: false
-checkdown::check_question(answer = 1,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 d. $P(A \mid C_1) \cdot P(C_1) + P(A \mid C_2) \cdot P(C_2) + P(A \mid C_3) \cdot P(C_3)$
 
-```{r}
-#| label: asn-3-d
-#| echo: false
-checkdown::check_question(answer = 0.5,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
 
 
 #### Problem 4
 
 Suppose 2% of CSUMB students are Mathematics Majors. Among Mathematics Majors, 30% are seniors. What percent of CSUMB students are mathematics seniors? (Do not include the percent sign when you input the numeric answer.)
 
-```{r}
-#| label: asn-4
-#| echo: false
-checkdown::check_question(answer = 0.6,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.6
+:::
 
 #### Problem 5
 
 Among vaccinated people, 25% have the flu. Among non-vaccinated people, 75% have the flu. What percent of people should be vaccinated to maintain a prevalence of 30% in the population? (Do not include the percent sign when you input the numeric answer.)
 
-```{r}
-#| label: asn-5
-#| echo: false
-checkdown::check_question(answer = 90,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+90
+:::
 
 #### Problem 6
 
 If a woman smokes during pregnancy, the probability of a premature birth is 0.1. If a woman does not smoke during pregnancy, the probability of a premature birth is 0.05. If 7 in 100 pregnant women smoke on average, what is the probability of a premature birth in the population? (A probability is a number between zero and one.)
 
-```{r}
-#| label: asn-6
-#| echo: false
-checkdown::check_question(answer = 0.0535,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0535
+:::
 
 
 #### Problem 7
@@ -1051,12 +1049,12 @@ gradethis::grade_this_code()
 
 If you did the calculation by hand, you can check your answer here:  
 
-```{r}
-#| label: asn-7-a
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3792
+:::
 
 
 
@@ -1123,12 +1121,12 @@ gradethis::grade_this_code()
 
 If you did the calculation by hand, you can check your answer here:  
 
-```{r}
-#| label: asn-7-b
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3792
+:::
 
 
 
@@ -1195,14 +1193,17 @@ gradethis::grade_this_code()
 
 If you did the calculation by hand, you can check your answer here:  
 
-```{r}
-#| label: asn-7-c
-#| echo: false
-checkdown::check_question(answer = 0.3792,
-          button_label = "Check Your Answer")
-```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3792
+:::
 
 
 d. Explain why the three estimates in parts a, b, and c are the same. 
 
-
+:::{.callout-tip collapse="true"}
+#### Answer
+Consider the definition of marginal probability. 
+:::
