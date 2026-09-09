@@ -333,7 +333,7 @@ a. $h$ and $t$ are equally likely.
 
 b. The probability of $h$ is 9 times of the probability of $t$.
 
-:::{.callout-tip collapse = 
+:::{.callout-tip collapse = "true"}
 #### Answer
 0.9
 :::

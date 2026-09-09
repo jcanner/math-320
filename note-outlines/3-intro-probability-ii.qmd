@@ -732,10 +732,10 @@ a. Calculate $\frac{P( A \mid B )}{P( A \mid B^c )}$ (called the odds).
 
 b. Interpret the ratio of the two conditional probabilities in the context.
 
-
-<!-- According to the CDC estimate, the prevalence of autism among boys is about 4.3 times of -->
-<!-- the prevalence of autism among girls -->
-
+:::{.callout-tip collapse = "true"}
+#### Answer
+One possible interpretation: *"According to the CDC estimate, the prevalence of autism among boys is about 4.3 times of the prevalence of autism among girls"*
+:::
 
 
 
