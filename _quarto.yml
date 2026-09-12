@@ -59,7 +59,8 @@ website:
         text: "Introduction to Probability II"
       - href: note-outlines/4-bayes-theorem.qmd
         text: "Bayes Theorem"
-   
+      - href: note-outlines/5-discrete-distributions.qmd
+        text: "Discrete Random Variables"   
    
        
 format:

@@ -1,5 +1,5 @@
 ---
-title: "Bayes Theorem"
+title: "Discrete Random Variables"
 format: 
   live-html:
     webr:
@@ -27,7 +27,7 @@ css: ../styles.css
 ---
 
 {{< include ../_extensions/r-wasm/live/_knitr.qmd >}}  
-{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}  
 
 ```{webr}
 #| label: theme
@@ -56,17 +56,37 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
 ```
 
 
-
-
 ## Discrete Random Variable
 
 **Definition:** Let $\Omega$ be a sample space. A real-valued function $W$: $\Omega \rightarrow \mathcal{R}$ is called a **random variable**.
 
-This definition sounds daunting, but we use it everyday. In an academic transcript, each letter grade in $\Omega = \{ a, b, c, d, f \}$ is mapped to a numeric value 4, 3, 2, 1, and 0, respectively. This process can be expressed as follows: $W(a) = 4$, $W(b) = 3$, $W(c) = 2$, $W(d) = 1$, and $W(f) = 0$. By the aforementioned definition, $W$ is a random variable, and $\mathcal{S}_W = \{ 0, 1, 2, 3, 4 \}$, the set of possible values of $W$, is called the **support** of $W$. More specifically, $W$ is a **discrete random variable** as its support $\mathcal{S}_W$ is countable.
+This definition sounds daunting, but we use it everyday.
 
-At the end of a soccer match, the sample space is $\Omega = \{ win, tie, loss \}$ for each team. In a professional soccer league, each game outcome is transformed to a numeric score as follows: $X(win) = 3$, $X(tie) = 1$, and $X(loss) = 0$. In this case, $X$ is a discrete random variable, and $\mathcal{S}_X = \{ 0, 1, 3 \}$ is the support of $X$. Each team in a league plays a large number of matches, and this random variable helps ranking teams at the end of the league (e.g., 10 wins, 5 ties, and 5 losses are equivalent to 35 points).
+***Example:*** In an academic transcript, each letter grade in $\Omega = \{ a, b, c, d, f \}$ is mapped to a numeric value 4, 3, 2, 1, and 0, respectively. This process can be expressed as follows: $W(a) = 4$, $W(b) = 3$, $W(c) = 2$, $W(d) = 1$, and $W(f) = 0$. By the aforementioned definition,
 
-Sometimes, an experiment returns a numeric outcome. Let $Y$ be the total number of goals a team scored in a match. In this case, $Y$ is a discrete random variable, and its support is $\mathcal{S}_Y = \{ 0, 1, 2, 3, \dots \}$. Let $Z$ be the outcome of tossing a 6-sided die. In this case, $Z$ is also a random variable, and its support is $\mathcal{S}_Z = \{ 1, 2, 3, 4, 5, 6 \}$.
+- $W$ is a random variable, and
+
+- $\mathcal{S}_W = \{ 0, 1, 2, 3, 4 \}$, the set of possible values of $W$, is called the **support** of $W$
+
+More specifically, $W$ is a **discrete random variable** as its support $\mathcal{S}_W$ is countable.
+
+***Example:*** At the end of a soccer match, the sample space is $\Omega = \{ win, tie, loss \}$ for each team. In a professional soccer league, each game outcome is transformed to a numeric score as follows: $X(win) = 3$, $X(tie) = 1$, and $X(loss) = 0$. In this case,
+
+- $X$ is a discrete random variable, and
+
+$\mathcal{S}_X = \{ 0, 1, 3 \}$ is the support of $X$.
+
+Each team in a league plays a large number of matches, and this random variable helps ranking teams at the end of the league (e.g., 10 wins, 5 ties, and 5 losses are equivalent to 35 points).
+
+Sometimes, an experiment returns a numeric outcome.
+
+***Example:*** Let $Y$ be the total number of goals a team scored in a match. In this case,
+
+- $Y$ is a discrete random variable, and
+
+- its support is $\mathcal{S}_Y = \{ 0, 1, 2, 3, \dots \}$.
+
+Let $Z$ be the outcome of tossing a 6-sided die. In this case, $Z$ is also a random variable, and its support is $\mathcal{S}_Z = \{ 1, 2, 3, 4, 5, 6 \}$.
 
 ## Probability Mass Function
 
@@ -77,30 +97,49 @@ Sometimes, an experiment returns a numeric outcome. Let $Y$ be the total number 
 
 We already have seen this kind of definition in a previous lecture. The PMF is a probability model for a discrete random variable.
 
-**Example:** Let $X$ be the points earned per match (3 for a win, 1 for a tie, and 0 for a loss). Given the support $\mathcal{S}_X = \{ 0, 1, 3 \}$, assume the following PMF:
+***Example:*** Let $X$ be the points earned per match (3 for a win, 1 for a tie, and 0 for a loss). Given the support $\mathcal{S}_X = \{ 0, 1, 3 \}$, assume the following PMF:
 
 $$f_X(0) = 0.2 \, , \,\,\, f_X(1) = 0.3 \, , \,\,\, f_X(3) = 0.5 \, .$$
 
 It represents that the probability of earning 0 points (a loss) is 0.2, the probability of earning 1 point (a tie) is 0.3, and the probability of earning 3 points (a win) is 0.5. (The probability of earning 2 points is zero in this system.) This probability model can be graphically represented as follows.
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Probability mass function"}
-x = c(0, 1, 2, 3) ### possible outcomes
-f = c(0.2, 0.3, 0, 0.5) ### respective probabilities
-barplot( f, names = x, col = "white", ylim = c(0, 1),
-         xlab = "Points earned per game", 
-         ylab = "Probability",
-         main = "Probability Mass Function" )
+```{webr}
+#| label: pmf-soccer
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%" 
+#| out-width: "40%" 
+#| fig-alt: "Probability mass function"
+library(ggformula)
+
+x <- c(0, 1, 2, 3) ### possible outcomes
+f_x <- c(0.2, 0.3, 0, 0.5) ### respective probabilities
+
+gf_col(f_x ~ x, 
+       xlab = "Points Earned per Game", 
+       ylab = "Probability",
+       title = "Probability Mass Function" ) +
+  ylim(0, 1)
 ```
 
-**Example:** Let $Z$ be the outcome of tossing a 6-sided die. Given its support $\mathcal{S}_Z = \{ 1, 2, 3, 4, 5, 6 \}$, assume $f_Z(1) = f_Z(2) = \dots = f_Z(6)$. In other words, $f_Z$ expresses that all of the six outcomes are equally likely, and it implies $f_Z(z) = \frac{1}{6}$ for $z = 1, 2, \dots, 6$. In this case, we say $Z$ follows a discrete uniform distribution from 1 to 6, and it can be graphically represented as follows.
+***Example:*** Let $Z$ be the outcome of tossing a 6-sided die. Given its support $\mathcal{S}_Z = \{ 1, 2, 3, 4, 5, 6 \}$, assume $f_Z(1) = f_Z(2) = \dots = f_Z(6)$. In other words, $f_Z$ expresses that all of the six outcomes are equally likely, and it implies $f_Z(z) = \frac{1}{6}$ for $z = 1, 2, \dots, 6$. In this case, we say $Z$ follows a *discrete uniform distribution* from 1 to 6, and it can be graphically represented as follows.
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Probability mass function"}
-z = 1:6 ### possible outcomes
-f = rep( 1/6, 6 ) ### respective probabilities
-barplot( f, names = z, col = "white", ylim = c(0, 0.5),
-         xlab = "Outcome of a die", 
-         ylab = "Probability",
-         main = "Probability Mass Function" )
+```{webr}
+#| label: pmf-dice
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%"
+#| out-width: "40%"
+#| fig-alt: "Probability mass function"
+
+z <- 1:6 # possible outcomes
+f_z <- rep( 1/6, 6 ) # respective probabilities
+
+gf_col(f_z ~ z,
+       xlab = "Outcome of a die", 
+       ylab = "Probability",
+       title = "Probability Mass Function" ) +
+  ylim(0, 1)
 ```
 
 ## Expectation
@@ -113,19 +152,33 @@ The expectation of $X$ is also called the **average**, **mean**, or **expected v
 
 **Note:** In words, the expectation of $X$ is the weighted average of all possible values of $X$ where each possible value of $X$ is weighted by its probability.
 
-**Example:** In a previous example, we let $X$ be the points a soccer team earned per match, and assumed $f_X(0) = 0.2$, $f_X(1) = 0.3$, and $f_X(3) = 0.5$. According to the definition, the expectation of $X$ (i.e., the expected points per match) is
+***Example:*** In a previous example, we let $X$ be the points a soccer team earned per match, and assumed $f_X(0) = 0.2$, $f_X(1) = 0.3$, and $f_X(3) = 0.5$. According to the definition, the expectation of $X$ (i.e., the expected points per match) is
 
+:::{.callout-note collapse="true"}
+#### Answer
 $$E(X) = 0 \cdot 0.2 + 1 \cdot 0.3 + 3 \cdot 0.5 = 1.8 \, .$$
+:::
 
-Assume $f_X(0) = 0.5$, $f_X(1) = 0.1$, and $f_X(3) = 0.4$. In this case, the expected points per game is
+***Example:*** Assume we have a new team where $f_X(0) = 0.5$, $f_X(1) = 0.1$, and $f_X(3) = 0.4$. In this case, the expected points per game is
 
-$$ 
-E(X) = 0 \cdot 0.5 + 1 \cdot 0.1 + 3 \cdot 0.4 = 1.3 \, . $$
+:::{.callout-note collapse="true"}
+#### Answer
+$$ E(X) = 0 \cdot 0.5 + 1 \cdot 0.1 + 3 \cdot 0.4 = 1.3 \, . $$
+:::
 
+Which team is is better on average when it comes to points per game?
+
+:::{.callout-note collapse="true"}
+#### Answer
 The former team is better than the latter team by 0.5 points on average.
+:::
 
-**Example:** In the example of tossing a six-sided die, we assumed $f_Z(z) = \frac{1}{6}$ for $z = 1, 2, \dots, 6$. By the definition, the expected outcome is
 
+***Example:*** In the example of tossing a six-sided die, we assumed $f_Z(z) = \frac{1}{6}$ for $z = 1, 2, \dots, 6$. By the definition, the expected outcome is
+
+
+:::{.callout-note collapse="true"}
+#### Answer
 $$\begin{aligned}
 E(Z) & = \sum_{z = 1}^6 s \cdot f_Z(z) \\
 & = \sum_{z = 1}^6 z \cdot \frac{1}{6} \\
@@ -133,6 +186,8 @@ E(Z) & = \sum_{z = 1}^6 s \cdot f_Z(z) \\
 & = \frac{1}{6} \cdot (1 + 2 + \dots + 6) \\
 & = 3.5 \, .
 \end{aligned}$$
+:::
+
 
 ## Variance
 
@@ -140,15 +195,15 @@ In some sense, the expectation characterizes a probability model in terms of the
 
 **Definition:** Let $X$ be a random variable, $\mathcal{S}_X$ be the support of $X$, and $f_X$ be the PMF of $X$. Let $E(X)$ be the expectation of $X$. The **variance** of $X$ is defined as
 
-$$ 
-V(X) = \sum_{x \in \mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, . $$
+$$ V(X) = \sum_{x \in \mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, . $$
 
 In words, the variance is the expected square distance of $X$ from $E(X)$, and it quantifies the variability of the random variable $X$ from its own average $E(X)$.
 
-**Example:** In the soccer example, given the PMF $f_X(0) = 0.2$, $f_X(1) = 0.3$, and $f_X(3) = 0.5$, we calculated the expectation, $E(X) = 1.8$, and we can calculate that the variance as follows:
+***Example:*** In the soccer example, given the PMF $f_X(0) = 0.2$, $f_X(1) = 0.3$, and $f_X(3) = 0.5$, we calculated the expectation, $E(X) = 1.8$, and we can calculate that the variance as follows:
 
-$$ 
-V(X) = (0 - 1.8)^2 \cdot 0.2 + (1 - 1.8)^2 \cdot 0.3 + (3 - 1.8)^2 \cdot 0.5 = 1.56 \, . $$
+:::{.callout-note collapse="true"}
+$$ V(X) = (0 - 1.8)^2 \cdot 0.2 + (1 - 1.8)^2 \cdot 0.3 + (3 - 1.8)^2 \cdot 0.5 = 1.56 \, . $$
+:::
 
 Given the other PMF $f_X(0) = 0.5$, $f_X(1) = 0.1$, and $f_X(3) = 0.4$. we calculated that the expectation is $E(X) = 1.3$, and we can calculate that the variance is $V(X) = 2.01$. The latter team has the lower expected points per game, and it has a higher variance than the former team.
 
@@ -156,6 +211,7 @@ Given the other PMF $f_X(0) = 0.5$, $f_X(1) = 0.1$, and $f_X(3) = 0.4$. we calcu
 
 **Example:** In the example of tossing a six-sided die, we assumed $f_Z(z) = \frac{1}{6}$ for $z = 1, 2, \dots, 6$, and we calculated $E(Z) = 3.5$. By the definition of variance,
 
+:::{.callout-note collapse="true"}
 $$\begin{aligned}
 V(Z) & = \sum_{z = 1}^6 [z - E(Z)]^2 \cdot f_Z(z) \\
 & = \sum_{s = 1}^6 [z - 3.5]^2 \cdot \frac{1}{6} \\
@@ -163,6 +219,7 @@ V(Z) & = \sum_{z = 1}^6 [z - E(Z)]^2 \cdot f_Z(z) \\
 & = \frac{1}{6} \cdot [ (1 - 3.5)^2 + (2-3.5)^2 + \dots + (6 - 3.5)^2 ] \\
 & = 2.9167 \, ,
 \end{aligned}$$
+:::
 
 and the standard deviation is $\sqrt{V(Z)} = 1.7078$.
 
@@ -172,18 +229,30 @@ When an experiment has binary outcomes, say 0 and 1, it is called a **Bernoulli 
 
 In this generic expression, the expectation of $X$ is
 
+:::{.callout-note collapse="true"}
 $$E(X) = 0 \cdot (1-\theta) + 1 \cdot \theta = \theta \, ,$$
+:::
+
 
 and the variance of $X$ is
 
+:::{.callout-note collapse="true"}
 $$\begin{aligned}
 V(X) & = (0 - \theta)^2 \cdot (1-\theta) + (1 - \theta)^2 \cdot \theta \\
 & = \theta^2 \cdot (1-\theta) + (1-\theta)^2 \cdot \theta \\
 & = \theta \cdot (1-\theta) \cdot [\theta + (1-\theta)] \\
 & = \theta \cdot (1-\theta) \, .
 \end{aligned}$$
+:::
 
-For example, if we assume that the probability of head is $\theta = 0.51$, the Bernoulli random variable $X$ has an expectation of $E(X) = 0.51$ and a variance of $V(X) = 0.51 \cdot (1-0.51) = 0.2499$.
+***Example*** If we assume that the probability of head is $\theta = 0.51$ for a Bernoulli random variable $X$, find the expectation and variance.  
+
+
+:::{.callout-note collapse="true"}
+$E(X) = 0.51$ and a variance of $V(X) = 0.51 \cdot (1-0.51) = 0.2499$.
+:::
+
+
 
 ## Binomial Random Variable
 
@@ -199,7 +268,9 @@ $$f_Y(y) = \frac{n!}{y! (n-y)!} \, \theta^y \, (1-\theta)^{n-y} \, , \,\,\, y = 
 
 In this case, we simply write $Y \sim \mathrm{Bino}(n, \theta)$.
 
-**Example:** Suppose we toss a coin three times where the probability of a head is $\theta = 0.9$ for each trial. Let $Y$ be the number of heads out of $n = 3$. Assuming $Y \sim \mathrm{Bino}(3, 0.9)$, which implies the three assumptions are satisfied, the support is $\mathcal{S}_Y = \{ 0, 1, 2, 3 \}$, and the PMF is as follows:
+***Example:*** Suppose we toss a coin three times where the probability of a head is $\theta = 0.9$ for each trial. Let $Y$ be the number of heads out of $n = 3$. Assuming $Y \sim \mathrm{Bino}(3, 0.9)$, which implies the three assumptions are satisfied, the support is $\mathcal{S}_Y = \{ 0, 1, 2, 3 \}$, and the PMF is as follows:
+
+:::{.callout-note collapse="true"}
 
 $$\begin{aligned}
 f_Y(0) & = \frac{3!}{0! \, 3!} \, (0.9)^0 \, (0.1)^{3} = 0.001 \, , \\
@@ -207,13 +278,16 @@ f_Y(1) & = \frac{3!}{1! \, 2!} \, (0.9)^1 \, (0.1)^{2} = 0.027 \, , \\
 f_Y(2) & = \frac{3!}{2! \, 1!} \, (0.9)^2 \, (0.1)^{1} = 0.243 \, , \\
 f_Y(3) & = \frac{3!}{3! \, 0!} \, (0.9)^3 \, (0.1)^{0} = 0.729 \, . 
 \end{aligned}$$
+:::
+
 
 We can calculate $f_Y(y)$ by $\texttt{dbinom}(y, n, \theta)$ in R.
 
-```{r}
-n = 3
-theta = 0.9
-dbinom(0, n, theta)
+```{webr}
+#| label: binomial-demo
+n <- 3
+theta <-  0.9
+dbinom(x = 0, size = n, prob = theta)
 dbinom(1, n, theta)
 dbinom(2, n, theta)
 dbinom(3, n, theta)
@@ -221,246 +295,524 @@ dbinom(3, n, theta)
 
 We can graphically show the probability model as follows.
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Binomial probability model"}
-n = 3 ### number of trials
-theta = 0.9 ### probability of head
-y = 0:n ### possible outcomes
-f = dbinom(y, n, theta) ### calculate PMF
-barplot( f, names = y, col = "white", ylim = c(0, 1),
-         xlab = "Number of heads out of 3 trials", 
-         ylab = "Probability",
-         main = "Binomial Probability Model" )
+```{webr}
+#| label: pmf-binomal
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%" 
+#| out-width: "40%" 
+#| fig-alt: "Binomial probability model"
+
+n <- 3 ### number of trials
+theta <- 0.9 ### probability of head
+y <- 0:n ### possible outcomes
+f_y <- dbinom(y, n, theta) ### calculate PMF
+
+gf_col(f_y ~ y,
+       xlab = "Number of heads out of 3 trials", 
+       ylab = "Probability",
+       title = "Binomial Probability Model" ) +
+    ylim(0, 1)
 ```
 
 According to the definition, the expected number of heads out of three trials is
 
+
+:::{.callout-note collapse="true"}
+
 $$E(Y) = 0 \cdot 0.001 + 1 \cdot 0.027 + 2 \cdot 0.243 + 3 \cdot 0.729 = 2.7 \, ,$$
+:::
 
 and the variance is
+
+:::{.callout-note collapse="true"}
 
 $$\begin{aligned}
 V(Y) & = (0 - 2.7)^2 \cdot 0.001 + (1 - 2.7)^2 \cdot 0.027 \\
 & \,\,\, + (2 - 2.7)^2 \cdot 0.243 + (3 - 2.7)^2 \cdot 0.729 \\
 & = 0.27 \, .
 \end{aligned}$$
+:::
 
-**Note:** If $Y \sim \mathrm{Bino}(n, \theta)$, then $E(Y) = n \cdot \theta$ and $V(Y) = n \cdot \theta(1-\theta)$. In the previous example, the expectation and variance can be calculated as follows:
 
+**Note:** If $Y \sim \mathrm{Bino}(n, \theta)$, then 
+
+- $E(Y) = n \cdot \theta$ and   
+- $V(Y) = n \cdot \theta(1-\theta)$. 
+
+In the previous example, the expectation and variance can be calculated as follows:
+
+:::{.callout-note collapse="true"}
 $$\begin{aligned}
 E(Y) & = 3(0.9) = 2.7 \, , \\
 V(Y) & = 3(0.9)(1-0.9) = 0.27 \, .
 \end{aligned}$$
+:::
 
-**Example:** Suppose a test consists of ten multiple-choice questions, and each question has one correct answer out of four choices. Seven or more correct answers are needed to pass the test. What is the probability of passing the test if we randomly guess each answer? Let $Y$ be the number of correct answers. It is analogous to the number of heads out of ten coin tosses with a 0.25 probability of head per coin toss. Assuming $Y \sim \mathrm{Bino}(n, \theta)$ where $n = 10$ and $\theta = 0.25$, the support of $\mathcal{S}_Y = \{ 0, 1, 2, \dots, 10 \}$, and the PMF is
+
+***Example:*** Suppose a test consists of ten multiple-choice questions, and each question has one correct answer out of four choices. Seven or more correct answers are needed to pass the test. What is the probability of passing the test if we randomly guess each answer?   
+
+Let $Y$ be the number of correct answers.  
+
+Assuming $Y \sim \mathrm{Bino}(n, \theta)$ where $n = 10$ and $\theta = _____$, the support of $\mathcal{S}_Y = \{ 0, 1, 2, \dots, 10 \}$, and the PMF is
 
 $$f_Y(y) = \frac{10!}{y! \, (10-y)!} \, \theta^y (1-\theta)^{10-y} \, , \,\,\, y = 0, 1, 2, \dots, 10 \, .$$
 
 The above PMF can be calculated using the $\texttt{dbinom}$ function in R, and graphically represent the PMF as follows.
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Binomial probability model"}
-n = 10 ### number of trials
-theta = 0.25 ### probability of correct answer
-y = 0:n ### possible outcomes
-f = dbinom(y, n, theta) ### calculate PMF
-pmf_table = data.frame( outcome = y, prob = round(f, 6) )
+```{webr}
+#| label: pmf-mc-questions
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%" 
+#| out-width: "40%" 
+#| fig-alt: "Probability probability model for multiple choice"
+
+n <- 10 ### number of trials
+theta <- 0.25 ### probability of correct answer
+y <- 0:n ### possible outcomes
+f_y <- dbinom(y, n, theta) ### calculate PMF
+
+pmf_table <- data.frame( outcome = y, prob = round(f_y, 6) )
 pmf_table
 
-barplot( f, 
-         names = y, 
-         col = rainbow(11), 
-         border = "white", 
-         ylim = c(0, 0.5),
-         xlab = "Number of correct answers out of 10 guesses", 
-         ylab = "Probability",
-         main = "Binomial Probability Model" )
+gf_col(f_y ~ y, fill = ~factor(y),
+       xlab = "Number of correct answers out of 10 guesses", 
+       ylab = "Probability",
+       title = "Binomial Probability Model" ) +
+  guides(fill = "none")
 ```
 
 We can calculate that the probability of passing the test (\$Y = 7\$ or more) is
+
+:::{.callout-note collapse="true"}
 
 $$\begin{aligned}
 P(Y \ge 7) & = f_Y(7) + f_Y(8) + f_Y(9) + f_Y(10) \\
 & = 0.003090 + 0.000386 + 0.000029 + 0.000001 \\ 
 & = 0.0035 \, .
 \end{aligned}$$
+:::
 
 It can be calculated using the $\texttt{dbinom}$ function as follows.
 
-```{r}
-n = 10
-theta = 0.25
-sum( dbinom(7:n, n, theta) )
+```{webr}
+#| label: greater-than-7
+n <- 10
+theta <- 0.25
+sum(dbinom(7:n, n, theta))
 ```
 
-## Warm-up
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdN3s0o1ppjMJB1ycehRmwSaDNfpKUDpOk6i8JCkf_ef-6NaA/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+We can also use the R function $\texttt{pbinom}$, which calculates the probability of being less than or equal to the given value, so in order to calculate the probability of being greater than or equal to a specific value, we need to make two modifications to our calculation.
 
-**Problem 1.** Let $X$ be a discrete random variable. Fill in the blanks.
+```{webr}
+#| label: great-than-7-other
+pbinom(6, n, theta, lower.tail = FALSE) 
+#or
+1 - pbinom(6, n, theta)
+```
 
-a\. The set of all possible values of $X$ is called the \[s...\], and it is denoted by $\mathcal{S}_X$.
+Using probability theory and the definition of complement, why did we adjust our code the way we did?
 
-b\. The \[p... m... f...\] is a function which receives a possible value of $X$ and returns its probability.
 
-c\. Let $f_X$ be the PMF of $X$. $f_X(x) = p$ is interpreted as the \[p...\] of $X = x$.
 
-d\. Assume $\mathcal{S}_X = \{ 1, 2, 3 \}$. The sum of $f_X(1)$, $f_X(2)$, and $f_X(3)$ must equal to \[o...\].
 
-e\. The \[e...\] of $X$ is the weighted average of all possible values of $X$ where each possible value is weighted by its probability.
 
-f\. The \[v...\] of $X$ is the expected square distance of $X$ from its average.
+## Wrap-Up
 
-g\. The square root of the variance is called the \[s... d...\].
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-h\. When a random variable $X$ can be either $X = 1$ or $X = 0$, it is called the \[B...\] random variable.
+#### Problem 1   
+Let $X$ be a discrete random variable. Fill in the blanks.
 
-**Problem 2.** Let $X$ be a random variable such that $\mathcal{S}_X = \{ -1, 0, 1 \}$ and $f_X(x) = 0.5 x^2$ for $x = -1, 0, 1$. Calculate the following.
+a. The set of all possible values of $X$ is called the \[s...\], and it is denoted by $\mathcal{S}_X$.
 
-a\. $f_X(-1) + f_X(0) + f_X(1)$
+:::{.callout-tip collapse="true"}
+#### Answer
+support
+:::
 
-b\. $E(X)$
+b. The \[p... m... f...\] is a function which receives a possible value of $X$ and returns its probability. 
 
-c\. $V(X)$
+:::{.callout-tip collapse="true"}
+#### Answer
+probability mass function
+:::
 
-**Problem 3.** Let $X$ be a Bernoulli random variable such that the probability of $X = 1$ is 0.7. Calculate the following.
+c. Let $f_X$ be the PMF of $X$. $f_X(x) = p$ is interpreted as the \[p...\] of $X = x$.
 
-a\. $f_X(0)$
+:::{.callout-tip collapse="true"}
+#### Answer
+probability
+:::
 
-b\. $E(X)$
+d. Assume $\mathcal{S}_X = \{ 1, 2, 3 \}$. The sum of $f_X(1)$, $f_X(2)$, and $f_X(3)$ must equal to \[o...\].
 
-c\. $V(X)$
+:::{.callout-tip collapse="true"}
+#### Answer
+one
+:::
 
-**Problem 4.** Suppose we toss a coin four times. Assume the probability of head is 0.5 for each toss, and all tosses are independent. Let $T$ be the number of heads out of four trials.
+e. The \[e...\] of $X$ is the weighted average of all possible values of $X$ where each possible value is weighted by its probability.
 
-a\. Fill in the blank: $T$ is called the \[b...\] random variable, and we write it as $T \sim \mathrm{Bino}(n, \theta)$ with $n = 4$ and $\theta = 0.5$.
+:::{.callout-tip collapse="true"}
+#### Answer
+expectation
+:::
 
-b\. Calculate $f_T(2)$, the probability of exactly two heads.
+f. The \[v...\] of $X$ is the expected square distance of $X$ from its average.
 
-c\. Calculate $P(T \ge 2)$, the probability of two or more heads.
+:::{.callout-tip collapse="true"}
+#### Answer
+variance
+:::
 
-d\. Calculate $E(T)$.
+g. The square root of the variance is called the \[s... d...\].
 
-e\. Calculate $V(T)$.
+:::{.callout-tip collapse="true"}
+#### Answer
+standard deviation
+:::
 
-**Problem 5.** Suppose we toss a coin 200 times. Assume the probability of head is 0.7 for each toss, and all tosses are independent. Calculate the probability of 160 or more heads.
+h. When a random variable $X$ can be either $X = 1$ or $X = 0$, it is called the \[B...\] random variable.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Bernoulli
+:::
+
+#### Problem 2   
+Let $X$ be a random variable such that $\mathcal{S}_X = \{ -1, 0, 1 \}$ and $f_X(x) = 0.5 x^2$ for $x = -1, 0, 1$. Calculate the following.
+
+a. $f_X(-1) + f_X(0) + f_X(1)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
+
+b. $E(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0
+:::
+
+c. $V(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
+
+#### Problem 3   
+Let $X$ be a Bernoulli random variable such that the probability of $X = 1$ is 0.7. Calculate the following.
+
+a. $f_X(0)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3
+:::
+
+b. $E(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.7
+:::
+
+c. $V(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.21
+:::
+
+#### Problem 4   
+Suppose we toss a coin four times. Assume the probability of head is 0.5 for each toss, and all tosses are independent. Let $T$ be the number of heads out of four trials.
+
+a. Fill in the blank: $T$ is called the \[B...\] random variable, and we write it as $T \sim \mathrm{Bino}(n, \theta)$ with $n = 4$ and $\theta = 0.5$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Binomial
+:::
+
+b. Calculate $f_T(2)$, the probability of exactly two heads.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.375
+:::
+
+c. Calculate $P(T \ge 2)$, the probability of two or more heads.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.6875
+:::
+
+d. Calculate $E(T)$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+2
+:::
+
+e. Calculate $V(T)$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
+
+#### Problem 5   
+Suppose we toss a coin 200 times. Assume the probability of head is 0.7 for each toss, and all tosses are independent. Calculate the probability of 160 or more heads.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0009
+:::
 
 ## Assignment
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSecROKzNglavCwAWHYpb3XIbXe20O4RANZciKekBUMpMeKHQA/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
 
-**Problem 1.** Suppose we toss a 12-sided die. Assume all faces are equally likely to occur. Let $X$ be the outcome where $\mathcal{S}_X = \{ 1, 2, \dots, 12 \}$. Calculate the following.
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
-a\. $\sum_{x = 1}^{12} f_X(x)$
+#### Problem 1   
+Suppose we toss a 12-sided die. Assume all faces are equally likely to occur. Let $X$ be the outcome where $\mathcal{S}_X = \{ 1, 2, \dots, 12 \}$. Calculate the following.
 
-b\. $f_X(1)$
+a. $\sum_{x = 1}^{12} f_X(x)$
 
-c\. $P(X \ge 10)$, the probability of any double-digit outcome
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
-d\. $E(X)$
+b. $f_X(1)$
 
-e\. $V(X)$
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0833
+:::
 
-**Problem 2.** Let $T$ be a random variable where $\mathcal{S}_T = \{ 1, 2, 3, 4 \}$. Assume the PMF is given by
+c. $P(X \ge 10)$, the probability of any double-digit outcome
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.25
+:::
+
+d. $E(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+6.5
+:::
+
+e. $V(X)$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+11.9167
+:::
+
+#### Problem 2   
+Let $T$ be a random variable where $\mathcal{S}_T = \{ 1, 2, 3, 4 \}$. Assume the PMF is given by
 
 $$f_T(t) = c \cdot t \, , \,\,\, t = 1, 2, 3, 4$$
 
 where $c > 0$ is some constant. Calculate the following.
 
-a\. $c$
+a. $c$
 
-b\. $f_T(4)$
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1
+:::
 
-c\. $E(T)$
+b. $f_T(4)$
 
-d\. $V(T)$
+:::{.callout-tip collapse="true"}
+#### Answer
+0.4
+:::
 
-**Problem 3.** Suppose we toss a pair of 6-sided dice. Assume all 36 paired outcomes are equally likely. Let $X$ be the outcome of the first die, and $Y$ be the outcome of the second die. Let $D = | X - Y |$ which is a random variable. Let $\mathcal{S}_D$ be the support of $D$, and let $f_D$ be the PMF of $D$.
+c. $E(T)$
 
-a\. How many possible outcomes are in $\mathcal{S}_D$.
+:::{.callout-tip collapse="true"}
+#### Answer
+3
+:::
 
-b\. Calculate $f_D(3)$.
+d. $V(T)$
 
-c\. Which outcome in $\mathcal{S}_D$ is the most likely outcome?
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
-d\. Calculate $E(D)$.
+#### Problem 3   
+Suppose we toss a pair of 6-sided dice. Assume all 36 paired outcomes are equally likely. Let $X$ be the outcome of the first die, and $Y$ be the outcome of the second die. Let $D = | X - Y |$ which is a random variable. Let $\mathcal{S}_D$ be the support of $D$, and let $f_D$ be the PMF of $D$.
 
-e\. Calculate the standard deviation of $D$.
+a. How many possible outcomes are in $\mathcal{S}_D$.
 
-**Problem 4.** Let $X$, $Y$, and $Z$ be random variables with the common support $\mathcal{S}_X = \mathcal{S}_Y = \mathcal{S}_Z =\{ 0, 1, 2, 3, 4 \}$. Their PMFs are graphically shown below.
+:::{.callout-tip collapse="true"}
+#### Answer
+6
+:::
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", echo = FALSE, fig.alt = "Probability distribution of X"}
-quiz1 = c( 1, 2, 5, 10, 5 )
-quiz2 = c( 10, 5, 1, 2, 10 )
-quiz3 = c( 5, 5, 5, 5, 5 )
+b. Calculate $f_D(3)$.
 
-f.x = quiz1 / sum(quiz1)
-f.y = quiz2 / sum(quiz2)
-f.z = quiz3 / sum(quiz3)
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1667
+:::
 
-barplot( f.x, names.arg = 0:4, ylim = c(0, 1), 
-         main = "Probability Distribution of X", 
-         xlab = "", ylab = "Probability",
-         col = "white" )
+c. Which outcome in $\mathcal{S}_D$ is the most likely outcome?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
+
+d. Calculate $E(D)$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1.9444
+:::
+
+e. Calculate the standard deviation of $D$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1.4326
+:::
+
+#### Problem 4   
+Let $X$, $Y$, and $Z$ be random variables with the common support $\mathcal{S}_X = \mathcal{S}_Y = \mathcal{S}_Z =\{ 0, 1, 2, 3, 4 \}$. Their PMFs are graphically shown below.
+
+```{r}
+#| label: problem-4
+#| echo: false
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%"
+#| out-width: "40%" 
+#| fig-alt: "Probability distribution of X, Y, and Z"
+
+quiz1 <- c( 1, 2, 5, 10, 5 )
+quiz2 <- c( 10, 5, 1, 2, 10 )
+quiz3 <- c( 5, 5, 5, 5, 5 )
+
+x <- 0:4
+
+f_x <- quiz1 / sum(quiz1)
+f_y <- quiz2 / sum(quiz2)
+f_z <- quiz3 / sum(quiz3)
+
+gf_col(f_x ~ x,  
+       title = "Probability Distribution of X", 
+       xlab = "Support", 
+       ylab = "Probability") +
+  ylim(0, 1)
+
+gf_col(f_y ~ x,  
+       title = "Probability Distribution of Y", 
+       xlab = "Support", 
+       ylab = "Probability") +
+  ylim(0, 1)
+
+gf_col(f_z ~ x,  
+       title = "Probability Distribution of Z", 
+       xlab = "Support", 
+       ylab = "Probability") +
+  ylim(0, 1)
 ```
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", echo = FALSE, fig.alt = "Probability distribution of Y"}
-barplot( f.y, names.arg = 0:4, ylim = c(0, 1), 
-         main = "Probability Distribution of Y", 
-         xlab = "", ylab = "Probability",
-         col = "white" )
+
+a. Multiple-choice: Which random variable has the largest expectation?
+
+```{r}
+#| label: asn-4-a
+#| echo: false
+checkdown::check_question(answer = "X",
+                          options = c("X",
+                                      "Y",
+                                      "Z",
+                                      "X, Y, and Z have the same expectation."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
 ```
 
-```{r, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", echo = FALSE, fig.alt = "Probability distribution of Z"}
-barplot( f.z, names.arg = 0:4, ylim = c(0, 1), 
-         main = "Probability Distribution of Z", 
-         xlab = "", ylab = "Probability",
-         col = "white" )
+
+b. Multiple-choice: Which random variable has the largest variance?
+
+```{r}
+#| label: asn-4-b
+#| echo: false
+checkdown::check_question(answer = "Y",
+                          options = c("X",
+                                      "Y",
+                                      "Z",
+                                      "X, Y, and Z have the same variance."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
 ```
 
-a\. Multiple-choice: Which random variable has the largest expectation?
 
-\(A\) X
+c. Multiple-choice: Which random variable has the largest standard deviation?
 
-\(B\) Y
+```{r}
+#| label: asn-4-c
+#| echo: false
+checkdown::check_question(answer = "Y",
+                          options = c("X",
+                                      "Y",
+                                      "Z",
+                                      "X, Y, and Z have the same standard deviation."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(C\) Z
 
-\(D\) X, Y, and Z have the same expectation.
+#### Problem 5   
+Suppose there are 12 multiple-choice questions in an exam. There are four choices per question, there is only one correct answer per question, and you earn 1 point per correct answer and 0 points per incorrect answer. The passing score is 75% or higher. Using the binomial probability model, calculate the probability of passing the exam under the given assumption. You may use the $\texttt{dbinom}$ function in R.
 
-b\. Multiple-choice: Which random variable has the largest variance?
+a. You are not prepared at all, so you randomly guess.
 
-\(A\) X
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0004
+:::
 
-\(B\) Y
+b. You are able to eliminate one incorrect answer, then randomly guess.
 
-\(C\) Z
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0039
+:::
 
-\(D\) X, Y, and Z have the same variance.
+c. You are able to eliminate two incorrect answers, then randomly guess.
 
-c\. Multiple-choice: Which random variable has the largest standard deviation?
+:::{.callout-tip collapse="true"}
+#### Answer
+0.073
+:::
 
-\(A\) X
+d. You are well prepared to choose a correct answer with a probability 0.9.
 
-\(B\) Y
+:::{.callout-tip collapse="true"}
+#### Answer
+0.9744
+:::
 
-\(C\) Z
-
-\(D\) X, Y, and Z have the same standard deviation.
-
-**Problem 5.** Suppose there are 12 multiple-choice questions in an exam. There are four choices per question, there is only one correct answer per question, and you earn 1 point per correct answer and 0 points per incorrect answer. The passing score is 75% or higher. Using the binomial probability model, calculate the probability of passing the exam under the given assumption. You may use the $\texttt{dbinom}$ function in R.
-
-a\. You are not prepared at all, so you randomly guess.
-
-b\. You are able to eliminate one incorrect answer, then randomly guess.
-
-c\. You are able to eliminate two incorrect answers, then randomly guess.
-
-d\. You are well prepared to choose a correct answer with a probability 0.9.
-
-## Assignment\*
-
-*You must submit hard copy. All answers must be explained using both notation and words in complete sentences. Lack of explanation, misuse of notation, or incomplete sentences will result in partial credits only.*
-
-**Problem 6.** Suppose you are a manager of Hotel 1 and Hotel 2. Customers rated the hotels where 1, 2, 3, 4, and 5 mean "very bad," "bad," "okay," "good", and "very good," respectively. @tbl-hotels is the summary of survey results in percent.
+#### Problem 6 
+Suppose you are a manager of Hotel 1 and Hotel 2. Customers rated the hotels where 1, 2, 3, 4, and 5 mean "very bad," "bad," "okay," "good", and "very good," respectively. @tbl-hotels is the summary of survey results in percent.
 
 | Rating  |  1  |  2  |  3  |  4  |  5  |
 |:-------:|:---:|:---:|:---:|:---:|:---:|
@@ -471,494 +823,158 @@ d\. You are well prepared to choose a correct answer with a probability 0.9.
 
 Let $f_X$ and $f_Y$ represent the probability models for the ratings of Hotel 1 and 2, respectively.
 
-a\. Draw $f_X$ and $f_Y$.
+a. Draw $f_X$ and $f_Y$.
 
-b\. Calculate $E(X)$ and $E(Y)$. Which hotel provides better experiences on average?
+```{webr}
+#| label: asn-6-f-x
+#| exercise: ex_f_x
+#| caption: "Create a plot of f_X, Hotel 1"
+x <- 1:5 ### support
+f1 <- c( 0.2, 0.1, 0.1, 0.2, 0.4 ) ### pmf
 
-c\. Calculate $V(X)$ and $V(Y)$. Which hotel provides more predictable (less uncertain) experiences for customers?
 
-d\. Let $f_Z$ represent the probability model for the ratings of Hotel 3. Assume $f_Z(1) = 0.5$, $f_Z(2) = f_Z(3) = f_Z(4) = 0$, and $f_Z(5) = 0.5$. Draw $f_Z$, and calculate $E(Z)$ and $V(Z)$.
-
-e\. Why is it important to consider both average and variance when we describe a probability model?
-
-
-#OLD
-
-## Wrap-Up
-
-In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
-
-#### Problem 1
-
-Assume $P(A \mid B) = 0.9$, $P(A \mid B^c) = 0.3$, and $P(B) = 0.7$. Calculate the following probabilities.
-
-a. $P(B^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.3
-:::
-
-b. $P(A)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.72
-:::
-
-c. $P(A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.28
-:::
-
-d. $P(A^c \mid B)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.1
-:::
-
-e. $P(A^c \mid B^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.7
-:::
-
-f. $P(B \mid A)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.875
-:::
-
-g. $P(B^c \mid A)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.125
-:::
-
-h. $P(B^c \mid A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.75
-:::
-
-i. $P(B \mid A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.25
-:::
-
-#### Problem 2
-
-Suppose any news is good or bad. If there is good news in the morning, there is good news in the evening with a probability of 0.75. If there is bad news in the morning, there is bad news in the evening with a probability of 0.25. Assume morning news is good 51% of the time. Suppose we missed morning news today, and there is good news in the evening. What is the probability that today's morning was good?
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.51
-:::
-
-#### Problem 3
-
-Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.5238
-:::
-
-#### Problem 4
-
-Suppose we toss a coin inside a room. If it rains outside, head occurs with a probability of 0.99. If it does not rain outside, head occurs with a probability of 0.1. Suppose it rains 10% of the time. Given head, calculate the probability that it is raining outside.
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.0909
-:::
-
-## Assignment
-
-Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
-
-Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
-
-#### Problem 1
-
-Assume $P(A) = 0.5$, $P(B \mid A) = 0.8$, and $P(B^c \mid A^c) = 0.7$. Calculate the following probabilities.
-
-a. $P(A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.5
-:::
-
-b. $P(B)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.55
-:::
-
-c. $P(B^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.45
-:::
-
-d. $P(B \mid A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.3
-:::
-
-e. $P(B^c \mid A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.7
-:::
-
-f. $P(A \mid B)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.7273
-:::
-
-g. $P(A^c \mid B)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.2727
-:::
-
-h. $P(A \mid B^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.2222
-:::
-
-i. $P(A^c \mid B^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.7778
-:::
-
-j. $P(A \mid A^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0
-:::
-
-k. $P(A \mid A)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-1
-:::
-
-#### Problem 2
-
-In an airport, a body scanner beeps when it detects a metal (a potential concealed weapon). If a traveler enters the body scanner with a metal, it beeps with a probability 0.999. If a traveler enters the body scanner without a metal, it beeps (false alarm) with a probability of 0.1.
-
-a. Assume 0.01% of travelers (1 in 10,000) enter the body scanner with a metal. If a body scanner beeps, what is the probability that the traveler actually has a metal?(Round to 6 decimal places for your response.)
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.000998
-:::
-
-b. Repeat part a assuming 10% of travelers enter the body scanner with a metal.
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.526
-:::
-
-#### Problem 3
-
-For fair criminal trials, defendants are assumed to be innocent until proven guilty, and prosecutors must provide sufficient evidence in order to conclude that defendants are guilty. Assume the following:
-
-If a defendant is innocent, it is concluded that the defendant is guilty with a probability of 0.05.
-
-If a defendant is guilty, it is concluded that the defendant is guilty with a probability of 0.9.
-
-In a hypothetical scenario, suppose prosecutors accuse any people so that 99% of defendants are innocent. If the conclusion is guilty, what is the probability that the defendant is truly guilty?
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.1538
-:::
-
-#### Problem 4
-
-Until 2013, all employees in Canadian workplaces were subject to drug test by a random selection.^1^ The drug test was intended to identify subjects who use illegal drugs, but it had been criticized that too many innocent employees were tested. In 2013, the Supreme Court of Canada ruled that there must be a reasonable cause (e.g., suspicious actions) to drug test an employee. This new policy would narrow the target population of drug test from all employees to suspicious employees. Let $U$ denote a drug use in a target population and $T$ denote a postive drug test result. Assume both sensitivity and specificity of the drug test have been constant at 0.95, and assume that only 5% are drug users among all employees and 95% are drug users among those who act suspiciously. Calculate the following.
-
-a. $P(T \mid U)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.95
-:::
-
-b. $P(T \mid U^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.05
-:::
-
-c. $P(T^c \mid U^c)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.95
-:::
-
-d. $P(T^c \mid U)$
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.05
-:::
-
-e. $P(U)$ under the old policy (prior to 2013)
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.05
-:::
-
-f. $P(U)$ under the new policy
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.95
-:::
-
-g. Under the [old]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}? (i.e., accuse an innocent subject)
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.5
-:::
-
-h. Under the [old]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}? (i.e., free a guilty subject)
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.0028
-:::
-
-i. Under the [new]{.underline} policy, what is the probability that the subject is [not a drug user]{.underline} when the test result is [positive]{.underline}?
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.0028
-:::
-
-j. Under the [new]{.underline} policy, what is the probability that the subject is [a drug user]{.underline} when the test result is [negative]{.underline}?
-
-
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.5
-:::
-
-k. Multiple-choice: All employees had been targeted under the old policy, and only suspicious employees have been targeted under the new policy. If the test result is negative, the subject is concluded to be clean, and will not be tested for the next three years. If the test result is positive, the subject is temporarily concluded to be a potential risk in the workplace, and will be observed until proven to be clean. According to the probability calculations in previous parts, the [...] policy raises the concern of safety in the workplace, and the [...] policy raises the concern of privacy.
-
-```{r}
-#| label: asn-4-k
-#| echo: false
-checkdown::check_question(answer = "new; old",
-                          options = c("old; old",
-                                      "old; new",
-                                      "new; old",
-                                      "new; new",
-                                      "both; both"),
-                          button_label = "Check Your Answer", 
-                          type = "radio")
 ```
 
-^1^ Hurley, W. J. (2015). Mandatory drug testing in the Canadian workplace: A note on the recent supreme court decision and its effect on the misclassification rate of non-drug users, Chance, 28(1), 21-26. \url{http://chance.amstat.org/2015/02/drug-testing/}
 
-#### Problem 5
+::: {.solution exercise="ex_f_x"}
 
-Imagine you are the wife of a man who was in Titanic which sank in the morning of April 15, 1912. News on radio said 30% of all passengers survived, 25% were men among survivors, and 80% were men among non-survivors. You do not know whether your husband survived or not.
+##### Solution
 
-a. What percent of passengers were men?
+```{webr}
+#| exercise: ex_f_x
+#| solution: true
+#| echo: false
+x <- 1:5 ### support
+f1 <- c( 0.2, 0.1, 0.1, 0.2, 0.4 ) ### pmf
 
+gf_col(f1 ~ x,
+       xlab = "Rating", 
+       ylab = "Probability", 
+       title = "Hotel 1" ) +
+  ylim(0, 1)
+```
 
-
-:::{.callout-tip collapse="true"}
-
-#### Answer
-
-0.635
 :::
 
-b. What is the probability that your husband survived?
+```{webr}
+#| exercise: ex_f_x
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+
+
+```{webr}
+#| label: asn-6-f-y
+#| exercise: ex_f_y
+#| caption: "Create a plot of f_Y, Hotel 2"
+y <- 1:5 ### support
+f2 <- c( 0.1, 0.2, 0.4, 0.2, 0.1 ) ##pmf
+
+
+```
+
+
+::: {.solution exercise="ex_f_y"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_f_y
+#| solution: true
+#| echo: false
+y <- 1:5 ### support
+f2 <- c( 0.1, 0.2, 0.4, 0.2, 0.1 ) ##pmf
+
+gf_col(f2 ~ x,
+       xlab = "Rating", 
+       ylab = "Probability", 
+       title = "Hotel 2" ) +
+  ylim(0, 1)
+```
+
+:::
+
+```{webr}
+#| exercise: ex_f_y
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+
+
+b. Calculate $E(X)$ and $E(Y)$. Which hotel provides better experiences on average?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$E(X) = 3.5$  
+$E(Y) = 3$  
+:::
+
+c. Calculate $V(X)$ and $V(Y)$. Which hotel provides more predictable (less uncertain) experiences for customers?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$V(X) = 2.45$  
+$V(Y) = 1.2$  
+:::
+
+d. Let $f_Z$ represent the probability model for the ratings of Hotel 3. Assume $f_Z(1) = 0.5$, $f_Z(2) = f_Z(3) = f_Z(4) = 0$, and $f_Z(5) = 0.5$. Draw $f_Z$, and calculate $E(Z)$ and $V(Z)$.
+
+
+```{webr}
+#| label: asn-6-f-z
+#| exercise: ex_f_z
+#| caption: "Create a plot of f_Z, Hotel 3"
+z <- 1:5 ### support
+f3 <- c( 0.5, 0, 0, 0, 0.5 ) ### pmf
+
+
+```
+
+
+::: {.solution exercise="ex_f_z"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_f_z
+#| solution: true
+#| echo: false
+z <- 1:5 ### support
+f3 <- c( 0.5, 0, 0, 0, 0.5 ) ### pmf
+
+gf_col(f3 ~ x,
+       xlab = "Rating", 
+       ylab = "Probability", 
+       title = "Hotel 3" ) +
+  ylim(0, 1)
+```
+
+:::
+
+```{webr}
+#| exercise: ex_f_z
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 
 
 :::{.callout-tip collapse="true"}
-
 #### Answer
+$E(Z) = 3$  
+$V(Z) = 4$  
+:::
 
-0.1181
+e. Why is it important to consider both average and variance when we describe a probability model?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Both average and variance are numeric descriptions of a probability distribution. The average measures the center of a probability distribution, and the variance measures the variability of an outcome around the center. It is possible that two probability distributions have the same average with different variances like the ratings of Hotels 2 and 3. Even though the two hotels have the same average rating of 3, visitors have extreme experiences in Hotel 3 (which results in a variance of 4), whereas visitors have relatively consistent experiences (near the average) in Hotel 2 (which results in a variance of 1.2).
 :::
