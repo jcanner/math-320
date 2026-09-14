@@ -207,7 +207,7 @@ k. Are $W$ and $T_2$ independent or dependent? How do you know?
 
 In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-#### Problem 1.
+#### Problem 1
 
 Fill in the blanks.
 

@@ -4,7 +4,7 @@ project:
   render:
     - "!*-print.qmd"
     - "*.qmd"
-    - "*/quiz/*"
+    - "!*/quiz/*"
     
 website:
   page-navigation: true
@@ -61,7 +61,8 @@ website:
         text: "Bayes Theorem"
       - href: note-outlines/5-discrete-distributions.qmd
         text: "Discrete Random Variables"   
-   
+      - href: note-outlines/6-continuous-distributions.qmd
+        text: "Continuous Random Variables"    
        
 format:
   html:
