@@ -9,8 +9,6 @@ format:
         - tidyverse
       repos:
         - https://projectmosaic.r-universe.dev
-      resources: 
-        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/3-intro-probability-ii/data/titanic.csv 
       cell-options:
         warning: true
         completion: false

@@ -9,8 +9,6 @@ format:
         - tidyverse
       repos:
         - https://projectmosaic.r-universe.dev
-      resources: 
-        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/3-intro-probability-ii/data/titanic.csv 
       cell-options:
         warning: true
         completion: false
@@ -1339,6 +1337,94 @@ gradethis::grade_this_code()
 
 
 c. Repeat part b when $n = 3, 4, \dots, 10$. Summarize your findings in a table and a graph.
+
+Use the controls to vary μ, the cutoff, variance, and maximum sample size.
+
+```{ojs}
+//| echo: false
+
+viewof mu = Inputs.range([95, 103], {
+  value: 99,
+  step: 0.1,
+  label: "Population mean (μ)"
+})
+
+viewof cutoff = Inputs.range([95, 103], {
+  value: 100,
+  step: 0.1,
+  label: "Decision cutoff"
+})
+
+viewof variance = Inputs.range([0.01, 16], {
+  value: 1,
+  step: 0.01,
+  label: "Variance (σ²)"
+})
+
+viewof max_n = Inputs.range([2, 50], {
+  value: 10,
+  step: 1,
+  label: "Maximum sample size"
+})
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|   - mu
+#|   - cutoff
+#|   - variance
+#|   - max_n
+
+n <- 1:max_n
+sigma <- sqrt(variance)
+
+p <- 1 - pnorm(
+  cutoff,
+  mean = mu,
+  sd = sigma / sqrt(n)
+)
+
+rslt <- data.frame(
+  samp_size = n,
+  prob = round(p, 4)
+)
+
+rslt
+```
+
+```{webr}
+#| edit: false
+#| echo: false
+#| input:
+#|   - mu
+#|   - cutoff
+#|   - variance
+#|   - max_n
+
+n <- 1:max_n
+sigma <- sqrt(variance)
+p <- 1 - pnorm(cutoff, mu, sigma / sqrt(n))
+
+plot(
+  n, p,
+  type = "b", lty = 3, pch = 19,
+  ylim = c(0, max(0.2, max(p) * 1.1)),
+  xlim = c(1, max_n),
+  xlab = "Number of Measurements",
+  ylab = "Probability",
+  main = "Probability of the Wrong Decision"
+)
+
+abline(v = n, lty = 3, col = "grey90")
+abline(
+  h = seq(0, max(0.2, max(p) * 1.1), length.out = 5),
+  lty = 3,
+  col = "grey90"
+)
+
+```
 
 
 

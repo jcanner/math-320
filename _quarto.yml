@@ -5,6 +5,7 @@ project:
     - "!*-print.qmd"
     - "*.qmd"
     - "!*/quiz/*"
+    - "!*-instructor.qmd"
     
 website:
   page-navigation: true
