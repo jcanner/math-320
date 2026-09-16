@@ -6,6 +6,7 @@ project:
     - "*.qmd"
     - "!*/quiz/*"
     - "!*-instructor.qmd"
+    - "!*.R"
     
 website:
   page-navigation: true
@@ -64,6 +65,8 @@ website:
         text: "Discrete Random Variables"   
       - href: note-outlines/6-continuous-distributions.qmd
         text: "Continuous Random Variables"    
+      - href: note-outlines/7-central-limit-theorem.qmd
+        text: "Central Limit Theorem"    
        
 format:
   html:
