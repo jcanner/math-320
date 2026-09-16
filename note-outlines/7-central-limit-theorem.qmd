@@ -1,0 +1,335 @@
+---
+title: "Central Limit Theorem"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: true
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}  
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}  
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+## Sampling Distribution of Sample Mean
+
+**Definition:** We say $(X_1, X_2, \dots, X_n)$ is an **independent and identically distributed sample** (or simply an **i.i.d. sample**) of size $n$ if $X_1, X_2, \dots, X_n$ are independent (unrelated) random variables and they have the same PMF or PDF.
+
+**Definition:** The simple average of $n$ random variables, $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$, is called the **sample mean**, and the probability model for $\bar{X}$ is called the sampling distribution of the sample mean.
+
+***Example:*** The above definitions are somewhat technical, and here is an example. Assume $X_1$ and $X_2$ are two independent random variables. In other words, the outcome of $X_1$ does not affect the outcome of $X_2$ and vice versa. Further assume that the support of $X_1$ and of $X_2$ are $\{ 0, 1, 3 \}$ and their PMFs are identical as follows:
+
+$$
+\begin{aligned}
+f_X(0) & = 0.2 \, , \\
+f_X(1) & = 0.4 \, , \\
+f_X(3) & = 0.4 \, .
+\end{aligned}
+$$
+
+By the definition, $(X_1, X_2)$ is an i.i.d. sample of size $n = 2$, and let $\bar{X} = \frac{1}{2} (X_1 + X_2)$ be the sample mean. @tbl-mean shows all nine possible outcomes of $(X_1, X_2)$, their probabilities, and values of $\bar{X}$.
+
+::: {#tbl-mean}
+
+| $(X_1, X_2)$ | Probability            | $\bar{X}$ |
+|--------------|------------------------|-----------|
+| (0, 0)       | $0.2 \cdot 0.2 = 0.04$ | 0.0       |
+| (0, 1)       | $0.2 \cdot 0.4 = 0.08$ | 0.5       |
+| (0, 3)       | $0.2 \cdot 0.4 = 0.08$ | 1.5       |
+| (1, 0)       | $0.4 \cdot 0.2 = 0.08$ | 0.5       |
+| (1, 1)       | $0.4 \cdot 0.4 = 0.16$ | 1.0       |
+| (1, 3)       | $0.4 \cdot 0.4 = 0.16$ | 2.0       |
+| (3, 0)       | $0.4 \cdot 0.2 = 0.08$ | 1.5       |
+| (3, 1)       | $0.4 \cdot 0.4 = 0.16$ | 2.0       |
+| (3, 3)       | $0.4 \cdot 0.4 = 0.16$ | 3.0       |
+
+: Sampling distribution of the sample mean
+
+::: 
+
+Note that the support (unique possibilities) of $\bar{X}$ is $\mathcal{S}_{\bar{X}} = \{0, 0.5, 1, 1.5, 2, 3\}$, and the sampling distribution of $\bar{X}$ can be represented by the following PMF:
+
+$$
+\begin{aligned}
+f_{\bar{X}}(0.0) & = 0.04 \, , \\
+f_{\bar{X}}(0.5) & = 0.16 \, , \\
+f_{\bar{X}}(1.0) & = 0.16 \, , \\
+f_{\bar{X}}(1.5) & = 0.16 \, , \\
+f_{\bar{X}}(2.0) & = 0.32 \, , \\
+f_{\bar{X}}(3.0) & = 0.16 \, .
+\end{aligned}
+$$
+
+Can you imagine the process of finding the exact sampling distribution of $\bar{X} = \frac{1}{3} (X_1 + X_2 + X_3)$ for $n = 3$? How about $n = 10$? When $n$ is large, finding the exact sampling distribution of $\bar{X}$ is very laborious, but we can approximate the sampling distribution of $\bar{X}$ using simulations as follows:
+
+- Step 1: Generate an i.i.d. sample $(X_1, X_2, \dots, X_n)$ of size $n$ given the PMF or PDF.
+
+- Step 2: Calculate the sample mean $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$.
+
+- Step 3: Repeat Steps 1 and 2 many times (say 10,000 times) and store the value of $\bar{X}$ each time.
+
+- Step 4: Visualize the sampling distribution of $\bar{X}$ using a histogram.
+
+Below R output simulates the above procedure.
+
+```{ojs}
+//| echo: false
+
+viewof n = Inputs.range([1, 1000], {
+  value: 10,
+  step: 1,
+  label: "Sample Size"
+})
+```
+
+```{webr}
+#| label: simulation
+#| edit: false
+#| echo: false
+#| input:
+#|   - n
+#| fig-alt: "Simulation of the sampling distribution of sample mean when n is 10"
+x <- c( 0, 1, 3 ) ### support of i.i.d. sample
+f <- c( 0.2, 0.4, 0.4 ) ### PMF of i.i.d. sample
+n_sim <- 10000 ### number of repetitions
+xbar <- rep( NA, n_sim ) ### storage for sample mean
+
+for (i in 1:n_sim ) {
+ ### sample size
+  iid_samp <- sample( x, prob = f, size = n, replace = TRUE ) ### Step 1
+  samp_mean <- mean(iid_samp) ### Step 2
+  xbar[i] <- samp_mean ### Step 3 (to be repeated n_sim times)
+}
+
+gf_dhistogram(~xbar, bins = 30,
+             color = "black",
+      title = "Sampling Distribution of Sample Mean",
+      xlab = expression( bar(X) ),
+      ylab = "Density Across 10,000 Samples of Size n",
+      subtitle =  sprintf("Mean = %.3f, SD = %.3f, n = %d",
+    mean(xbar), sd(xbar), n)) |> 
+  gf_density(~xbar, color = "black", alpha = 0.5) +
+  xlim(1.6-3*1.2, 1.6+3*1.2)
+```
+
+The sampling distribution of $\bar{X}$ follows a normal distribution approximately. Is it coincident? See the following section.
+
+## Central Limit Theorem
+
+**Theorem:** Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample of size $n$ from a probability model with a model mean of $\mu$ and a model standard deviation of $\sigma$. The approximate sampling distribution of $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ follows a normal distribution as $n$ goes to infinity, more specifically,
+
+$$
+\bar{X} \sim \mathrm{N} \left( \mu, \, \frac{\sigma}{\sqrt{n}} \right)
+$$
+
+It is known as the **Central Limit Theorem** (or **CLT**).
+
+We can verify the CLT in the previous simulation. We generated an i.i.d. sample of size $n = 10$ from the following probability model: $f_X(0) = 0.2$, $f_X(1) = 0.4$, and $f_X(3) = 0.4$. The mean, variance, and standard deviation of this model are:
+
+$$
+\begin{aligned}
+E(X) & = 0 \cdot 0.2 + 1 \cdot 0.4 + 3 \cdot 0.4 = 1.6 \, , \\
+V(X) & = (0 - 1.6)^2 \cdot 0.2 + (1 - 1.6)^2 \cdot 0.4 + (3 - 1.6)^2 \cdot 0.4 = 1.44 \, , \\
+\sqrt{ V(X) } & = \sqrt{1.44} = 1.2 \, .
+\end{aligned}
+$$
+
+Since $\mu = 1.6$ and $\sigma = 1.2$, and approximate sampling distribution of $\bar{X} = \frac{1}{10} (X_1 + X_2 + \dots + X_{10})$ is
+
+$$
+\bar{X} \sim \mathrm{N} \left( 1.6, \, \frac{1.2}{\sqrt{10}} \right) \, .
+$$
+
+The standard deviation of $\bar{X}$, $\frac{\sigma}{\sqrt{n}} = \frac{1.2}{\sqrt{10}} = 0.3795$, is called the **standard error** of $\bar{X}$, and it quantifies the variability of $\bar{X}$ around the mean $\mu = 1.6$.
+
+If we generate an i.i.d. sample of size $n = 50$, we can guess that the approximate sampling distribution of $\bar{X} = \frac{1}{50} (X_1 + X_2 + \dots + X_{50})$ will be
+
+$$
+\bar{X} \sim \mathrm{N} \left( 1.6, \, \frac{1.2}{\sqrt{50}} \right)
+$$
+
+where $\frac{\sigma}{\sqrt{n}} = \frac{1.2}{\sqrt{50}} = 0.1697$ is the standard error of $\bar{X}$.
+
+
+
+## Wrap-Up
+
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
+
+#### Problem 1    
+
+Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample of size $n$ from a probability model with a model mean of $\mu$ and a model standard deviation of $\sigma$. Fill in the blank.
+
+a. $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ is called the \[s... m...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
+b. $\bar{X}$ is a \[r... v...\] because each $X_i$ is a \[r... v...\]. (They are the same words.)
+
+c. The probability model of $\bar{X}$ is called the \[s... d...\] of $\bar{X}$.
+
+d. According to the \[C... L... T...\], when $n$ is large, the approximate sampling distribution of $\bar{X}$ is
+
+$$
+\bar{X} \sim \mathrm{N} \left( \mu, \, \frac{\sigma}{\sqrt{n}} \right) \, .
+$$
+
+e. $\frac{\sigma}{\sqrt{n}}$ is called the \[s... e...\] of $\bar{X}$, and it quantifies the variability of $\bar{X}$.
+
+#### Problem 2
+Assume $(X_1, X_2, \dots, X_n)$ is an i.i.d. sample of size $n = 100$ generated from the following PMF:
+
+$$
+\begin{aligned}
+f_X(-1) & = 0.3 \, , \\
+f_X(0) & = 0.2 \, , \\
+f_X(1) & = 0.5 \, .
+\end{aligned}
+$$
+
+a. Calculate the model mean $\mu$.
+
+b. Calculate the model standard deviation $\sigma$.
+
+**Note:** According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
+
+c. Calculate the value of $c$.
+
+d. Calculate the value of $d$.
+
+e. Calculate the probability that $\bar{X} > 0$.
+
+## Assignment
+
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
+
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
+
+#### Problem 1 
+A gamble is designed as follows. You gain \$7 with a probability 0.1, gain or lose nothing with a probability 0.1, and lose \$1 (i.e., gain –\$1) with a probability of 0.8. Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i$ is the amount of gain in the $i^{\mathrm{th}}$ trial. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the average of your gain when you play $n = 100$ times.
+
+a. Calculate the model mean $\mu$.
+
+b. Calculate the model standard deviation $\sigma$.
+
+According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
+
+c. Calculate the value of $c$.
+
+d. Calculate the value of $d$.
+
+e. Calculate the probability that your average gain is positive.
+
+#### Problem 2
+An archer scores $1, 2, \dots, 10$ points per arrow according to the following probability model:
+
+$$
+f_X(x) = \frac{x}{55} \, , \,\,\, x = 1, 2, \dots, 10 \, .
+$$
+
+```{r, echo = FALSE, fig.height = 5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Simulation of the sampling distribution of sample mean when n is 10"}
+x = 1:10 ### support
+f = x/55 ### probability mass function
+barplot( f, names = x, col = "white", ylim = c(0, 0.5),
+         xlab = "Score per arrow", 
+         ylab = "Probability",
+         main = "Probability Mass Function" )
+```
+
+Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i$ is the score of the $i^{\mathrm{th}}$ arrow. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the average score after shooting $n$ arrows. An archer is promoted when $\bar{X} \ge 6.5$.
+
+a. Calculate the model mean $\mu$.
+
+b. Calculate the model standard deviation $\sigma$.
+
+c. If $n = 10$, what is the probability that the archer will be promoted?
+
+d. If $n = 50$, what is the probability that the archer will be promoted?
+
+e. What is the minimum number of arrows that the archer will be promoted with a probability of 0.95 at least?
+
+#### Problem 3 
+A Major League Baseball player has a true batting average of 0.300. In loosely speaking, it implies that the probability of a success is 0.3 and the probability of a failure is 0.7 at each bat. Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i = 1$ for a success and $X_i = 0$ for a failure at the $i^{\mathrm{th}}$ bat. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be his batting average after batting $n$ times. Assume the player will be at bat $n = 40$ times, and he will be relegated if the batting average will be lower than 0.250.
+
+a. Calculate the model mean $\mu$.
+
+b. Calculate the model standard deviation $\sigma$.
+
+According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
+
+c. Calculate the value of $c$.
+
+d. Calculate the value of $d$.
+
+e. Calculate the probability that he will be relegated?
+
+#### Problem 4 
+Historically, the average midterm score of students has been 75 points (out of 100) with a standard deviation of 10 points. Suppose there are 36 students in this semester. If the average score exceeds 80 points this semester, all students will get a free lunch? What is the probability that students will get a free lunch?
+
+#### Problem 5 
+An archer scores $1, 2, \dots, 10$ points per arrow according to the following probability mode:
+
+$$ f_X(x) = \frac{x^2}{385} \, , \,\,\, x = 1, 2, \dots, 10 \, . $$
+
+Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i$ is the score by the $i^{\mathrm{th}}$ arrow. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the average score after shooting $n$ arrows. An archer is promoted when $\bar{X} \ge 7.5$.
+
+a. Draw the probability model for the score per arrow.
+
+b. Calculate the model mean $\mu$ and standard deviation $\sigma$.
+
+c. Draw the sampling distribution of $\bar{X}$ when $n = 10, 25, 50$.
+
+d. Calculate the probability that the archer will be promoted when $n = 10, 25, 50$. Report the result in a table format.
+
+e. Report the result of part d using a graph (the probability on the y-axis and the number of arrows on the x-axis).
+
+f. What is the minimum number of arrows that the archer will be promoted with a probability of 0.95 at least?
+
+
+
+
