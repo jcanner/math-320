@@ -150,8 +150,7 @@ gf_dhistogram(~xbar, bins = 30,
       ylab = "Density Across 10,000 Samples of Size n",
       subtitle =  sprintf("Mean = %.3f, SD = %.3f, n = %d",
     mean(xbar), sd(xbar), n)) |> 
-  gf_density(~xbar, color = "black", alpha = 0.5) +
-  xlim(1.6-3*1.2, 1.6+3*1.2)
+  gf_density(~xbar, color = "black", alpha = 0.5) 
 ```
 
 The sampling distribution of $\bar{X}$ follows a normal distribution approximately. Is it coincident? See the following section.
@@ -206,12 +205,22 @@ a. $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ is called the \[s... m...\].
 
 :::{.callout-tip collapse="true"}
 #### Answer
-discrete
+sample mean
 :::
 
 b. $\bar{X}$ is a \[r... v...\] because each $X_i$ is a \[r... v...\]. (They are the same words.)
 
+:::{.callout-tip collapse="true"}
+#### Answer
+random variable
+:::
+
 c. The probability model of $\bar{X}$ is called the \[s... d...\] of $\bar{X}$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+sampling distribution
+:::
 
 d. According to the \[C... L... T...\], when $n$ is large, the approximate sampling distribution of $\bar{X}$ is
 
@@ -219,7 +228,17 @@ $$
 \bar{X} \sim \mathrm{N} \left( \mu, \, \frac{\sigma}{\sqrt{n}} \right) \, .
 $$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+Central Limit Theorem
+:::
+
 e. $\frac{\sigma}{\sqrt{n}}$ is called the \[s... e...\] of $\bar{X}$, and it quantifies the variability of $\bar{X}$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+standard error
+:::
 
 #### Problem 2
 Assume $(X_1, X_2, \dots, X_n)$ is an i.i.d. sample of size $n = 100$ generated from the following PMF:
@@ -234,15 +253,64 @@ $$
 
 a. Calculate the model mean $\mu$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.2
+:::
+
 b. Calculate the model standard deviation $\sigma$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.8718
+:::
 
 **Note:** According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
 
 c. Calculate the value of $c$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$\mu = 0.2$
+:::
+
 d. Calculate the value of $d$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$\frac{\sigma}{\sqrt n} = 0.0872$
+:::
+
 e. Calculate the probability that $\bar{X} > 0$.
+
+
+```{webr}
+#| label: wrap-2-e
+#| exercise: ex_wrap_2_e
+#| caption: "Use R to find the Probability"
+pnorm(   , mean =  , sd =   )
+```
+
+
+::: {.solution exercise="ex_wrap_2_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_2_e
+#| solution: true
+#| echo: false
+1 - pnorm(0, mean = 0.2, sd = 0.8718/sqrt(100))
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_2_e
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 ## Assignment
 
@@ -255,15 +323,64 @@ A gamble is designed as follows. You gain \$7 with a probability 0.1, gain or lo
 
 a. Calculate the model mean $\mu$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-0.1
+:::
+
 b. Calculate the model standard deviation $\sigma$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+2.3854
+:::
 
 According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
 
 c. Calculate the value of $c$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-0.1
+:::
+
 d. Calculate the value of $d$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.2385
+:::
+
 e. Calculate the probability that your average gain is positive.
+
+
+```{webr}
+#| label: asn-1-e
+#| exercise: ex_asn_1_e
+#| caption: "Use R to find the Probability"
+
+```
+
+
+::: {.solution exercise="ex_asn_1_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_1_e
+#| solution: true
+#| echo: false
+1 - pnorm(0, -0.1, 0.2385)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_1_e
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 #### Problem 2
 An archer scores $1, 2, \dots, 10$ points per arrow according to the following probability model:
@@ -272,44 +389,287 @@ $$
 f_X(x) = \frac{x}{55} \, , \,\,\, x = 1, 2, \dots, 10 \, .
 $$
 
-```{r, echo = FALSE, fig.height = 5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Simulation of the sampling distribution of sample mean when n is 10"}
-x = 1:10 ### support
-f = x/55 ### probability mass function
-barplot( f, names = x, col = "white", ylim = c(0, 0.5),
-         xlab = "Score per arrow", 
-         ylab = "Probability",
-         main = "Probability Mass Function" )
+```{r}
+#| label: archer-pmf
+#| echo: true
+#| fig-alt: "Simulation of the sampling distribution of sample mean when n is 10"
+x <- 1:10 ### support
+f <- x/55 ### probability mass function
+gf_col(f ~ x,
+       xlab = "Score per arrow", 
+       ylab = "Probability",
+       title = "Probability Mass Function" ) +
+  ylim(0, 0.25)
 ```
 
 Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i$ is the score of the $i^{\mathrm{th}}$ arrow. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the average score after shooting $n$ arrows. An archer is promoted when $\bar{X} \ge 6.5$.
 
 a. Calculate the model mean $\mu$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+7
+:::
+
 b. Calculate the model standard deviation $\sigma$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+2.4495
+:::
 
 c. If $n = 10$, what is the probability that the archer will be promoted?
 
-d. If $n = 50$, what is the probability that the archer will be promoted?
+```{webr}
+#| label: asn-2-c
+#| exercise: ex_asn_2_c
+#| caption: "Use R to find the Probability"
 
-e. What is the minimum number of arrows that the archer will be promoted with a probability of 0.95 at least?
+```
+
+
+::: {.solution exercise="ex_asn_2_c"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_2_c
+#| solution: true
+#| echo: false
+1 - pnorm(6.5, mean = 7, sd = 2.4495/sqrt(10))
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_2_c
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+d. If $n = 50$, what is the probability that the archer will be promoted?  
+
+```{webr}
+#| label: asn-2-d
+#| exercise: ex_asn_2_d
+#| caption: "Use R to find the Probability"
+
+```
+
+
+::: {.solution exercise="ex_asn_2_d"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_2_d
+#| solution: true
+#| echo: false
+1 - pnorm(6.5, mean = 7, sd = 2.4495/sqrt(50))
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_2_d
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+e. What is the minimum number of arrows needed so that the archer will be promoted with a probability of 0.95 at least?
+
+### Archer Application {#section-archer}
+```{ojs}
+//| echo: false
+
+viewof n_arrows = Inputs.range([1, 100], {
+  value: 10,
+  step: 1,
+  label: "Sample Size"
+})
+
+viewof mu = Inputs.range([0, 10], {
+  value: 7,
+  step: 0.0001,
+  label: "Population Mean"
+})
+
+viewof sigma = Inputs.range([0, 10], {
+  value: 2.4495,
+  step: 0.0001,
+  label: "Population Standard Deviation"
+})
+
+viewof cutoff = Inputs.range([0, 10], {
+  value: 6.5,
+  step: 0.1,
+  label: "Cutoff for Promotion"
+})
+```
+
+```{webr}
+#| label: cutoff-app
+#| ncol: 2
+#| edit: false
+#| echo: false
+#| input:
+#|   - n_arrows
+#|   - mu
+#|   - sigma 
+#|   - cutoff
+
+
+
+se <- sigma/sqrt(n_arrows)
+n_min <- n_arrows - 10
+n_max <- n_arrows + 10
+
+ggplot() +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = mu, sd = se),
+    xlim = c(cutoff, mu + 4 * se),
+    geom = "area",
+    fill = "skyblue",
+    alpha = 0.6,
+    n = 1000
+  ) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = mu, sd = se),
+    xlim = c(mu - 4 * se, mu + 4 * se),
+    linewidth = 1.2,
+    n = 1000
+  ) +
+  geom_vline(
+    xintercept = cutoff,
+    color = "red",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  labs(x = expression(bar(X)), 
+       y = "Density",
+       subtitle = "")
+
+prob_data <- data.frame(n_range = n_min:n_max, 
+                        probs = 1 - pnorm(cutoff, mean = mu, sd = sigma/sqrt(n_min:n_max)))
+
+ggplot(prob_data,
+       aes(x = n_range,
+           y = probs)) +
+  geom_point() + 
+  geom_line()
+  
+```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+65
+:::
+
 
 #### Problem 3 
 A Major League Baseball player has a true batting average of 0.300. In loosely speaking, it implies that the probability of a success is 0.3 and the probability of a failure is 0.7 at each bat. Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i = 1$ for a success and $X_i = 0$ for a failure at the $i^{\mathrm{th}}$ bat. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be his batting average after batting $n$ times. Assume the player will be at bat $n = 40$ times, and he will be relegated if the batting average will be lower than 0.250.
 
 a. Calculate the model mean $\mu$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3
+:::
+
 b. Calculate the model standard deviation $\sigma$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.4583
+:::
 
 According to the CLT, the approximate sampling distribution of $\bar{X}$ is $\bar{X} \sim \mathrm{N}( c, d )$.
 
 c. Calculate the value of $c$.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.3
+:::
+
 d. Calculate the value of $d$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0725
+:::
 
 e. Calculate the probability that he will be relegated?
 
+```{webr}
+#| label: asn-3-e
+#| exercise: ex_asn_3_e
+#| caption: "Use R to find the Probability"
+
+```
+
+
+::: {.solution exercise="ex_asn_3_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_3_e
+#| solution: true
+#| echo: false
+pnorm(0.25, mean = 0.3, sd = 0.0725)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_3_e
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
 #### Problem 4 
 Historically, the average midterm score of students has been 75 points (out of 100) with a standard deviation of 10 points. Suppose there are 36 students in this semester. If the average score exceeds 80 points this semester, all students will get a free lunch? What is the probability that students will get a free lunch?
+
+```{webr}
+#| label: asn-4
+#| exercise: ex_asn_4
+#| caption: "Use R to find the Probability"
+
+```
+
+
+::: {.solution exercise="ex_asn_4"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_4
+#| solution: true
+#| echo: false
+1 - pnorm(80, mean = 75, sd = 10/sqrt(36))
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_4
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+
 
 #### Problem 5 
 An archer scores $1, 2, \dots, 10$ points per arrow according to the following probability mode:
@@ -318,18 +678,195 @@ $$ f_X(x) = \frac{x^2}{385} \, , \,\,\, x = 1, 2, \dots, 10 \, . $$
 
 Let $(X_1, X_2, \dots, X_n)$ be an i.i.d. sample where $X_i$ is the score by the $i^{\mathrm{th}}$ arrow. Let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the average score after shooting $n$ arrows. An archer is promoted when $\bar{X} \ge 7.5$.
 
-a. Draw the probability model for the score per arrow.
+a. Draw the probability model for the score per arrow.  
 
-b. Calculate the model mean $\mu$ and standard deviation $\sigma$.
+```{webr}
+#| label: asn-5-a
+#| exercise: ex_asn_5_a
+#| caption: "Use R to draw the pmf"
+
+x <- 1:10
+f <- (x^2)/385
+
+gf_col()
+```
+
+
+::: {.solution exercise="ex_asn_5_a"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_a
+#| solution: true
+#| echo: false
+x <- 1:10
+f <- (x^2)/385
+
+gf_col(f ~ x,
+       xlab = "Number of Points Per Arrow",
+       ylab = "Probability",
+       title = "Probability Mass Function")
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_a
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+b. Calculate the model mean $\mu$ and standard deviation $\sigma$.  
+
+```{webr}
+#| label: calculate-with-R
+#you can use R to find the mean and sd using the x and f vectors
+x <- 1:10
+f <- (x^2)/385
+
+```
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$\mu = 7.8571$  
+$\sigma = 2.01626$  
+:::
 
 c. Draw the sampling distribution of $\bar{X}$ when $n = 10, 25, 50$.
 
+```{webr}
+#| label: asn-5-c
+#| fig-alt: "Sampling Distributions for Each Sample Size"
+
+n <- c(10, 25, 50) #sample sizes
+mu <- 7.8571       #population mean
+sd <- 2.01626      #population sd
+
+
+se_max <- sd/sqrt(min(n))
+
+gf_function(fun = dnorm,
+             args = c(mean = mu,
+                      sd = sigma/sqrt(n[1])),
+            xlim = c(mu - 4*se_max, mu + 4*se_max),
+            linewidth = 1.2,
+            linetype = 1,
+            color = ~factor(n[1])) |> 
+  gf_function(fun = dnorm,
+             args = c(mean = mu,
+                      sd = sigma/sqrt(n[2])),
+            xlim = c(mu - 4*se_max, mu + 4*se_max),
+            linewidth = 1.2,
+            linetype = 2,
+            color = ~factor(n[2])) |> 
+  gf_function(fun = dnorm,
+             args = c(mean = mu,
+                      sd = sigma/sqrt(n[3])),
+            xlim = c(mu - 4*se_max, mu + 4*se_max),
+            linewidth = 1.2,
+            linetype = 3,
+            color = ~factor(n[3])) +
+  labs(x = expression(bar(x)), 
+                      y = "Density", 
+                      color = "Number of Arrows")
+
+```
+
+
+
+
+
 d. Calculate the probability that the archer will be promoted when $n = 10, 25, 50$. Report the result in a table format.
 
+```{webr}
+#| label: asn-5-d
+#| exercise: ex_asn_5_d
+#| caption: "Use R to find the probabilities"
+n <- c(10, 25, 50)
+prob <- pnorm()
+data.frame(arrows = n, p_promo = prob)
+```
+
+
+::: {.solution exercise="ex_asn_5_d"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_d
+#| solution: true
+#| echo: false
+n <- c(10, 25, 50)
+prob <- 1 - pnorm(7.5, mean = 7.8571, sd = 2.01626/sqrt(n))
+data.frame(arrows = n, p_promo = prob)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_d
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+
 e. Report the result of part d using a graph (the probability on the y-axis and the number of arrows on the x-axis).
+
+```{webr}
+#| label: asn-5-e
+#| exercise: ex_asn_5_e
+#| caption: "Use R to create the graph"
+
+gf_point() |> 
+  gf_line() +
+  xlim(10, 50) +
+  ylim(0, 1)
+
+```
+
+
+::: {.solution exercise="ex_asn_5_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_e
+#| solution: true
+#| echo: false
+
+gf_point(prob ~ n, 
+         xlab = "Number of Arrows",
+         ylab = "Probability of Promotion") |> 
+  gf_line() +
+  xlim(10, 50) +
+  ylim(0, 1)
+
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_e
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
 
 f. What is the minimum number of arrows that the archer will be promoted with a probability of 0.95 at least?
 
 
+Use the applet in @section-archer to help you find the solution.
 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+87
+:::
 

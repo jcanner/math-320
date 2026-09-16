@@ -53,7 +53,7 @@ pnorm(0.5, mean = 1, sd = 0.2)
 
 :::
   
-  ```{webr}
+```{webr}
 #| exercise: ex_wrap_8_b
 #| check: true
 #| echo: false
