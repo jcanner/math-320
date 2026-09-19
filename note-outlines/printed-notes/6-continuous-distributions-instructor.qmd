@@ -1,0 +1,855 @@
+---
+title: "Continuous Random Variables"
+format: docx
+execute: 
+  warning: false 
+  message: false
+  echo: true
+  eval: true
+embed-resources: true
+code-copy: true
+code-overflow: wrap
+toc: false
+number-sections: true
+css: ../styles.css
+---
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+## Continuous Random Variable
+
+**Definition:** Let $\mathcal{S}$ be a set. Let $a$ and $b$ be two arbitrary elements in $\mathcal{S}$. If there are a finite number of elements between $a$ and $b$, $\mathcal{S}$ is **countable**. Otherwise, $\mathcal{S}$ is **uncountable**.
+
+***Example:*** Let $\mathcal{C} = \{ 1, 2, 3, \dots \}$. If we choose any two elements in $\mathcal{C}$, there are a finite number of elements between them. Therefore, $\mathcal{C}$ is a countable set.
+
+***Example:*** Let $\mathcal{U} = (0, 1)$, the set of all real numbers between 0 and 1 exclusive. Let us consider two elements 0.2 and 0.3 in $\mathcal{U}$. There are infinitely many elements between the two elements. Therefore, $\mathcal{U}$ is an uncountable set.
+
+**Definition:** Let $X$ be a random variable and $\mathcal{S}_X$ be the support of $X$. If $\mathcal{S}_X$ is countable (or countably infinite), $X$ is a **discrete random variable**. If $\mathcal{S}_X$ is uncountable, then $X$ is a **continuous random variable**.
+
+In the previous lecture, we focused on discrete random variables. If $X$ is a discrete random variable with $\mathcal{S}_X$, we use a probability mass function (PMF) to represent its probability model. In this lecture, we focus on continuous random variables. If $X$ is a continuous random variable with $\mathcal{S}_X$, we need to use calculus (integration) for probability calculation.
+
+## Probability Density Function
+
+**Definition:** Let $X$ be a continuous random variable and $\mathcal{S}_X$ be the support of $X$. We say $f_X$: $\mathcal{S}_X \rightarrow \mathcal{R}$ is a **probability density function** (or **PDF**) if it satisfies the following two conditions:
+
+1.  $f_X(x) \ge 0$ for any $x \in \mathcal{S}_X$
+2.  $\int_{\mathcal{S}_X} f_X(x) \, dx = 1$
+
+When we have a continuous random variable, we use the integration $\int$ instead of the summation $\sum$.
+
+***Example:*** Let $T$ be the time to finish a 2-hour exam. Its support is $\mathcal{S}_T = (0, 2)$, all real numbers between 0 and 2. Assume the PDF of $T$ is given by
+
+$$
+f_T(t) = \frac{3}{8} \, t^2 \, , \,\,\, 0 < t < 2 \, .
+$$ {#eq-exam}
+
+It is a legitimate PDF as it satisfies the two conditions:
+
+1.  $\frac{3}{8} \, t^2 \ge 0$ for $0 < t < 2$
+2.  $\int_0^2 \frac{3}{8} \, t^2 \, dt = 1$.
+
+The PDF is graphically shown below.
+
+```{r}
+#| label: pdf-exam 
+#| echo: false
+#| fig-alt: "Probability density function"
+f <- function(x) { 3/8 * x^2 }
+
+gf_function( fun = f, xlim = c(0, 2)) |> 
+  gf_label(xlab = "Exam Time",
+           ylab = "Density",
+           title = "Probability Density Function") +
+    theme(text = element_text(size = 16))
+```
+
+We do not interpret $f_T(t)$ as the probability of $T = t$. In fact, the probability of $T = t$ is zero. Instead, we can calculate the probability of $t_1 \le T \le t_2$. For example, the probability that a student finishes the exam after 1 hour is  
+
+$P(1 < T < 2) =$
+
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$
+P(1 < T < 2) = \int_1^2 f_T(t) \, dt = \int_1^2 \frac{3}{8} \, t^2 \, dt = 0.875 \, . 
+$$
+:::
+
+
+The probability that a student finishes the exam before 1 hour is
+
+$P(0 < T < 1) =$
+
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$
+P(0 < T < 1) = \int_0^1 f_T(t) \, dt = \int_0^1 \frac{3}{8} \, t^2 \, dt = 0.125 \, .
+$$
+:::
+
+
+**Note:** The value of $f_T(t)$ is called the density of $T = t$. It has a theoretical interpretation rather than a practical interpretation. For example,
+
+$$
+\frac{f_T(1.5)}{f_T(0.5)} = \frac{(1.5)^2}{(0.5)^2} = 9 \, ,
+$$
+
+and it is theoretically interpreted as $T = 1.5$ is 9 times more plausible outcome than $T = 0.5$. Loosely speaking, if 100 students needed about 0.5 hours to finish the exam, about we expect th 900 students would need about 1.5 hours.
+
+## Expectation
+
+**Definition:** The **expectation** of a continuous random variable $X$ is defined as
+
+$$
+E(X) = \int_{\mathcal{S}_X} x \cdot f_X(x) \, dx \, .
+$$
+
+It is also called the **average**, **mean**, and **expected value** of $X$.
+
+In some sense, it is the weighted average of all values in $\mathcal{S}_X$ and each value in $\mathcal{S}_X$ is weighted by the density $f_X(x)$. Since $\mathcal{S}_X$ is uncountable, we sum over $\mathcal{S}_X$ using the integration $\int$ instead of the summation $\sum$.
+
+***Example:*** In the previous example, the expected time to finish the exam is
+
+$E(X) =$
+
+:::{.callout-note collapse="true"}
+#### Answer
+
+$$
+E(X) = \int_{\mathcal{S}_T} t \cdot f_T(t) \, dt = \int_0^2 t \cdot \frac{3}{8} \, t^2 \, dt = 1.5 \, .
+$$
+:::
+
+
+In other words, students need 1.5 hours to finish the exam on average. (It does not imply that most students need 1.5 hours.)
+
+## Variance
+
+**Definition:** The **variance** of a continuous random variable $X$ is defined as
+
+$$
+V(X) = \int_{\mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, dx \, .
+$$
+
+**Definition:** The **standard deviation** of $X$ is defined as $\sqrt{V(X)}$.
+
+***Example:*** In the previous example, the variance of $T$ is
+
+$V(T) =$
+
+:::{.callout-note collapse="true"}
+#### Answer
+
+$$
+V(T) = \int_0^2 (t - 1.5)^2 \cdot \frac{3}{8} \, t^2 \, dt = 0.15 \, ,
+$$
+
+:::
+
+
+and the standard deviation of $T$ is $\sqrt{0.15} = 0.387$.
+
+## Parametric Models
+
+A PDF can serve as a probability model for a continuous variable, and it can be more flexible by attaching a model parameter. Let $T$ be the time to finish a 2-hour exam, and consider the following PDF:
+
+$$
+f_T(t) = \frac{1}{2^{\theta + 1}} \, (\theta + 1) \, t^\theta \, , \,\,\, 0 < t < 2
+$$ {#eq-exam2}
+
+where $\theta > 1$ is a model parameter (fixed). Note that the PDF in @eq-exam is a special case of the PDF in @eq-exam2 when $\theta = 2$. The PDF in @eq-exam2 is flexible by choosing the value of $\theta$. The below figure demonstrates the shapes of $f_T$ at $\theta = 1$, $\theta = 2$, and $\theta = 4$.
+
+```{r}
+#| label: pdf-exam-theta 
+#| echo: false
+#| fig-alt: "Probability density function at different values of the model parameter"
+
+ft <- function(x, theta) {
+  (theta + 1) / 2^(theta + 1) * x^theta
+}
+
+gf_function(
+  fun = function(x) ft(x, theta = 1),
+  xlim = c(0, 2),
+  color = ~"1", 
+  linewidth = 1.2,
+  linetype = 3
+  
+) |>
+  gf_function(
+    fun = function(x) ft(x, theta = 2),
+    xlim = c(0, 2),
+    color = ~"2", 
+    linewidth = 1.2,
+    linetype = 1
+  ) |>
+  gf_function(
+    fun = function(x) ft(x, theta = 4),
+    xlim = c(0, 2),
+    color = ~"4", 
+    linewidth = 1.2,
+    linetype = 2
+  ) |>
+  gf_labs(
+    x = "Time to finish the exam (hours)",
+    y = "Density",
+    title = "Probability Density Function",
+    color = expression(theta)
+  ) +
+  theme(legend.position = "bottom",
+       text = element_text(size = 16))
+```
+
+There are many parametric probability models that statisticians use depending on the distribution of data to be observed. The following subsections introduce three popular parametric models known as the exponential distribution, uniform distribution, and normal distribution.
+
+### Exponential Distribution
+
+Let $X$ be a continuous random variable where $\mathcal{S}_X = (0, \infty)$. We say $X$ follows an **exponential distribution** with a parameter $\theta > 0$ when its PDF is given by
+
+$$
+f_X(x) = \frac{1}{\theta} \, e^{-\frac{x}{\theta}} \, , \,\,\, 0 < x < \infty \, .
+$$
+
+In this case, we write $X \sim \mathrm{Exp}(\theta)$. The below figure shows the exponential distributions at $\theta = 1$, $\theta = 2$, and $\theta = 5$.
+
+```{r}
+#| label: pdf-exp
+#| echo: false
+#| fig-alt: "Exponential Distributions"
+
+gf_function(
+  fun = function(x) dexp(x, rate = 1),
+  xlim = c(0, 15),
+  color = ~"1", 
+  linewidth = 1.2,
+  linetype = 3
+  
+) |>
+  gf_function(
+    fun = function(x) dexp(x, rate = 1/2),
+    xlim = c(0, 15),
+    color = ~"2", 
+    linewidth = 1.2,
+    linetype = 1
+  ) |>
+  gf_function(
+    fun = function(x) dexp(x, rate = 1/5),
+    xlim = c(0, 15),
+    color = ~"5", 
+    linewidth = 1.2,
+    linetype = 2
+  ) |>
+  gf_labs(
+    x = "Time to finish the exam (hours)",
+    y = "Density",
+    title = "Exponential Distributions",
+    color = expression(theta)
+  ) +
+  theme(legend.position = "bottom",
+        text = element_text(size = 16))
+```
+
+***Example:*** Suppose you call customer service. Let $X$ be the waiting time (minutes) until someone answers your call. Assume $X \sim \mathrm{Exp}(\theta)$ with $\theta = 5$. Under this assumption, the probability model for $X$ is represented by the PDF
+
+$$
+f_X(x) = \frac{1}{5} \, e^{-\frac{x}{5}} \, , \,\,\, 0 < x < \infty \, . \notag
+$$
+
+The probability that the waiting time is at most 1 minute is
+
+:::{.callout-note collapse="true"}
+#### Answer
+
+
+$$
+P(X \le 1) = \int_0^1 \frac{1}{5} \, e^{-\frac{x}{5}} \, dx = 0.1813 \, .
+$$
+
+:::
+
+It can be calculated by the $\texttt{pexp}$ function as follows.
+
+```{r}
+#| label: calculation-exp-1
+pexp(q = 1, rate = 1/5 )
+```
+
+The probability that the waiting time is longer than 1 minute is
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$
+P(X > 1) = 1 - P(X \le 1) = 1 - 0.1813 = 0.8187 \, .
+$$
+:::
+
+
+```{r}
+#| label: calculation-exp-2
+1 - pexp(1, 1/5 )
+```
+
+When $X \sim \mathrm{Exp}(\theta)$, the probability $P(X \le x)$ or $P(X < x)$ can be calculated by $\texttt{pexp}( x, 1 / \theta )$, and the probability $P(X > x)$ or $P(X \ge x)$ can be calculated by $1 - \texttt{pexp}( x, 1 / \theta)$.
+
+By the definition of expectation and of variance,
+
+
+$$ \begin{aligned}
+E(X) & = \int_{\mathcal{S}_X} x \cdot f_X(x) \, dx \\
+& = \int_0^\infty x \cdot \frac{1}{5} \, e^{-\frac{x}{5}} \, dx \\
+& = 5 \, 
+\end{aligned}$$
+
+and
+
+$$\begin{aligned}
+V(X) & = \int_{\mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, dx \\
+& = \int_0^\infty (x - 5)^2 \cdot \frac{1}{5} \, e^{-\frac{x}{5}} \, dx \\
+& = 25 \, .
+\end{aligned}$$
+
+
+
+The above integration can be done by the integration by parts or by the $\texttt{integrate}$ function in R as follows.
+
+```{r}
+#| label: numeric integration
+theta <- 5
+
+#function for the mean
+f_mean <- function(x) { x * 1 / theta * exp(- x / theta) }
+
+# integrate over support to get expected value
+(mu <- integrate( f_mean, lower = 0, upper = Inf )$value)
+
+#function for variance
+f_variance <- function(x) { ( x - mu ) ^ 2 * 1 / theta * exp(- x / theta) }
+
+#integrate over support to get variance
+integrate( f_variance, lower = 0, upper = Inf )$value
+```
+
+**Note:** When $X \sim \mathrm{Exp}(\theta)$, for any choice of $\theta  > 0$, it can be shown that the expectation and variance of $X$ are as follows:
+
+$$
+\begin{aligned}
+E(X) & = \int_0^\infty x \cdot \frac{1}{\theta} \, e^{-\frac{x}{\theta}} \, dx = \theta \, , \\
+V(X) & = \int_0^\infty (x - \theta)^2 \cdot \frac{1}{\theta} \, e^{-\frac{x}{\theta}} \, dx = \theta^2 \, .
+\end{aligned}
+$$
+
+### Uniform Distribution
+
+Let $X$ be a continuous random variable where $\mathcal{S}_X = (\theta_1, \theta_2)$ for some $\theta_1$ and $\theta_2$ such that $-\infty < \theta_1 < \theta_2 < \infty$. We say $X$ follows a **uniform distribution** with parameters $\theta_1$ and $\theta_2$ when its PDF is given by
+
+$$
+f_X(x) = \frac{1}{\theta_2 - \theta_1} \, , \,\,\, \theta_1 < x < \theta_2 \, . 
+$$
+
+In this case, we write $X \sim \mathrm{Unif}(\theta_1, \theta_2)$. The below figure shows the uniform distribution at some $\theta_1$ (lower bound) and $\theta_2$ (upper bound).
+
+```{r}
+#| label: pdf-unif
+#| echo: false
+#| fig-alt: "Uniform Distributions"
+
+x <- seq(0, 1, 0.001)
+y <- rep(1, length(x))
+
+uniform_data <- data.frame(x = x, y = y)
+
+gf_line(
+  y ~ x,
+  data = uniform_data,
+  color = 1,
+  linetype = 1, linewidth = 2
+) |>
+  gf_hline(
+    yintercept = 0,
+    color = 8
+  ) |>
+  gf_labs(
+    x = "Support",
+    y = "Density"
+  ) |>
+  gf_refine(
+    coord_cartesian(
+      xlim = c(-0.25, 1.25),
+      ylim = c(0, 1.2)
+    ),
+    scale_x_continuous(
+      breaks = c(0, 1),
+      labels = expression(theta[1], theta[2])
+    ),
+    scale_y_continuous(
+      breaks = c(0, 1),
+      labels = expression(0, frac(1, theta[2] - theta[1]))
+    )
+  ) +
+  theme(text = element_text(size = 16))
+```
+
+***Example:*** Suppose a bus arrives at a bus stop every 10 minutes. The bus schedule is unknown to you, and you go to the bus stop at a random time. Let $X$ be the waiting time (minutes) until the bus arrives. In this case, it is reasonable to assume $X \sim \mathrm{Unif}(\theta_1, \theta_2)$ where $\theta_1 = 0$ and $\theta_2 = 10$. Under this assumption, the probability model for $X$ is represented by the PDF
+
+$$ f_X(x) = \frac{1}{10 - 0} \, , \,\,\, 0 < x < 10 \, . \notag $$
+
+The probability that the waiting time is at most 1 minute is  
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$ 
+P(X \le 1) = \int_0^1 \frac{1}{10} \, dx = 0.1 \, , 
+$$
+:::
+
+and the probability that the waiting time is at least 1 minute is  
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$
+P(X \ge 1) = \int_1^{10} \frac{1}{10} \, dx = 0.9 \, .
+$$
+:::
+
+
+The expectation and variance of $X$ are  
+
+:::{.callout-note collapse="true"}
+#### Answer
+$$ 
+\begin{aligned}
+E(X) & = \int_{\mathcal{S}_X} x \cdot f_X(x) \, dx = \int_0^{10} x \cdot \frac{1}{10} \, dx = 5 \, , \\ 
+V(X) & = \int_{\mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, dx = \int_0^{10} (x - 5)^2 \cdot \frac{1}{10} \, dx = 8.3333 \, . 
+\end{aligned}
+$$
+:::
+
+
+**Note:** When $X \sim \mathrm{Unif}(\theta_1, \theta_2)$, for any choice of $-\infty < \theta_1 < \theta_2 < \infty$, it can be shown that the expectation and variance of $X$ are as follows:
+
+$$ 
+\begin{aligned} 
+E(X) & = \int_{\theta_1}^{\theta_2} x \cdot \frac{1}{\theta_2 - \theta_1} \, dx = \frac{\theta_1 + \theta_2}{2} \, , \\
+V(X) & = \int_{\theta_1}^{\theta_2} \left(x - \frac{\theta_1 + \theta_2}{2} \right)^2 \cdot \frac{1}{\theta_2 - \theta_1} \, dx = \frac{(\theta_2 - \theta_1)^2}{12} \, . 
+\end{aligned} 
+$$
+
+The expectation of $X$ is the midpoint of the lower bound $\theta_1$ and the upper bound $\theta_2$ of the support, and the variance of $X$ increases as the distance between $\theta_1$ and $\theta_2$ increases.
+
+### Normal Distribution
+
+Let $X$ be a continuous random variable where $\mathcal{S}_X = (-\infty, \infty)$. We say $X$ follows a **normal distribution** (or **Gaussian distribution**) with parameters $-\infty< \mu < \infty$ and $\sigma > 0$ when its PDF is given by
+
+$$ 
+f_X(x) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \, e^{-\frac{(x - \mu)^2}{2\sigma^2}} \, , \,\,\, -\infty < x < \infty \, . 
+$$
+
+In this case, we write $X \sim \mathrm{N}(\mu, \sigma)$. The below figure shows the two normal distributions at $(\mu, \sigma) = (65, 5)$ and $(\mu, \sigma) = (70, 4)$.
+
+```{r}
+#| label: pdf-norm
+#| echo: false
+#| fig-alt: "Normal Distributions"
+
+gf_function(
+  fun = function(x) dnorm(x, mean = 65, sd = 5),
+  xlim = c(65-3*5, 70 + 3*5),
+  color = ~"65, 5", 
+  linewidth = 1.2,
+  linetype = 3
+  ) |>
+  gf_function(
+    fun = function(x) dnorm(x, mean = 65, sd = 4),
+    xlim = c(65-3*5, 70 + 3*5),
+    color = ~"65, 4", 
+    linewidth = 1.2,
+    linetype = 1
+  ) |>
+  gf_function(
+    fun = function(x) dnorm(x, mean = 70, sd = 5),
+    xlim = c(65-3*5, 70 + 3*5),
+    color = ~"70, 5", 
+    linewidth = 1.2,
+    linetype = 2
+  ) |>
+  gf_labs(
+    x = "Support",
+    y = "Density",
+    title = "Normal Distributions",
+    color = expression(mu ~ sigma)
+  ) +
+  theme(legend.position = "bottom",
+        text = element_text(size = 16))
+```
+
+***Example:*** Let $X$ be the height (inches) of adult women. Assume $X \sim N(\mu, \sigma)$ where $\mu = 65$ and $\sigma = 5$. The PDF of $X$ is given by
+
+$$
+f_X(x) = \frac{1}{ \sqrt{2 \pi (5)^2} } \, e^{-\frac{(x - 65)^2}{2(5)^2}} \, , \,\,\, -\infty < x < \infty \, .
+$$
+
+Under this assumption, the probability that a woman is 68 inches or shorter is
+
+$$
+P(X \le 68) = \int_{-\infty}^{68} f_X(x) \, dx = \int_{-\infty}^{68} \frac{1}{ \sqrt{2 \pi (5)^2} } \, e^{-\frac{(x - 65)^2}{2(5)^2}} \, dx = 0.726 \, .
+$$
+
+The above probability calculation can be done by the $\texttt{pnorm}$ function as follows.
+
+```{r}
+#| label: calculations-norm-1
+pnorm(68, mean = 65, sd = 5)
+```
+
+Given this probability calculation, the probability that a woman is taller than 68 inches is $P(X > 68) = 1 - P(X \le 68) = 0.274$.
+
+```{r}
+#| label: calculations-norm-2
+1 - pnorm(68, mean = 65, sd = 5)
+```
+
+When $X \sim \mathrm{N}(\mu, \sigma)$, the probability $P(X \le x)$ or $P(X < x)$ can be calculated by $\texttt{pnorm}( x, \mu, \sigma )$, and the probability $P(X > x)$ or $P(X \ge x)$ can be calculated by $1 - \texttt{pnorm}( x, \mu, \sigma )$.
+
+The expectation and variance of $X$ are
+
+$$
+\begin{aligned}
+E(X) & = \int_{\mathcal{S}_X} x \cdot f_X(x) \, dx = \int_{-\infty}^{\infty} \frac{x}{ \sqrt{2 \pi (5)^2} } \, e^{-\frac{(x - 65)^2}{2(5)^2}} \, dx = 65 \, , \\ 
+V(X) & = \int_{\mathcal{S}_X} [x - E(X)]^2 \cdot f_X(x) \, dx = \int_{-\infty}^{\infty} \frac{(x - 65)^2}{ \sqrt{2 \pi (5)^2} } \, e^{-\frac{(x - 65)^2}{2(5)^2}} \, dx = 25 \, .
+\end{aligned}
+$$
+
+**Note:** When $X \sim \mathrm{N}(\mu, \sigma)$, for any choice of $-\infty < \mu < \infty$ and $\sigma > 0$, it can be shown that the expectation and variance of $X$ are as follows:
+
+$$ 
+\begin{aligned} 
+E(X) & = \int_{-\infty}^{\infty} \frac{x}{ \sqrt{2 \pi \sigma^2} } \, e^{-\frac{(x - \mu)^2}{2\sigma^2}} \, dx = \mu \, , \\ 
+V(X) & = \int_{-\infty}^{\infty} \frac{(x - \mu)^2}{ \sqrt{2 \pi \sigma^2} } \, e^{-\frac{(x - \mu)^2}{2\sigma^2}} \, dx = \sigma^2 \, . 
+\end{aligned} 
+$$
+
+Because of the above properties, the model parameter $\mu$ is referred to as the **model expectation** (**model mean**, **model average**, or **model expected value**), and the model parameter $\sigma$ is referred to as the **model standard deviation**. ($\sigma^2$ is referred to as the **model variance**.)
+
+**Definition:** When $X \sim \mathrm{N}( \mu, \sigma )$ where $\mu = 0$ and $\sigma = 1$, we say $X$ follows the **standard normal distribution**.
+
+## Wrap-Up
+
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
+
+#### Problem 1   
+Fill in the blank.
+
+a. A random variable is \[d...\] when its support is countable.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
+b. A random variable is \[c...\] when its support is uncountable.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+continuous
+:::
+
+c. The \[e...\] of a random variable quantifies the central tendency of the probability model.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+expectation
+:::
+
+d. The \[v...\] of a random variable quantifies the variability from the expectation.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+variance
+:::
+
+e. When a normal distribution has a mean of 0 and a standard deviation of 1, it is called the \[s... n... d...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+standard normal distribution
+:::
+
+
+#### Problem 2 
+Multiple choice: Which of the following does not mean the same thing as the others when we quantify the characteristics of a probability model?
+
+
+```{r}
+#| label: wrap-2
+#| echo: false
+checkdown::check_question(answer = "standard deviation",
+                          options = c("average",
+                                      "expectation",
+                                      "expected value",
+                                      "mean.",
+                                      "standard deviation"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+
+#### Problem 3 
+Let $X$ be a random variable and $\mathcal{S}_X$ be the support of $X$. True or false?
+
+a. Given $\mathcal{S}_X = \{ 0, 1, 2 \}$, $X$ is a discrete random variable.
+
+```{r}
+#| label: wrap-3-a
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+b. Given $\mathcal{S}_X = \{ 0, 1, 2, \dots \}$, $X$ is a discrete random variable.
+
+```{r}
+#| label: wrap-3-b
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+c. Given $\mathcal{S}_X = (0, 1)$, $X$ is a continuous random variable.
+
+```{r}
+#| label: wrap-3-c
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+d. Given $\mathcal{S}_X = (0, \infty)$, $X$ is a continuous random variable.
+
+```{r}
+#| label: wrap-3-d
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+#### Problem 4 
+True or false?
+
+a. An exponential distribution is symmetric about the mean.
+
+```{r}
+#| label: wrap-4-a
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+b. A uniform distribution is symmetric about the mean.
+
+```{r}
+#| label: wrap-4-b
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+c. A normal distribution is symmetric about the mean.
+
+```{r}
+#| label: wrap-4-c
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+
+#### Problem 5 
+Let $X$ be a random variable such that $\mathcal{S}_X = (0, 1)$ and $f_X(x) = 2x$ for $0 < x < 1$. Calculate the following.
+
+a. $P(X = 0.5)$, the probability that $X = 0.5$ exactly.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+
+:::
+
+
+b. $P(X \le 0.5)$
+
+c. $P(X > 0.5)$
+
+d. $E(X)$
+
+e. $V(X)$
+
+#### Problem 6 
+Assume $X$ follows an exponential distribution where $\theta = 1$. Calculate the following.
+
+a. $P(X = 0.5)$
+
+b. $P(X \le 0.5)$
+
+c. $P(X > 0.5)$
+
+d. $E(X)$
+
+e. $V(X)$
+
+#### Problem 7 
+Assume $X$ follows a uniform distribution where $\theta_1 = 0$ and $\theta_2 = 2$. Calculate the following.
+
+a. $P(X = 0.5)$
+
+b. $P(X \le 0.5)$
+
+c. $P(X > 0.5)$
+
+d. $E(X)$
+
+e. $V(X)$
+
+#### Problem 8 
+Assume $X$ follows a normal distribution where $\mu = 1$ and $\sigma = 0.2$. Calculate the following.
+
+a. $P(X = 0.5)$
+
+b. $P(X \le 0.5)$
+
+c. $P(X > 0.5)$
+
+d. $E(X)$
+
+e. $V(X)$
+
+## Assignment
+
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
+
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
+
+#### Problem 1 
+Let $X$ be a random variable such that $\mathcal{S}_X = (0, 1)$ and $f_X(x) = 12 \, x^2 (1 - x)$ for $0 < x < 1$. Below is a graphic representation of this probability model.
+
+```{r}
+#| label: pdf-prob-1
+#| echo: false
+#| fig-height: 4.5 
+#| fig-width: 5 
+#| out-height: "40%" 
+#| out-width: "40%" 
+#| fig-alt: "Probability density function"
+f <- function(x) { 12 * x^2 * (1 - x) } ### PDF
+
+gf_function( fun = f, xlim = c(0, 1)) |> 
+  gf_label(xlab = "X",
+           ylab = "Density",
+           title = "Probability Density Function") +
+    theme(text = element_text(size = 16))
+```
+
+Calculate the following.
+
+a. $P(X < 0.5)$
+
+b. $P(X > 0.5)$
+
+c. $P(0.25 < X < 0.75)$
+
+d. expectation of $X$
+
+e. standard deviation of $X$
+
+#### Problem 2 
+Let $X$ be the monthly change in oil price in percent. Suppose the government controls the oil price so that the monthly change cannot be below –10% or above +10%. Assume $X \sim \mathrm{Unif}(-10, 10)$ in percent. Calculate the following.
+
+a. the probability that the oil price decreases the next month
+
+b. the probability that the oil price increases the next month
+
+c. the probability that the oil price changes more than 1% the next month
+
+d. the expected monthly change in oil price in percent
+
+e. the standard deviation of monthly change in oil price in percent
+
+#### Problem 3 
+Let $X$ be the IQ test score. In the population, the IQ test score is modeled by $X \sim \mathrm{N}(\mu, \sigma)$ where $\mu = 100$ and $\sigma = 15$. Calculate the following.
+
+a. the average IQ test score in the population
+
+b. the standard deviation of IQ test score in the population
+
+c. the probability that IQ test score is between 70 and 130.
+
+d. the probability that IQ test score is above Albert Einstein's which is known to be 160 (round to 8 decimals)
+
+#### Problem 4 
+Assume $Z \sim \mathrm{N}(\mu, \sigma)$ where $\mu = 0$ and $\sigma = 1$. Calculate the following.
+
+a. the expectation of $Z$
+
+b. the variance of $Z$
+
+c. the standard deviation of $Z$
+
+d. the probability that $Z$ is greater than +2.
+
+e. the probability that $Z$ is less than –2.
+
+f. the probability that $|Z|$ is greater than 2
+
+g. the probability that $|Z|$ is greater than 3.
+
+
+
+#### Problem 5 
+Suppose an inaccurate thermometer is used to measure the body temperature of children at school. Let $T$ be the body temperature ($^\circ$F) measured by the thermometer. Assume $T \sim \mathrm{N}(\mu, \sigma)$ where $\mu$ is the true unknown body temperature of a child and $\sigma$ is the standard deviation of measurement.
+
+a. If the school nurse observes $T \ge 100$, the child will be sent home. Suppose the true body temperature of a child is $\mu = 99$ (which is a normal temperature for children) and the standard deviation of measurement is $\sigma = 1$. Calculate the probability that the child will be sent home because of the inaccurate thermometer.
+
+b. **Here is a theorem:** Let $\overline{T}$ be the average of $n$ repeated measurements (where the measurement error is purely random at each measurement). If $T \sim \mathrm{N}(\mu, \sigma)$ for a single measurement, then the probability model for the average of $n$ measurements is
+
+$$
+\overline{T} \sim \mathrm{N} \left( \mu, \frac{\sigma}{\sqrt{n}} \right) \, .
+$$
+
+Given this theorem, the child will be sent home when $\overline{T} \ge 100$ is observed. Assuming $\mu = 99$ and $\sigma = 1$, calculate the probability that the child will be sent home after taking the average of $n = 2$ measurements.
+
+c. Repeat part b when $n = 3, 4, \dots, 10$. Summarize your findings in a table and a graph.
+
+d. Based on your probability calculations, what is your practical suggestion for the school nurse?
+

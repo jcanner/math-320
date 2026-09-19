@@ -638,7 +638,7 @@ gradethis::grade_this_code()
 
 
 #### Problem 4 
-Historically, the average midterm score of students has been 75 points (out of 100) with a standard deviation of 10 points. Suppose there are 36 students in this semester. If the average score exceeds 80 points this semester, all students will get a free lunch? What is the probability that students will get a free lunch?
+Historically, the average midterm score of students has been 75 points (out of 100) with a standard deviation of 10 points. Suppose there are 36 students in this semester. If the average score exceeds 80 points this semester, all students will get a free lunch. What is the probability that students will get a free lunch?
 
 ```{webr}
 #| label: asn-4
