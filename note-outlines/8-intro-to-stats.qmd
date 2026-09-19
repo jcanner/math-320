@@ -9,6 +9,8 @@ format:
         - tidyverse
       repos:
         - https://projectmosaic.r-universe.dev
+      resources:
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/study-hours.csv
       cell-options:
         warning: true
         completion: false
@@ -60,25 +62,57 @@ Statistics is broadly defined as a study of collecting and analyzing data in qua
 
 ### Setting up an R Project
 
+To set up your Quarto document (`qmd`), you will need to load some packages. This is necessary for each Quarto document.  
+
+- If you are using the server [Cal-ICOR Hub](https://csumb.jupyter.cal-icor.org/) the packages are already installed.  
+- If you are using your own computer, you will need to make sure these packages are installed.  
+
 ```{r}
+#| label: packages-install
+#| eval: false
+install.packages(c("ggformula", "mosaic", "tidyverse"))
+```
+
+Here are the three packages you will need to load. Note that we typically include two code chunk settings:  
+
+- `#| label: setup` to indicate that this codes chunk has our setup information.  
+- `#| include: false` which loads the packages but hides the output and code from the document.  
+
+```{r}
+#| echo: fenced
 #| label: setup
 #| include: false
-library(ggformula)
-library(mosaic)
-library(tidyverse)
+library(ggformula) #graphics
+library(mosaic)    #stats
+library(tidyverse) #data cleaning
 ```
 
 ### Case Study
 
-Let us take a look at the dataset $\texttt{studyhours.csv}$. It is a sample of 110 students observed at a university of 7,000 students.
+Let us take a look at the dataset $\texttt{study-hours.csv}$. It is a sample of 110 students observed at a university of 7,000 students.
 
 
 ```{r}
 #| label: read-data
-studyhours <- read.csv("Data/studyhours.csv") ### read studyhours.csv in Data folder
-head(studyhours, 5) ### view the first 5 lines
-dim(studyhours) ### number of rows (sample size) and number of columns
+#read study_hours.csv 
+study_hours <- read_csv("8-intro-to-stats/study-hours.csv", 
+                       show_col_types = FALSE) 
 ```
+
+
+We can get a good overview of our data using the `glimpse()` function.  
+```{r}
+#| label: glimpse-data
+glimpse(study_hours)
+```
+
+
+We can look at the first five rows of our data using the `head()` function. 
+```{r}
+#| label: head-data
+head(study_hours, 5) ### view the first 5 lines
+```
+
 
 A dataset consists of rows and columns. The above dataset has 110 rows and 5 columns. It is a sample of $n = 110$ students in an introductory statistics course (across multiple sections) who volunteered to report the following information:
 
@@ -90,19 +124,38 @@ A dataset consists of rows and columns. The above dataset has 110 rows and 5 col
 
 - $\texttt{year}$: academic year ($\texttt{Sophomore}$, $\texttt{Junior}$, or $\texttt{Senior}$)
 
-It cannot accurately represent the entire university because these students belong to the College of Science (e.g., biology, chemistry, environmental science, marine science). To this end, this sample represents students of the College of Science in the university.
+
+#### Population of Interest 
+The **population of interest** is defined by the **research question**. 
+
+In statistics, that research question always about a **parameter** that summarizes a variable measured on the population of interest.  
+
+
+***Example:*** Create two or three research questions we could answer using the study hours data. 
+
+
+
+#### Sample and Generalizablity 
+A **sample** is a subset of a **population**. It may or may not be representative of the **population of interest**. We call this the **generalizability** of the sample to the population of interest.  
+
+***Example***: For our study hours data, if the data is only selected from the College fo Science, then it cannot be generalized to the entire university, just to students in the College of Science.  
+
+
 
 One university unit is considered to be about three hours of work per week, including class time and outside of classroom. Since one hour of class time is scheduled per week per unit, students are expected to spend about two hours of work outside of classroom. One purpose of this survey was to explore if students do two hours of work outside of classroom for every unit they take in the semester. For this purpose, we need to create a new column, $\texttt{hours\_units} = \frac{ \texttt{hours} }{ \texttt{units} }$, in the data frame named $\texttt{studyhours}$.
 
 ```{r}
-studyhours$hours_units = studyhours$hours / studyhours$units ### create the new column
-head(studyhours, 5)
-dim(studyhours)
+#| label: create-hours-units
+### create the new column
+study_hours <- study_hours |> 
+  mutate(hours_units = hours / units)
+
+head(study_hours, 5)
 ```
 
 ## Variable Types
 
-In statistics, a **variable** refers to any characteristics that varies from individual to individual. In the data frame $\texttt{studyhours}$, there are five variables, $\texttt{units}$, $\texttt{hours}$, $\texttt{gender}$, $\texttt{year}$, and $\texttt{hours\_units}$. The first column $\texttt{id}$ is not considered as a variable because it is just an identifier for each student.
+In statistics, a **variable** refers to any characteristics that varies from individual to individual. In the data frame $\texttt{study_hours}$, there are five variables, $\texttt{units}$, $\texttt{hours}$, $\texttt{gender}$, $\texttt{year}$, and $\texttt{hours\_units}$. The first column $\texttt{id}$ is not considered as a variable because it is just an identifier for each student.
 
 If a variable takes numeric values, it is a **numeric variable** (e.g., $\texttt{units}$, $\texttt{hours}$, and $\texttt{hours\_units}$). If a variable takes non-numeric values, it is a **categorical variable** (e.g., $\texttt{gender}$ and $\texttt{year}$). These two main variable types can be categorized into the following subtypes:
 
@@ -113,21 +166,21 @@ If a variable takes numeric values, it is a **numeric variable** (e.g., $\texttt
 The $\texttt{str}$ function helps checking the variable type of each column. It identifies columns of integers ($\texttt{int}$), of real numbers ($\texttt{num}$), and of characters ($\texttt{chr}$).
 
 ```{r}
-str(studyhours)
+str(study_hours)
 ```
 
 R does not know if a categorical variable is nominal or ordinal. By default, R remembers levels of a categorical variable by the alphabetical order: $\texttt{Junior}$, $\texttt{Senior}$, and $\texttt{Sophomore}$.
 
 ```{r}
-table(studyhours$gender) ### count by levels of gender
-table(studyhours$year) ### count by levels of year
+table(study_hours$gender) ### count by levels of gender
+table(study_hours$year) ### count by levels of year
 ```
 
 In our context, the three levels of $\texttt{year}$ can be ordered as follows: $\texttt{Sophomore}$, $\texttt{Junior}$, and $\texttt{Senior}$. The ordinal levels can be ordered as follows:
 
 ```{r}
-studyhours$year = factor(studyhours$year, levels = c("Sophomore", "Junior", "Senior"))
-table(studyhours$year)
+study_hours$year = factor(study_hours$year, levels = c("Sophomore", "Junior", "Senior"))
+table(study_hours$year)
 ```
 
 ## Summarizing Data by Variable Type
@@ -145,7 +198,7 @@ library(mosaic)
 For a categorical variable, the **sample count** of each level is a descriptive statistics.
 
 ```{r}
-tally(~year, data = studyhours, format = "count")
+tally(~year, data = study_hours, format = "count")
 ```
 
 Among the $n = 110$ students in the sample, 17 students are sophomore, 39 students are junior, and 54 students are senior.
@@ -153,7 +206,7 @@ Among the $n = 110$ students in the sample, 17 students are sophomore, 39 studen
 By dividing each count by the sample size $n = 110$, we can calculate the **sample proportion** of each level.
 
 ```{r}
-tally(~year, data = studyhours, format = "proportion")
+tally(~year, data = study_hours, format = "proportion")
 ```
 
 It is just like a probability model. Given a sample space of $\Omega = \{ \texttt{Sophomore}, \texttt{Junior}, \texttt{Senior} \}$,
@@ -167,7 +220,7 @@ The sample proportions are also called **observed probabilities** or **empirical
 By multiplying each sample proportion (observed probability) by 100, we can calculate the **sample percent**.
 
 ```{r}
-tally(~year, data = studyhours, format = "percent")
+tally(~year, data = study_hours, format = "percent")
 ```
 
 Among the $n = 110$ students in the sample, 15.5%, 35.5%, and 49.1% are sophomore, junior, and senior, respectively. The word "percent" literally means "per hundred." In other words, in a hypothetical group of one hundred students, we expect about 15.5 students, 35 students, and 49.1 students are sophomore, junior, and senior.
@@ -210,7 +263,7 @@ $$
 The formal definitions of $Q_1$ and $Q_3$ are technical, and we let R calculate it. The below R code calculates the 5-number summary ($\texttt{min}$, $Q_1$, $M$, $Q_3$, and $\texttt{max}$).
 
 ```{r}
-quantile(~hours_units, data = studyhours) ### 5-number summary
+quantile(~hours_units, data = study_hours) ### 5-number summary
 ```
 
 We interpret the above descriptive statistics as follows. In the sample of $n = 110$ students, all students reported that they study between 0.46 and 4.58 hours per week per unit which is a wide range. About 50% of the students reported that they study 1.57 hours per week per unit or less, about 25% of the students below 1.12 hours per week per units or less, and about 25% of the students above 2.08 hours per week per units. These statistics inform that a majority of students in the College of Science spend less than two hours per week per units, and slightly more than 25% of students spend sufficient time to earn one unit.
@@ -246,8 +299,8 @@ $$ {#eq-sd}
 The below R code calculates $\bar{X}$ and $S$.
 
 ```{r}
-mean(~hours_units, data = studyhours) ### sample mean
-sd(~hours_units, data = studyhours) ### sample standard deviation
+mean(~hours_units, data = study_hours) ### sample mean
+sd(~hours_units, data = study_hours) ### sample standard deviation
 ```
 
 We interpret that, on average, students spend 1.65 hours per week per unit (a standard deviation of 0.72), but it is not easy to understand in the context. Assuming the population distribution of $\texttt{hours\_units}$ follows a normal distribution, we can model $\texttt{hours\_units} \sim \mathrm{N}(\mu, \sigma)$ by estimating $\mu$ by $\bar{X} = 1.65$ and estimating $\sigma$ by $S = 0.72$.
@@ -387,12 +440,12 @@ e. The sample standard deviation is sensitive to an outlier.
 
 \(F\) Both (C) and (D)
 
-#### Problem 5 In the dataset of $\texttt{studyhours.csv}$, let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+#### Problem 5 In the dataset of $\texttt{study_hours.csv}$, let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
 
 ```{r}
-studyhours = read.csv("Data/studyhours.csv") ### read studyhours.csv in Data folder
-head(studyhours, 5) ### view the first 5 lines
-table(studyhours$gender)
+study_hours = read.csv("Data/study_hours.csv") ### read study_hours.csv in Data folder
+head(study_hours, 5) ### view the first 5 lines
+table(study_hours$gender)
 ```
 
 Calculate the following statistics.
