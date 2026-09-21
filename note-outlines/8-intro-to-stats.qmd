@@ -53,6 +53,8 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
         ggplot2.continuous.fill = scale_fill_viridis_c,
         ggplot2.discrete.color = scale_color_viridis_d,
         ggplot2.discrete.fill = scale_fill_viridis_d)
+study_hours <- read_csv("8-intro-to-stats/study-hours.csv", show_col_types = FALSE) 
+
 ```
 
 ## Introduction to Statistics
@@ -95,7 +97,7 @@ Let us take a look at the dataset $\texttt{study-hours.csv}$. It is a sample of 
 ```{webr}
 #| label: read-data
 #read study_hours.csv 
-study_hours <- read_csv("8-intro-to-stats/study-hours.csv", 
+study_hours <- read_csv("study-hours.csv", 
                        show_col_types = FALSE) 
 ```
 
@@ -144,7 +146,7 @@ A **sample** is a subset of a **population**. It may or may not be representativ
 
 One university unit is considered to be about three hours of work per week, including class time and outside of classroom. Since one hour of class time is scheduled per week per unit, students are expected to spend about two hours of work outside of classroom. One purpose of this survey was to explore if students do two hours of work outside of classroom for every unit they take in the semester. For this purpose, we need to create a new column, $\texttt{hours\_units} = \frac{ \texttt{hours} }{ \texttt{units} }$, in the data frame named $\texttt{study_hours}$. We can do this using the `mutate()` function, which allows us to create new variables.  
 
-```{webr}
+```{r}
 #| label: create-hours-units
 ### create the new column
 study_hours <- study_hours |> 
