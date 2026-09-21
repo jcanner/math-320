@@ -80,8 +80,7 @@ Here are the three packages you will need to load. Note that we typically includ
 - `#| label: setup` to indicate that this codes chunk has our setup information.  
 - `#| include: false` which loads the packages but hides the output and code from the document.  
 
-```{r}
-#| echo: fenced
+```{{r}}
 #| label: setup
 #| include: false
 library(ggformula) #graphics
@@ -146,7 +145,7 @@ A **sample** is a subset of a **population**. It may or may not be representativ
 
 One university unit is considered to be about three hours of work per week, including class time and outside of classroom. Since one hour of class time is scheduled per week per unit, students are expected to spend about two hours of work outside of classroom. One purpose of this survey was to explore if students do two hours of work outside of classroom for every unit they take in the semester. For this purpose, we need to create a new column, $\texttt{hours\_units} = \frac{ \texttt{hours} }{ \texttt{units} }$, in the data frame named $\texttt{study_hours}$. We can do this using the `mutate()` function, which allows us to create new variables.  
 
-```{r}
+```{webr}
 #| label: create-hours-units
 ### create the new column
 study_hours <- study_hours |> 
@@ -186,24 +185,25 @@ The $\texttt{glimpse}$ function helps checking the variable type of each column.
 `R` defaults to `dbl` or type double for numeric values.  
 
 ```{r}
+#| label: glimpse-again
 glimpse(study_hours)
 ```
 
 R does not know if a categorical variable is nominal or ordinal. By default, R remembers levels of a categorical variable by the alphabetical order: $\texttt{Junior}$, $\texttt{Senior}$, and $\texttt{Sophomore}$.
 
-```{r}
+```{webr}
 #| label: table-gender
 tally(~gender, data = study_hours) ### count by levels of gender
 ```
 
-```{r}
+```{webr}
 #| label: table-year
 tally(~year, data = study_hours) ### count by levels of year
 ```
 
 In our context, the three levels of $\texttt{year}$ can be ordered as follows: $\texttt{Sophomore}$, $\texttt{Junior}$, and $\texttt{Senior}$. The ordinal levels can be ordered as follows using the `mutate()` function again:
 
-```{r}
+```{webr}
 #| label: order-year
 study_hours <- study_hours |> 
   mutate(year = factor(year, 
@@ -222,7 +222,7 @@ In statistics, a **statistic** is defined as a numeric summary of data. This def
 
 For a categorical variable, the **sample count** of each level is a descriptive statistics.
 
-```{r}
+```{webr}
 #| label: count
 tally(~year, data = study_hours, format = "count")
 ```
@@ -231,7 +231,7 @@ Among the $n = 110$ students in the sample, 17 students are sophomore, 39 studen
 
 By dividing each count by the sample size $n = 110$, we can calculate the **sample proportion** of each level.
 
-```{r}
+```{webr}
 #| label: proportion
 tally(~year, data = study_hours, format = "proportion")
 ```
@@ -246,7 +246,7 @@ The sample proportions are also called **observed probabilities** or **empirical
 
 By multiplying each sample proportion (observed probability) by 100, we can calculate the **sample percent**.
 
-```{r}
+```{webr}
 #| label: percentage
 tally(~year, data = study_hours, format = "percent")
 ```
@@ -291,7 +291,7 @@ $$
 
 The formal definitions of $Q_1$ and $Q_3$ are technical, and we let R calculate it. The below R code calculates the 5-number summary ($\texttt{min}$, $Q_1$, $M$, $Q_3$, and $\texttt{max}$).
 
-```{r}
+```{webr}
 #| label: quantile
 quantile(~hours_units, data = study_hours) ### 5-number summary
 ```
@@ -337,7 +337,7 @@ $$ {#eq-sd}
 
 The below R code calculates $\bar{X}$ and $S$.
 
-```{r}
+```{webr}
 #| label: mean-sd
 mean(~hours_units, data = study_hours) ### sample mean
 sd(~hours_units, data = study_hours) ### sample standard deviation
@@ -426,7 +426,7 @@ The center and spread are important characteristics of a sample. Both sample mea
 
 For the purpose of demonstration, suppose we recorded the gas price (dollars per gallon) of $n = 10$ randomly sampled gas stations in a town.
 
-```{r}
+```{webr}
 #| label: x-center
 x <- c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 5.99)
 x_order <- sort(x, decreasing = FALSE)
@@ -437,7 +437,7 @@ median(x_order) ### sample median
 
 Suppose the most expensive place increased the gas price by \$1.00 per gallon (from \$5.99 per gallon to \$6.99 per gallon).
 
-```{r}
+```{webr}
 #| label: y-center
 y <- c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 6.99)
 y_order <- sort(y, decreasing = FALSE)
@@ -450,7 +450,7 @@ The sample mean increased by \$0.1 per gallon (from $\bar{X} = 5.165$ to $\bar{X
 
 ## Wrap-up
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSc8_9iqh5WUNJOK9VFtBQi-r5Rho-oR2gUQBH3okHpjhiHcAA/viewform). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
 #### Problem 1 
 Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 5, 4), calculate the following statistics.
@@ -515,11 +515,11 @@ Multiple-choice: Suppose we will add one data value to a sample of size $n$. Whi
 \(F\) Both (C) and (D)
 
 #### Problem 5 
-In the dataset of $\texttt{study_hours.csv}$, let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+In the dataset of [`study_hours.csv`](../8-intro-to-stats/study-hours.csv), let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
 
 ```{r}
 #| eval: false
-study_hours = read.csv("Data/study_hours.csv") ### read study_hours.csv in Data folder
+study_hours <- read.csv("data/study_hours.csv") ### read study_hours.csv in Data folder
 head(study_hours, 5) ### view the first 5 lines
 table(study_hours$gender)
 ```
@@ -538,20 +538,13 @@ e. sample percent of male students
 
 ## Assignment
 
-***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLScGamDmwwoV9dSAEF6L6AWZFlk8MHdZKQ7Gae-PXi1Air5WSg/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
 
-***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
 #### Problem 1 
-The dataset $\texttt{king.csv}$ is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
+The dataset [`king.csv`](../8-intro-to-stats/king.csv) is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
 
-```{r}
-#| eval: false
-king <- read_csv("king.csv") ### read the csv file
-dim(king) ### dimension of data frame (rows and columns)
-colnames(king) ### column names
-head(king, 5) ### view first 5 lines
-```
 
 Below are descriptions of the variables.
 
@@ -643,7 +636,7 @@ c. Student B's performance deviates more from the average score than Student A's
 d. The \[...\] of Student B is substantially longer than of Student A because it is a sensitive statistic to an outlier.
 
 #### Problem 5 
-Revisit $\texttt{king.csv}$. The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
+Revisit [`king.csv`](../8-intro-to-stats/king.csv). The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
 
 a. Estimate the probability of giving a birth to a boy when a woman is pregnant.
 
