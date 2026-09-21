@@ -92,7 +92,7 @@ library(tidyverse) #data cleaning
 Let us take a look at the dataset $\texttt{study-hours.csv}$. It is a sample of 110 students observed at a university of 7,000 students.
 
 
-```{r}
+```{webr}
 #| label: read-data
 #read study_hours.csv 
 study_hours <- read_csv("8-intro-to-stats/study-hours.csv", 
@@ -101,14 +101,14 @@ study_hours <- read_csv("8-intro-to-stats/study-hours.csv",
 
 
 We can get a good overview of our data using the `glimpse()` function.  
-```{r}
+```{webr}
 #| label: glimpse-data
 glimpse(study_hours)
 ```
 
 
 We can look at the first five rows of our data using the `head()` function. 
-```{r}
+```{webr}
 #| label: head-data
 head(study_hours, 5) ### view the first 5 lines
 ```
@@ -142,9 +142,9 @@ A **sample** is a subset of a **population**. It may or may not be representativ
 
 
 
-One university unit is considered to be about three hours of work per week, including class time and outside of classroom. Since one hour of class time is scheduled per week per unit, students are expected to spend about two hours of work outside of classroom. One purpose of this survey was to explore if students do two hours of work outside of classroom for every unit they take in the semester. For this purpose, we need to create a new column, $\texttt{hours\_units} = \frac{ \texttt{hours} }{ \texttt{units} }$, in the data frame named $\texttt{studyhours}$.
+One university unit is considered to be about three hours of work per week, including class time and outside of classroom. Since one hour of class time is scheduled per week per unit, students are expected to spend about two hours of work outside of classroom. One purpose of this survey was to explore if students do two hours of work outside of classroom for every unit they take in the semester. For this purpose, we need to create a new column, $\texttt{hours\_units} = \frac{ \texttt{hours} }{ \texttt{units} }$, in the data frame named $\texttt{study_hours}$. We can do this using the `mutate()` function, which allows us to create new variables.  
 
-```{r}
+```{webr}
 #| label: create-hours-units
 ### create the new column
 study_hours <- study_hours |> 
@@ -157,30 +157,59 @@ head(study_hours, 5)
 
 In statistics, a **variable** refers to any characteristics that varies from individual to individual. In the data frame $\texttt{study_hours}$, there are five variables, $\texttt{units}$, $\texttt{hours}$, $\texttt{gender}$, $\texttt{year}$, and $\texttt{hours\_units}$. The first column $\texttt{id}$ is not considered as a variable because it is just an identifier for each student.
 
+### Numeric Variables
 If a variable takes numeric values, it is a **numeric variable** (e.g., $\texttt{units}$, $\texttt{hours}$, and $\texttt{hours\_units}$). If a variable takes non-numeric values, it is a **categorical variable** (e.g., $\texttt{gender}$ and $\texttt{year}$). These two main variable types can be categorized into the following subtypes:
 
-- If a numeric variable takes countable numeric values (e.g., integers), it is a **discrete numeric variable** (e.g., $\texttt{units}$). Otherwise, it is a **continuous numeric variable** (e.g., $\texttt{hours\_units}$). If numeric values are rounded for practical convenience, we may treat it as a continuous numeric variable. For instance, most students reported $\texttt{hours}$ (study hours per week) in rounded numbers because they do not keep track every minute and second, so it may be treated as continuous rather than discrete.
+**Definition**: If a numeric variable takes countable numeric values , it is a **discrete numeric variable**
 
-- Values of a categorical variable are called **levels**. If levels can be ordered in a meaningful manner, it is an **ordinal categorical variable** (e.g., $\texttt{year}$). Otherwise, it is a **nominal** **categorical variable** (e.g., $\texttt{gender}$).
 
-The $\texttt{str}$ function helps checking the variable type of each column. It identifies columns of integers ($\texttt{int}$), of real numbers ($\texttt{num}$), and of characters ($\texttt{chr}$).
+
+**Definition**: If a numeric variable takes on all possible values it is a **continuous numeric variable**. If numeric values are rounded for practical convenience, we may treat it as a continuous numeric variable. 
+
+
+For instance, most students reported $\texttt{hours}$ (study hours per week) in rounded numbers because they do not keep track every minute and second, so it may be treated as continuous rather than discrete.
+
+### Categorial Variables
+
+Values of a categorical variable are called **levels**. 
+
+
+**Definition**: If the levels of a categorical variable can be ordered in a meaningful manner, it is an **ordinal** categorical variable.
+
+
+**Definition**: If levels are unordered it is called a **nominal** categorical variable.
+
+The $\texttt{glimpse}$ function helps checking the variable type of each column. It identifies columns of integers ($\texttt{int}$), of real numbers ($\texttt{dbl}$), and of characters ($\texttt{chr}$). 
+
+`R` defaults to `dbl` or type double for numeric values.  
 
 ```{r}
-str(study_hours)
+glimpse(study_hours)
 ```
 
 R does not know if a categorical variable is nominal or ordinal. By default, R remembers levels of a categorical variable by the alphabetical order: $\texttt{Junior}$, $\texttt{Senior}$, and $\texttt{Sophomore}$.
 
 ```{r}
-table(study_hours$gender) ### count by levels of gender
-table(study_hours$year) ### count by levels of year
+#| label: table-gender
+tally(~gender, data = study_hours) ### count by levels of gender
 ```
 
-In our context, the three levels of $\texttt{year}$ can be ordered as follows: $\texttt{Sophomore}$, $\texttt{Junior}$, and $\texttt{Senior}$. The ordinal levels can be ordered as follows:
+```{r}
+#| label: table-year
+tally(~year, data = study_hours) ### count by levels of year
+```
+
+In our context, the three levels of $\texttt{year}$ can be ordered as follows: $\texttt{Sophomore}$, $\texttt{Junior}$, and $\texttt{Senior}$. The ordinal levels can be ordered as follows using the `mutate()` function again:
 
 ```{r}
-study_hours$year = factor(study_hours$year, levels = c("Sophomore", "Junior", "Senior"))
-table(study_hours$year)
+#| label: order-year
+study_hours <- study_hours |> 
+  mutate(year = factor(year, 
+                       levels = c("Sophomore", 
+                                  "Junior", 
+                                  "Senior")))
+
+tally(~year, data = study_hours)
 ```
 
 ## Summarizing Data by Variable Type
@@ -189,15 +218,10 @@ In statistics, a **statistic** is defined as a numeric summary of data. This def
 
 ### Descriptive Statistics for Categorical Variable
 
-Let us load the mosaic package first.
-
-```{r, warning = FALSE, message = FALSE}
-library(mosaic)
-```
-
 For a categorical variable, the **sample count** of each level is a descriptive statistics.
 
 ```{r}
+#| label: count
 tally(~year, data = study_hours, format = "count")
 ```
 
@@ -206,6 +230,7 @@ Among the $n = 110$ students in the sample, 17 students are sophomore, 39 studen
 By dividing each count by the sample size $n = 110$, we can calculate the **sample proportion** of each level.
 
 ```{r}
+#| label: proportion
 tally(~year, data = study_hours, format = "proportion")
 ```
 
@@ -220,10 +245,12 @@ The sample proportions are also called **observed probabilities** or **empirical
 By multiplying each sample proportion (observed probability) by 100, we can calculate the **sample percent**.
 
 ```{r}
+#| label: percentage
 tally(~year, data = study_hours, format = "percent")
 ```
 
-Among the $n = 110$ students in the sample, 15.5%, 35.5%, and 49.1% are sophomore, junior, and senior, respectively. The word "percent" literally means "per hundred." In other words, in a hypothetical group of one hundred students, we expect about 15.5 students, 35 students, and 49.1 students are sophomore, junior, and senior.
+Among the $n = 110$ students in the sample, 15.5%, 35.5%, and 49.1% are sophomore, junior, and senior, respectively. The word "percent" literally means "per hundred." In other words, in a hypothetical group of one hundred students, we expect about 15.5 students, 35 students, and 49.1 students are sophomore, junior, and senior.  
+
 
 ### Descriptive Statistics for Numeric Variable
 
@@ -263,10 +290,20 @@ $$
 The formal definitions of $Q_1$ and $Q_3$ are technical, and we let R calculate it. The below R code calculates the 5-number summary ($\texttt{min}$, $Q_1$, $M$, $Q_3$, and $\texttt{max}$).
 
 ```{r}
+#| label: quantile
 quantile(~hours_units, data = study_hours) ### 5-number summary
 ```
 
-We interpret the above descriptive statistics as follows. In the sample of $n = 110$ students, all students reported that they study between 0.46 and 4.58 hours per week per unit which is a wide range. About 50% of the students reported that they study 1.57 hours per week per unit or less, about 25% of the students below 1.12 hours per week per units or less, and about 25% of the students above 2.08 hours per week per units. These statistics inform that a majority of students in the College of Science spend less than two hours per week per units, and slightly more than 25% of students spend sufficient time to earn one unit.
+We interpret the above descriptive statistics as follows. 
+
+- In the sample of $n = 110$ students, all students reported that they study between _____ and _____ hours per week per unit which is a wide range.  
+
+- About 50% of the students reported that they study _____ hours per week per unit or less.  
+
+- About 25% of the students below _____ hours per week per units or less, and about 25% of the students above _____ hours per week per units.  
+
+These statistics inform that a majority of students in the College of Science spend less than two hours per week per units, and slightly more than 25% of students spend sufficient time to earn one unit.
+
 
 There are some other statistics calculated from the 5-number summary. The distance between $Q_1$ and $Q_3$ is defined as the **interquartile range** (or **IQR**), so
 
@@ -299,23 +336,49 @@ $$ {#eq-sd}
 The below R code calculates $\bar{X}$ and $S$.
 
 ```{r}
+#| label: mean-sd
 mean(~hours_units, data = study_hours) ### sample mean
 sd(~hours_units, data = study_hours) ### sample standard deviation
 ```
 
-We interpret that, on average, students spend 1.65 hours per week per unit (a standard deviation of 0.72), but it is not easy to understand in the context. Assuming the population distribution of $\texttt{hours\_units}$ follows a normal distribution, we can model $\texttt{hours\_units} \sim \mathrm{N}(\mu, \sigma)$ by estimating $\mu$ by $\bar{X} = 1.65$ and estimating $\sigma$ by $S = 0.72$.
+We interpret that, on average, students spend 1.65 hours per week per unit (a standard deviation of 0.72), but it is not easy to understand in the context.  
 
-```{r, echo = FALSE, fig.height = 4.5, fig.width = 5, out.height = "40%", out.width = "40%", fig.alt = "Population distribution of study hours per week per unit estimated by sample"}
-mu = 1.65
-sigma = 0.72
-x = seq( mu - 3 * sigma, mu + 3 * sigma, 0.001 )
-y = dnorm( x, mean = mu, sd = sigma )
-plot( x, y, type = "l", axes = FALSE,
-      main = "Population Distribution Estimated by Sample",
-      xlab = "Study hours per week per unit",
-      ylab = "" )
-abline( h = 0, lty = 8 )
-axis( 1, c( mu + c(-10, -2:2, 10) * sigma ) )
+Assuming the population distribution of $\texttt{hours\_units}$ follows a normal distribution, we can model $\texttt{hours\_units} \sim \mathrm{N}(\mu, \sigma)$ by estimating $\mu$ by $\bar{X} = 1.65$ and estimating $\sigma$ by $s = 0.72$.
+
+```{r}
+#| label: normal-plot
+#| echo: false
+#| fig-alt: "Population distribution of study hours per week per unit estimated by sample"
+mu <- 1.65
+sd <- 0.72
+
+ggplot() +
+  # stat_function(
+  #   fun = dnorm,
+  #   args = list(mean = mu, sd = se),
+  #   xlim = c(cutoff, mu + 4 * se),
+  #   geom = "area",
+  #   fill = "skyblue",
+  #   alpha = 0.6,
+  #   n = 1000
+  # ) +
+  stat_function(
+    fun = dnorm,
+    args = list(mean = mu, sd = sd),
+    xlim = c(mu - 4 * sd, mu + 4 * sd),
+    linewidth = 1.2,
+    n = 1000
+  ) +
+  geom_vline(
+    xintercept = mu,
+    color = "red",
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  labs(x = "Study Hours per Week per Unit", 
+       y = "Density",
+       title = "Normal Probability Model") +
+  scale_x_continuous(breaks = round(seq(mu-4*sd, mu + 4*sd, by = sd), 2))
 ```
 
 For any normal distribution $X \sim \mathrm{N}(\mu, \sigma)$ the following probability statements are true:
@@ -328,13 +391,15 @@ P( \mu - 3\sigma \le X \le \mu + 3\sigma ) & = 0.997 \, .
 \end{aligned}
 $$
 
-It is known as the **empirical rule** under normality assumption. Assuming $\texttt{hours\_units} \sim \mathrm{N}(\mu, \sigma)$, where $\mu$ and $\sigma$ are estimated by $\bar{X} = 1.65$ and $S = 0.72$, respectively, we can have the following interpretations according to the empirical rule.
+It is known as the **empirical rule** under normality assumption. Assuming $\texttt{hours\_units} \sim \mathrm{N}(\mu, \sigma)$, where $\mu$ and $\sigma$ are estimated by $\bar{X} = 1.65$ and $s = 0.72$, respectively, we can have the following interpretations according to the empirical rule.
 
-- About 68.3% of students in the population study 0.93 and 2.37 hours per week per unit).
+- About 68.3% of students in the population study _____ and _____ hours per week per unit).
 
-- About 95.4% study 0.21 and 3.09 hours per week per unit.
+- About 95.4% study _____ and _____ hours per week per unit.
 
-The above estimates are reliable only when a normal distribution is as a good approximation for the population distribution.
+**The above estimates are reliable only when a normal distribution is as a good approximation for the population distribution.**
+
+
 
 ### Central Tendency vs. Spread of Data
 
@@ -352,6 +417,7 @@ Some descriptive statistics quantify the spread of data.
 
 - **Sample standard deviation**: $S$ is defined in @eq-sd. It is one way of quantifying the spread of data values around the sample mean $\bar{X}$. Under the normality assumption, we estimate that 68.3% of data values in the population are in $[\bar{X} - S, \bar{X} + S]$, 95.4% are in $[\bar{X} - 2S, \bar{X} + 2S]$, and 99.7% are in $[\bar{X} - 3S, \bar{X} + 3S]$ according to the empirical rule under normality assumption. These estimations become more accurate as the sample size $n$ increases, and the normality assumption must be satisfied.
 
+
 ### Sensitivity vs. Robustness to Outliers
 
 The center and spread are important characteristics of a sample. Both sample mean ($\bar{X}$) and sample median ($M$) measure the center of a sample $(X_1, X_2, \dots, X_n)$, but they have different characteristics. The sample mean ($\bar{X}$) is value-based which means all values of $X_1, X_2, \dots, X_n$ are averaged to calculate $\bar{X}$. On the other hand, the sample mean ($M$) is rank-based which means that the calculation of $M$ depends on the order $X_{(1)} \le X_{(2)} \le \dots \le X_{(n)}$.
@@ -359,8 +425,9 @@ The center and spread are important characteristics of a sample. Both sample mea
 For the purpose of demonstration, suppose we recorded the gas price (dollars per gallon) of $n = 10$ randomly sampled gas stations in a town.
 
 ```{r}
-x = c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 5.99)
-x_order = sort(x, decreasing = FALSE)
+#| label: x-center
+x <- c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 5.99)
+x_order <- sort(x, decreasing = FALSE)
 x_order
 mean(x_order) ### sample mean
 median(x_order) ### sample median
@@ -369,8 +436,9 @@ median(x_order) ### sample median
 Suppose the most expensive place increased the gas price by \$1.00 per gallon (from \$5.99 per gallon to \$6.99 per gallon).
 
 ```{r}
-y = c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 6.99)
-y_order = sort(y, decreasing = FALSE)
+#| label: y-center
+y <- c(4.96, 5.30, 5.25, 4.88, 5.10, 5.40, 5.04, 4.85, 4.88, 6.99)
+y_order <- sort(y, decreasing = FALSE)
 y_order
 mean(y_order) ### sample mean
 median(y_order) ### sample median
@@ -378,11 +446,12 @@ median(y_order) ### sample median
 
 The sample mean increased by \$0.1 per gallon (from $\bar{X} = 5.165$ to $\bar{X} = 5.265$), but the sample median stayed constant at $M = 5.07$. In this case, we say that the sample mean is **sensitive** to outlier(s), and we say that the sample median is **robust** to outlier(s).
 
-## Warm-up
+## Wrap-up
 
 *You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSc8_9iqh5WUNJOK9VFtBQi-r5Rho-oR2gUQBH3okHpjhiHcAA/viewform). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
 
-#### Problem 1 Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 5, 4), calculate the following statistics.
+#### Problem 1 
+Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 5, 4), calculate the following statistics.
 
 a. sample size
 
@@ -398,7 +467,8 @@ f. sample standard deviation
 
 g. sample median
 
-#### Problem 2 Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 54), where 54 is an outlier (a data value which is extremely distant from other data values), calculate the following statistics.
+#### Problem 2 
+Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 54), where 54 is an outlier (a data value which is extremely distant from other data values), calculate the following statistics.
 
 a. sample size
 
@@ -414,7 +484,8 @@ f. sample standard deviation
 
 g. sample median
 
-#### Problem 3 True or false?
+#### Problem 3 
+True or false?
 
 a. The sample mean is sensitive to an outlier.
 
@@ -426,7 +497,8 @@ d. The sample range is sensitive to an outlier.
 
 e. The sample standard deviation is sensitive to an outlier.
 
-#### Problem 4 Multiple-choice: Suppose we will add one data value to a sample of size $n$. Which of the following makes the sample mean less sensitive?
+#### Problem 4 
+Multiple-choice: Suppose we will add one data value to a sample of size $n$. Which of the following makes the sample mean less sensitive?
 
 \(A\) The current sample size $n$ is already large.
 
@@ -440,9 +512,11 @@ e. The sample standard deviation is sensitive to an outlier.
 
 \(F\) Both (C) and (D)
 
-#### Problem 5 In the dataset of $\texttt{study_hours.csv}$, let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+#### Problem 5 
+In the dataset of $\texttt{study_hours.csv}$, let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
 
 ```{r}
+#| eval: false
 study_hours = read.csv("Data/study_hours.csv") ### read study_hours.csv in Data folder
 head(study_hours, 5) ### view the first 5 lines
 table(study_hours$gender)
@@ -466,10 +540,12 @@ e. sample percent of male students
 
 ***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
 
-#### Problem 1 The dataset $\texttt{king.csv}$ is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
+#### Problem 1 
+The dataset $\texttt{king.csv}$ is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
 
 ```{r}
-king = read.csv("Data/king.csv") ### read the csv file
+#| eval: false
+king <- read_csv("king.csv") ### read the csv file
 dim(king) ### dimension of data frame (rows and columns)
 colnames(king) ### column names
 head(king, 5) ### view first 5 lines
@@ -527,7 +603,8 @@ j. $\texttt{educyr}$
 
 k. $\texttt{gest}$
 
-#### Problem 2 Let $(7, 8, 9, 8, 8)$ be quiz scores of Student A. Each quiz is out of 7, and the passing score is 7 for each quiz. Calculate the following statistics.
+#### Problem 2 
+Let $(7, 8, 9, 8, 8)$ be quiz scores of Student A. Each quiz is out of 7, and the passing score is 7 for each quiz. Calculate the following statistics.
 
 a. sample mean
 
@@ -539,7 +616,8 @@ d. sample range
 
 e. proportion of quizzes passed
 
-#### Problem 3 Let $(9, 10, 10, 1, 10)$ be quiz scores of Student B who took the same quizzes as Student A in the same class. Calculate the following statistics.
+#### Problem 3 
+Let $(9, 10, 10, 1, 10)$ be quiz scores of Student B who took the same quizzes as Student A in the same class. Calculate the following statistics.
 
 a. sample mean
 
@@ -551,7 +629,8 @@ d. sample range
 
 e. proportion of quizzes passed
 
-#### Problem 4 Fill in the blank in the context of Problems 2 and 3. (Choices: sample mean, sample standard deviation, sample median, sample range, proportion of quizzes passed)
+#### Problem 4 
+Fill in the blank in the context of Problems 2 and 3. (Choices: sample mean, sample standard deviation, sample median, sample range, proportion of quizzes passed)
 
 a. The two students performed the same according to the \[...\].
 
@@ -561,7 +640,8 @@ c. Student B's performance deviates more from the average score than Student A's
 
 d. The \[...\] of Student B is substantially longer than of Student A because it is a sensitive statistic to an outlier.
 
-#### Problem 5 Revisit $\texttt{king.csv}$. The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
+#### Problem 5 
+Revisit $\texttt{king.csv}$. The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
 
 a. Estimate the probability of giving a birth to a boy when a woman is pregnant.
 
@@ -579,7 +659,10 @@ g. Estimate the age in years that 25% of pregnant women will be younger than tha
 
 h. Estimate the age in years that 25% of pregnant women will be older than that age
 
-**\*Problem 6 For a categorical variable, suppose your goal is to report the minimum amount of information without losing any information. Is it sufficient to calculate the sample count for each level? Explain why or why not.
-f
-**\*Problem 7 For a numeric variable, can we argue which statistics, sample mean or sample median, is better to measure the center of a sample? If so, choose the better one and explain. Otherwise, explain why not. In addition, explain why it is not sufficient to describe a sample based on central tendency only.
+#### Problem 6 
+For a categorical variable, suppose your goal is to report the minimum amount of information without losing any information. Is it sufficient to calculate the sample count for each level? Explain why or why not.
+
+
+#### Problem 7 
+For a numeric variable, can we argue which statistics, sample mean or sample median, is better to measure the center of a sample? If so, choose the better one and explain. Otherwise, explain why not. In addition, explain why it is not sufficient to describe a sample based on central tendency only.
 
