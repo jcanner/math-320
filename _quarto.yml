@@ -2,11 +2,11 @@ project:
   type: website
   output-dir: docs
   render:
-    - "!*-print.qmd"
-    - "*.qmd"
-    - "!*/quiz/*"
-    - "!*-instructor.qmd"
+    - "!/note-outlines/printed-notes/"
+    - "!/quiz/"
     - "!*.R"
+    - "*.qmd"
+    - "*.csv"
     
 website:
   page-navigation: true
