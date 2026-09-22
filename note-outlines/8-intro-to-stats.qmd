@@ -18,7 +18,7 @@ execute:
   warning: false 
   message: false
   echo: true
-embed-resources: true
+embed-resources: false
 code-copy: true
 code-overflow: wrap
 toc: true
@@ -515,7 +515,7 @@ Multiple-choice: Suppose we will add one data value to a sample of size $n$. Whi
 \(F\) Both (C) and (D)
 
 #### Problem 5 
-In the dataset of [`study_hours.csv`](note-outlines/8-intro-to-stats/study-hours.csv), let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+In the dataset of [`study_hours.csv`](8-intro-to-stats/study-hours.csv), let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
 
 
 Calculate the following statistics.
@@ -537,7 +537,7 @@ Check your answer by inputting them below their respective question. All calcula
 Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
 #### Problem 1 
-The dataset [`king.csv`](note-outlines/8-intro-to-stats/king.csv) is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
+The dataset [`king.csv`](8-intro-to-stats/king.csv) is a random sample of 2,500 mothers (and their newborn babies) who gave a birth in 2001 in King County, Washington.
 
 
 Below are descriptions of the variables.
@@ -630,7 +630,7 @@ c. Student B's performance deviates more from the average score than Student A's
 d. The \[...\] of Student B is substantially longer than of Student A because it is a sensitive statistic to an outlier.
 
 #### Problem 5 
-Revisit [`king.csv`](note-outlines/8-intro-to-stats/king.csv). The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
+Revisit [`king.csv`](8-intro-to-stats/king.csv). The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
 
 a. Estimate the probability of giving a birth to a boy when a woman is pregnant.
 
