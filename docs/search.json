@@ -80,17 +80,6 @@
     "text": "One of the most frustrating parts for people learning R is troubleshooting errors. R is incredibly powerful, but it is dumb. It can’t guess what you meant, nor add in a comma that you forgot to type. Read Chapter 6: Deciphering Common R Errors (5 min) which covers the most common errors in R and how to decipher them. R errors aren’t always clear to new users, but they almost always will direct you to where the problem occurs. Sometimes that is just telling you that it can’t find the file or object you are trying to point it to. Other times, it will repeat your code right up to the point where it didn’t understand. That helps focus your attention when searching for errors."
   },
   {
-    "objectID": "note-outlines/9-summarizing-data.html",
-    "href": "note-outlines/9-summarizing-data.html",
-    "title": "Summarizing and Visualizing Data",
-    "section": "",
-    "text": "{{&lt; include ../_extensions/r-wasm/live/_knitr.qmd &gt;}}",
-    "crumbs": [
-      "Note Outlines",
-      "Summarizing and Visualizing Data"
-    ]
-  },
-  {
     "objectID": "note-outlines/9-summarizing-data.html#good-practice-of-statistics",
     "href": "note-outlines/9-summarizing-data.html#good-practice-of-statistics",
     "title": "Summarizing and Visualizing Data",
