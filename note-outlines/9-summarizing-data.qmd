@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Statistics"
+title: "Summarizing and Visualizing Data"
 format: 
   live-html:
     webr:
@@ -73,23 +73,38 @@ A good practice of statistics is as follows.
 
 ## Categorical Data
 
-Categorical data can be summarized by the **count** of each level, and then we can calculate the **percent** or **proportion** of each level as needed. The categorical data can be visualized by a **barplot**. Below is a simple demonstration of a barplot when a sample of a categorical variables is $(\texttt{A}, \texttt{D}, \texttt{C}, \texttt{A}, \texttt{A}, \texttt{B}, \texttt{B}, \texttt{C}, \texttt{B}, \texttt{A})$.
+Categorical data can be summarized by the **count** of each level, and then we can calculate the **percent** or **proportion** of each level as needed. The categorical data can be visualized by a **barplot**. 
 
-```{r, echo = TRUE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Demonstration of a barplot"}
-x = c("A", "D", "C", "A", "A", "B", "B", "C", "B", "A") ### sample
 
-n = length(x) ### sample size
-table(x) ### counts
-table(x) / n ### proportions
-table(x) / n * 100 ### percents
+```{r}
 
-barplot( height = c(4, 3, 2, 1),
-         names.arg = c("A", "B", "C", "D"),
-         ylim = c(0, n),
-         col = c(2, 3, 4, 6),
-         xlab = "Four Levels",
-         ylab = "Count",
-         main = "Barplot" )
+study_hours <- read_csv("8-intro-to-stats/study-hours.csv", 
+                       show_col_types = FALSE) |> 
+  mutate(year = factor(year, levels = c("Sophomore",
+                                        "Junior",
+                                        "Senior")))
+
+tally(gender ~ year, data = study_hours)
+
+tally(~ gender | year, data = study_hours, format = "prop")
+
+
+gf_bar(~gender, data = study_hours,
+       xlab = "Gender",
+       ylab = "Number of Students",
+       title = "Sample of n = 110 University Students in the College of Science")
+
+gf_props(~year, data = study_hours,
+       xlab = "Class Rank",
+       ylab = "Proportion of Students",
+       title = "Sample of n = 110 University Students in the College of Science")
+
+gf_props(~gender | year, data = study_hours, 
+         fill = ~gender,
+         xlab = "Gender",
+         ylab = "Proportion of Students",
+         title = "Sample of n = 110 University Students in the College of Science",
+         show.legend = FALSE)
 ```
 
 Given a categorical variable of interest, it can be summarized by group. See the following case study.
