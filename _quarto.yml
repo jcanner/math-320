@@ -69,7 +69,9 @@ website:
         text: "Central Limit Theorem"    
       - href: note-outlines/8-intro-to-stats.qmd
         text: "Introduction to Statistics"   
-       
+      - href: note-outlines/9-summarizing-data.qmd
+        text: "Summarizing and Visualizing Data"
+        
 format:
   html:
     lang: en
