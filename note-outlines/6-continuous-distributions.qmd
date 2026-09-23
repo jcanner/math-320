@@ -1204,14 +1204,14 @@ f. the probability that $|Z|$ is greater than 2
 #| exercise: ex_asn_4_f
 #| solution: true
 #| echo: false
-
+# double lb ----
 # double lb ----
 2*pnorm(-2, 0, 1)
 
 # double ub ----
 2*(1-pnorm(2, 0, 1))
 
-# add
+# add ----
 pnorm(-2, 0, 1) + (1-pnorm(2, 0, 1))
 ```
 

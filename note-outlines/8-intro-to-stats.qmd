@@ -11,6 +11,7 @@ format:
         - https://projectmosaic.r-universe.dev
       resources:
         - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/study-hours.csv
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/king.csv
       cell-options:
         warning: true
         completion: false
@@ -457,78 +458,388 @@ Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 5, 4), calculate the following statis
 
 a. sample size
 
+:::{.callout-tip collapse="true"}
+#### Answer
+10
+:::
+
 b. sample minimum
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 c. sample maximum
 
+:::{.callout-tip collapse="true"}
+#### Answer
+9
+:::
+
 d. sample range
+
+:::{.callout-tip collapse="true"}
+#### Answer
+8
+:::
 
 e. sample mean
 
+:::{.callout-tip collapse="true"}
+#### Answer
+4.8
+:::
+
 f. sample standard deviation
 
+:::{.callout-tip collapse="true"}
+#### Answer
+2.7406
+:::
+
 g. sample median
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4.5
+:::
 
 #### Problem 2 
 Given a sample of (8, 3, 1, 5, 8, 2, 3, 9, 54), where 54 is an outlier (a data value which is extremely distant from other data values), calculate the following statistics.
 
 a. sample size
 
+:::{.callout-tip collapse="true"}
+#### Answer
+9
+:::
+
 b. sample minimum
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 c. sample maximum
 
+:::{.callout-tip collapse="true"}
+#### Answer
+54
+:::
+
 d. sample range
+
+:::{.callout-tip collapse="true"}
+#### Answer
+53
+:::
 
 e. sample mean
 
+:::{.callout-tip collapse="true"}
+#### Answer
+10.3333
+:::
+
 f. sample standard deviation
 
+:::{.callout-tip collapse="true"}
+#### Answer
+16.6283
+:::
+
 g. sample median
+
+:::{.callout-tip collapse="true"}
+#### Answer
+5
+:::
 
 #### Problem 3 
 True or false?
 
 a. The sample mean is sensitive to an outlier.
 
+```{r}
+#| label: wrap-3-a
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 b. The sample median is sensitive to an outlier.
+
+```{r}
+#| label: wrap-3-b
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 c. The sample IQR is sensitive to an outlier.
 
+```{r}
+#| label: wrap-3-c
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 d. The sample range is sensitive to an outlier.
 
+```{r}
+#| label: wrap-3-d
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 e. The sample standard deviation is sensitive to an outlier.
+
+```{r}
+#| label: wrap-3-e
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 #### Problem 4 
 Multiple-choice: Suppose we will add one data value to a sample of size $n$. Which of the following makes the sample mean less sensitive?
 
-\(A\) The current sample size $n$ is already large.
 
-\(B\) The new data value is close to the current sample mean.
+```{r}
+#| label: wrap-4
+#| echo: false
+checkdown::check_question(answer = "Both (A) and (B)",
+                          options = c("The current sample size $n$ is already large.",
+                                      "The new data value is close to the current sample mean.",
+                                      "The new data value is smaller than the current sample minimum.",
+                                      "The new data value is greater than the current sample maximum.",
+                                      "Both (A) and (B)",
+                                      "Both (C) and (D)"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(C\) The new data value is smaller than the current sample minimum.
-
-\(D\) The new data value is greater than the current sample maximum.
-
-\(E\) Both (A) and (B)
-
-\(F\) Both (C) and (D)
 
 #### Problem 5 
-In the dataset of [`study_hours.csv`](8-intro-to-stats/study-hours.csv), let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+In the dataset of [`study-hours.csv`](8-intro-to-stats/study-hours.csv), let us focus on the categorical variable of $\texttt{gender}$ where $\texttt{F}$ denotes a female student and $\texttt{M}$ denotes a male student.
+
+
+
+```{webr}
+#| label: wrap-5-read
+#| exercise: ex_wrap_5_read
+#| caption: "Use R to read in the data as study_hours"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_read"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_read
+#| solution: true
+#| echo: false
+study_hours <- read_csv("study-hours.csv", show_col_types = FALSE)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_read
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 
 Calculate the following statistics.
 
 a. sample size
 
+```{webr}
+#| label: wrap-5-a
+#| exercise: ex_wrap_5_a
+#| caption: "Use R to find the sample size"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_a"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_a
+#| solution: true
+#| echo: false
+
+# glimpse ----
+glimpse(study_hours)
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_a
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
 b. sample count of female students
+
+```{webr}
+#| label: wrap-5-b
+#| exercise: ex_wrap_5_b
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_b"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_b
+#| solution: true
+#| echo: false
+
+tally(~gender, data = study_hours)
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_b
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 c. sample proportion of female students
 
+```{webr}
+#| label: wrap-5-c
+#| exercise: ex_wrap_5_c
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_c"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_c
+#| solution: true
+#| echo: false
+
+tally(~gender, data = study_hours, format = "proportion")
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_c
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
 d. sample proportion of male students
+```{webr}
+#| label: wrap-5-d
+#| exercise: ex_wrap_5_d
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_d"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_d
+#| solution: true
+#| echo: false
+
+tally(~gender, data = study_hours, format = "proportion")
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_d
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 e. sample percent of male students
+
+```{webr}
+#| label: wrap-5-e
+#| exercise: ex_wrap_5_e
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_wrap_5_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_wrap_5_e
+#| solution: true
+#| echo: false
+
+tally(~gender, data = study_hours, format = "percent")
+
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_wrap_5_e
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
 
 ## Assignment
 
@@ -572,86 +883,528 @@ Identify the variable type of each variable below. (Choices: numeric discrete va
 
 a. $\texttt{bwt}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
+
 b. $\texttt{low}$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+categorical nominal variable
+:::
 
 c. $\texttt{firstep}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+categorical nominal variable
+:::
+
 d. $\texttt{gender}$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+categorical nominal variable
+:::
 
 e. $\texttt{age}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
+
 f. $\texttt{race}$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+categorical nominal variable
+:::
 
 g. $\texttt{parity}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric discrete variable
+:::
+
 h. $\texttt{wpre}$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
 
 i. $\texttt{wgain}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
+
 j. $\texttt{educyr}$
 
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
+
 k. $\texttt{gest}$
+
+:::{.callout-tip collapse="true"}
+#### Answer
+numeric continuous variable
+:::
 
 #### Problem 2 
 Let $(7, 8, 9, 8, 8)$ be quiz scores of Student A. Each quiz is out of 7, and the passing score is 7 for each quiz. Calculate the following statistics.
 
 a. sample mean
 
+:::{.callout-tip collapse="true"}
+#### Answer
+8
+:::
+
 b. sample standard deviation
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.7071
+:::
 
 c. sample median
 
+:::{.callout-tip collapse="true"}
+#### Answer
+8
+:::
+
 d. sample range
 
+:::{.callout-tip collapse="true"}
+#### Answer
+2
+:::
+
 e. proportion of quizzes passed
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1
+:::
 
 #### Problem 3 
 Let $(9, 10, 10, 1, 10)$ be quiz scores of Student B who took the same quizzes as Student A in the same class. Calculate the following statistics.
 
 a. sample mean
 
+:::{.callout-tip collapse="true"}
+#### Answer
+8
+:::
+
 b. sample standard deviation
+
+:::{.callout-tip collapse="true"}
+#### Answer
+3.937
+:::
 
 c. sample median
 
+:::{.callout-tip collapse="true"}
+#### Answer
+10
+:::
+
 d. sample range
 
+:::{.callout-tip collapse="true"}
+#### Answer
+9
+:::
+
 e. proportion of quizzes passed
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.80
+:::
 
 #### Problem 4 
 Fill in the blank in the context of Problems 2 and 3. (Choices: sample mean, sample standard deviation, sample median, sample range, proportion of quizzes passed)
 
 a. The two students performed the same according to the \[...\].
 
+:::{.callout-tip collapse="true"}
+#### Answer
+sample mean
+:::
+
 b. Student B received a perfect score of 10 at least 50% of the time according to the \[...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+sample median
+:::
 
 c. Student B's performance deviates more from the average score than Student A's according to the \[...\].
 
+:::{.callout-tip collapse="true"}
+#### Answer
+sample standard deviation
+:::
+
 d. The \[...\] of Student B is substantially longer than of Student A because it is a sensitive statistic to an outlier.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+sample range
+:::
+
 
 #### Problem 5 
 Revisit [`king.csv`](8-intro-to-stats/king.csv). The sample represents all pregnant women in 2001 in King County, Washington. Answer the following question by calculating appropriate statistics.
 
-a. Estimate the probability of giving a birth to a boy when a woman is pregnant.
+
+```{webr}
+#| label: asn-5-read
+#| exercise: ex_asn_5_read
+#| caption: "Use R to read in the data as king"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_read"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_read
+#| solution: true
+#| echo: false
+king <- read_csv("king.csv", show_col_types = FALSE)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_read
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+
+a. Estimate the probability of giving a birth to a boy when a woman is 
+
+```{webr}
+#| label: asn-5-a
+#| exercise: ex_asn_5_a
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_a"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_a
+#| solution: true
+#| echo: false
+tally(~gender, data = king, format = "proportion")
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_a
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5164
+:::
 
 b. Estimate the percent of smokers among pregnant woman.
 
+```{webr}
+#| label: asn-5-b
+#| exercise: ex_asn_5_b
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_b"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_b
+#| solution: true
+#| echo: false
+tally(~smoker, data = king, format = "percent")
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_b
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+7%
+:::
+
 c. Estimate the percent of drinkers among pregnant woman.
+
+```{webr}
+#| label: asn-5-c
+#| exercise: ex_asn_5_c
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_c"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_c
+#| solution: true
+#| echo: false
+tally(~drinker, data = king, format = "percent")
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_c
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1.16%
+:::
 
 d. Estimate the average birth weight in grams.
 
+```{webr}
+#| label: asn-5-d
+#| exercise: ex_asn_5_d
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_d"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_d
+#| solution: true
+#| echo: false
+mean(~bwt, data = king)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_d
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+3414.019g
+:::
+
 e. Estimate the middle birth weight that 50% of babies will be heavier than that birth weight
+
+```{webr}
+#| label: asn-5-e
+#| exercise: ex_asn_5_e
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_e"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_e
+#| solution: true
+#| echo: false
+median(~bwt, data = king)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_a
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+ 3444.5g
+:::
 
 f. Estimate the probability of a low birth weight ($< 2500$ grams).
 
+```{webr}
+#| label: asn-5-f
+#| exercise: ex_asn_5_f
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_f"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_f
+#| solution: true
+#| echo: false
+tally(~low, data = king, format = "proportion")
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_f
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0508
+:::
+
 g. Estimate the age in years that 25% of pregnant women will be younger than that age
 
+```{webr}
+#| label: asn-5-g
+#| exercise: ex_asn_5_g
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_g"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_g
+#| solution: true
+#| echo: false
+quantile(~age, data = king)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_g
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+25 years
+:::
+
 h. Estimate the age in years that 25% of pregnant women will be older than that age
+
+```{webr}
+#| label: asn-5-h
+#| exercise: ex_asn_5_h
+#| caption: "Use R to find the value"
+
+
+```
+
+
+::: {.solution exercise="ex_asn_5_h"}
+
+##### Solution
+
+```{webr}
+#| exercise: ex_asn_5_h
+#| solution: true
+#| echo: false
+quantile(~age, data = king)
+```
+
+:::
+  
+```{webr}
+#| exercise: ex_asn_5_h
+#| check: true
+#| echo: false
+gradethis::grade_this_code()
+```
+
+:::{.callout-tip collapse="true"}
+#### Answer
+34 years
+:::
+
 
 #### Problem 6 
 For a categorical variable, suppose your goal is to report the minimum amount of information without losing any information. Is it sufficient to calculate the sample count for each level? Explain why or why not.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+Yes, it is sufficient to calculate the sample count for each level for the following reason. There are three common ways to report statistics for a categorical variable: (1) sample counts, (2) sample proportions, and (3) sample percents. Suppose there are $g$ levels for a categorical variables, and let $n_1, n_2, \dots, n_g$ be the sample counts for each level (i.e., the number of individuals belonging to each level). From these statistics (sample counts), we can calculate the total sample size, $n = n_1 + n_2 + \dots + n_g$, and calculate the sample proportions as follows: $p_i = \frac{n_i}{n}$ for $i = 1, 2, \dots, g$. Then, we can calculate the sample percents as follows: $p_i \times 100\%$ for $i = 1, 2, \dots, g$. Therefore, the sample counts $n_1, n_2, \dots, n_h$ are minimally sufficient statistics without losing any information about the categorical variable of interest.
+:::
 
 #### Problem 7 
 For a numeric variable, can we argue which statistics, sample mean or sample median, is better to measure the center of a sample? If so, choose the better one and explain. Otherwise, explain why not. In addition, explain why it is not sufficient to describe a sample based on central tendency only.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+One statistic (sample mean or sample median) is not better than the other to represent the center of a sample. The sample mean is sensitive to outlier(s), and the sample median is robust to outlier(s), and these are just properties (neither good or bad). Suppose you earned grade points of (2, 2, 2, 2, 4) in five courses (i.e., 4 C's and 1 A). The median grade point would be 2, and the mean (average) grade point is 2.4 which reflects the one great performance!
+
+In addition, the median or mean does not describe the dispersion of values in a sample. Suppose Student A scored (8, 8, 8, 8, 8) and Student B scored (6, 10, 7, 9, 8) in five quizzes. Their sample medians and means are both 8, but the central tendency does not inform about the variability. The sample standard deviation of Student A's score is 0 (which means the scores are constant), and of Student B's score is 1.58 (which means the scores vary around the average by some degree).
+
+Therefore, a good practice is to report sample mean and standard deviation (which are sensitive to outliers) and Q1, median, and Q3 (which are robust to outliers) to describe a sample. One practical recommendation is to use the `df_stats()` function in R!
+:::
