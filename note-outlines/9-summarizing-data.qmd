@@ -1,0 +1,520 @@
+---
+title: "Introduction to Statistics"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      resources:
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/study-hours.csv
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/king.csv
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: false
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}  
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}  
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+## Good Practice of Statistics
+
+A good practice of statistics is as follows.
+
+- Set clear objective(s).
+
+- Collect data which can address the objective(s).
+
+- Calculate informative, concise, and interpretable descriptive statistic(s).
+
+- Present the results in table(s) and graphic(s) which are self-explanatory.
+
+- Interpret the results in the context.
+
+
+## Categorical Data
+
+Categorical data can be summarized by the **count** of each level, and then we can calculate the **percent** or **proportion** of each level as needed. The categorical data can be visualized by a **barplot**. Below is a simple demonstration of a barplot when a sample of a categorical variables is $(\texttt{A}, \texttt{D}, \texttt{C}, \texttt{A}, \texttt{A}, \texttt{B}, \texttt{B}, \texttt{C}, \texttt{B}, \texttt{A})$.
+
+```{r, echo = TRUE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Demonstration of a barplot"}
+x = c("A", "D", "C", "A", "A", "B", "B", "C", "B", "A") ### sample
+
+n = length(x) ### sample size
+table(x) ### counts
+table(x) / n ### proportions
+table(x) / n * 100 ### percents
+
+barplot( height = c(4, 3, 2, 1),
+         names.arg = c("A", "B", "C", "D"),
+         ylim = c(0, n),
+         col = c(2, 3, 4, 6),
+         xlab = "Four Levels",
+         ylab = "Count",
+         main = "Barplot" )
+```
+
+Given a categorical variable of interest, it can be summarized by group. See the following case study.
+
+### Case Study I: Titanic
+
+Titanic was a British passenger liner. It sank in the North Atlantic Ocean in the morning of April 15, 1912. The cause was collision with an iceberg, and many passengers lost lives. $\texttt{Titanic.csv}$ is a dataset which includes information about 1,316 passengers. There are five columns:
+
+- $\texttt{id}$: passenger identification number
+
+- $\texttt{class}$: passenger class (first, second, or third)
+
+- $\texttt{age}$: passenger’s age group (adult or child)
+
+- $\texttt{sex}$: passenger’s sex (female or male)
+
+- $\texttt{survived}$: passenger’s survival status (no or yes)
+
+The objective is to investigate if certain groups of passengers had higher chances of survival.
+
+```{r, warning = FALSE, message = FALSE}
+library(mosaic)
+titanic = read.csv("Data/Titanic.csv")
+
+### summary by count
+tally(~survived, data = titanic)
+tally(survived ~ sex, data = titanic)
+tally(survived ~ age, data = titanic)
+tally(survived ~ class, data = titanic)
+
+### summary by percent
+tally(~survived, data = titanic, format = "percent")
+tally(survived ~ sex, data = titanic, format = "percent")
+tally(survived ~ age, data = titanic, format = "percent")
+tally(survived ~ class, data = titanic, format = "percent")
+```
+
+|                 |          | Did not survive | Survived  | Total |
+|:---------------:|:--------:|:---------------:|:---------:|:-----:|
+|       Sex       |  Female  |    123 (28%)    | 324 (72%) |  447  |
+|                 |   Male   |    694 (80%)    | 175 (20%) |  869  |
+|       Age       |  Adults  |    765 (63%)    | 442 (37%) | 1,207 |
+|                 | Children |    52 (48%)     | 57 (52%)  |  109  |
+| Passenger Class |  First   |    122 (38%)    | 203 (62%) |  325  |
+|                 |  Second  |    167 (59%)    | 118 (41%) |  285  |
+|                 |  Third   |    528 (75%)    | 178 (25%) |  706  |
+|      Total      |  Total   |    817 (62%)    | 499 (38%) | 1,316 |
+
+: Count and percent of passengers who survived and who did not survive by sex, age, and passenger class
+
+```{r,fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Barplot of Titanic data by sex"}
+
+surv_sex = tally(survived ~ sex, data = titanic, format = "percent")
+barplot( surv_sex, 
+         beside = TRUE,
+         col = c(2, 4),
+         main = "Survival Rate by Sex",
+         ylab = "Survival Rate (%)", 
+         ylim = c(0,100),
+         names = c("Female (N = 447)", "Male (N = 869)"),
+         legend = TRUE, 
+         args.legend = list( x = "topleft", 
+                             bty = "n", 
+                             legend = c("Died", "Survived") ) )
+```
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Barplot of Titanic data by age"}
+surv_age = tally(survived ~ age, data = titanic, format = "percent")
+barplot( surv_age, 
+         beside = TRUE,
+         col = c(2, 4),
+         main = "Survival Rate by Sex",
+         ylab = "Survival Rate (%)", 
+         ylim = c(0,100),
+         names = c("Adult (N = 1,207)", "Child (N = 109)"),
+         legend = TRUE, 
+         args.legend = list( bty = "n", legend = c("Died", "Survived") ) )
+```
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Barplot of Titanic data by class"}
+surv_class = tally(survived ~ class, data = titanic, format = "percent")
+barplot( surv_class, 
+         beside = TRUE,
+         col = c(2, 4),
+         main = "Survival Rate by Sex",
+         ylab = "Survival Rate (%)", 
+         ylim = c(0,100),
+         names = c("1st (N = 325)", "2nd (N = 285)", "3rd (N = 706)"),
+         legend = TRUE, 
+         args.legend = list( bty = "n", legend = c("Died", "Survived") ) )
+```
+
+Among the 1,316 passengers, 499 (38%) survived. The percent (%) of passengers who survived are summarized in @tbl-titanic by female and male, by adult and child, and by the first class, second class, and third class. The survival rates of female and male passengers were 72% and 20%, respectively; the survival rates of adults and children were 37% and 52%, respectively, and the survival rates of the first class, second class, and third class passengers were 62%, 41%, and 25%, respectively. The data show that the chance of survival was higher for females than for males, and it was higher for children than for adults. As seen in the movie of Titanic, the captain's order ("Women and children first") explains this result. The data also show that the chance of survival was the highest for first-class passengers and the lowest for third-class passengers. It was not a part of the captain's order, but unfortunately, lifeboats were located near the first- and second-class passengers, and it was found that routes for third-class passengers were blocked. It was a tragedy, and the data revealed social injustice in this tragedy.
+
+## Numeric Data
+
+Numeric data can be summarized by sample mean and standard deviation as well as 5-number summary. The 5-number summary can be used to draw a boxplot which is a quick visual summary of numeric data.
+
+### Boxplot
+
+Let $X_{(1)}$, $Q_1$, $M$, $Q_3$, and $X_{(n)}$ be the sample minimum, first quartile, median, third quartile, and maximum, respectively. The **inter-quartile range** (or **IQR**) is defined as
+
+$$
+\texttt{IQR} = Q_3 - Q_1 \, .
+$$
+
+The **lower fence** and **upper fence** are defined as
+
+$$
+\begin{aligned}
+\texttt{LF} & = Q_1 - 1.5 \times \texttt{IQR} \, , \\
+\texttt{UF} & = Q_3 + 1.5 \times \texttt{IQR} \, ,
+\end{aligned}
+$$
+
+any data values outside of $(\texttt{LF}, \texttt{UF})$ are **outliers**. (In general, any extremely low or high data values are referred to as outliers, and it is an arbitrary definition of outliers.) The **lower whisker** and **upper whisker** are defined as follows:
+
+- Among data values greater than or equal to $\texttt{LF}$, let $\texttt{LW}$ be the closest data value to $\texttt{LF}$. Then $\texttt{LW}$ is called the **lower whisker**.
+
+- Among data values less than or equal to $\texttt{UF}$, let $\texttt{UW}$ be the closest data value to $\texttt{UF}$. Then \$\texttt{UW}\$ is called the upper whisker.
+
+For the purpose of demonstration, let us focus on the numeric variable $\texttt{Top\_Speed}$ (the maximum speed in km/h) in the dataset $\texttt{Euro.csv}$, a sample of European soccer players who played in Euro 2016, Euro 2020, or Euro 2024.
+
+```{r, warning = FALSE, message = FALSE}
+euro = read.csv("Data/Euro.csv") ### read csv file
+library(mosaic)
+favstats(~Top_Speed, data = euro)
+```
+
+According to the above descriptive statistics, we can calculate $\texttt{IQR} = 31.5 - 27.5 = 4.0$. The lower fence and upper fence are $\texttt{LF} = 27.5 - 1.5(4) = 21.5$ and $\texttt{UF} = 31.5 + 1.5(4) = 37.5$, respectively, and the lower whisker and upper whisker are $\texttt{LW} = 21.5$ and $\texttt{UW} = 36.5$, respectively, which can be calculated as follows.
+
+```{r}
+Q1 = 27.5
+Q3 = 31.5
+IQR = Q3 - Q1 ### inter-quartile range
+LF = Q1 - 1.5 * IQR ### lower fence
+UF = Q3 + 1.5 * IQR ### upper fence
+LF; UF
+LW = min( euro$Top_Speed[ euro$Top_Speed >= LF ], na.rm = TRUE ) ### lower whisker
+UW = max( euro$Top_Speed[ euro$Top_Speed <= UF ], na.rm = TRUE ) ### upper whisker
+LW; UW
+```
+
+The boxplot of maximum speed (km/h) is shown below.
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "60%", out.width = "60%", fig.alt = "Boxplot of maximum speed of European players"}
+bp = boxplot( euro$Top_Speed, 
+              ylim = c(0,40),
+              horizontal = TRUE,
+              col = 4,
+              main = "Maximum Speed of European Soccer Players",
+              xlab = "Speed (km/h)" )
+
+mtext( side = 1, line = -1.5, 
+       at = 40, adj = 1, col = 4,
+       text = "Note: All players in Euro 2016, 2020, and 2024 are combined.",
+       cex = 0.7 )
+
+bp$stats ### LF, Q1, M, Q3, and UF
+bp$n ### sample size after removing missing value (NA)
+```
+
+The thick middle bar in the box is the sample median ($M = 29.7$), the left side and right side of the box are the first quartile ($Q_1 = 27.5$) and the third quartile ($Q_3 = 31.5$), respectively, and the left bar and right bar at the end of the dotted line are the lower whisker ($\texttt{LW} = 21.5$) and the upper whisker ($\texttt{UW} = 36.5$), respectively. All circled data values outside the fence $(\texttt{LF}, \texttt{UF}) = (21.5, 37.5)$ are outliers, and no outliers are seen above the upper fence (which implies that $\texttt{UF} = 36.5$ is the sample maximum).
+
+### Histogram
+
+A histogram is another way of visualizing numeric data. It partitions the range of observed data by creating a bin $B_i = [b_{i-1}, b_i)$ for $i = 1, 2, \dots, m$; counts data values belonging to each bin; and uses a graphic like a barplot to visualize the relative frequency of each bin. Below is the histogram of the maximum speed (km/h) by creating $m = 20$ bins from 0 to 40 with a width of 2, $B_1 = [0, 2), B_2 = [2, 4), \dots, B_{20} = [38, 40)$.
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "60%", out.width = "60%", fig.alt = "Boxplot of maximum speed of European players"}
+h = hist( euro$Top_Speed,
+          freq = FALSE,
+          col = "white", border = "blue",
+          main = "Maximum Speed of European Soccer Players",
+          xlab = "Speed (km/h)",
+          xlim = c(0, 40),
+          ylim = c(0, 0.15),
+          breaks = seq(0, 40, 2) )
+lines( density(euro$Top_Speed, na.rm = TRUE, adjust = 1.5), col = 4, lwd = 2 )
+h$breaks ### partition breaks
+h$counts ### counts
+h$density ### proportions
+```
+
+### Case Study II: European Soccer {#sec-euro}
+
+Have European soccer players become faster over the 8 years (from Euro 2016 to 2024)? Of course, soccer players do not generate their maximum speed every minute, but they run at their maximum speed at critical moments. Exercise scientists believe that the maximum speed (km/h) is an indicator of athletes' physical strength and speed.
+
+```{r}
+euro = read.csv("Data/Euro.csv") ### read csv file
+head(euro, 5) ### view first 5 lines
+favstats(Top_Speed ~ Event, data = euro)
+```
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "60%", out.width = "60%", fig.alt = "Boxplot of maximum speed by Euro 2016, 2020, and 2024"}
+bp = boxplot( Top_Speed ~ Event, data = euro,
+              ylim = c(0,40),
+              horizontal = FALSE,
+              col = c(2, 3, 4),
+              main = "Maximum Speed of European Soccer Players",
+              ylab = "Speed (km/h)",
+              xlab = "" )
+```
+
+```{r, fig.height = 4.5, fig.width = 5, out.height = "60%", out.width = "60%", fig.alt = "Histogram of maximum speed by Euro 2016, 2020, and 2024"}
+euro2016 = subset(euro, Event == "Euro 2016")
+euro2020 = subset(euro, Event == "Euro 2020")
+euro2024 = subset(euro, Event == "Euro 2024")
+
+h = hist( euro$Top_Speed,
+          freq = FALSE,
+          col = "white", border = "grey70",
+          main = "Maximum Speed of European Soccer Players",
+          xlab = "Speed (km/h)",
+          xlim = c(0, 40),
+          ylim = c(0, 0.20),
+          breaks = seq(0, 40, 2) )
+lines( density(euro2016$Top_Speed, na.rm = TRUE, adjust = 2), col = 2, lty = 1 )
+lines( density(euro2020$Top_Speed, na.rm = TRUE, adjust = 2), col = 3, lty = 2 )
+lines( density(euro2024$Top_Speed, na.rm = TRUE, adjust = 2), col = 4, lty = 4 )
+legend( x = "topleft",
+        bty = "n",
+        cex = 0.8,
+        col = c(2, 3, 4),
+        lty = c(1, 2, 4),
+        legend = c("Euro 2016", "Euro 2020", "Euro 2024") )
+```
+
+| Year | Min. |  Q1  | Median |  Q3  | Max. | Mean |  SD  |  N  |
+|:----:|:----:|:----:|:------:|:----:|:----:|:----:|:----:|:---:|
+| 2016 | 14.1 | 26.3 |  28.2  | 29.6 | 32.8 | 27.7 | 2.77 | 429 |
+| 2020 | 0.0  | 27.2 |  29.2  | 30.8 | 33.8 | 28.5 | 3.76 | 490 |
+| 2024 | 20.5 | 30.1 |  31.8  | 33.1 | 36.5 | 31.3 | 2.60 | 493 |
+
+: Descriptive statistics of maximum speed (km) by the three events
+
+Over the three competitions, the data show that European soccer players have become faster according to the maximum speed (km/h). The average maximum speed was 27.7, 28.5, and 31.3 km/h in Euro 2016, Euro 2020, and Euro 2024, respectively, and the fastest player in each competition has become faster over the eight years (32.8 km/h in 2016, 33.8 km/h in 2020, and 36.5 km/h in 2020). See @tbl-euro for detailed descriptive statistics. If a player generated a maximum speed of 29.6 km/h, only 25% of players were faster than him in 2016 ($Q_1 = 29.6$ km/h in 2016), but more than 75% of players were faster than him in 2024 ($Q_1 = 30.1$ km/h in 2024).
+
+## Warm-up
+
+*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLScFBDN2nyPS-VUr7O2rBcdSOwKnRycRedOfkM1yE6CRTAHZug/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+
+**Problem 1.** Fill in the blank.
+
+a\. A categorical variable can be visualized by a \[b...\].
+
+b\. A numeric variable can be visualized by a \[b...\] using the 5-number summary.
+
+c\. A numeric variable can be visualized by a \[h...\] by specifying the bins (intervals) of possible values.
+
+d\. Data values which are outside of lower fence and upper fence called \[o...\].
+
+e\. In a boxplot, the middle bar inside the box is the sample \[m...\].
+
+f\. In a boxplot, the left side of the box is the sample \[f... q...\].
+
+g\. In a boxplot, the right side of the box is the sample \[t... q...\].
+
+h\. In a boxplot, the left bar and right bar marked outside of the box are the lower \[w...\] and upper \[w...\]. (They are the same word, so answer only once.)
+
+**Problem 2.** Given a sample of $(1, 2, \dots, 100)$ of size 100, calculate the following statistics based on the below descriptive statistics.
+
+```{r}
+x = 1:100
+x
+favstats(~x)
+```
+
+a\. inter-quartile range ($\texttt{IQR}$)
+
+b\. lower fence ($\texttt{LF}$)
+
+c\. upper fence ($\texttt{UF}$)
+
+d\. lower whisker ($\texttt{LW}$)
+
+e\. upper whisker ($\texttt{LW}$)
+
+f\. the number of outliers
+
+**Problem 3.** Given a sample of (1, 10, 100, 1000, 10000), calculate the following statistics based on the below descriptive statistics.
+
+```{r}
+x = 10 ^ (0:4)
+x
+favstats(~x)
+```
+
+a\. inter-quartile range ($\texttt{IQR}$)
+
+b\. lower fence ($\texttt{LF}$)
+
+c\. upper fence ($\texttt{UF}$)
+
+d\. lower whisker ($\texttt{LW}$)
+
+e\. upper whisker ($\texttt{LW}$)
+
+f\. the number of outliers
+
+## Assignment
+
+***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdbpNvMhhXY3NuP1C61EGRi2k7j6IcJwC3Oc-hHSam69BbvHw/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+
+***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
+
+**Problem 1.** This problem is continued from Case Study II (\@sec-euro). Below is a summary of the maximum speed by event within each position in @tbl-euro2. Fill in the blank by *rounding to one decimal place*. (You must show your code.)
+
+|  Position  | Year |  Q1  | Median |  Q3  |  Max  | Mean  | SD  |  N  |
+|:----------:|:----:|:----:|:------:|:----:|:-----:|:-----:|:---:|:---:|
+|  Defender  | 2016 | 26.8 | \[a\]  | 29.8 | 32.1  | 28.1  | 2.4 | 147 |
+|            | 2020 | 28.4 |  29.9  | 31.3 | \[b\] | 29.5  | 2.6 | 165 |
+|            | 2024 | 31.0 |  32.2  | 33.5 | 35.7  | \[c\] | 2.1 | 151 |
+| Midfielder | 2016 | 26.5 |  28.1  | 29.6 | 31.9  | \[d\] | 2.2 | 164 |
+|            | 2020 | 27.2 |  29.0  | 30.4 | \[e\] | 28.3  | 4.0 | 193 |
+|            | 2024 | 30.1 | \[f\]  | 32.8 | 35.8  | 31.2  | 2.2 | 182 |
+|  Forward   | 2016 | 26.2 | \[g\]  | 29.8 | 32.8  | 27.9  | 2.4 | 94  |
+|            | 2020 | 27.4 |  29.5  | 31.3 | \[h\] | 29.1  | 3.1 | 106 |
+|            | 2024 | 30.5 |  32.1  | 33.2 | 36.5  | \[i\] | 2.3 | 131 |
+
+: Descriptive statistics of maximum speed (km) by event within each position
+
+**Problem 2.** $\texttt{Affairs.csv}$ is a partial dataset of a magazine survey conducted in 1969 by Psychology Today. Readers of the magazine were asked to mail in their answers. About 20,000 replies were received, and a subset of them were recorded as a sample. It contains the following variables. In this problem, the goal of data analysis is to study factors associated with the likelihood of extramarital affairs.
+
+- $\texttt{affairs}$: Did you have extramarital affairs during the past year? ($\texttt{no}$ or $\texttt{yes}$)
+
+- $\texttt{gender}:$ Are you a female or a male? ($\texttt{female}$ or $\texttt{male}$)
+
+- $\texttt{children}$: Do you have children? ($\texttt{no}$ or $\texttt{yes}$)
+
+- $\texttt{religiousness}$: How religious are you? ($\texttt{anti}$, $\texttt{not at all}$, $\texttt{slightly}$, $\texttt{somewhat}$, or $\texttt{very}$)
+
+- $\texttt{rating}$: How happy are you with your marriage? ($\texttt{very unhappy}$, $\texttt{unhappy}$, $\texttt{average}$, $\texttt{above average}$, or $\texttt{very happy}$)
+
+Reference: Fair, R.C. (1978). A Theory of Extramarital Affairs. Journal of Political Economy, 86, 45–61. @tbl-affair is a summary of the percent of respondents who had extramarital affairs during the past year. Fill in the blank by *rounding to one decimal place*. (You must show your code.)
+
+|   |   | No affairs (%) | At least one affair (%) | N |
+|:--:|:--:|:--:|:--:|:--:|
+| Gender | Female | 77.1 | 22.9 | 315 |
+|  | Male | 72.7 | 27.3 | 286 |
+| Children | No | 84.2 | 15.8 | \[a\] |
+|  | Yes (1 or more) | 71.4 | 28.6 | \[b\] |
+| Religiousness | Anti-religious | \[c\] | \[d\] | 48 |
+|  | Not at all | 75.0 | 25.0 | 164 |
+|  | Slightly religious | 66.7 | 33.3 | 129 |
+|  | Somewhat religious | 82.6 | 17.4 | 190 |
+|  | Very religious | \[e\] | \[f\] | 70 |
+| Marriage rating | Very unhappy | 50.0 | 50.0 | 16 |
+|  | Unhappy | 50.0 | 50.0 | 66 |
+|  | Average | 71.0 | 29.0 | 93 |
+|  | Above average | 75.3 | 24.7 | 194 |
+|  | Very happy | \[g\] | \[h\] | 232 |
+| Total | Total | 75.0 | 25.0 | \[i\] |
+
+: Percent of respondents who had extramarital affairs during the past year
+
+**\*Problem 3.** Reproduce the following boxplots exactly. (You must show your code.)
+
+```{r, echo = FALSE, fig.height = 4.5, fig.width = 5, out.height = "60%", out.width = "60%", fig.alt = "Boxplot of maximum speed by Euro 2016, 2020, and 2024 within each position"}
+bp = boxplot( Top_Speed ~ Event, data = subset( euro, Position == "Defender" ),
+              ylim = c(15,40),
+              horizontal = FALSE,
+              col = c("white", "white", "white"),
+              main = "Defenders",
+              ylab = "Speed (km/h)",
+              xlab = "" )
+abline( h = seq(15, 40, 5), col = 8, lty = 3 )
+
+bp = boxplot( Top_Speed ~ Event, data = subset( euro, Position == "Midfielder" ),
+              ylim = c(15,40),
+              horizontal = FALSE,
+              col = c("white", "white", "white"),
+              main = "Midfielders",
+              ylab = "Speed (km/h)",
+              xlab = "" )
+abline( h = seq(15, 40, 5), col = "grey85" )
+
+bp = boxplot( Top_Speed ~ Event, data = subset( euro, Position == "Forward" ),
+              ylim = c(15,40),
+              horizontal = FALSE,
+              col = c("white", "white", "white"),
+              main = "Forwards",
+              ylab = "Speed (km/h)",
+              xlab = "" )
+abline( h = seq(15, 40, 5), col = "grey85" )
+```
+
+**\*Problem 4.** Reproduce the following barplots exactly. (You must show your code.) For the second barplot, note that $\texttt{rating}$ is an ordinal categorical variable. Specify the order of the five levels of \$\texttt{rating}\$ as follows: $\texttt{very unhappy}$, $\texttt{unhappy}$, $\texttt{average}$, $\texttt{above average}$, and $\texttt{very happy}$.
+
+```{r, warning = FALSE, message = FALSE}
+library(mosaic)
+affair = read.csv("Data/Affairs.csv")
+tally(~rating, data = affair) ### alphabetical order (default)
+affair$rating = factor( affair$rating,
+                        levels = c("very unhappy", "unhappy", "average", "above average", "very happy") )
+tally(~rating, data = affair) ### specified order (preferred)
+```
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 9, out.height = "50%", out.width = "50%", fig.alt = "Barplot of affair data"}
+temp = tally(affairs ~ gender, data = affair, format = "percent")
+barplot( temp, 
+         beside = TRUE,
+         col = c(3, 2),
+         main = "Extramarital Affairs During the Past Year",
+         ylab = "At least one affair (%)", 
+         ylim = c(0,100),
+         names = c("Female (315)", "Male (286)"),
+         legend = TRUE, 
+         args.legend = list( x = "topright", 
+                             bty = "n", 
+                             legend = c("No", "Yes") ) )
+
+abline( h = seq(0, 100, 20), col = "grey85" )
+
+temp = tally(affairs ~ rating, data = affair, format = "percent")
+barplot( temp, 
+         beside = TRUE,
+         col = c(3, 2),
+         main = "Extramarital Affairs During the Past Year",
+         ylab = "At least one affair (%)", 
+         ylim = c(0,100),
+         names = c("Very unhappy (16)", "Unhappy (66)", "Average (93)", "Above average (194)", "Very happy (232)"),
+         legend = TRUE, 
+         args.legend = list( x = "topright", 
+                             bty = "n", 
+                             legend = c("No", "Yes") ) )
+
+abline( h = seq(0, 100, 20), col = "grey85" )
+```
