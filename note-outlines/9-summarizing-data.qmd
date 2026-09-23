@@ -125,6 +125,12 @@ Titanic was a British passenger liner. It sank in the North Atlantic Ocean in th
 
 The objective is to investigate if certain groups of passengers had higher chances of survival.
 
+
+[Cal ICOR Link](https://csumb.jupyter.cal-icor.org/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fjcanner%2Fmath-320-activities&branch=main&urlpath=rstudio%2F)
+
+[R On Computer]()
+
+
 ```{r, warning = FALSE, message = FALSE}
 library(mosaic)
 titanic = read.csv("Data/Titanic.csv")
