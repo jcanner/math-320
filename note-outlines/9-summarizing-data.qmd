@@ -405,19 +405,60 @@ Fill in the blank.
 
 a. A categorical variable can be visualized by a \[b...\].
 
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
 b. A numeric variable can be visualized by a \[b...\] using the 5-number summary.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
 
 c. A numeric variable can be visualized by a \[h...\] by specifying the bins (intervals) of possible values.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
 d. Data values which are outside of lower fence and upper fence called \[o...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
 
 e. In a boxplot, the middle bar inside the box is the sample \[m...\].
 
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
 f. In a boxplot, the left side of the box is the sample \[f... q...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
 
 g. In a boxplot, the right side of the box is the sample \[t... q...\].
 
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
 h. In a boxplot, the left bar and right bar marked outside of the box are the lower \[w...\] and upper \[w...\]. (They are the same word, so answer only once.)
+
+:::{.callout-tip collapse="true"}
+#### Answer
+discrete
+:::
+
 
 #### Problem 2  
 Given a sample of $(1, 2, \dots, 100)$ of size 100, calculate the following statistics based on the below descriptive statistics.

@@ -355,6 +355,56 @@
     ]
   },
   {
+    "objectID": "note-outlines/10-sampling-methods.html#sampling-methods",
+    "href": "note-outlines/10-sampling-methods.html#sampling-methods",
+    "title": "Sampling Methods",
+    "section": "1 Sampling Methods",
+    "text": "1 Sampling Methods\nA sample is defined as a subset of the population. In most practical cases, the sample size \\(n\\) is much smaller than the population size \\(N\\). For instance, if \\(n = 100\\) and \\(N = 10000\\), there are about \\(6.52 \\times 10^{241}\\) possible samples (10,000 choose 100). To this end, it is almost impossible to observe the same sample twice when we take a sample twice. In practice, however, a researcher observes only one sample out of such a large number of possible samples. Therefore, “Is my sample a good sample” is not a good question. Instead, “Is my sample obtained by a good sampling method?” is a better question to be asked. In this chapter, we discuss sampling methods (i.e., how to take a sample).\n\n1.1 Simple Random Sampling\nWhen all individuals in the population have the same probability of being included in a sample, it is referred to as simple random sampling (or random sampling). In other words, if the population size is \\(N\\) and the sample size is \\(n\\), simple random sampling allows a probability of \\(\\frac{n}{N}\\) for each individual in the population to be sampled. Simple random sampling is an ideal sampling method (however it is done), but it is very challenging to execute in practice.\nA simple random sample can be executed by a random number generator. Suppose we want to take a simple random sample of size \\(n = 10\\) from a population of size \\(N = 10000\\). It can be done using the \\(\\texttt{sample}\\) function as follows.\n\n\n\n\n\n\n\n\nThe \\(\\texttt{sample}\\) function can be used with a sample space and probability mass function. For example, suppose \\(\\Omega = \\{ a, b, c \\}\\) and \\(P(a) = 0.2\\), \\(P(b) = 0.3\\), and \\(P(c) = 0.5\\). We can do simple random sampling on \\(\\Omega\\) of size \\(n = 1000\\) with replacement as follows.\n\n\n\n\n\n\n\n\nWe can also do simple random sampling of a discrete random variable. Suppose \\(\\mathcal{S}_X = \\{ 1, 2, 3, 4 \\}\\) and \\(f_X(x) = \\frac{x}{10}\\) for \\(x = 1, 2, 3, 4\\).\n\n\n\n\n\n\n\n\nFinally, we can take a random sample from a parametric probability distribution using r____(n, parameters) versions of our probability distribution functions for specified parameter values.\n\n\n\n\n\n\n\n\n\n\n1.2 Stratified Sampling\nVaguely speaking, when there are two or more groups of interest and we take a simple random sample from each group, it is called stratified sampling. In the United States, the two political parties, Democratic and Republican, have different views on the same national issue. Suppose 90% of the population support the Democratic Party and 10% support the Republican Party. If a researcher takes a simple random sample of size \\(n = 100\\) disregarding this fact, we expect 90 individuals and 10 individuals from each party. If the researcher wants to enforce this ratio, one method of stratified sampling is to take a simple random sample of size \\(n_1 = 90\\) among supporters of the Democratic Party and a simple random sample of size \\(n_2 = 10\\) among supporters of the Republican Party. If the researcher wants to balance the two groups for some reason, one method of stratified sampling is to take a simple random sample of size \\(n_1 = 50\\) and a simple random sample of size \\(n_2 = 50\\) from each party. As such, when there are \\(g\\) groups of interest and we take a simple random sample of size \\(n_i\\) from each group such that \\(n_1 + n_2 + \\dots + n_g = n\\) is fixed, it is referred to as stratified sampling.\n\n\n1.3 Cluster Sampling\nWhen a researcher randomly selects groups and observes all individuals in the selected groups, it is referred to as cluster sampling. It is a useful strategy to obtain a large sample size. Here is an example of education research. Suppose there are 12 classrooms and there are 30 students per classroom. It is easier to observe all students in four classrooms (a total of 120 students) rather than observing 120 students randomly selected across the 12 classrooms. A researcher may randomly select four classrooms and observe all students in the four selected classrooms. In this case, each classroom is a cluster, and there are a total of 120 students in four clusters (30 students per cluster).\n\n\n1.4 Convenience Sampling\nBroadly speaking, when a researcher includes easily accessible individuals in a sample, it is referred to as convenience sampling. It is not recommended, but it is often done in practice. Researchers should be aware of potential source of bias in their findings based on a convenient sample. For example, suppose the goal is to estimate the population average SAT score in mathematics (parameter). If a statistics professor takes a sample of students in the Department of Mathematics and Statistics because they are easily accessible, it is likely to over-estimate the parameter.\n\n\n1.5 Voluntary Sampling\nIn human subject research, there must be an informed consent by participants, and all human subjects have the right not to participate in the research. Therefore, we can only observe human subjects who volunteered to be in the sample, and it is referred to as voluntary sampling . For example, suppose the goal is to estimate the proportion of college students who uses illegal drugs on a regular basis (parameter). If drug users do not participate in the survey (even though their identity will be protected) or drug users lie in the survey (because they are afraid of revealing illegal actions), it is likely to under-estimate the parameter. As such, studying human subjects are challenging in various aspects.",
+    "crumbs": [
+      "Note Outlines",
+      "Sampling Methods"
+    ]
+  },
+  {
+    "objectID": "note-outlines/10-sampling-methods.html#wrap-up",
+    "href": "note-outlines/10-sampling-methods.html#wrap-up",
+    "title": "Sampling Methods",
+    "section": "2 Wrap-up",
+    "text": "2 Wrap-up\nIn your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.\n\n2.0.1 Problem 1\nSuppose a research team in the Monterey County Health Department wants to estimate the prevalence of COVID-19. Choose the sampling method (simple random sampling, stratified sampling, cluster sampling, convenience sampling, or voluntary sampling) which best describes each hypothetical scenario (disregarding ethics).\n\nHouseholds are randomly selected and test kits are sent to home. All individuals in each selected household must test themselves and send results to the health department. It is the law.\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\ncluster sampling\n\n\n\n\nIndividuals are randomly selected using random number generators so that every person has the same chance to be selected. If a person is selected, the person must go to the health department and be tested. It is the law.\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nsimple random sampling\n\n\n\n\nThe health department recruits people to be tested. If a person is tested, the person will receive a $15 gift card.\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nvoluntary sampling\n\n\n\n\nAll county officers will be asked to be tested because they are easily approachable. If officers resist to be tested, they will be fired.\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\nconvenience sampling\n\n\n\n\nClassrooms in local schools are randomly selected, and students in the selected classrooms will be tested. There is no excuse for students if they are selected.\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\ncluster sampling\n\n\n\n\n\n2.0.2 Problem 2\nIn Exercise 1, suppose the Monterey County Health Department plans stratified sampling of size 300 by the age group of 0-9, 10-19, 20-39, 40-59, and 60+. Table 1 is the census data of Monterey County.\n\n\n\nTable 1: Population by age group in Monterey County 2023\n\n\n\n\n\nAge\nPopulation\n\n\n\n\n0-9\n58,571\n\n\n10-19\n65,134\n\n\n20-29\n56,850\n\n\n30-39\n56,497\n\n\n40-49\n54,954\n\n\n50-59\n47,099\n\n\n60-69\n47,303\n\n\n70-79\n29,083\n\n\n80+\n15,505\n\n\n\n\n\n\nCalculate the sample size for each age group for the stratified sampling. Your answer must be rounded to whole number.\n\n0-9\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\n41\n\n\n\n\n10-19\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\n45\n\n\n\n\n20-39\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\n79\n\n\n\n\n40-59\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\n71\n\n\n\n\n60+\n\n\n\n\n\n\n\nTipAnswer\n\n\n\n\n\n64\n\n\n\n\n\n2.0.3 Problem 3\nWhen two researchers do simple random sampling of the same size from the same population, they will obtain the same sample. True or false?\n\n\n\n\nTrue\nFalse\n\n\n\n\n\n\n\n\n\n2.0.4 Problem 4\nSuppose your goal is to estimate the average age of CSUMB students (parameter). You obtain a simple random sample of size 100 students and estimate the parameter by the sample mean. You obtain another simple random sample of size 100 students and estimate the parameter by the sample mean. Because simple random sampling is the most ideal sampling method, the two sample means will be the same as the parameter. True or false?\n\n\n\n\nTrue\nFalse",
+    "crumbs": [
+      "Note Outlines",
+      "Sampling Methods"
+    ]
+  },
+  {
+    "objectID": "note-outlines/10-sampling-methods.html#assignment",
+    "href": "note-outlines/10-sampling-methods.html#assignment",
+    "title": "Sampling Methods",
+    "section": "3 Assignment",
+    "text": "3 Assignment\nCheck your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.\nThough you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.\n\n3.0.1 Problem 1\nMultiple-choice: For each case below, do you think the parameter will be (A) accurately estimated, (B) under-estimated, or (C) over-estimated? Justify your answer.\n\nEstimating the average study hours per week among college students (parameter) by surveying students in the library\n\n\n\n\n\n\naccurately estimated\n\n\n\n\nunder-estimated\n\n\n\n\nover-estimated\n\n\n\n\n\n\n\n\n\nEstimating the average amount of drinking water per day among American adults (parameter) by surveying people in the gym\n\n\n\n\n\n\naccurately estimated\n\n\n\n\nunder-estimated\n\n\n\n\nover-estimated\n\n\n\n\n\n\n\n\n\nEstimating the average number of visiting a doctor per year among American adults (parameter) by surveying patients in an urgent care\n\n\n\n\n\n\naccurately estimated\n\n\n\n\nunder-estimated\n\n\n\n\nover-estimated\n\n\n\n\n\n\n\n\n\nEstimating the average frequency of checking emails per week among college students (parameter) by surveying students via email\n\n\n\n\n\n\naccurately estimated\n\n\n\n\nunder-estimated\n\n\n\n\nover-estimated\n\n\n\n\n\n\n\n\n\nEstimating the average grade point average among all college students (parameter) by taking a simple random sample from the graduation ceremony.\n\n\n\n\n\n\naccurately estimated\n\n\n\n\nunder-estimated\n\n\n\n\nover-estimated\n\n\n\n\n\n\n\n\n\n\n3.0.2 Problem 2\nWhen you apply for a job after graduation, you need three letters of recommendation from professors. Would you do simple random sampling of three professors (out of all professors you had in college) to ask letters of recommendation? Why or why not? Explain in 100-150 words.",
+    "crumbs": [
+      "Note Outlines",
+      "Sampling Methods"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH 320: Applied Probability and Statistics",
+    "section": "",
+    "text": "This website provides interactive note outlines, assinments, and other resources for MATH 320: Applied Probability and Statistics at California State University, Monterey Bay. It uses the following packages:\n\nggformula\n\nmosaic\n\ntidyverse\n\nstats",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "note-outlines/1-intro-r-quarto.html#r-orientation",
     "href": "note-outlines/1-intro-r-quarto.html#r-orientation",
     "title": "Introduction to R and Quarto",
@@ -418,23 +468,6 @@
     "crumbs": [
       "Note Outlines",
       "Introduction to R and Quarto"
-    ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "MATH 320: Applied Probability and Statistics",
-    "section": "",
-    "text": "This website provides interactive note outlines, assinments, and other resources for MATH 320: Applied Probability and Statistics at California State University, Monterey Bay. It uses the following packages:\n\nggformula\n\nmosaic\n\ntidyverse\n\nstats",
-    "crumbs": [
-      "Home"
     ]
   },
   {

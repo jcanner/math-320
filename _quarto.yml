@@ -71,6 +71,9 @@ website:
         text: "Introduction to Statistics"   
       - href: note-outlines/9-summarizing-data.qmd
         text: "Summarizing and Visualizing Data"
+      - href: note-outlines/10-sampling-methods.qmd
+        text: "Sampling Methods"
+
         
 format:
   html:

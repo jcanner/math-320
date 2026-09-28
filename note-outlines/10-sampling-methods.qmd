@@ -1,0 +1,342 @@
+---
+title: "Sampling Methods"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: false
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}} 
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+## Sampling Methods
+
+A **sample** is defined as a subset of the population. In most practical cases, the sample size $n$ is much smaller than the population size $N$. For instance, if $n = 100$ and $N = 10000$, there are about $6.52 \times 10^{241}$ possible samples (10,000 choose 100). To this end, it is almost impossible to observe the same sample twice when we take a sample twice. In practice, however, a researcher observes only one sample out of such a large number of possible samples. Therefore, "Is my sample a good sample" is not a good question. Instead, "Is my sample obtained by a good sampling method?" is a better question to be asked. In this chapter, we discuss sampling methods (i.e., how to take a sample).
+
+### Simple Random Sampling
+
+When all individuals in the population have the same probability of being included in a sample, it is referred to as **simple random sampling** (or **random sampling**). In other words, if the population size is $N$ and the sample size is $n$, simple random sampling allows a probability of $\frac{n}{N}$ for each individual in the population to be sampled. Simple random sampling is an ideal sampling method (however it is done), but it is very challenging to execute in practice.
+
+A simple random sample can be executed by a random number generator. Suppose we want to take a simple random sample of size $n = 10$ from a population of size $N = 10000$. It can be done using the $\texttt{sample}$ function as follows.
+
+```{webr}
+#| label: random-sample
+id <- 1:10000 ### id numbered from 1 to 10000
+id_sample <- sample(id, size = 20, replace = FALSE) ### simple random sampling
+id_sample ### sampled id
+```
+
+The $\texttt{sample}$ function can be used with a sample space and probability mass function. For example, suppose $\Omega = \{ a, b, c \}$ and $P(a) = 0.2$, $P(b) = 0.3$, and $P(c) = 0.5$. We can do simple random sampling on $\Omega$ of size $n = 1000$ with replacement as follows.
+
+```{webr}
+#| label: sample-pmf
+omega <- c("a", "b", "c") ### outcomes in sample space
+probs <- c(0.2, 0.3, 0.5) ### probabilities
+samp_omega <- sample(omega, prob = probs, size = 1000, replace = TRUE) ### simple random sampling
+tally(~samp_omega)
+tally(~samp_omega, format = "prop")
+```
+
+We can also do simple random sampling of a discrete random variable. Suppose $\mathcal{S}_X = \{ 1, 2, 3, 4 \}$ and $f_X(x) = \frac{x}{10}$ for $x = 1, 2, 3, 4$.
+
+```{webr}
+#| label: sample-discrete
+x <- 1:4 ### support
+f <- x / 10 ### probability mass function
+samp_x <- sample(x, prob = f, size = 100, replace = TRUE) ### simple random sampling
+tally(~samp_x)
+mean(~samp_x) ### sample mean
+var(~samp_x)
+```
+
+Finally, we can take a random sample from a parametric probability distribution using `r____(n, parameters)` versions of our probability distribution functions for specified parameter values.
+
+```{webr}
+#| label: sample-known-dists
+
+#random binomial sample
+rbinom(n = 10, size = 10, prob = 0.2)
+
+#random normal sample
+rnorm(n = 10, mean = 20, sd = 2.3)
+
+#random exponential sample
+rexp(n = 10, rate = 1/5 )
+
+#random uniform sample
+runif(n = 10, min = -5, max = 5)
+
+```
+
+### Stratified Sampling
+
+Vaguely speaking, when there are two or more groups of interest and we take a simple random sample from each group, it is called **stratified sampling**. In the United States, the two political parties, Democratic and Republican, have different views on the same national issue. Suppose 90% of the population support the Democratic Party and 10% support the Republican Party. If a researcher takes a simple random sample of size $n = 100$ disregarding this fact, we expect 90 individuals and 10 individuals from each party. If the researcher wants to enforce this ratio, one method of stratified sampling is to take a simple random sample of size $n_1 = 90$ among supporters of the Democratic Party and a simple random sample of size $n_2 = 10$ among supporters of the Republican Party. If the researcher wants to balance the two groups for some reason, one method of stratified sampling is to take a simple random sample of size $n_1 = 50$ and a simple random sample of size $n_2 = 50$ from each party. As such, when there are $g$ groups of interest and we take a simple random sample of size $n_i$ from each group such that $n_1 + n_2 + \dots + n_g = n$ is fixed, it is referred to as **stratified sampling**.
+
+### Cluster Sampling
+
+When a researcher randomly selects groups and observes all individuals in the selected groups, it is referred to as **cluster sampling**. It is a useful strategy to obtain a large sample size. Here is an example of education research. Suppose there are 12 classrooms and there are 30 students per classroom. It is easier to observe all students in four classrooms (a total of 120 students) rather than observing 120 students randomly selected across the 12 classrooms. A researcher may randomly select four classrooms and observe all students in the four selected classrooms. In this case, each classroom is a cluster, and there are a total of 120 students in four clusters (30 students per cluster).
+
+### Convenience Sampling
+
+Broadly speaking, when a researcher includes easily accessible individuals in a sample, it is referred to as **convenience sampling**. It is not recommended, but it is often done in practice. Researchers should be aware of potential source of bias in their findings based on a convenient sample. For example, suppose the goal is to estimate the population average SAT score in mathematics (parameter). If a statistics professor takes a sample of students in the Department of Mathematics and Statistics because they are easily accessible, it is likely to over-estimate the parameter.
+
+### Voluntary Sampling
+
+In human subject research, there must be an informed consent by participants, and all human subjects have the right not to participate in the research. Therefore, we can only observe human subjects who volunteered to be in the sample, and it is referred to as **voluntary sampling** . For example, suppose the goal is to estimate the proportion of college students who uses illegal drugs on a regular basis (parameter). If drug users do not participate in the survey (even though their identity will be protected) or drug users lie in the survey (because they are afraid of revealing illegal actions), it is likely to under-estimate the parameter. As such, studying human subjects are challenging in various aspects.
+
+## Wrap-up
+
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
+
+#### Problem 1 
+
+Suppose a research team in the Monterey County Health Department wants to estimate the prevalence of COVID-19. Choose the sampling method (simple random sampling, stratified sampling, cluster sampling, convenience sampling, or voluntary sampling) which best describes each hypothetical scenario (disregarding ethics).
+
+a. Households are randomly selected and test kits are sent to home. All individuals in each selected household must test themselves and send results to the health department. It is the law.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+cluster sampling
+:::
+  
+
+b. Individuals are randomly selected using random number generators so that every person has the same chance to be selected. If a person is selected, the person must go to the health department and be tested. It is the law.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+simple random sampling
+:::
+  
+
+c. The health department recruits people to be tested. If a person is tested, the person will receive a \$15 gift card.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+voluntary sampling
+:::
+  
+
+d. All county officers will be asked to be tested because they are easily approachable. If officers resist to be tested, they will be fired.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+convenience sampling
+:::
+  
+
+e. Classrooms in local schools are randomly selected, and students in the selected classrooms will be tested. There is no excuse for students if they are selected.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+cluster sampling
+:::
+  
+
+#### Problem 2 
+
+In Exercise 1, suppose the Monterey County Health Department plans stratified sampling of size 300 by the age group of 0-9, 10-19, 20-39, 40-59, and 60+. @tbl-monterey is the census data of Monterey County.
+
+| Age   | Population |
+|-------|------------|
+| 0-9   | 58,571     |
+| 10-19 | 65,134     |
+| 20-29 | 56,850     |
+| 30-39 | 56,497     |
+| 40-49 | 54,954     |
+| 50-59 | 47,099     |
+| 60-69 | 47,303     |
+| 70-79 | 29,083     |
+| 80+   | 15,505     |
+
+: Population by age group in Monterey County 2023 {#tbl-monterey}
+
+Calculate the sample size for each age group for the stratified sampling. *Your answer must be rounded to whole number.*
+
+a. 0-9
+
+:::{.callout-tip collapse="true"}
+#### Answer
+41
+:::
+
+b. 10-19
+
+:::{.callout-tip collapse="true"}
+#### Answer
+45
+:::
+
+c. 20-39
+
+:::{.callout-tip collapse="true"}
+#### Answer
+79
+:::
+
+d. 40-59
+
+:::{.callout-tip collapse="true"}
+#### Answer
+71
+:::
+
+e. 60+ 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+64
+:::
+
+#### Problem 3 
+
+When two researchers do simple random sampling of the same size from the same population, they will obtain the same sample. True or false?
+
+```{r}
+#| label: wrap-3
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+#### Problem 4 
+
+Suppose your goal is to estimate the average age of CSUMB students (parameter). You obtain a simple random sample of size 100 students and estimate the parameter by the sample mean. You obtain another simple random sample of size 100 students and estimate the parameter by the sample mean. Because simple random sampling is the most ideal sampling method, the two sample means will be the same as the parameter. True or false?
+
+```{r}
+#| label: wrap-4
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+## Assignment
+
+Check your answer by inputting them below their respective question. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified.
+
+Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
+
+#### Problem 1 
+
+Multiple-choice: For each case below, do you think the parameter will be (A) accurately estimated, (B) under-estimated, or (C) over-estimated? Justify your answer.
+
+a. Estimating the average study hours per week among college students (parameter) by surveying students in the library
+
+```{r}
+#| label: asn-1-a
+#| echo: false
+checkdown::check_question(answer = "over-estimated",
+                          options = c("accurately estimated",
+                                      "under-estimated",
+                                      "over-estimated"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+b. Estimating the average amount of drinking water per day among American adults (parameter) by surveying people in the gym
+
+```{r}
+#| label: asn-1-b
+#| echo: false
+checkdown::check_question(answer = "over-estimated",
+                          options = c("accurately estimated",
+                                      "under-estimated",
+                                      "over-estimated"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+c. Estimating the average number of visiting a doctor per year among American adults (parameter) by surveying patients in an urgent care
+
+```{r}
+#| label: asn-1-c
+#| echo: false
+checkdown::check_question(answer = "over-estimated",
+                          options = c("accurately estimated",
+                                      "under-estimated",
+                                      "over-estimated"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+d. Estimating the average frequency of checking emails per week among college students (parameter) by surveying students via email
+
+```{r}
+#| label: asn-1-d
+#| echo: false
+checkdown::check_question(answer = "over-estimated",
+                          options = c("accurately estimated",
+                                      "under-estimated",
+                                      "over-estimated"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+e. Estimating the average grade point average among all college students (parameter) by taking a simple random sample from the graduation ceremony.
+
+```{r}
+#| label: asn-1-e
+#| echo: false
+checkdown::check_question(answer = "over-estimated",
+                          options = c("accurately estimated",
+                                      "under-estimated",
+                                      "over-estimated"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
+
+#### Problem 2 
+
+When you apply for a job after graduation, you need three letters of recommendation from professors. Would you do simple random sampling of three professors (out of all professors you had in college) to ask letters of recommendation? Why or why not? Explain in 100-150 words.
+
+
