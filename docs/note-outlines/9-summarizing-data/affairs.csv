@@ -1,0 +1,602 @@
+affairs,gender,children,religiousness,rating
+no,male,no,slightly,above average
+no,female,no,somewhat,above average
+no,female,yes,anti,above average
+no,male,yes,very,very happy
+no,male,no,not at all,average
+no,female,no,not at all,very happy
+no,female,no,not at all,average
+no,male,yes,not at all,above average
+no,female,yes,somewhat,unhappy
+no,male,no,somewhat,very happy
+no,male,yes,not at all,unhappy
+no,male,yes,somewhat,above average
+no,male,yes,very,above average
+no,female,no,not at all,above average
+no,female,no,somewhat,above average
+no,female,yes,anti,very happy
+no,female,yes,not at all,average
+no,female,no,slightly,above average
+no,female,no,not at all,very happy
+no,female,yes,not at all,very happy
+no,female,no,not at all,very happy
+no,female,no,not at all,very happy
+no,female,yes,somewhat,above average
+no,female,yes,slightly,very happy
+no,male,yes,not at all,above average
+no,female,no,not at all,very happy
+no,female,no,somewhat,very happy
+no,male,yes,very,above average
+no,male,yes,slightly,very happy
+no,female,yes,slightly,above average
+no,male,yes,somewhat,average
+no,female,no,slightly,very happy
+no,male,no,somewhat,above average
+no,female,yes,very,above average
+no,male,yes,anti,above average
+no,female,no,somewhat,average
+no,female,yes,slightly,above average
+no,female,no,somewhat,very happy
+no,male,yes,anti,very happy
+no,female,no,slightly,very happy
+no,male,yes,very,very happy
+no,male,yes,very,average
+no,female,no,very,above average
+no,female,yes,not at all,very unhappy
+no,female,yes,very,average
+no,male,no,slightly,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,male,yes,not at all,above average
+no,female,no,very,very happy
+no,male,yes,not at all,above average
+no,male,yes,very,very happy
+no,male,yes,somewhat,above average
+no,male,no,anti,very happy
+no,female,yes,somewhat,very unhappy
+no,male,yes,very,above average
+no,female,yes,somewhat,very happy
+no,female,no,somewhat,above average
+no,male,yes,somewhat,above average
+no,female,yes,very,unhappy
+no,male,yes,slightly,above average
+no,female,no,not at all,very happy
+no,male,no,not at all,very happy
+no,male,no,somewhat,above average
+no,male,yes,not at all,very happy
+no,male,yes,somewhat,above average
+no,female,yes,slightly,very happy
+no,female,no,very,very happy
+no,female,no,not at all,above average
+no,female,no,slightly,very happy
+no,female,yes,very,very happy
+no,female,no,not at all,very happy
+no,male,yes,somewhat,average
+no,male,yes,anti,very happy
+no,male,yes,somewhat,very happy
+no,female,yes,slightly,very happy
+no,male,yes,slightly,very happy
+no,female,no,slightly,very happy
+no,male,yes,not at all,unhappy
+no,male,yes,slightly,very happy
+no,male,yes,somewhat,very happy
+no,female,no,not at all,above average
+no,male,no,somewhat,average
+no,female,yes,somewhat,very happy
+no,female,no,anti,above average
+no,female,yes,somewhat,very happy
+no,female,no,slightly,unhappy
+no,female,yes,slightly,very happy
+no,female,yes,slightly,above average
+no,female,yes,somewhat,above average
+no,male,yes,not at all,average
+no,male,yes,somewhat,above average
+no,male,yes,very,average
+no,male,no,anti,above average
+no,female,yes,very,very happy
+no,male,yes,slightly,very unhappy
+no,male,yes,anti,above average
+no,male,yes,slightly,very happy
+no,male,yes,somewhat,very happy
+no,female,yes,very,very happy
+no,male,yes,not at all,above average
+no,female,no,somewhat,very happy
+no,male,yes,very,very happy
+no,female,yes,somewhat,above average
+no,male,yes,somewhat,above average
+no,male,yes,somewhat,above average
+no,male,yes,somewhat,above average
+no,male,yes,slightly,average
+no,female,no,not at all,above average
+no,female,yes,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,female,no,very,very happy
+no,male,yes,very,above average
+no,female,no,slightly,above average
+no,male,no,somewhat,very happy
+no,male,yes,somewhat,unhappy
+no,male,no,very,above average
+no,female,no,somewhat,very happy
+no,female,yes,somewhat,above average
+no,female,yes,not at all,very happy
+no,female,yes,very,above average
+no,male,yes,somewhat,average
+no,female,yes,not at all,unhappy
+no,female,no,slightly,very happy
+no,male,yes,very,very happy
+no,female,no,not at all,very happy
+no,male,no,somewhat,very happy
+no,male,no,not at all,very happy
+no,male,no,not at all,very happy
+no,female,yes,somewhat,average
+no,male,yes,somewhat,very happy
+no,female,no,not at all,very happy
+no,male,no,not at all,average
+no,female,yes,slightly,average
+no,female,yes,slightly,above average
+no,female,no,not at all,very happy
+no,female,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,male,no,anti,above average
+no,female,yes,not at all,above average
+no,female,yes,very,above average
+no,male,yes,very,average
+no,male,yes,not at all,above average
+no,male,no,slightly,average
+no,male,yes,anti,above average
+no,male,yes,somewhat,above average
+no,female,yes,very,average
+no,female,yes,somewhat,above average
+no,male,yes,anti,above average
+no,male,yes,somewhat,average
+no,male,no,not at all,average
+no,male,yes,not at all,average
+no,male,yes,somewhat,average
+no,male,yes,not at all,average
+no,male,yes,somewhat,average
+no,female,yes,very,very unhappy
+no,female,yes,somewhat,unhappy
+no,male,yes,somewhat,average
+no,male,yes,not at all,very happy
+no,female,yes,not at all,very happy
+no,female,yes,not at all,very happy
+no,male,yes,very,very happy
+no,female,yes,very,above average
+no,female,yes,slightly,above average
+no,female,yes,somewhat,unhappy
+no,female,yes,not at all,unhappy
+no,female,no,somewhat,above average
+no,male,yes,slightly,above average
+no,male,yes,somewhat,unhappy
+no,male,yes,somewhat,very happy
+no,female,no,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,slightly,above average
+no,female,no,not at all,very happy
+no,male,yes,not at all,unhappy
+no,female,no,slightly,above average
+no,female,yes,not at all,above average
+no,female,yes,somewhat,average
+no,female,yes,somewhat,above average
+no,female,yes,very,unhappy
+no,male,yes,somewhat,very happy
+no,female,yes,slightly,average
+no,female,no,somewhat,very happy
+no,female,yes,slightly,very happy
+no,female,yes,somewhat,very happy
+no,male,no,slightly,very happy
+no,male,yes,not at all,very happy
+no,male,yes,somewhat,very happy
+no,male,yes,anti,very happy
+no,male,no,slightly,very happy
+no,female,yes,somewhat,above average
+no,male,yes,somewhat,above average
+no,male,yes,somewhat,above average
+no,female,yes,not at all,average
+no,male,yes,anti,above average
+no,male,yes,somewhat,average
+no,female,no,not at all,very happy
+no,male,yes,somewhat,unhappy
+no,female,no,somewhat,very happy
+no,male,yes,very,very happy
+no,male,yes,not at all,very happy
+no,female,no,slightly,very happy
+no,male,no,not at all,average
+no,female,yes,not at all,unhappy
+no,female,no,not at all,average
+no,female,yes,somewhat,unhappy
+no,female,no,anti,very happy
+no,female,no,not at all,above average
+no,female,yes,somewhat,average
+no,female,yes,slightly,average
+no,male,no,not at all,very happy
+no,male,yes,not at all,unhappy
+no,male,no,not at all,very happy
+no,female,no,not at all,very happy
+no,male,no,very,very happy
+no,male,no,somewhat,very happy
+no,male,no,somewhat,average
+no,female,yes,anti,above average
+no,male,yes,very,very happy
+no,female,yes,slightly,average
+no,male,yes,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,male,no,somewhat,above average
+no,female,yes,slightly,above average
+no,female,yes,anti,very happy
+no,female,yes,somewhat,above average
+no,male,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,male,yes,slightly,very happy
+no,female,yes,very,above average
+no,female,yes,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,male,no,somewhat,above average
+no,male,no,somewhat,very happy
+no,male,yes,somewhat,average
+no,female,no,very,very happy
+no,female,yes,very,very happy
+no,male,yes,slightly,very happy
+no,female,yes,somewhat,above average
+no,male,yes,not at all,above average
+no,female,yes,slightly,above average
+no,male,yes,anti,very happy
+no,male,yes,slightly,very happy
+no,female,yes,somewhat,above average
+no,male,yes,slightly,above average
+no,female,no,slightly,average
+no,female,yes,somewhat,very happy
+no,female,yes,slightly,above average
+no,male,yes,very,above average
+no,female,yes,somewhat,average
+no,male,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,female,yes,somewhat,above average
+no,male,no,anti,very happy
+no,female,yes,slightly,above average
+no,female,no,not at all,very happy
+no,male,yes,not at all,above average
+no,male,yes,somewhat,above average
+no,female,yes,not at all,very happy
+no,female,yes,slightly,very happy
+no,male,yes,somewhat,average
+no,male,yes,anti,above average
+no,female,no,not at all,very happy
+no,female,yes,slightly,average
+no,male,yes,not at all,very happy
+no,female,yes,not at all,very unhappy
+no,female,yes,not at all,very happy
+no,male,yes,somewhat,very happy
+no,female,yes,slightly,very happy
+no,male,yes,somewhat,very happy
+no,male,no,slightly,very happy
+no,female,no,not at all,average
+no,male,yes,not at all,average
+no,female,no,somewhat,above average
+no,female,yes,not at all,very unhappy
+no,male,yes,very,average
+no,female,yes,not at all,very happy
+no,male,no,somewhat,above average
+no,male,no,anti,very happy
+no,male,yes,somewhat,above average
+no,female,yes,somewhat,above average
+no,female,yes,somewhat,above average
+no,female,yes,slightly,average
+no,female,yes,slightly,above average
+no,male,no,slightly,unhappy
+no,male,no,slightly,very happy
+no,male,yes,slightly,unhappy
+no,female,yes,slightly,unhappy
+no,female,yes,not at all,above average
+no,female,yes,slightly,above average
+no,male,no,not at all,very happy
+no,male,yes,very,above average
+no,female,no,somewhat,average
+no,female,yes,somewhat,very happy
+no,male,no,not at all,average
+no,female,no,somewhat,very happy
+no,female,no,not at all,very happy
+no,male,yes,somewhat,average
+no,male,yes,very,above average
+no,female,yes,not at all,unhappy
+no,male,yes,not at all,very happy
+no,male,yes,not at all,above average
+no,male,no,slightly,very happy
+no,female,yes,somewhat,above average
+no,female,no,not at all,above average
+no,male,yes,somewhat,very happy
+no,female,no,very,average
+no,male,yes,somewhat,average
+no,male,no,slightly,very happy
+no,female,no,not at all,unhappy
+no,female,yes,somewhat,very happy
+no,male,yes,very,very happy
+no,male,yes,anti,above average
+no,female,yes,very,average
+no,male,yes,somewhat,very happy
+no,female,yes,not at all,very happy
+no,male,yes,not at all,above average
+no,female,no,not at all,above average
+no,male,yes,somewhat,above average
+no,female,no,slightly,very happy
+no,female,no,not at all,very happy
+no,male,yes,somewhat,above average
+no,female,yes,somewhat,very happy
+no,female,no,not at all,very happy
+no,male,no,anti,very happy
+no,male,yes,slightly,above average
+no,female,no,not at all,very happy
+no,female,yes,very,very happy
+no,male,yes,somewhat,average
+no,male,no,not at all,above average
+no,female,yes,somewhat,above average
+no,female,yes,somewhat,above average
+no,female,yes,very,very happy
+no,male,yes,slightly,very happy
+no,female,yes,somewhat,unhappy
+no,female,no,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,slightly,very happy
+no,female,yes,not at all,very happy
+no,male,no,not at all,very happy
+no,female,yes,not at all,average
+no,male,yes,not at all,above average
+no,female,yes,not at all,very happy
+no,male,yes,somewhat,above average
+no,male,no,somewhat,above average
+no,male,yes,somewhat,very happy
+no,male,yes,slightly,average
+no,female,yes,somewhat,average
+no,male,no,very,unhappy
+no,female,no,not at all,very happy
+no,female,no,slightly,very happy
+no,male,no,very,above average
+no,female,yes,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,not at all,very happy
+no,female,yes,slightly,average
+no,male,yes,not at all,very happy
+no,male,no,somewhat,above average
+no,male,no,slightly,very happy
+no,male,yes,slightly,very happy
+no,female,no,very,very happy
+no,female,yes,very,above average
+no,female,yes,slightly,very happy
+no,male,yes,somewhat,very happy
+no,male,yes,slightly,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,somewhat,very happy
+no,female,yes,anti,above average
+no,female,no,slightly,above average
+no,female,yes,somewhat,unhappy
+no,male,yes,very,unhappy
+no,male,yes,not at all,very happy
+no,female,no,somewhat,average
+no,male,no,somewhat,very happy
+no,female,yes,somewhat,above average
+no,female,yes,slightly,very happy
+no,female,yes,slightly,above average
+no,female,no,slightly,very happy
+no,female,yes,not at all,very happy
+no,female,yes,anti,very happy
+no,male,yes,somewhat,very happy
+no,male,yes,somewhat,very happy
+no,male,yes,somewhat,above average
+no,female,yes,not at all,unhappy
+no,female,no,somewhat,very happy
+no,female,yes,not at all,above average
+no,female,no,not at all,above average
+no,female,no,not at all,very happy
+no,female,yes,slightly,above average
+no,female,yes,very,very happy
+no,male,yes,somewhat,above average
+no,female,yes,slightly,unhappy
+no,male,yes,slightly,unhappy
+no,female,yes,not at all,unhappy
+no,male,no,very,very happy
+no,female,no,anti,very happy
+no,female,no,anti,very happy
+no,female,yes,somewhat,very happy
+no,male,no,not at all,average
+no,male,yes,very,very happy
+no,female,yes,somewhat,very happy
+no,male,yes,very,above average
+no,male,no,not at all,average
+no,male,no,somewhat,very unhappy
+no,male,no,somewhat,very happy
+no,male,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,female,no,not at all,above average
+no,female,yes,somewhat,very happy
+no,female,no,not at all,average
+no,male,yes,not at all,very happy
+no,male,no,somewhat,average
+no,male,yes,somewhat,above average
+no,female,no,slightly,very happy
+no,female,yes,not at all,average
+no,female,no,somewhat,very happy
+no,male,yes,somewhat,average
+no,female,yes,slightly,very happy
+no,female,no,somewhat,very happy
+no,male,yes,somewhat,very happy
+no,female,yes,not at all,above average
+no,female,yes,not at all,very unhappy
+no,female,no,very,above average
+no,male,yes,not at all,above average
+no,male,yes,somewhat,very happy
+no,male,no,anti,very happy
+no,female,yes,somewhat,above average
+no,female,yes,very,average
+no,male,yes,somewhat,above average
+no,female,yes,not at all,above average
+no,female,no,slightly,very happy
+no,male,yes,somewhat,above average
+no,female,yes,very,very happy
+no,female,yes,not at all,unhappy
+no,female,yes,slightly,above average
+no,female,yes,not at all,above average
+no,female,yes,somewhat,above average
+no,male,yes,somewhat,average
+no,male,yes,not at all,unhappy
+no,female,yes,slightly,average
+no,male,yes,slightly,very happy
+no,female,yes,slightly,above average
+no,female,no,not at all,very happy
+no,female,yes,somewhat,above average
+no,female,no,somewhat,very happy
+no,female,no,not at all,very happy
+no,male,no,somewhat,above average
+no,male,yes,not at all,unhappy
+no,male,yes,slightly,above average
+no,female,yes,not at all,above average
+yes,male,no,slightly,above average
+yes,female,yes,slightly,very happy
+yes,male,yes,very,unhappy
+yes,female,yes,slightly,unhappy
+yes,male,no,somewhat,very happy
+yes,female,yes,not at all,very happy
+yes,male,yes,somewhat,unhappy
+yes,female,no,not at all,above average
+yes,male,yes,not at all,above average
+yes,female,yes,somewhat,unhappy
+yes,female,yes,somewhat,unhappy
+yes,female,yes,slightly,above average
+yes,female,yes,very,very unhappy
+yes,male,yes,not at all,unhappy
+yes,female,yes,slightly,unhappy
+yes,male,no,anti,very happy
+yes,male,yes,not at all,average
+yes,female,no,slightly,very happy
+yes,male,yes,somewhat,very happy
+yes,female,yes,very,very happy
+yes,female,yes,slightly,above average
+yes,female,yes,very,above average
+yes,male,yes,slightly,above average
+yes,female,yes,somewhat,unhappy
+yes,female,yes,somewhat,above average
+yes,female,yes,somewhat,average
+yes,male,no,not at all,unhappy
+yes,male,no,somewhat,above average
+yes,female,yes,slightly,average
+yes,female,yes,somewhat,above average
+yes,male,yes,not at all,unhappy
+yes,female,no,very,very happy
+yes,female,yes,somewhat,very happy
+yes,female,yes,not at all,above average
+yes,male,yes,not at all,above average
+yes,female,no,anti,average
+yes,female,yes,not at all,very happy
+yes,male,yes,not at all,above average
+yes,female,yes,anti,average
+yes,male,yes,not at all,average
+yes,male,yes,slightly,very happy
+yes,female,no,slightly,above average
+yes,male,yes,anti,unhappy
+yes,male,yes,slightly,very happy
+yes,male,yes,somewhat,very happy
+yes,female,yes,somewhat,very unhappy
+yes,male,no,slightly,above average
+yes,female,yes,somewhat,very happy
+yes,male,yes,slightly,above average
+yes,male,yes,very,above average
+yes,male,yes,not at all,above average
+yes,male,yes,not at all,above average
+yes,male,no,not at all,very happy
+yes,female,yes,very,average
+yes,male,no,slightly,average
+yes,female,yes,somewhat,above average
+yes,male,yes,slightly,above average
+yes,male,yes,not at all,very unhappy
+yes,male,no,anti,unhappy
+yes,male,yes,slightly,above average
+yes,male,yes,somewhat,above average
+yes,female,yes,anti,above average
+yes,female,yes,slightly,unhappy
+yes,male,yes,anti,above average
+yes,male,yes,somewhat,above average
+yes,male,yes,anti,above average
+yes,female,yes,somewhat,unhappy
+yes,male,yes,anti,average
+yes,male,yes,slightly,very unhappy
+yes,female,yes,slightly,above average
+yes,female,yes,slightly,average
+yes,male,yes,not at all,unhappy
+yes,male,no,somewhat,very happy
+yes,male,yes,slightly,above average
+yes,female,yes,anti,very happy
+yes,female,yes,slightly,average
+yes,female,no,not at all,very happy
+yes,female,yes,slightly,average
+yes,male,yes,not at all,above average
+yes,female,yes,somewhat,unhappy
+yes,male,yes,slightly,above average
+yes,male,yes,anti,average
+yes,female,yes,not at all,average
+yes,female,yes,slightly,average
+yes,male,yes,very,very happy
+yes,male,yes,not at all,unhappy
+yes,female,yes,anti,average
+yes,female,yes,somewhat,unhappy
+yes,male,yes,not at all,above average
+yes,female,yes,not at all,average
+yes,female,yes,slightly,above average
+yes,female,no,somewhat,average
+yes,male,yes,somewhat,very happy
+yes,male,yes,not at all,unhappy
+yes,female,yes,very,average
+yes,female,no,slightly,very unhappy
+yes,female,yes,not at all,unhappy
+yes,male,yes,slightly,above average
+yes,male,no,not at all,unhappy
+yes,female,yes,slightly,very unhappy
+yes,male,yes,very,very happy
+yes,male,yes,somewhat,above average
+yes,female,yes,not at all,average
+yes,male,yes,slightly,average
+yes,male,yes,very,unhappy
+yes,male,yes,not at all,above average
+yes,male,yes,not at all,above average
+yes,female,yes,anti,unhappy
+yes,male,yes,slightly,average
+yes,male,yes,somewhat,very unhappy
+yes,female,no,not at all,very happy
+yes,female,yes,not at all,unhappy
+yes,male,yes,not at all,above average
+yes,female,no,not at all,very happy
+yes,female,yes,somewhat,very happy
+yes,female,yes,slightly,average
+yes,male,no,somewhat,very happy
+yes,female,yes,anti,very happy
+yes,female,yes,not at all,above average
+yes,female,no,anti,very unhappy
+yes,female,yes,not at all,very happy
+yes,female,yes,very,above average
+yes,female,no,anti,very happy
+yes,male,yes,somewhat,above average
+yes,female,yes,slightly,unhappy
+yes,female,yes,not at all,above average
+yes,male,yes,somewhat,above average
+yes,male,no,slightly,unhappy
+yes,male,yes,slightly,average
+yes,male,yes,anti,above average
+yes,male,yes,somewhat,average
+yes,male,yes,slightly,above average
+yes,male,no,not at all,average
+yes,male,yes,slightly,unhappy
+yes,male,yes,very,very happy
+yes,female,yes,anti,very happy
+yes,male,no,anti,very happy
+yes,female,yes,somewhat,above average
+yes,female,yes,slightly,unhappy
+yes,female,yes,somewhat,unhappy
+yes,male,yes,slightly,unhappy
+yes,female,yes,not at all,unhappy
+yes,male,yes,not at all,above average
+yes,male,yes,somewhat,average
+yes,male,yes,slightly,unhappy
+yes,male,yes,anti,very happy
+yes,female,yes,not at all,above average
+yes,male,yes,not at all,very happy
+yes,male,yes,slightly,unhappy
+yes,female,yes,slightly,very happy

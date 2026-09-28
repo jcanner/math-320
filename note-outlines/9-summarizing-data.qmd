@@ -27,8 +27,7 @@ number-sections: true
 css: ../styles.css
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
-{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}} {{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
 
 ```{webr}
 #| label: theme
@@ -74,8 +73,8 @@ A good practice of statistics is as follows.
 
 Categorical data can be summarized by the **count** of each level, and then we can calculate the **percent** or **proportion** of each level as needed. The categorical data can be visualized by a **barplot**.
 
+We will use the `study_hours` data again, so we will read it in and add in our `mutate()` function to set our levels for `year` and our new variable `hours_units`.
 
-We will use the `study_hours` data again, so we will read it in and add in our `mutate()` function to set our levels for `year` and our new variable `hours_units`.  
 ```{r}
 #| label: read-study-hours
 study_hours <- read_csv("8-intro-to-stats/study-hours.csv", 
@@ -93,7 +92,7 @@ The `tally()` function allows us to summarize categorical data via counts, propo
 The `formula` can be one of the following -
 
 - `~x` for a single variable x
-- `y ~ x` for two variables, `y` will be conditioned on `x` for non-count tables.  
+- `y ~ x` for two variables, `y` will be conditioned on `x` for non-count tables.\
 - `~x | y` for a conditional calculation
 - 
 
@@ -110,15 +109,14 @@ tally(~ gender, data = study_hours, format = "prop")
 tally(gender ~ year, data = study_hours, format = "count")
 ```
 
-
 ### Bar plots
 
-We can make a bar plot for a single variable using the following functions:  
+We can make a bar plot for a single variable using the following functions:
 
-- `gf_bar(~x, data = mydata)` for unsummarized counts of `x`  
-- `gf_col(y ~ x, data = mydata)` for summarized counts `y` of `x`  
-- `gf_props(~x, data = mydata)` for unsummarized proportions of `x`  
-- `gf_percents(~x, data = mydata)` for unsummarized percentages of `x`  
+- `gf_bar(~x, data = mydata)` for unsummarized counts of `x`\
+- `gf_col(y ~ x, data = mydata)` for summarized counts `y` of `x`\
+- `gf_props(~x, data = mydata)` for unsummarized proportions of `x`\
+- `gf_percents(~x, data = mydata)` for unsummarized percentages of `x`
 
 ```{r}
 #| label: single-barplots
@@ -133,45 +131,36 @@ gf_props(~year, data = study_hours,
        title = "Sample of n = 110 University Students in the College of Science")
 ```
 
-Always be sure to provide labels for each axis (`xlab`, `ylab`) and an informative `title` for each graph that includes: 
+Always be sure to provide labels for each axis (`xlab`, `ylab`) and an informative `title` for each graph that includes:
 
 - Variable Names and Units, if appropriate
 - Summary measures displayed on the graph
 - Information about the sample or population, including size
 
-
-
 ### Conditional Proportions
 
 A contingency table is a simple way of looking at the relationship between two categorical variables.
-
 
 ```{r}
 #| label: contingency-table
 tally(gender ~ year, data = study_hours)
 ```
 
-A conditional proportion is the proportion calculated over a specific subgroup - it is the empirical analog to a conditional probability $P(A | B)$.  The formula can take two forms: 
+A conditional proportion is the proportion calculated over a specific subgroup - it is the empirical analog to a conditional probability $P(A | B)$. The formula can take two forms:
 
 - `y ~ x`, which is `y` conditioned on `x` or
 - `~ y | x`, which is also `y` conditioned on `x`
 
-I prefer the `~ y | x` format because it is the same format that will be needed for an analogous barplot of the conditional outcomes.  
-
+I prefer the `~ y | x` format because it is the same format that will be needed for an analogous barplot of the conditional outcomes.
 
 ```{r}
 #| label: conditional-proportion
 tally(~ gender | year, data = study_hours, format = "prop")
 ```
 
-What does the table tell us about the distribution of female-identifying students across the class years in our data?  
+What does the table tell us about the distribution of female-identifying students across the class years in our data?
 
-
-
-
-
-
-We can visualize our conditional proportions using the `gf_props()` function.  Notice the new argument `fill = ~gender` which will fill our bars with a color for each level in `gender`.  
+We can visualize our conditional proportions using the `gf_props()` function. Notice the new argument `fill = ~gender` which will fill our bars with a color for each level in `gender`.
 
 ```{r}
 #| label: conditional-bar-plot
@@ -182,9 +171,6 @@ gf_props(~gender | year, data = study_hours,
          title = "Sample of n = 110 University Students in the College of Science",
          show.legend = FALSE) #hides unnecessary legend 
 ```
-
-
-
 
 ### Case Study I: Titanic
 
@@ -206,9 +192,9 @@ The objective is to investigate if certain groups of passengers had higher chanc
 
 [R On Computer: Download Zip File](9-summarizing-data/summarizing-data-activity.zip)
 
-Our goal is to produce statistics and graphics that help us explore the data on survival, similar to the output below, using R. 
+Our goal is to produce statistics and graphics that help us explore the data on survival, similar to the output below, using R.
 
-|     Variable    |   Level  | Did not survive | Survived  | Total |
+|    Variable     |  Level   | Did not survive | Survived  | Total |
 |:---------------:|:--------:|:---------------:|:---------:|:-----:|
 |       Sex       |  Female  |    123 (28%)    | 324 (72%) |  447  |
 |                 |   Male   |    694 (80%)    | 175 (20%) |  869  |
@@ -220,13 +206,6 @@ Our goal is to produce statistics and graphics that help us explore the data on 
 |      Total      |  Total   |    817 (62%)    | 499 (38%) | 1,316 |
 
 : Count and percent of passengers who survived and who did not survive by sex, age, and passenger class
-
-
-
-
-
-
-
 
 ## Numeric Data
 
@@ -249,13 +228,11 @@ $$
 \end{aligned}
 $$
 
-any data values outside of $(\texttt{LF}, \texttt{UF})$ are **outliers**. (In general, any extremely low or high data values are referred to as outliers, and it is an arbitrary definition of outliers.) 
-
-
+any data values outside of $(\texttt{LF}, \texttt{UF})$ are **outliers**. (In general, any extremely low or high data values are referred to as outliers, and it is an arbitrary definition of outliers.)
 
 ### Boxplot
 
-Once we know the $(\texttt{LF}, \texttt{UF})$ we can use this to draw the boxplot by defining our "whiskers".  
+Once we know the $(\texttt{LF}, \texttt{UF})$ we can use this to draw the boxplot by defining our "whiskers".
 
 The **lower whisker** and **upper whisker** are defined as follows:
 
@@ -265,8 +242,7 @@ The **lower whisker** and **upper whisker** are defined as follows:
 
 - The outliers will then be represented as dots beyond the last value on the whisker.
 
-- The "box" is then made up of $Q_1$, $M$, and $Q_3$ values. 
-
+- The "box" is then made up of $Q_1$, $M$, and $Q_3$ values.
 
 R will do these calculations for us within the `gf_boxplot()` function:
 
@@ -290,7 +266,9 @@ gf_boxplot(gender ~ hours_units, data = study_hours,
            ylab = "Gender",
            title = "Study Habits of Sudents in the College of Science (n = 110) at the University") 
 ```
-We can also flip it vertically by switching our categorical variable to the `x` position rather than `y` position. 
+
+We can also flip it vertically by switching our categorical variable to the `x` position rather than `y` position.
+
 ```{r}
 #| label: boxplot-vertical
 gf_boxplot(hours_units ~ year, data = study_hours,
@@ -299,28 +277,17 @@ gf_boxplot(hours_units ~ year, data = study_hours,
            title = "Study Habits of Sudents in the College of Science (n = 110) at the University") 
 ```
 
-
 #### Descriptions of Shape - Skew
 
 In looking at a boxplot we can also evaluate the "skew" of the distribution as one of the following:
 
 - Right/Positive Skew
 
-
-
-
-- Left/Negative Skew   
-
-
-
+- Left/Negative Skew
 
 - Symmetric
 
-
-
-
-Let's compare the summary statistics across gender for hours per week per unit.  The function `df_stats()` gives us the five number summary plus mean/sd.    
-
+Let's compare the summary statistics across gender for hours per week per unit. The function `df_stats()` gives us the five number summary plus mean/sd.
 
 ```{r}
 #| label: sum-stats-skew
@@ -328,17 +295,11 @@ df_stats(hours_units ~ gender, data = study_hours )
 
 ```
 
-How do you think skew impacts our measures of center? 
-
-
-
-
-
+How do you think skew impacts our measures of center?
 
 ### Histogram
 
 A histogram is another way of visualizing numeric data. It partitions the range of observed data by creating a bin $B_i = [b_{i-1}, b_i)$ for $i = 1, 2, \dots, m$; counts data values belonging to each bin; and uses a graphic like a barplot to visualize the relative frequency of each bin. Below is a histogram of study hours per week per unit with a bin width of 0.25.
-
 
 ```{r}
 #| label: histogram
@@ -350,8 +311,7 @@ gf_histogram(~hours_units, data = study_hours,
 
 ```
 
-
-We can adjust the bin width to whatever is reasonable to create a clear visualization - it is balance between too much "granularity" and too little.  Here is a bin width of 0.20 - which histogram do you think is better?
+We can adjust the bin width to whatever is reasonable to create a clear visualization - it is balance between too much "granularity" and too little. Here is a bin width of 0.20 - which histogram do you think is better?
 
 ```{r}
 #| label: histogram-binwidth-change
@@ -363,28 +323,15 @@ gf_histogram(~hours_units, data = study_hours,
 
 ```
 
-
 #### Descriptions of Shape - Modality
 
 Just like the boxplot, we can also describe the skew of the data distribution based on the histogram (and id outliers), but histograms also provide information on another characteristics of shape - modality, or how many peaks a distribution might have.
 
 Draw a unimodal, bimodal, and multimodal with different skews:
 
-
-
-
-
-
-
-
-
-
-
-
 ### Case Study II: European Soccer {#sec-euro}
 
 Have European soccer players become faster over the 8 years (from Euro 2016 to 2024)? Of course, soccer players do not generate their maximum speed every minute, but they run at their maximum speed at critical moments. Exercise scientists believe that the maximum speed (km/h) is an indicator of athletes' physical strength and speed. Our goal will be to reproduce the statistics below as well as create visualizations for comparisons to see how maximum speed has changed over time in the Euro Cups.
-
 
 | Year | Min. |  Q1  | Median |  Q3  | Max. | Mean |  SD  |  N  |
 |:----:|:----:|:----:|:------:|:----:|:----:|:----:|:----:|:---:|
@@ -394,73 +341,80 @@ Have European soccer players become faster over the 8 years (from Euro 2016 to 2
 
 : Descriptive statistics of maximum speed (km) by the three events
 
-
-
 ## Wrap-up
 
 In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-#### Problem 1  
+#### Problem 1
+
 Fill in the blank.
 
-a. A categorical variable can be visualized by a \[b...\].
+a.  A categorical variable can be visualized by a \[b...\].
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+barplot
 :::
 
-b. A numeric variable can be visualized by a \[b...\] using the 5-number summary.
+b.  A numeric variable can be visualized by a \[b...\] using the 5-number summary.
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+boxplot
 :::
 
-c. A numeric variable can be visualized by a \[h...\] by specifying the bins (intervals) of possible values.
+c.  A numeric variable can be visualized by a \[h...\] by specifying the bins (intervals) of possible values.
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+histogram
 :::
 
-d. Data values which are outside of lower fence and upper fence called \[o...\].
+d.  Data values which are outside of lower fence and upper fence called \[o...\].
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+outliers
 :::
 
-e. In a boxplot, the middle bar inside the box is the sample \[m...\].
+e.  In a boxplot, the middle bar inside the box is the sample \[m...\].
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+median
 :::
 
-f. In a boxplot, the left side of the box is the sample \[f... q...\].
+f.  In a boxplot, the left side of the box is the sample \[f... q...\].
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+first quartile
 :::
 
-g. In a boxplot, the right side of the box is the sample \[t... q...\].
+g.  In a boxplot, the right side of the box is the sample \[t... q...\].
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+third quartile
 :::
 
-h. In a boxplot, the left bar and right bar marked outside of the box are the lower \[w...\] and upper \[w...\]. (They are the same word, so answer only once.)
+h.  In a boxplot, the left bar and right bar marked outside of the box are the lower \[w...\] and upper \[w...\]. (They are the same word, so answer only once.)
 
-:::{.callout-tip collapse="true"}
+::: {.callout-tip collapse="true"}
 #### Answer
-discrete
+
+whisker
 :::
 
+#### Problem 2
 
-#### Problem 2  
 Given a sample of $(1, 2, \dots, 100)$ of size 100, calculate the following statistics based on the below descriptive statistics.
 
 ```{r}
@@ -470,19 +424,56 @@ head(x)
 df_stats(~x, data = x)
 ```
 
-a. inter-quartile range ($\texttt{IQR}$)
+a.  inter-quartile range ($\texttt{IQR}$)
 
-b. lower fence ($\texttt{LF}$)
+::: {.callout-tip collapse="true"}
+#### Answer
 
-c. upper fence ($\texttt{UF}$)
+49.5
+:::
 
-d. lower whisker ($\texttt{LW}$)
+b.  lower fence ($\texttt{LF}$)
 
-e. upper whisker ($\texttt{LW}$)
+::: {.callout-tip collapse="true"}
+#### Answer
 
-f. the number of outliers
+-48.5
+:::
 
-#### Problem 3  
+c.  upper fence ($\texttt{UF}$)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+149.5
+:::
+
+d.  lower whisker ($\texttt{LW}$)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+1
+:::
+
+e.  upper whisker ($\texttt{LW}$)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+100
+:::
+
+f.  the number of outliers
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+0
+:::
+
+#### Problem 3
+
 Given a sample of (1, 10, 100, 1000, 10000), calculate the following statistics based on the below descriptive statistics.
 
 ```{r}
@@ -492,19 +483,53 @@ head(x)
 df_stats(~x, data = x)
 ```
 
-a. inter-quartile range ($\texttt{IQR}$)
+a.  inter-quartile range ($\texttt{IQR}$)
 
-b. lower fence ($\texttt{LF}$)
+::: {.callout-tip collapse="true"}
+#### Answer
 
-c. upper fence ($\texttt{UF}$)
+990
+:::
 
-d. lower whisker ($\texttt{LW}$)
+b.  lower fence ($\texttt{LF}$)
 
-e. upper whisker ($\texttt{LW}$)
+::: {.callout-tip collapse="true"}
+#### Answer
 
-f. the number of outliers
+-1475
+:::
 
+c.  upper fence ($\texttt{UF}$)
 
+::: {.callout-tip collapse="true"}
+#### Answer
+
+2485
+:::
+
+d.  lower whisker ($\texttt{LW}$)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+1
+:::
+
+e.  upper whisker ($\texttt{LW}$)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+1000
+:::
+
+f.  the number of outliers
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+1
+:::
 
 ## Assignment
 
@@ -512,10 +537,9 @@ Check your answer by inputting them below their respective question. All calcula
 
 Though you are checking the numeric answers here, you should make sure your written work is complete and your mathematical notation is correct as both will be graded on the homework quiz.
 
-#### Problem 1  
-This problem is continued from Case Study II (\@sec-euro). Below is a summary of the maximum speed by event within each position in @tbl-euro2. Fill in the blank by *rounding to one decimal place*. (You must show your code.)
+#### Problem 1
 
-::: #tbl-euro2
+This problem is continued from Case Study II (\@sec-euro). Below is a summary of the maximum speed by event within each position in @tbl-euro2. Fill in the blank by *rounding to one decimal place*. (You must show your code.)
 
 |  Position  | Year |  Q1  | Median |  Q3  |  Max  | Mean  | SD  |  N  |
 |:----------:|:----:|:----:|:------:|:----:|:-----:|:-----:|:---:|:---:|
@@ -531,9 +555,22 @@ This problem is continued from Case Study II (\@sec-euro). Below is a summary of
 
 : Descriptive statistics of maximum speed (km) by event within each position
 
+Here is the data (but it is also in your activity from class): [`euro-cup.csv`](9-summarizing-data/euro-cup.csv)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+```{r}
+#| label: answer-euro-cup
+euro <- read_csv("9-summarizing-data/euro-cup.csv", show_col_types = FALSE) #your will be in a data folder
+
+df_stats(top_speed ~ event + position, data = euro)
+
+```
 :::
 
-#### Problem 2  
+#### Problem 2
+
 `affairs.csv` is a partial dataset of a magazine survey conducted in 1969 by Psychology Today. Readers of the magazine were asked to mail in their answers. About 20,000 replies were received, and a subset of them were recorded as a sample. It contains the following variables. In this problem, the goal of data analysis is to study factors associated with the likelihood of extramarital affairs.
 
 - `affairs`: Did you have extramarital affairs during the past year? (`no` or `yes`)
@@ -568,8 +605,45 @@ Reference: Fair, R.C. (1978). A Theory of Extramarital Affairs. Journal of Polit
 
 : Percent of respondents who had extramarital affairs during the past year
 
-#### Problem 3  
-Reproduce the following boxplots exactly. (You must show your code.) You can produce each boxplot separately using the `filter()` function or you can use faceting features of graphs.  
+Here is the data: [`affairs.csv`](9-summarizing-data/affairs.csv)
+
+::: {.callout-tip collapse="true"}
+#### Answer
+
+```{r}
+#| label: answer-affairs
+affair <- read_csv("9-summarizing-data/affairs.csv", show_col_types = FALSE) #your will be in a data folder
+
+
+tally(~affairs, data = affair, format = "perc")
+
+tally(~gender, data = affair)
+tally(~children, data = affair)
+tally(~religiousness, data = affair)
+tally(~rating, data = affair)
+
+
+
+
+tally(gender ~ affairs, 
+      data = affair, 
+      format = "perc")
+tally(children ~ affairs, 
+      data = affair, 
+      format = "perc")
+tally(religiousness ~ affairs, 
+      data = affair, 
+      format = "perc")
+tally(rating ~ affairs, 
+      data = affair, 
+      format = "perc")
+
+```
+:::
+
+#### Problem 3
+
+Reproduce the following boxplots exactly. (You must show your code.) You can produce each boxplot separately using the `filter()` function or you can use faceting features of graphs.
 
 ```{r}
 #| label: asn-3-recreate
@@ -584,18 +658,23 @@ gf_boxplot(event ~ top_speed | position, data = euro,
 
 ```
 
-#### Problem 4  
+#### Problem 4
+
 Reproduce the following barplots exactly. (You must show your code.) For the second barplot, note that `rating` is an ordinal categorical variable. Specify the order of the five levels of `rating` as follows: `very unhappy`, `unhappy`, `average`, `above average`, and `very happy`.
 
 ```{r}
 #| label: asn-4-data
 #| warning: false
 #| echo: false
-affair <- read_csv("9-summarizing-data/affairs.csv")
-tally(~rating, data = affair) ### alphabetical order (default)
+affair <- read_csv("9-summarizing-data/affairs.csv",
+                   show_col_types = FALSE)
 affair <- affair |> 
   mutate(rating = factor(rating,
-                        levels = c("very unhappy", "unhappy", "average", "above average", "very happy") ))
+                         levels = c("very unhappy",
+                                    "unhappy", 
+                                    "average", 
+                                    "above average", 
+                                    "very happy") ))
 ```
 
 ```{r}
