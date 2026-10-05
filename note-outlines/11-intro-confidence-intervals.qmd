@@ -10,7 +10,6 @@ format:
       repos:
         - https://projectmosaic.r-universe.dev
       resources:
-        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/study-hours.csv
         - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/king.csv
       cell-options:
         warning: true
@@ -27,7 +26,7 @@ number-sections: true
 css: ../styles.css
 ---
 
-{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}\
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
 {{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
 
 ```{webr}

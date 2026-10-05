@@ -355,17 +355,6 @@
     ]
   },
   {
-    "objectID": "note-outlines/11-intro-confidence-intervals.html",
-    "href": "note-outlines/11-intro-confidence-intervals.html",
-    "title": "Introduction to Inference: Confidence Intervals",
-    "section": "",
-    "text": "{{&lt; include ../_extensions/r-wasm/live/_knitr.qmd &gt;}}",
-    "crumbs": [
-      "Note Outlines",
-      "Introduction to Confidence Intervals"
-    ]
-  },
-  {
     "objectID": "note-outlines/11-intro-confidence-intervals.html#review",
     "href": "note-outlines/11-intro-confidence-intervals.html#review",
     "title": "Introduction to Inference: Confidence Intervals",
