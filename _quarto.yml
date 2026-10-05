@@ -73,7 +73,8 @@ website:
         text: "Summarizing and Visualizing Data"
       - href: note-outlines/10-sampling-methods.qmd
         text: "Sampling Methods"
-
+      - href: note-outlines/11-intro-confidence-intervals.qmd
+        text: "Introduction to Confidence Intervals"
         
 format:
   html:

@@ -6,7 +6,7 @@ discrete
 :::
   
   
-  ```{r}
+```{r}
 #| label: wrap-2
 #| echo: false
 checkdown::check_question(answer = "standard deviation",
