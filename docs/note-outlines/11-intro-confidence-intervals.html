@@ -353,6 +353,7 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <h2 data-number="3" class="anchored" data-anchor-id="sec-ci"><span class="header-section-number">3</span> Derivation of 95% CI for Population Mean</h2>
 <p>According to the Central Limit Theorem, if we repeat simple random sampling of a large size <span class="math inline">\(n\)</span> from a population, the approximate sampling distribution of the sample mean is <span class="math inline">\(\bar{X} \sim \mathrm{N}(\mu, \texttt{SE})\)</span> where <span class="math inline">\(\texttt{SE} = \frac{\sigma}{\sqrt{n}}\)</span>.</p>
 <p>Let <span class="math inline">\(Z = \frac{\bar{X} - \mu}{\texttt{SE}}\)</span> which is referred to as a <strong>Z statistic</strong>.</p>
+<p>We know the shape, center, and spread of the sampling distribution of the sample mean due to the Central Limit Theorem. Mathematically, how do we transform the shape, center, and spread when we calculate the Z-statistic?</p>
 <p>Then the approximate sampling distribution of the Z statistic is <span class="math inline">\(Z \sim \mathrm{N}(0,1)\)</span>. Let <span class="math inline">\(c\)</span> be the constant such that <span class="math inline">\(P(-c \le Z \le c) = 0.95\)</span> as shown below.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -536,7 +537,7 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </div>
 </div>
 </div>
-<p>Calculate the critical value <span class="math inline">\(c\)</span> when:</p>
+<p><strong>USING R -</strong> Calculate the critical value <span class="math inline">\(c\)</span> when:</p>
 <ol type="a">
 <li><span class="math inline">\(1 - \alpha = 0.9\)</span></li>
 </ol>
@@ -699,38 +700,38 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <p>Multiple-choice: A CI for <span class="math inline">\(\mu\)</span> becomes more precise as…</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_97130" onsubmit="return validate_form_97130()" method="post">
+<form name="form_94056" onsubmit="return validate_form_94056()" method="post">
 <label>
-<input type="radio" name="answer_97130" id="answer_97130_1" value="the confidence level increases (i.e., a better chance to capture the population mean)">
+<input type="radio" name="answer_94056" id="answer_94056_1" value="the confidence level increases (i.e., a better chance to capture the population mean)">
 the confidence level increases (i.e., a better chance to capture the population mean)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_97130" id="answer_97130_2" value="the sample size increases">
+<input type="radio" name="answer_94056" id="answer_94056_2" value="the sample size increases">
 the sample size increases
 </label>
 <br>
 <label>
-<input type="radio" name="answer_97130" id="answer_97130_3" value="the sample standard deviation increases">
+<input type="radio" name="answer_94056" id="answer_94056_3" value="the sample standard deviation increases">
 the sample standard deviation increases
 </label>
 <br>
 <label>
-<input type="radio" name="answer_97130" id="answer_97130_4" value="the sample mean increases">
+<input type="radio" name="answer_94056" id="answer_94056_4" value="the sample mean increases">
 the sample mean increases
 </label>
 <br>
 <label>
-<input type="radio" name="answer_97130" id="answer_97130_5" value="all of the above">
+<input type="radio" name="answer_94056" id="answer_94056_5" value="all of the above">
 all of the above
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_97130"></div>
+<div id="result_94056"></div>
 </form>
-<script>function validate_form_97130() {var x, text; var x = document.forms['form_97130']['answer_97130'].value;if (x == 'the sample size increases'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_97130').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_94056() {var x, text; var x = document.forms['form_94056']['answer_94056'].value;if (x == 'the sample size increases'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_94056').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_97130').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_94056').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -741,38 +742,38 @@ all of the above
 <p>Multiple-choice: Suppose 10,000 researchers do simple random sampling of the same size <span class="math inline">\(n\)</span> from the same population. Let <span class="math inline">\(\mu\)</span> be the unknown population average to be estimated. If each researcher calculates a 95% CI for <span class="math inline">\(\mu\)</span> using their simple random samples, then…</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_37653" onsubmit="return validate_form_37653()" method="post">
+<form name="form_94206" onsubmit="return validate_form_94206()" method="post">
 <label>
-<input type="radio" name="answer_37653" id="answer_37653_1" value="they will observe the same 95% CI because they take samples from the same population">
+<input type="radio" name="answer_94206" id="answer_94206_1" value="they will observe the same 95% CI because they take samples from the same population">
 they will observe the same 95% CI because they take samples from the same population
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37653" id="answer_37653_2" value="all researchers' 95% CIs will capture the population mean">
+<input type="radio" name="answer_94206" id="answer_94206_2" value="all researchers' 95% CIs will capture the population mean">
 all researchers' 95% CIs will capture the population mean
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37653" id="answer_37653_3" value="about 9,500 researchers' CIs will capture the population mean">
+<input type="radio" name="answer_94206" id="answer_94206_3" value="about 9,500 researchers' CIs will capture the population mean">
 about 9,500 researchers' CIs will capture the population mean
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37653" id="answer_37653_4" value="all researchers know whether their CIs captured the population mean or not.">
+<input type="radio" name="answer_94206" id="answer_94206_4" value="all researchers know whether their CIs captured the population mean or not.">
 all researchers know whether their CIs captured the population mean or not.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37653" id="answer_37653_5" value="about 9,500 know whether their CIs captured the population mean or not.">
+<input type="radio" name="answer_94206" id="answer_94206_5" value="about 9,500 know whether their CIs captured the population mean or not.">
 about 9,500 know whether their CIs captured the population mean or not.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_37653"></div>
+<div id="result_94206"></div>
 </form>
-<script>function validate_form_37653() {var x, text; var x = document.forms['form_37653']['answer_37653'].value;if (x == 'about 9,500 researchers' CIs will capture the population mean'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_37653').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_94206() {var x, text; var x = document.forms['form_94206']['answer_94206'].value;if (x == 'about 9,500 researchers' CIs will capture the population mean'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_94206').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_97130').innerText == 'Correct'; res2 = document.getElementById('result_37653').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_94056').innerText == 'Correct'; res2 = document.getElementById('result_94206').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>

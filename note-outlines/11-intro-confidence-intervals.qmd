@@ -110,6 +110,10 @@ According to the Central Limit Theorem, if we repeat simple random sampling of a
 
 Let $Z = \frac{\bar{X} - \mu}{\texttt{SE}}$ which is referred to as a **Z statistic**.
 
+We know the shape, center, and spread of the sampling distribution of the sample mean due to the Central Limit Theorem.  Mathematically, how do we transform the shape, center, and spread when we calculate the Z-statistic?
+
+
+
 Then the approximate sampling distribution of the Z statistic is $Z \sim \mathrm{N}(0,1)$. Let $c$ be the constant such that $P(-c \le Z \le c) = 0.95$ as shown below.
 
 ```{r}
@@ -334,7 +338,7 @@ gf_function(
   theme(text = element_text(size = 16))
 ```
 
-Calculate the critical value $c$ when:
+**USING R -** Calculate the critical value $c$ when:
 
 a. $1 - \alpha = 0.9$
 
