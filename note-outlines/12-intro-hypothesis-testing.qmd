@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Inference: Confidence Intervals"
+title: "Introduction to Inference: Hypothesis Testing"
 format: 
   live-html:
     webr:
@@ -27,6 +27,7 @@ css: ../styles.css
 ---
 
 {{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
 {{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
 
 ```{webr}
@@ -55,233 +56,257 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
         ggplot2.discrete.fill = scale_fill_viridis_d)
 ```
 
----
-title: "Introduction to Statistical Hypothesis Testing"
-author: "Steven B. Kim"
-format: 
-  html:
-    css: styles.css
-    theme: cosmo
-    fontsize: 0.9em
-    linestretch: 1.7
-    toc: true
-    toc-location: left
-    number-sections: true
-    html-math-method: katex
-mainfont: serif
-editor: visual
----
+In statistics, a **hypothesis** refers to an assumption about the population or an unknown parameter (any quantity which describes the population).
 
-In statistics, a **hypothesis** refers to an assumption about the population or an unknown parameter (any quantity which describes the population). For example, let $\theta$ denote the proportion of boys among newborn babies in the United States. Then $\theta = 0.5$ is a hypothesis stating that the population proportion is 0.5 (i.e., the probability that a mother gives birth to a boy is 0.5). Another competing hypothesis is $\theta > 0.5$. This hypothesis states that the probability that a mother gives birth to a boy is greater than 0.5.
+- For example, let $\theta$ denote the proportion of boys among newborn babies in the United States. Then $\theta = 0.5$ is a hypothesis stating that the population proportion is 0.5 (i.e., the probability that a mother gives birth to a boy is 0.5).\
+- Another competing hypothesis is $\theta > 0.5$. This hypothesis states that the probability that a mother gives birth to a boy is greater than 0.5.
 
 ## Two Kinds of Hypothesis {#sec-hypothesis}
 
-In statistical hypothesis testing, we specify two competing hypotheses: **null hypothesis** and **alternative hypothesis**. The null hypothesis is denoted by $H_0$, and the alternative hypothesis is denoted by $H_1$. The procedure of hypothesis testing is developed based on the assumption of $H_0$. If data suggest strong evidence against $H_0$ in favor of $H_1$, we conclude $H_1$. Otherwise, we conclude $H_0$.
+In statistical hypothesis testing, we specify two competing hypotheses: **null hypothesis** and **alternative hypothesis**.
+
+- The null hypothesis is denoted by $H_0$, and   
+- the alternative hypothesis is denoted by $H_1$. 
+
+The procedure of hypothesis testing is developed based on the assumption of $H_0$. If data suggest strong evidence against $H_0$ in favor of $H_1$, we conclude $H_1$. Otherwise, we conclude $H_0$.
 
 **Note:** Conclusion of $H_1$ does not imply that $H_1$ is true. It implies that observed data (a sample) suggest strong evidence against $H_0$ in favor of $H_1$. Similarly, conclusion of $H_0$ does not imply that $H_0$ is true. It implies that observed data is not strong enough to reject the assumption of $H_0$.
 
 ## Analogy: Presumption of Innocence in U.S. Criminal Trials {#sec-analogy}
 
-Statistical hypothesis testing described in @sec-hypothesis is somewhat similar to criminal trials in the United States. There are two competing hypotheses in a criminal trial. The first hypothesis is that the defendant is innocent, and it is assumed to be true until proven guilty (**presumption of innocence**). The second hypothesis is that the defendant is guilty. The prosecutor must provide strong evidence against the presumption of innocence in order to reject the presumption and conclude guilty. According to our criminal justice system, after seeing all evidence provided by the prosecutor, all 12 jurors must agree that the defendant is guilty in order to conclude guilty. Otherwise, we conclude that the defendant is innocent. (It is not because we truly believe that the defendant is innocent. It is because the evidence is not strong enough to reject the presumption of innocence.)
+Statistical hypothesis testing described in @sec-hypothesis is somewhat similar to criminal trials in the United States. There are two competing hypotheses in a criminal trial.
+
+- The first hypothesis is that the defendant is innocent, and it is assumed to be true until proven guilty (**presumption of innocence**).
+
+- The second hypothesis is that the defendant is guilty.
+
+The prosecutor must provide strong evidence against the presumption of innocence in order to reject the presumption and conclude guilty.
+
+|                        | Actually Innocent | Actually Guilty |
+|------------------------|-------------------|-----------------|
+| Jury Decides: Innocent |                   |                 |
+| Jury Decides: Guilty   |                   |                 |
+
+: Jury Trial Decisions
+
+According to our criminal justice system, after seeing all evidence provided by the prosecutor, all 12 jurors must agree that the defendant is guilty in order to conclude guilty. Otherwise, we conclude that the defendant is innocent. (It is not because we truly believe that the defendant is innocent. It is because the evidence is not strong enough to reject the presumption of innocence.)
 
 ## Three Kinds of Alternative Hypothesis
 
-Let $\theta$ be a parameter to be tested. The null hypothesis is simply stated as $H_0$: $\theta = \theta_0$ where $\theta_0$ is referred to as the **null value**. In the previous example, we may set $H_0$: $\theta = 0.5$ (i.e., the probability of giving birth to a boy is 0.5). There are three forms of alternative hypothesis $H_1$
+Let $\theta$ be a parameter to be tested.   
 
-- $H_1$: $\theta > \theta_0$ which is referred to as the **right-sided test**.
+The null hypothesis is simply stated as $H_0$: $\theta = \theta_0$ where $\theta_0$ is referred to as the **null value**. 
+In the previous example, we may set $H_0$: $\theta = 0.5$ (i.e., the probability of giving birth to a boy is 0.5). There are three forms of alternative hypothesis $H_1$
 
-- $H_1$: $\theta < \theta_0$ which is referred to as the **left-sided test**.
+- $H_1$: $\theta > \theta_0$ which is referred to as the **right-sided test**, a type of **one-sided test**.
+
+- $H_1$: $\theta < \theta_0$ which is referred to as the **left-sided test**, a type of **one-sided test**.
 
 - $H_1$: $\theta \ne \theta_0$ which is referred to as the **two-sided test**.
 
-Given $H_0$: $\theta = \theta_0$, the direction of $H_1$ depends on the researcher's question of interest. In the previous example, we may set $H_0$: $\theta = 0.5$ and $H_1$: $\theta > 0.5$ (right-sided test) because the sex ratio at birth is known to be about 105 to 100 (boys to girls). The two competing hypotheses $H_0$ and $H_1$ are assumptions, and we need data (a sample) to conclude $H_0$ or $H_1$.
+Given $H_0$: $\theta = \theta_0$, the direction of $H_1$ depends on the researcher's question of interest. 
+
+
+In the previous example, we may set $H_0$: $\theta = 0.5$ and $H_1$: $\theta > 0.5$ (right-sided test) because the sex ratio at birth is known to be about 105 to 100 (boys to girls). The two competing hypotheses $H_0$ and $H_1$ are assumptions, and we need data (a sample) to conclude $H_0$ or $H_1$.
+
 
 ## Test Statistic {#sec-teststat}
 
-A statistic (numeric summary of data) is called a **test statistic** if it is used to conduct statistical hypothesis testing. In order to test $H_0$: $\theta = 0.5$ and $H_1$: $\theta > 0.5$, we need to analyze a categorical variable with two levels: boy and girl (male and female) at birth. For the purpose of demonstration, let us revisit the $\texttt{king.csv}$ dataset, a simple random sample of 2,500 mothers who gave births in 2001 in King County. Below are descriptive statistics and data visualization relevant to our hypothesis testing.
+A statistic (numeric summary of data) is called a **test statistic** if it is used to conduct statistical hypothesis testing.   
 
-```{r, warning = FALSE, message = FALSE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Barplot by proportion"}
-library(mosaic)
-king = read.csv("Data/king.csv") ### read csv file
-dim(king) ### dimension of data
+In order to test $H_0$: $\theta = 0.5$ and $H_1$: $\theta > 0.5$, we need to analyze a categorical variable with two levels: boy and girl (male and female) at birth. 
+
+For the purpose of demonstration, let us revisit the [`king.csv`](8-intro-to-stats/king.csv) dataset, a simple random sample of 2,500 mothers who gave births in 2001 in King County. Below are descriptive statistics and data visualization relevant to our hypothesis testing.
+
+```{webr}
+#| label: king-data
+king <- read_csv("king.csv") ### read csv file
 head(king, 5) ### view first 5 lines
-count = tally(~gender, data = king, format = "count")
-prop = tally(~gender, data = king, format = "proportion")
-count
-prop
-barplot( prop, 
-         beside = TRUE,
-         col = c("pink", "blue"),
-         main = "Newborn Babies in 2001 in King County",
-         ylab = "Proportion", 
-         ylim = c(0,1),
-         names = c("Girls (1209)", "Boys (1291)") )
 ```
 
-In the sample, we observed 1209 girls ($\texttt{F}$) and 1291 boys ($\texttt{M}$) out of $n = 2500$ newborn babies. The unknown parameter $\theta$, the probability of giving birth to a boy, can be estimated by the sample proportion of boys, $\bar{X} = \frac{1291}{2500} = 0.5164$, and we can calculate a test statistic as follows:
 
-$$
-Z = \frac{\bar{X} - \theta_0}{ \sqrt{ \frac{\theta_0 (1 - \theta_0)}{n} } } = \frac{0.5164 - 0.5}{ \sqrt{ \frac{0.5(1 - 0.5)}{2500} } } = 1.64 \, .
-$$
+```{webr}
+#| label: king-summary
+tally(~gender, data = king, format = "count")
+tally(~gender, data = king, format = "proportion")
 
-```{r}
-n = dim(king)[1] ### the number of rows in the data (sample size)
-xbar = 1291 / n ### sample proportion of boys
-theta0 = 0.5 ### null value
-se = sqrt( theta0 * (1 - theta0) / n ) ### standard error
-z = (xbar - theta0) / se ### z statistic
-z
 
+gf_props(~gender, data = king,
+         fill = ~gender,
+         title = "Newborn Babies in 2001 in King County",
+         ylab = "Proportion",
+         xlab = "Gender",
+         show.legend = FALSE)
 ```
 
-This test statistic is sometimes referred to as a **Z statistic**. The numerator of $Z$ measures the discrepancy between the sample proportion ($\bar{X} = 0.5164$) and the null hypothesis ($\theta_0 = 0.5$). The denominator $\texttt{SE} = \sqrt{ \frac{\theta_0 (1 - \theta_0) }{n} }$ is called the **standard error** of $\bar{X}$. The standard error measures uncertainty in the sample proportion given the null hypothesis ($\theta_0 = 0.5$) and sample size ($n = 2500$). In our case, a large positive value of $Z$ is regarded as strong evidence against $H_0$: $\theta = 0.5$ in favor of $H_1$: $\theta > 0.5$, and it can be attained when $\bar{X} > \theta_0$ and $\texttt{SE}$ is small. A natural question is how large $Z$ should be in order to reject $H_0$ and conclude $H_1$. This question will be addressed in @sec-rule.
+In the sample, we observed 1209 girls ($\texttt{F}$) and 1291 boys ($\texttt{M}$) out of $n = 2500$ newborn babies. 
+
+The unknown parameter $\theta$, the probability of giving birth to a boy, can be estimated by the sample proportion of boys, $\hat{p} = \frac{1291}{2500} = 0.5164$, and we can calculate a test statistic as follows:
+
+$$
+Z = \frac{\hat{p} - \theta_0}{ \sqrt{ \frac{\theta_0 (1 - \theta_0)}{n} } } = \frac{0.5164 - 0.5}{ \sqrt{ \frac{0.5(1 - 0.5)}{2500} } } = 1.64 \, .
+$$
+
+This test statistic is sometimes referred to as a **Z statistic**. 
+
+- The numerator of $Z$ measures the discrepancy between the sample proportion ($\bar{X} = 0.5164$) and the null hypothesis ($\theta_0 = 0.5$).  
+- The denominator $\texttt{SE} = \sqrt{ \frac{\theta_0 (1 - \theta_0) }{n} }$ is called the **standard error** of $\bar{X}$.  
+- The standard error measures uncertainty in the sample proportion given the null hypothesis ($\theta_0 = 0.5$) and sample size ($n = 2500$). 
+
+
+In our case, a large positive value of $Z$ is regarded as strong evidence against $H_0$: $\theta = 0.5$ in favor of $H_1$: $\theta > 0.5$, and it can be attained when $\hat{p} > \theta_0$ and $\texttt{SE}$ is small. However, we need a better mechanism for decision making than asking "is it a big $Z$ score?". First, we need to understand the challenges of making a decision based on data.  
 
 ## Two Kinds of Mistake in Statistical Hypothesis Testing
 
-There are two kinds of mistake in statistical hypothesis testing. The first kind of mistake is concluding $H_1$ when $H_0$ is true, and it is referred to as the **Type I error**. The second kind of mistake is concluding $H_0$ when $H_1$ is true, and it is referred to as the **Type II error**. Since the process of hypothesis testing is built upon the assumption of $H_0$, we conclude $H_0$ or $H_1$ by fixing the probability of committing Type I error. This fixed probability is called the **significance level**, and denoted by $\alpha$. A typical choice is $\alpha = 0.01$, $\alpha = 0.05$, or $\alpha = 0.1$. If we fix $\alpha = 0.05$, the underlying interpretation is that we allow a 5% chance of committing Type I error (concluding $H_1$ when $H_0$ is true).
+There are two kinds of mistake in statistical hypothesis testing. 
 
-## Rejection Rule {#sec-rule}
+- The first kind of mistake is concluding $H_1$ when $H_0$ is true, and it is referred to as the **Type I error**. 
 
-Under the assumption of $H_0$, the reference probability model for the Z statistic is the standard normal distribution, and we write $Z \sim N(0,1)$. It is also called the **null distribution** of $Z$ (the sampling distribution of $Z$ under the assumption of $H_0$).
+- The second kind of mistake is concluding $H_0$ when $H_1$ is true, and it is referred to as the **Type II error**. 
 
-```{r, echo = FALSE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Null distribution of Z statistic"}
-mu = 0
-sigma = 1
-x = seq( mu - 4 * sigma, mu + 4 * sigma, 0.01 )
-y = dnorm( x, mu, sigma )
-plot( x, y, type = "l", col = 1, lty = 1, 
-      main = "Null Distribution of Z", 
-      xlab = "Value of Z", 
-      ylab = "",
-      xlim = c( mu - 3.5 * sigma, mu + 3.5 * sigma ), 
-      ylim = c( 0, 0.4 ), 
-      axes = FALSE )
-axis( 1, seq( mu - 5 * sigma, mu + 5 * sigma, sigma ) )
-abline( h = 0, col = 8 )
-```
+Since the process of hypothesis testing is built upon the assumption of $H_0$, we conclude $H_0$ or $H_1$ by fixing the probability of committing Type I error. This fixed probability is called the **significance level**, and denoted by $\alpha$. 
 
-After fixing a significance level $\alpha$, we conclude $H_1$ when:
+A typical choice is $\alpha = 0.01$, $\alpha = 0.05$, or $\alpha = 0.1$. If we fix $\alpha = 0.05$, the underlying interpretation is that we allow a 5% chance of committing Type I error (concluding $H_1$ when $H_0$ is true).
 
-- [Right-sided test]{.underline}: $Z \ge c$ where $c$ is calculated by $\texttt{qnorm}(1 - \alpha)$.
-
-- [Left-sided test]{.underline}: $Z \le c$ where $c$ is calculated by $\texttt{qnorm}(\alpha)$.
-
-- [Two-sided test]{.underline}: $\lvert Z \rvert \ge c$ where $c$ is calculated by $\texttt{qnorm}(1 - \alpha/2)$.
-
-Otherwise, we conclude $H_0$. The value of $c$ is called a **critical value**, and it is like a threshold to determine $H_1$ or $H_0$ at a fixed significance level $\alpha$.
-
-Remember that the process of hypothesis testing is formulated under the assumption of $H_0$. Therefore, when we conclude $H_0$, we carefully state that it is insufficient evidence to reject $H_0$ at a significance level $\alpha$. We shall [not]{.underline} state that it is sufficient evidence to conclude $H_0$. (Recall the analogy in Section @sec-analogy. In a criminal trial, when we conclude innocence, it is because of insufficient evidence to reject the presumption of innocence. It does not imply that the prosecutor provided sufficient evidence for innocence.)
-
-In @sec-teststat, supposed we fixed a significance level of $\alpha = 0.05$, and we calculated $Z = 1.64$. We can calculate the critical value $c$ as follows.
-
-```{r}
-alpha = 0.05 ### significance level
-c = qnorm(1 - alpha) ### critical value
-c
-```
-
-It was close, but $Z = 1.64$ is less than $c = 1.6449$. Therefore, we conclude $H_0$: $\theta = 0.5$. In words, the sample of 2,500 newborn babies is not sufficient evidence to conclude that the probability of giving birth to a boy is greater than 0.5. The parameter $\theta$ is estimated as $\bar{X} = 0.5164$, and we would need a larger sample size to conclude $H_1$: $\theta > 0.5$ if it is true.
 
 ## P-value
 
-In statistics, the **p-value** is broadly defined as the probability of observing an observed outcome or a more unlikely outcome in favor of $H_1$ under the assumption of $H_0$. After calculating $Z = \texttt{z}$, the calculation of p-value depends on the direction of $H_1$ as follows:
+In statistics, the **p-value** is broadly defined as the probability of observing an outcome or a more unlikely outcome under the assumption of $H_0$ being true. 
 
-- [Right-sided test]{.underline}: p = $1 - \texttt{pnorm}(\texttt{z})$
+- If the observed outcome is very unlikely, we find the assumption that $H_0$ is true to be unreasonable and find in favor of $H_1$  
 
-- Left-sided test: p = $\texttt{pnorm}(\texttt{z})$
+- If the observed outcome is likely, then there is not reason to find the assumption that $H_0$ is true unreasonable, but this does not *prove* that $H_0$ is true.  
 
-- Two-sided test: p = $2 * \texttt{pnorm}(\texttt{z})$ if $\texttt{z} < 0$ or p = $2 * (1 - \texttt{pnorm}(\texttt{z}))$ if $\texttt{z} > 0$
 
-```{r, echo = FALSE, fig.height = 3, fig.width = 10, out.height = "100%", out.width = "100%", fig.alt = "P-value calculation"}
-par( mfrow=c( 1, 3 ) )
+After calculating $Z = \texttt{z}$, the calculation of p-value depends on the direction of $H_1$ as follows:
 
-###
+- [Right-sided test]{.underline}: p = `1 - pnorm(z)`
 
-mu = 0 ### model mean
-sigma = 1 ### model standard deviation
-x = seq( -4, 4, 0.001 )
+- Left-sided test: p = `pnorm(z)`
 
-plot( x, dnorm( x, mu, sigma ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "Z Statistic", ylab = "", main = "Left-sided Test" )
-abline( h = 0 )
+- Two-sided test: p = `2*pnorm(z)` if $\texttt{z} < 0$ or p = `2*(1 - pnorm(z))` if $\texttt{z} > 0$
 
-a = -5; b = -1.5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dnorm( grid[i], mu, sigma ) )
-   lines( x.temp, y.temp, col = "gold" ) }
 
-z = b
-axis( 1, c( -10, 0, z, 10 ), label = c( "", "0", "z", "" ) )
+```{r}
+#| label: shaded-curves
+#| echo: false
+#| fig-width: 6.5
+mu <- 0
+sigma <- 1
+z <- 1.5
 
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
+# Normal curve
+curve_data <- data.frame(
+  x = seq(-4, 4, by = 0.001)
+)
+curve_data$y <- dnorm(curve_data$x, mu, sigma)
 
-###
+# X-values used for the P-value lines
+grid <- seq(-4, 4, by = 0.01)
 
-mu = 0 ### model mean
-sigma = 1 ### model standard deviation
-x = seq( -4, 4, 0.001 )
+pvalue_data <- rbind(
+  data.frame(
+    test = "Left-sided Test",
+    x = grid[grid <= -z]
+  ),
+  data.frame(
+    test = "Right-sided Test",
+    x = grid[grid >= z]
+  ),
+  data.frame(
+    test = "Two-sided Test",
+    x = grid[abs(grid) >= z]
+  )
+)
 
-plot( x, dnorm( x, mu, sigma ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "Z Statistic", ylab = "", main = "Right-sided Test" )
-abline( h = 0 )
+pvalue_data$y <- dnorm(pvalue_data$x, mu, sigma)
 
-a = 1.5; b = 5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dnorm( grid[i], mu, sigma ) )
-   lines( x.temp, y.temp, col = "gold" ) }
+ggplot() +
+  # Normal density curve
+  geom_line(
+    data = curve_data,
+    aes(x = x, y = y),
+    linewidth = 0.8
+  ) +
 
-z = a
-axis( 1, c( -10, 0, z, 10 ), label = c( "", "0", "z", "" ) )
+  # Gold P-value lines
+  geom_segment(
+    data = pvalue_data,
+    aes(
+      x = x,
+      xend = x,
+      y = 0,
+      yend = y,
+      color = "P-value"
+    ),
+    linewidth = 0.5
+  ) +
 
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
+  facet_wrap(~ test, nrow = 1) +
 
-###
+  scale_color_manual(
+    values = c("P-value" = "darkgrey")
+  ) +
 
-mu = 0 ### model mean
-sigma = 1 ### model standard deviation
-x = seq( -4, 4, 0.001 )
+  scale_x_continuous(
+    name = "Z Statistic",
+    breaks = c(-z, 0, z),
+    labels = c("-|z|", "0", "|z|"),
+    limits = c(-4, 4)
+  ) +
 
-plot( x, dnorm( x, mu, sigma ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "Z Statistic", ylab = "", main = "Two-sided Test" )
-abline( h = 0 )
+  scale_y_continuous(
+    name = NULL,
+    expand = expansion(mult = c(0, 0.05))
+  ) +
 
-a = 1.5; b = 5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dnorm( grid[i], mu, sigma ) )
-   lines( x.temp, y.temp, col = "gold" ) }
+  labs(color = NULL) +
 
-z = a
-axis( 1, c( -10, -z, 0, z, 10 ), label = c( "", "-|z|", "0", "|z|", "" ) )
-
-a = -5; b = -1.5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dnorm( grid[i], mu, sigma ) )
-   lines( x.temp, y.temp, col = "gold" ) }
-
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
+  theme_light() +
+  theme(
+    legend.position = c(0.94, 0.9),
+    legend.background = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  )
 ```
 
-Instead of comparing the value of $Z$ to the critical value $c$ as in @sec-rule, we can compare p-value to the significance level $\alpha$. If the value of $p$ is less than or equal to $\alpha$, we conclude $H_1$. Otherwise, we conclude $H_0$.
+We can compare p-value to the significance level $\alpha$. If the value of $p$ is less than or equal to $\alpha$, we conclude $H_1$. Otherwise, we conclude $H_0$.
 
 In the previous example, we can calculate the p-value for the right-sided test as follows.
 
-```{r}
-n = dim(king)[1] ### the number of rows in the data (sample size)
-xbar = 1291 / n ### sample proportion of boys
-theta0 = 0.5 ### null value
-se = sqrt( theta0 * (1 - theta0) / n ) ### standard error
-z = (xbar - theta0) / se ### z statistic
-z
-p = 1 - pnorm(z) ### p-value for right-sided test
-p
+```{webr}
+#| label: p-value
+1 - pnorm(1.64) ### p-value for right-sided test
 ```
 
-It was close, but p = 0.0505 is greater than $\alpha = 0.05$. Therefore, we conclude $H_0$. We interpret p = 0.0505 as follows. If we repeat simple random sampling of size $n = 2500$, the probability of observing $Z = 1.64$ or $Z > 1.64$ is p = 0.0505 if $H_0$: $\theta = 0.5$ is true. This result is not statistically significant enough at the fixed significance level of $\alpha = 0.05$, so we conclude $H_0$ at $\alpha = 0.05$.
+We interpret p = 0.0505 as follows: 
+
+- If we repeat simple random sampling of size $n = 2500$, the probability of observing $Z = 1.64$ or $Z > 1.64$ is p = 0.0505 if $H_0$: $\theta = 0.5$ is true.
+
+Rewrite this in the context of the problem:
+
+
+
+
+
+
+We can **evaluate** p-values based on its proximity to the the **significance** level:
+
+![Evidence against the null hypothesis](../12-intro-hypothesis-tests/pvalue-generic.png)
+
+To scale this to our $\alpha = 0.05$, we would use the following scale
+
+![Evidence against the null hypothesis $\alpha = 0.05$](../12-intro-hypothesis-tests/pvalue-05.png)
+
+
+Therefore, with our $p-value = 0.0505$ we have **moderate** evidence against the null hypothesis, and therefore find support for the alternative hypothesis.
+
+
+Rewrite the evaluation of the p-value in context of the problem:
+
+
+
 
 ## General Procedure of Statistical Hypothesis Testing
 
@@ -290,60 +315,68 @@ In summary, the procedure of statistical hypothesis testing is as follows:
 1.  Choose a parameter of interest, and state $H_0$ and $H_1$ in terms of the parameter. It depends on the research question.
 2.  Fix a significance level $\alpha$. It is a small fixed probability of committing Type I error (concluding $H_1$ when $H_0$ is true).
 3.  Calculate a test statistic and p-value under the assumption of $H_0$.
-4.  Conclude $H_0$ or $H_1$. You may compare the calculated test statistic to $c$ or the p-value to $\alpha$.
+4.  Evaluate the p-value and the level of evidence against $H_0$ based on $\alpha$.
 5.  State the conclusion in the context.
 
-**Remark:** In this chapter, we discussed the procedure when a parameter of interest is $\theta$, the unknown probability of an event (the population proportion of a certain group). The procedure is known to be valid when (1) we have a simple random sample of size $n$ and (2) the sample size $n$ is as large as follows: $n \theta_0 \ge 10$ or $n(1 - \theta_0) \ge 10$. In our example, $n = 2500$ and $\theta_0 = 0.5$, so $n$ is large enough ($n\theta_0 = 1250 \ge 10$ and $n(1-\theta_0) = 1250 \ge 10$).
+**Conditions for Our Analysis:** We discussed the procedure when a parameter of interest is $\theta$, the unknown probability of an event (the population proportion of a certain group). The procedure is known to be valid (and results trustworthy) when: 
 
-## Warm-up
+1. we have a simple random sample of size $n$ and 
+2. the sample size $n$ is as large as follows: 
+    a. $n \theta_0 \ge 10$ or 
+    b. $n(1 - \theta_0) \ge 10$. 
+    
+In our example, $n = 2500$ and $\theta_0 = 0.5$, so $n$ is large enough ($n\theta_0 = 1250 \ge 10$ and $n(1-\theta_0) = 1250 \ge 10$).
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSddNCcu36e40Xo51e-cbJvQk_h5Us7rr_jeS4CVq52UQMxUZA/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+## Wrap-Up
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-**Problem 1.** Fill in the blank.
+#### Problem 1 
+Fill in the blank.
 
-a\. A \[h...\] is an assumption about the population or an unknown parameter.
+a. A \[h...\] is an assumption about the population or an unknown parameter.
 
-b\. A \[t... s...\] is a statistic which is used for statistical hypothesis testing.
+b. A \[t... s...\] is a statistic which is used for statistical hypothesis testing.
 
-c\. A \[n... h...\] is assumed to be true in the procedure of statistical hypothesis testing.
+c. A \[n... h...\] is assumed to be true in the procedure of statistical hypothesis testing.
 
-d\. If data is strongly against the null hypothesis in favor of the \[a... h...\], we conclude the \[a... h...\].
+d. If data is strongly against the null hypothesis in favor of the \[a... h...\], we conclude the \[a... h...\].
 
-e\. \[...\] refers to conclusion of $H_1$ when $H_0$ is true.
+e. \[...\] refers to conclusion of $H_1$ when $H_0$ is true.
 
-f\. \[...\] refers to conclusion of $H_0$ when $H_1$ is true.
+f. \[...\] refers to conclusion of $H_0$ when $H_1$ is true.
 
-g\. A \[s... l...\] is denoted by $\alpha$, and it is a small fixed probability of committing the Type I error.
+g. A \[s... l...\] is denoted by $\alpha$, and it is a small fixed probability of committing the Type I error.
 
-h\. We compare a test statistic to the \[c... v...\] to conclude $H_0$ or $H_1$.
+h. We can compare a p-value to the \[s... l...\] to conclude $H_0$ or $H_1$.
 
-i\. We can a p-value to the \[...\] to conclude $H_0$ or $H_1$.
+#### Problem 2 
+True or false?
 
-**Problem 2.** True or false?
+a. If $H_0$ is true, it is possible to conclude $H_1$.
 
-a\. If $H_0$ is true, it is possible to conclude $H_1$.
+b. If $H_1$ is true, it is possible to conclude $H_0$.
 
-b\. If $H_1$ is true, it is possible to conclude $H_0$.
+c. If we fix $\alpha = 0.05$, it implies that we allow a probability of 0.05 for concluding $H_0$ when $H_1$ is true.
 
-c\. If we fix $\alpha = 0.05$, it implies that we allow a probability of 0.05 for concluding $H_0$ when $H_1$ is true.
+d. When a p-value is less than $\alpha$, we conclude $H_1$.
 
-d\. When a p-value is less than $\alpha$, we conclude $H_1$.
+e. If $H_0$ is concluded, it implies that $H_0$ is true.
 
-e\. If $H_0$ is concluded, it implies that $H_0$ is true.
+f. If $H_1$ is concluded, it implies that $H_1$ is true.
 
-f\. If $H_1$ is concluded, it implies that $H_1$ is true.
+g. If a p-value is 0.09, it implies that the probability that $H_0$ is true is 0.09.
 
-g\. If a p-value is 0.09, it implies that the probability that $H_0$ is true is 0.09.
+#### Problem 3 
+Suppose a researcher calculated a Z statistic of 2.1. Using R, calculate the p-value for:
 
-**Problem 3.** Suppose a researcher calculated a Z statistic of 2.1. Calculate the p-value for:
+a. right-sided test
 
-a\. right-sided test
+b. left-sided test
 
-b\. left-sided test
+c. two-sided test
 
-c\. two-sided test
-
-**Problem 4.** Multiple-choice: Suppose we test $H_0$: $\theta = 0.7$ versus $H_1$: $\theta > 0.7$ (right-sided test). Which of the following provides the strongest evidence for $H_1$?
+#### Problem 4 
+Multiple-choice: Suppose we test $H_0$: $\theta = 0.7$ versus $H_1$: $\theta > 0.7$ (right-sided test). Which of the following provides the strongest evidence for $H_1$?
 
 \(A\) $\bar{X} = 0.75$ and $n = 100$
 
@@ -355,9 +388,11 @@ c\. two-sided test
 
 \(E\) $\bar{X} = 0.8$ and $n = 50$
 
-**Problem 5.** Multiple-choice: Which case results in the smallest p-value in Problem 4?
+#### Problem 5 
+Multiple-choice: Which case results in the smallest p-value in Problem 4?
 
-**Problem 6.** Multiple-choice: Suppose we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta < 0.3$ (left-sided test). Which of the following results in the smallest p-value?
+#### Problem 6 
+Multiple-choice: Suppose we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta < 0.3$ (left-sided test). Which of the following results in the smallest p-value?
 
 \(A\) $\bar{X} = 0.35$ and $n = 500$
 
@@ -369,9 +404,11 @@ c\. two-sided test
 
 \(E\) $\bar{X} = 0.25$ and $n = 200$
 
-**Problem 7.** Multiple-choice: If we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta \ne 0.3$ (two-sided test), which case in Problem 6 results in the smallest p-value?
+#### Problem 7 
+Multiple-choice: If we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta \ne 0.3$ (two-sided test), which case in Problem 6 results in the smallest p-value?
 
-**Problem 8.** Multiple-choice: Which of the following can be a negative value?
+#### Problem 8 
+Multiple-choice: Which of the following can be a negative value?
 
 \(A\) sample proportion
 
@@ -385,15 +422,14 @@ c\. two-sided test
 
 ## Assignment
 
-***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfT0OoWDf6dfBKlbsZh3GO6inPMKlSXWR2Y1oCdOcMqxrN27w/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+**New Instruction:** You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
 
-***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
+#### Problem 1 
+Let $\theta$ be the U.S. President's approval rating (i.e., the population proportion of Americans who think the President is doing a good job). Suppose a 50% approval rating is a benchmark that the President is doing a good job, and it has been believed that the approval rating is below 50% since the election. In May 2025, Gallup randomly sampled 1,003 adults, and 431 of them responded that the President is doing a good job.
 
-**Problem 1.** Let $\theta$ be the U.S. President's approval rating (i.e., the population proportion of Americans who think the President is doing a good job). Suppose a 50% approval rating is a benchmark that the President is doing a good job, and it has been believed that the approval rating is below 50% since the election. In May 2025, Gallup randomly sampled 1,003 adults, and 431 of them responded that the President is doing a good job.
+a. What is the null value in this context? (Numeric answer)
 
-a\. What is the null value in this context? (Numeric answer)
-
-b\. Multiple-choice: Given the above description, what kind of statistical hypothesis testing do we want to do?
+b. Multiple-choice: Given the above description, what kind of statistical hypothesis testing do we want to do?
 
 \(A\) right-sided test
 
@@ -401,15 +437,15 @@ b\. Multiple-choice: Given the above description, what kind of statistical hypot
 
 \(C\) two-sided test
 
-c\. Calculate the sample proportion of people who approved.
+c. Calculate the sample proportion of people who approved.
 
-d\. Calculate the standard error.
+d. Calculate the standard error.
 
-e\. Calculate the Z statistic.
+e. Calculate the Z statistic.
 
-f\. Calculate the p-value.
+f. Calculate the p-value.
 
-g\. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you conclude?
+g. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you conclude?
 
 \(A\) $H_0$
 
@@ -417,7 +453,7 @@ g\. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you con
 
 \(C\) Inconclusive
 
-h\. Multiple-choice: The significance level $\alpha = 0.05$ implies that we allowed a probability of 0.05 for...
+h. Multiple-choice: The significance level $\alpha = 0.05$ implies that we allowed a probability of 0.05 for...
 
 \(A\) concluding $\theta = 0.5$ when $\theta > 0.5$ is true.
 
@@ -431,7 +467,7 @@ h\. Multiple-choice: The significance level $\alpha = 0.05$ implies that we allo
 
 \(F\) concluding $\theta \ne 0.5$ when $\theta = 0.5$ is true.
 
-i\. Multiple-choice: Which of the following statement is the most appropriate concluding statement?
+i. Multiple-choice: Which of the following statement is the most appropriate concluding statement?
 
 \(A\) The approval rating is 50%.
 
@@ -445,11 +481,12 @@ i\. Multiple-choice: Which of the following statement is the most appropriate co
 
 \(F\) The sample provides sufficient evidence to conclude that the approval rating is below 50%.
 
-**Problem 2.** A child, who loves outdoor activities on weekend, believes that it rains more often on weekend (Saturdays and Sundays) than on weekdays (Monday to Friday). Of the last 100 rainy days, 33 days were on Saturdays and Sundays. Does this weather record support the child's hypothesis? Let $\theta$ be the true proportion of Saturdays and Sundays among all rainy days.
+#### Problem 2 
+A child, who loves outdoor activities on weekend, believes that it rains more often on weekend (Saturdays and Sundays) than on weekdays (Monday to Friday). Of the last 100 rainy days, 33 days were on Saturdays and Sundays. Does this weather record support the child's hypothesis? Let $\theta$ be the true proportion of Saturdays and Sundays among all rainy days.
 
-a\. What is the null value in this context? (Numeric answer)
+a. What is the null value in this context? (Numeric answer)
 
-b\. Multiple-choice: Which of the following represents the alternative hypothesis?
+b. Multiple-choice: Which of the following represents the alternative hypothesis?
 
 \(A\) right-sided test
 
@@ -457,15 +494,15 @@ b\. Multiple-choice: Which of the following represents the alternative hypothesi
 
 \(C\) two-sided test
 
-c\. Calculate the sample proportion?
+c. Calculate the sample proportion?
 
-d\. Calculate the standard error.
+d. Calculate the standard error.
 
-e\. Calculate the Z statistic.
+e. Calculate the Z statistic.
 
-f\. Calculate the p-value.
+f. Calculate the p-value.
 
-g\. Multiple-choice: At a significance level of $\alpha = 0.1$, what do you conclude?
+g. Multiple-choice: At a significance level of $\alpha = 0.1$, what do you conclude?
 
 \(A\) $H_0$
 
@@ -473,56 +510,60 @@ g\. Multiple-choice: At a significance level of $\alpha = 0.1$, what do you conc
 
 \(C\) Inconclusive
 
-h\. Multiple-choice: In this hypothesis testing, the null hypothesis $H_0$ is that the chance of rain is the same everyday, and the alternative hypothesis $H_1$ is that the chance of rain is higher on Saturday and Sunday than on Monday to Friday. If the p-value is correctly calculated in part f, the p-value is greater than $\alpha = 0.1$. Which of the following statement is the most appropriate concluding statement?
+h. Multiple-choice: In this hypothesis testing, the null hypothesis $H_0$ is that the chance of rain is the same everyday, and the alternative hypothesis $H_1$ is that the chance of rain is higher on Saturday and Sunday than on Monday to Friday. If the p-value is correctly calculated in part f, the p-value is greater than $\alpha = 0.1$. Which of the following statement is the most appropriate concluding statement?
 
-\(A\) Assuming $H_0$ is true, the data provide insignificant evidence for $H_0$.
+\(A\) Assuming $H_0$ is true, the data provide evidence for $H_0$.
 
-\(B\) Assuming $H_0$ is true, the data provide insignificant evidence against $H_0$.
+\(B\) Assuming $H_0$ is true, the data provide no evidence against $H_0$.
 
-\(C\) Assuming $H_1$ is true, the data provide insignificant evidence for $H_1$.
+\(C\) Assuming $H_1$ is true, the data provide evidence for $H_1$.
 
-\(D\) Assuming $H_1$ is true, the data provide insignificant evidence against $H_1$.
+\(D\) Assuming $H_1$ is true, the data provide no evidence against $H_1$.
 
-**\*Problem 3.** Suicidal behavior is a leading cause of death and injury in the world (Klonsky, 2016). While women are more likely to experience suicidal ideation and attempt, men are more likely to die per attempt. It is known as the [Gender Paradox of Suicide](https://cams-care.com/resources/educational-content/the-gender-paradox-of-suicide/). According to the Centers for Disease Control and Prevention (CDC), men were four times as likely as women to commit suicide in 2021. Download $\texttt{ShandongChina.csv}$. It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
+#### Problem 3 
+>Suicide prevention begins with recognizing warning signs, listening without judgment, and connecting people with trusted support. Everyone can help by taking concerns seriously, encouraging open conversations, reducing stigma, and guiding someone toward a counselor, healthcare professional, or crisis resource. In the United States, the 988 Suicide & Crisis Lifeline provides free, confidential support 24/7. With compassion, awareness, and timely intervention, suicide can be prevented.
+
+Suicidal behavior is a leading cause of death and injury in the world (Klonsky, 2016). While women are more likely to experience suicidal ideation and attempt, men are more likely to die per attempt. It is known as the [Gender Paradox of Suicide](https://cams-care.com/resources/educational-content/the-gender-paradox-of-suicide/). According to the Centers for Disease Control and Prevention (CDC), men were four times as likely as women to commit suicide in 2021. Download $\texttt{ShandongChina.csv}$. It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
 
 Our goal is to answer two questions: (1) Are women more likely to attempt suicide than men? (2) Are there more men who died as a result of suicide attempt than women? Assume that 50% are men and 50% are women in the general population of Shandong, China. You may modify the following R code for answering the following questions.
 
-```{r, warning = FALSE, message = FALSE}
-library(mosaic)
-shandong = read.csv("Data/ShandongChina.csv") ### data for question (1)
-dim(shandong) ### dimension of data
-head(shandong, 5) ### view first 5 lines
 
-shandong2 = subset(shandong, Died == "yes") ### subset the data (those who died) for question (2)
-dim(shandong2)
-head(shandong2, 5)
+
+```{r}
+#| eval: false
+
+### data for question (1)
+shandong <- read_csv("data/ShandongChina.csv", show_col_types = FALSE) 
+
+### subset the data (those who died) for question (2)
+shandong_died = shandong |> filter(Died == "yes") 
 ```
 
 *Let us focus on the research question (1) in parts a to e.*
 
-a\. Let $\theta$ be the proportion of women among those who attempt suicide in Shandong, China. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
+a. Let $\theta$ be the proportion of women among those who attempt suicide in Shandong, China. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
 
-b\. Provide a graphic which summarize the relevant data.
+b. Provide a graphic which summarize the relevant data.
 
-c\. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
+c. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
 
-d\. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
+d. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
 
-e\. State the conclusion in the context.
+e. State the conclusion in the context.
 
 *Let us focus on the research question (2) in the following parts.*
 
-f\. How would you define $\theta$ in the context of research question (2)?
+f. How would you define $\theta$ in the context of research question (2)?
 
-g\. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
+g. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
 
-h\. Provide a graphic which summarize the relevant data.
+h. Provide a graphic which summarize the relevant data.
 
-i\. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
+i. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
 
-j\. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
+j. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
 
-k\. State the conclusion in the context.
+k. State the conclusion in the context.
 
 **References:**
 

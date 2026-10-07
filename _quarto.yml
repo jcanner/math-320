@@ -75,6 +75,8 @@ website:
         text: "Sampling Methods"
       - href: note-outlines/11-intro-confidence-intervals.qmd
         text: "Introduction to Confidence Intervals"
+      - href: note-outlines/12-intro-hypothesis-testing.qmd
+        text: "Introduction to Hypothesis Testing"        
         
 format:
   html:

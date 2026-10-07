@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction to Inference: Hypothesis Testing – MATH 320: Applied Probability and Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../note-outlines/11-intro-confidence-intervals.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/12-intro-hypothesis-testing.html">Introduction to Hypothesis Testing</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">MATH 320: Applied Probability and Statistics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/jcanner/math-320" title="GitHub Organization" class="quarto-navigation-tool px-1" aria-label="GitHub Organization"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Getting Started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RStudio Orientation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/intro-to-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/install-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install R and RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Note Outlines</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/1-intro-r-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to R and Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/2-intro-probability-i.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/3-intro-probability-ii.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability II</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/4-bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/5-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/6-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/7-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Central Limit Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/8-intro-to-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/9-summarizing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summarizing and Visualizing Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/10-sampling-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling Methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/11-intro-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/12-intro-hypothesis-testing.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction to Hypothesis Testing</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sec-hypothesis" id="toc-sec-hypothesis" class="nav-link active" data-scroll-target="#sec-hypothesis"><span class="header-section-number">1</span> Two Kinds of Hypothesis</a></li>
+  <li><a href="#sec-analogy" id="toc-sec-analogy" class="nav-link" data-scroll-target="#sec-analogy"><span class="header-section-number">2</span> Analogy: Presumption of Innocence in U.S. Criminal Trials</a></li>
+  <li><a href="#three-kinds-of-alternative-hypothesis" id="toc-three-kinds-of-alternative-hypothesis" class="nav-link" data-scroll-target="#three-kinds-of-alternative-hypothesis"><span class="header-section-number">3</span> Three Kinds of Alternative Hypothesis</a></li>
+  <li><a href="#sec-teststat" id="toc-sec-teststat" class="nav-link" data-scroll-target="#sec-teststat"><span class="header-section-number">4</span> Test Statistic</a></li>
+  <li><a href="#two-kinds-of-mistake-in-statistical-hypothesis-testing" id="toc-two-kinds-of-mistake-in-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#two-kinds-of-mistake-in-statistical-hypothesis-testing"><span class="header-section-number">5</span> Two Kinds of Mistake in Statistical Hypothesis Testing</a></li>
+  <li><a href="#p-value" id="toc-p-value" class="nav-link" data-scroll-target="#p-value"><span class="header-section-number">6</span> P-value</a></li>
+  <li><a href="#general-procedure-of-statistical-hypothesis-testing" id="toc-general-procedure-of-statistical-hypothesis-testing" class="nav-link" data-scroll-target="#general-procedure-of-statistical-hypothesis-testing"><span class="header-section-number">7</span> General Procedure of Statistical Hypothesis Testing</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">8</span> Wrap-Up</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">9</span> Assignment</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/12-intro-hypothesis-testing.html">Introduction to Hypothesis Testing</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Introduction to Inference: Hypothesis Testing</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJ3ZWJyOjppbnN0YWxsKFwiZ3JhZGV0aGlzXCIsIHF1aWV0ID0gVFJVRSlcbmxpYnJhcnkoZ3JhZGV0aGlzKVxub3B0aW9ucyh3ZWJyLmV4ZXJjaXNlLmNoZWNrZXIgPSBmdW5jdGlvbihcbiAgbGFiZWwsIHVzZXJfY29kZSwgc29sdXRpb25fY29kZSwgY2hlY2tfY29kZSwgZW52aXJfcmVzdWx0LCBldmFsdWF0ZV9yZXN1bHQsXG4gIGVudmlyX3ByZXAsIGxhc3RfdmFsdWUsIGVuZ2luZSwgc3RhZ2UsIC4uLlxuKSB7XG4gIGlmIChpcy5udWxsKGNoZWNrX2NvZGUpKSB7XG4gICAgIyBObyBncmFkaW5nIGNvZGUsIHNvIGp1c3Qgc2tpcCBncmFkaW5nXG4gICAgaW52aXNpYmxlKE5VTEwpXG4gIH0gZWxzZSBpZiAoaXMubnVsbChsYWJlbCkpIHtcbiAgICBsaXN0KFxuICAgICAgY29ycmVjdCA9IEZBTFNFLFxuICAgICAgdHlwZSA9IFwid2FybmluZ1wiLFxuICAgICAgbWVzc2FnZSA9IFwiQWxsIGV4ZXJjaXNlcyBtdXN0IGhhdmUgYSBsYWJlbC5cIlxuICAgIClcbiAgfSBlbHNlIGlmIChpcy5udWxsKHNvbHV0aW9uX2NvZGUpKSB7XG4gICAgbGlzdChcbiAgICAgIGNvcnJlY3QgPSBGQUxTRSxcbiAgICAgIHR5cGUgPSBcIndhcm5pbmdcIixcbiAgICAgIG1lc3NhZ2UgPSBodG1sdG9vbHM6OnRhZ3MkZGl2KFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcIkEgcHJvYmxlbSBvY2N1cnJlZCBncmFkaW5nIHRoaXMgZXhlcmNpc2UuXCIpLFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcbiAgICAgICAgICBcIk5vIHNvbHV0aW9uIGNvZGUgd2FzIGZvdW5kLiBOb3RlIHRoYXQgZ3JhZGluZyBleGVyY2lzZXMgdXNpbmcgdGhlIFwiLFxuICAgICAgICAgIGh0bWx0b29sczo6dGFncyRjb2RlKFwiZ3JhZGV0aGlzXCIpLFxuICAgICAgICAgIFwicGFja2FnZSByZXF1aXJlcyBhIG1vZGVsIHNvbHV0aW9uIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBkb2N1bWVudC5cIlxuICAgICAgICApXG4gICAgICApXG4gICAgKVxuICB9IGVsc2Uge1xuICAgIGdyYWRldGhpczo6Z3JhZGV0aGlzX2V4ZXJjaXNlX2NoZWNrZXIoXG4gICAgICBsYWJlbCA9IGxhYmVsLCBzb2x1dGlvbl9jb2RlID0gc29sdXRpb25fY29kZSwgdXNlcl9jb2RlID0gdXNlcl9jb2RlLFxuICAgICAgY2hlY2tfY29kZSA9IGNoZWNrX2NvZGUsIGVudmlyX3Jlc3VsdCA9IGVudmlyX3Jlc3VsdCxcbiAgICAgIGV2YWx1YXRlX3Jlc3VsdCA9IGV2YWx1YXRlX3Jlc3VsdCwgZW52aXJfcHJlcCA9IGVudmlyX3ByZXAsXG4gICAgICBsYXN0X3ZhbHVlID0gbGFzdF92YWx1ZSwgc3RhZ2UgPSBzdGFnZSwgZW5naW5lID0gZW5naW5lKVxuICB9XG59KSJ9
+</script>
+</div>
+</div>
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwiOnRydWUsImluY2x1ZGUiOmZhbHNlLCJsYWJlbCI6InRoZW1lIiwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGdncGxvdDIpXG50aGVtZV9zZXQodGhlbWVfbGlnaHQoKSlcbm9wdGlvbnMoZ2dwbG90Mi5jb250aW51b3VzLmNvbG9yID0gc2NhbGVfY29sb3JfdmlyaWRpc19jLCBcbiAgICAgICAgZ2dwbG90Mi5jb250aW51b3VzLmZpbGwgPSBzY2FsZV9maWxsX3ZpcmlkaXNfYyxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5jb2xvciA9IHNjYWxlX2NvbG9yX3ZpcmlkaXNfZCxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5maWxsID0gc2NhbGVfZmlsbF92aXJpZGlzX2QpIn0=
+</script>
+</div>
+</div>
+<p>In statistics, a <strong>hypothesis</strong> refers to an assumption about the population or an unknown parameter (any quantity which describes the population).</p>
+<ul>
+<li>For example, let <span class="math inline">\(\theta\)</span> denote the proportion of boys among newborn babies in the United States. Then <span class="math inline">\(\theta = 0.5\)</span> is a hypothesis stating that the population proportion is 0.5 (i.e., the probability that a mother gives birth to a boy is 0.5).<br>
+</li>
+<li>Another competing hypothesis is <span class="math inline">\(\theta &gt; 0.5\)</span>. This hypothesis states that the probability that a mother gives birth to a boy is greater than 0.5.</li>
+</ul>
+<section id="sec-hypothesis" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="sec-hypothesis"><span class="header-section-number">1</span> Two Kinds of Hypothesis</h2>
+<p>In statistical hypothesis testing, we specify two competing hypotheses: <strong>null hypothesis</strong> and <strong>alternative hypothesis</strong>.</p>
+<ul>
+<li>The null hypothesis is denoted by <span class="math inline">\(H_0\)</span>, and<br>
+</li>
+<li>the alternative hypothesis is denoted by <span class="math inline">\(H_1\)</span>.</li>
+</ul>
+<p>The procedure of hypothesis testing is developed based on the assumption of <span class="math inline">\(H_0\)</span>. If data suggest strong evidence against <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_1\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>.</p>
+<p><strong>Note:</strong> Conclusion of <span class="math inline">\(H_1\)</span> does not imply that <span class="math inline">\(H_1\)</span> is true. It implies that observed data (a sample) suggest strong evidence against <span class="math inline">\(H_0\)</span> in favor of <span class="math inline">\(H_1\)</span>. Similarly, conclusion of <span class="math inline">\(H_0\)</span> does not imply that <span class="math inline">\(H_0\)</span> is true. It implies that observed data is not strong enough to reject the assumption of <span class="math inline">\(H_0\)</span>.</p>
+</section>
+<section id="sec-analogy" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sec-analogy"><span class="header-section-number">2</span> Analogy: Presumption of Innocence in U.S. Criminal Trials</h2>
+<p>Statistical hypothesis testing described in <a href="#sec-hypothesis" class="quarto-xref">Section&nbsp;1</a> is somewhat similar to criminal trials in the United States. There are two competing hypotheses in a criminal trial.</p>
+<ul>
+<li><p>The first hypothesis is that the defendant is innocent, and it is assumed to be true until proven guilty (<strong>presumption of innocence</strong>).</p></li>
+<li><p>The second hypothesis is that the defendant is guilty.</p></li>
+</ul>
+<p>The prosecutor must provide strong evidence against the presumption of innocence in order to reject the presumption and conclude guilty.</p>
+<table class="caption-top table">
+<caption>Jury Trial Decisions</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th>Actually Innocent</th>
+<th>Actually Guilty</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Jury Decides: Innocent</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Jury Decides: Guilty</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>According to our criminal justice system, after seeing all evidence provided by the prosecutor, all 12 jurors must agree that the defendant is guilty in order to conclude guilty. Otherwise, we conclude that the defendant is innocent. (It is not because we truly believe that the defendant is innocent. It is because the evidence is not strong enough to reject the presumption of innocence.)</p>
+</section>
+<section id="three-kinds-of-alternative-hypothesis" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="three-kinds-of-alternative-hypothesis"><span class="header-section-number">3</span> Three Kinds of Alternative Hypothesis</h2>
+<p>Let <span class="math inline">\(\theta\)</span> be a parameter to be tested.</p>
+<p>The null hypothesis is simply stated as <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = \theta_0\)</span> where <span class="math inline">\(\theta_0\)</span> is referred to as the <strong>null value</strong>. In the previous example, we may set <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.5\)</span> (i.e., the probability of giving birth to a boy is 0.5). There are three forms of alternative hypothesis <span class="math inline">\(H_1\)</span></p>
+<ul>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &gt; \theta_0\)</span> which is referred to as the <strong>right-sided test</strong>, a type of <strong>one-sided test</strong>.</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &lt; \theta_0\)</span> which is referred to as the <strong>left-sided test</strong>, a type of <strong>one-sided test</strong>.</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta \ne \theta_0\)</span> which is referred to as the <strong>two-sided test</strong>.</p></li>
+</ul>
+<p>Given <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = \theta_0\)</span>, the direction of <span class="math inline">\(H_1\)</span> depends on the researcher’s question of interest.</p>
+<p>In the previous example, we may set <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.5\)</span> and <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &gt; 0.5\)</span> (right-sided test) because the sex ratio at birth is known to be about 105 to 100 (boys to girls). The two competing hypotheses <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> are assumptions, and we need data (a sample) to conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>.</p>
+</section>
+<section id="sec-teststat" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-teststat"><span class="header-section-number">4</span> Test Statistic</h2>
+<p>A statistic (numeric summary of data) is called a <strong>test statistic</strong> if it is used to conduct statistical hypothesis testing.</p>
+<p>In order to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.5\)</span> and <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &gt; 0.5\)</span>, we need to analyze a categorical variable with two levels: boy and girl (male and female) at birth.</p>
+<p>For the purpose of demonstration, let us revisit the <a href="8-intro-to-stats/king.csv"><code>king.csv</code></a> dataset, a simple random sample of 2,500 mothers who gave births in 2001 in King County. Below are descriptive statistics and data visualization relevant to our hypothesis testing.</p>
+<div class="cell">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6ImtpbmctZGF0YSIsIndhcm5pbmciOnRydWV9LCJjb2RlIjoia2luZyA8LSByZWFkX2NzdihcImtpbmcuY3N2XCIpICMjIyByZWFkIGNzdiBmaWxlXG5oZWFkKGtpbmcsIDUpICMjIyB2aWV3IGZpcnN0IDUgbGluZXMifQ==
+</script>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6Imtpbmctc3VtbWFyeSIsIndhcm5pbmciOnRydWV9LCJjb2RlIjoidGFsbHkofmdlbmRlciwgZGF0YSA9IGtpbmcsIGZvcm1hdCA9IFwiY291bnRcIilcbnRhbGx5KH5nZW5kZXIsIGRhdGEgPSBraW5nLCBmb3JtYXQgPSBcInByb3BvcnRpb25cIilcblxuXG5nZl9wcm9wcyh+Z2VuZGVyLCBkYXRhID0ga2luZyxcbiAgICAgICAgIGZpbGwgPSB+Z2VuZGVyLFxuICAgICAgICAgdGl0bGUgPSBcIk5ld2Jvcm4gQmFiaWVzIGluIDIwMDEgaW4gS2luZyBDb3VudHlcIixcbiAgICAgICAgIHlsYWIgPSBcIlByb3BvcnRpb25cIixcbiAgICAgICAgIHhsYWIgPSBcIkdlbmRlclwiLFxuICAgICAgICAgc2hvdy5sZWdlbmQgPSBGQUxTRSkifQ==
+</script>
+</div>
+</div>
+<p>In the sample, we observed 1209 girls (<span class="math inline">\(\texttt{F}\)</span>) and 1291 boys (<span class="math inline">\(\texttt{M}\)</span>) out of <span class="math inline">\(n = 2500\)</span> newborn babies.</p>
+<p>The unknown parameter <span class="math inline">\(\theta\)</span>, the probability of giving birth to a boy, can be estimated by the sample proportion of boys, <span class="math inline">\(\hat{p} = \frac{1291}{2500} = 0.5164\)</span>, and we can calculate a test statistic as follows:</p>
+<p><span class="math display">\[
+Z = \frac{\hat{p} - \theta_0}{ \sqrt{ \frac{\theta_0 (1 - \theta_0)}{n} } } = \frac{0.5164 - 0.5}{ \sqrt{ \frac{0.5(1 - 0.5)}{2500} } } = 1.64 \, .
+\]</span></p>
+<p>This test statistic is sometimes referred to as a <strong>Z statistic</strong>.</p>
+<ul>
+<li>The numerator of <span class="math inline">\(Z\)</span> measures the discrepancy between the sample proportion (<span class="math inline">\(\bar{X} = 0.5164\)</span>) and the null hypothesis (<span class="math inline">\(\theta_0 = 0.5\)</span>).<br>
+</li>
+<li>The denominator <span class="math inline">\(\texttt{SE} = \sqrt{ \frac{\theta_0 (1 - \theta_0) }{n} }\)</span> is called the <strong>standard error</strong> of <span class="math inline">\(\bar{X}\)</span>.<br>
+</li>
+<li>The standard error measures uncertainty in the sample proportion given the null hypothesis (<span class="math inline">\(\theta_0 = 0.5\)</span>) and sample size (<span class="math inline">\(n = 2500\)</span>).</li>
+</ul>
+<p>In our case, a large positive value of <span class="math inline">\(Z\)</span> is regarded as strong evidence against <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.5\)</span> in favor of <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &gt; 0.5\)</span>, and it can be attained when <span class="math inline">\(\hat{p} &gt; \theta_0\)</span> and <span class="math inline">\(\texttt{SE}\)</span> is small. However, we need a better mechanism for decision making than asking “is it a big <span class="math inline">\(Z\)</span> score?”. First, we need to understand the challenges of making a decision based on data.</p>
+</section>
+<section id="two-kinds-of-mistake-in-statistical-hypothesis-testing" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="two-kinds-of-mistake-in-statistical-hypothesis-testing"><span class="header-section-number">5</span> Two Kinds of Mistake in Statistical Hypothesis Testing</h2>
+<p>There are two kinds of mistake in statistical hypothesis testing.</p>
+<ul>
+<li><p>The first kind of mistake is concluding <span class="math inline">\(H_1\)</span> when <span class="math inline">\(H_0\)</span> is true, and it is referred to as the <strong>Type I error</strong>.</p></li>
+<li><p>The second kind of mistake is concluding <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_1\)</span> is true, and it is referred to as the <strong>Type II error</strong>.</p></li>
+</ul>
+<p>Since the process of hypothesis testing is built upon the assumption of <span class="math inline">\(H_0\)</span>, we conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> by fixing the probability of committing Type I error. This fixed probability is called the <strong>significance level</strong>, and denoted by <span class="math inline">\(\alpha\)</span>.</p>
+<p>A typical choice is <span class="math inline">\(\alpha = 0.01\)</span>, <span class="math inline">\(\alpha = 0.05\)</span>, or <span class="math inline">\(\alpha = 0.1\)</span>. If we fix <span class="math inline">\(\alpha = 0.05\)</span>, the underlying interpretation is that we allow a 5% chance of committing Type I error (concluding <span class="math inline">\(H_1\)</span> when <span class="math inline">\(H_0\)</span> is true).</p>
+</section>
+<section id="p-value" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="p-value"><span class="header-section-number">6</span> P-value</h2>
+<p>In statistics, the <strong>p-value</strong> is broadly defined as the probability of observing an outcome or a more unlikely outcome under the assumption of <span class="math inline">\(H_0\)</span> being true.</p>
+<ul>
+<li><p>If the observed outcome is very unlikely, we find the assumption that <span class="math inline">\(H_0\)</span> is true to be unreasonable and find in favor of <span class="math inline">\(H_1\)</span></p></li>
+<li><p>If the observed outcome is likely, then there is not reason to find the assumption that <span class="math inline">\(H_0\)</span> is true unreasonable, but this does not <em>prove</em> that <span class="math inline">\(H_0\)</span> is true.</p></li>
+</ul>
+<p>After calculating <span class="math inline">\(Z = \texttt{z}\)</span>, the calculation of p-value depends on the direction of <span class="math inline">\(H_1\)</span> as follows:</p>
+<ul>
+<li><p><u>Right-sided test</u>: p = <code>1 - pnorm(z)</code></p></li>
+<li><p>Left-sided test: p = <code>pnorm(z)</code></p></li>
+<li><p>Two-sided test: p = <code>2*pnorm(z)</code> if <span class="math inline">\(\texttt{z} &lt; 0\)</span> or p = <code>2*(1 - pnorm(z))</code> if <span class="math inline">\(\texttt{z} &gt; 0\)</span></p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="12-intro-hypothesis-testing_files/figure-html/shaded-curves-1.png" class="img-fluid figure-img" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can compare p-value to the significance level <span class="math inline">\(\alpha\)</span>. If the value of <span class="math inline">\(p\)</span> is less than or equal to <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>.</p>
+<p>In the previous example, we can calculate the p-value for the right-sided test as follows.</p>
+<div class="cell">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6InAtdmFsdWUiLCJ3YXJuaW5nIjp0cnVlfSwiY29kZSI6IjEgLSBwbm9ybSgxLjY0KSAjIyMgcC12YWx1ZSBmb3IgcmlnaHQtc2lkZWQgdGVzdCJ9
+</script>
+</div>
+</div>
+<p>We interpret p = 0.0505 as follows:</p>
+<ul>
+<li>If we repeat simple random sampling of size <span class="math inline">\(n = 2500\)</span>, the probability of observing <span class="math inline">\(Z = 1.64\)</span> or <span class="math inline">\(Z &gt; 1.64\)</span> is p = 0.0505 if <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.5\)</span> is true.</li>
+</ul>
+<p>Rewrite this in the context of the problem:</p>
+<p>We can <strong>evaluate</strong> p-values based on its proximity to the the <strong>significance</strong> level:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../12-intro-hypothesis-tests/pvalue-generic.png" class="img-fluid figure-img"></p>
+<figcaption>Evidence against the null hypothesis</figcaption>
+</figure>
+</div>
+<p>To scale this to our <span class="math inline">\(\alpha = 0.05\)</span>, we would use the following scale</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../12-intro-hypothesis-tests/pvalue-05.png" class="img-fluid figure-img"></p>
+<figcaption>Evidence against the null hypothesis <span class="math inline">\(\alpha = 0.05\)</span></figcaption>
+</figure>
+</div>
+<p>Therefore, with our <span class="math inline">\(p-value = 0.0505\)</span> we have <strong>moderate</strong> evidence against the null hypothesis, and therefore find support for the alternative hypothesis.</p>
+<p>Rewrite the evaluation of the p-value in context of the problem:</p>
+</section>
+<section id="general-procedure-of-statistical-hypothesis-testing" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="general-procedure-of-statistical-hypothesis-testing"><span class="header-section-number">7</span> General Procedure of Statistical Hypothesis Testing</h2>
+<p>In summary, the procedure of statistical hypothesis testing is as follows:</p>
+<ol type="1">
+<li>Choose a parameter of interest, and state <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> in terms of the parameter. It depends on the research question.</li>
+<li>Fix a significance level <span class="math inline">\(\alpha\)</span>. It is a small fixed probability of committing Type I error (concluding <span class="math inline">\(H_1\)</span> when <span class="math inline">\(H_0\)</span> is true).</li>
+<li>Calculate a test statistic and p-value under the assumption of <span class="math inline">\(H_0\)</span>.</li>
+<li>Evaluate the p-value and the level of evidence against <span class="math inline">\(H_0\)</span> based on <span class="math inline">\(\alpha\)</span>.</li>
+<li>State the conclusion in the context.</li>
+</ol>
+<p><strong>Conditions for Our Analysis:</strong> We discussed the procedure when a parameter of interest is <span class="math inline">\(\theta\)</span>, the unknown probability of an event (the population proportion of a certain group). The procedure is known to be valid (and results trustworthy) when:</p>
+<ol type="1">
+<li>we have a simple random sample of size <span class="math inline">\(n\)</span> and</li>
+<li>the sample size <span class="math inline">\(n\)</span> is as large as follows:
+<ol type="a">
+<li><span class="math inline">\(n \theta_0 \ge 10\)</span> or</li>
+<li><span class="math inline">\(n(1 - \theta_0) \ge 10\)</span>.</li>
+</ol></li>
+</ol>
+<p>In our example, <span class="math inline">\(n = 2500\)</span> and <span class="math inline">\(\theta_0 = 0.5\)</span>, so <span class="math inline">\(n\)</span> is large enough (<span class="math inline">\(n\theta_0 = 1250 \ge 10\)</span> and <span class="math inline">\(n(1-\theta_0) = 1250 \ge 10\)</span>).</p>
+</section>
+<section id="wrap-up" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">8</span> Wrap-Up</h2>
+<p>In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.</p>
+<section id="problem-1" class="level4" data-number="8.0.1">
+<h4 data-number="8.0.1" class="anchored" data-anchor-id="problem-1"><span class="header-section-number">8.0.1</span> Problem 1</h4>
+<p>Fill in the blank.</p>
+<ol type="a">
+<li><p>A [h…] is an assumption about the population or an unknown parameter.</p></li>
+<li><p>A [t… s…] is a statistic which is used for statistical hypothesis testing.</p></li>
+<li><p>A [n… h…] is assumed to be true in the procedure of statistical hypothesis testing.</p></li>
+<li><p>If data is strongly against the null hypothesis in favor of the [a… h…], we conclude the [a… h…].</p></li>
+<li><p>[…] refers to conclusion of <span class="math inline">\(H_1\)</span> when <span class="math inline">\(H_0\)</span> is true.</p></li>
+<li><p>[…] refers to conclusion of <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_1\)</span> is true.</p></li>
+<li><p>A [s… l…] is denoted by <span class="math inline">\(\alpha\)</span>, and it is a small fixed probability of committing the Type I error.</p></li>
+<li><p>We can compare a p-value to the [s… l…] to conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>.</p></li>
+</ol>
+</section>
+<section id="problem-2" class="level4" data-number="8.0.2">
+<h4 data-number="8.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">8.0.2</span> Problem 2</h4>
+<p>True or false?</p>
+<ol type="a">
+<li><p>If <span class="math inline">\(H_0\)</span> is true, it is possible to conclude <span class="math inline">\(H_1\)</span>.</p></li>
+<li><p>If <span class="math inline">\(H_1\)</span> is true, it is possible to conclude <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>If we fix <span class="math inline">\(\alpha = 0.05\)</span>, it implies that we allow a probability of 0.05 for concluding <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_1\)</span> is true.</p></li>
+<li><p>When a p-value is less than <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>.</p></li>
+<li><p>If <span class="math inline">\(H_0\)</span> is concluded, it implies that <span class="math inline">\(H_0\)</span> is true.</p></li>
+<li><p>If <span class="math inline">\(H_1\)</span> is concluded, it implies that <span class="math inline">\(H_1\)</span> is true.</p></li>
+<li><p>If a p-value is 0.09, it implies that the probability that <span class="math inline">\(H_0\)</span> is true is 0.09.</p></li>
+</ol>
+</section>
+<section id="problem-3" class="level4" data-number="8.0.3">
+<h4 data-number="8.0.3" class="anchored" data-anchor-id="problem-3"><span class="header-section-number">8.0.3</span> Problem 3</h4>
+<p>Suppose a researcher calculated a Z statistic of 2.1. Using R, calculate the p-value for:</p>
+<ol type="a">
+<li><p>right-sided test</p></li>
+<li><p>left-sided test</p></li>
+<li><p>two-sided test</p></li>
+</ol>
+</section>
+<section id="problem-4" class="level4" data-number="8.0.4">
+<h4 data-number="8.0.4" class="anchored" data-anchor-id="problem-4"><span class="header-section-number">8.0.4</span> Problem 4</h4>
+<p>Multiple-choice: Suppose we test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.7\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &gt; 0.7\)</span> (right-sided test). Which of the following provides the strongest evidence for <span class="math inline">\(H_1\)</span>?</p>
+<p>(A) <span class="math inline">\(\bar{X} = 0.75\)</span> and <span class="math inline">\(n = 100\)</span></p>
+<p>(B) <span class="math inline">\(\bar{X} = 0.72\)</span> and <span class="math inline">\(n = 1000\)</span></p>
+<p>(C) <span class="math inline">\(\bar{X} = 0.71\)</span> and <span class="math inline">\(n = 10000\)</span></p>
+<p>(D) <span class="math inline">\(\bar{X} = 0.7\)</span> and <span class="math inline">\(n = 500\)</span></p>
+<p>(E) <span class="math inline">\(\bar{X} = 0.8\)</span> and <span class="math inline">\(n = 50\)</span></p>
+</section>
+<section id="problem-5" class="level4" data-number="8.0.5">
+<h4 data-number="8.0.5" class="anchored" data-anchor-id="problem-5"><span class="header-section-number">8.0.5</span> Problem 5</h4>
+<p>Multiple-choice: Which case results in the smallest p-value in Problem 4?</p>
+</section>
+<section id="problem-6" class="level4" data-number="8.0.6">
+<h4 data-number="8.0.6" class="anchored" data-anchor-id="problem-6"><span class="header-section-number">8.0.6</span> Problem 6</h4>
+<p>Multiple-choice: Suppose we test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.3\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta &lt; 0.3\)</span> (left-sided test). Which of the following results in the smallest p-value?</p>
+<p>(A) <span class="math inline">\(\bar{X} = 0.35\)</span> and <span class="math inline">\(n = 500\)</span></p>
+<p>(B) <span class="math inline">\(\bar{X} = 0.3\)</span> and <span class="math inline">\(n = 100\)</span></p>
+<p>(C) <span class="math inline">\(\bar{X} = 0.29\)</span> and <span class="math inline">\(n = 100\)</span></p>
+<p>(D) <span class="math inline">\(\bar{X} = 0.25\)</span> and <span class="math inline">\(n = 100\)</span></p>
+<p>(E) <span class="math inline">\(\bar{X} = 0.25\)</span> and <span class="math inline">\(n = 200\)</span></p>
+</section>
+<section id="problem-7" class="level4" data-number="8.0.7">
+<h4 data-number="8.0.7" class="anchored" data-anchor-id="problem-7"><span class="header-section-number">8.0.7</span> Problem 7</h4>
+<p>Multiple-choice: If we test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.3\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta \ne 0.3\)</span> (two-sided test), which case in Problem 6 results in the smallest p-value?</p>
+</section>
+<section id="problem-8" class="level4" data-number="8.0.8">
+<h4 data-number="8.0.8" class="anchored" data-anchor-id="problem-8"><span class="header-section-number">8.0.8</span> Problem 8</h4>
+<p>Multiple-choice: Which of the following can be a negative value?</p>
+<p>(A) sample proportion</p>
+<p>(B) p-value</p>
+<p>(C) Z statistic</p>
+<p>(D) standard error</p>
+<p>(E) There are more than one answer among (A) to (D)</p>
+</section>
+</section>
+<section id="assignment" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="assignment"><span class="header-section-number">9</span> Assignment</h2>
+<p><strong>New Instruction:</strong> You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.*</p>
+<section id="problem-1-1" class="level4" data-number="9.0.1">
+<h4 data-number="9.0.1" class="anchored" data-anchor-id="problem-1-1"><span class="header-section-number">9.0.1</span> Problem 1</h4>
+<p>Let <span class="math inline">\(\theta\)</span> be the U.S. President’s approval rating (i.e., the population proportion of Americans who think the President is doing a good job). Suppose a 50% approval rating is a benchmark that the President is doing a good job, and it has been believed that the approval rating is below 50% since the election. In May 2025, Gallup randomly sampled 1,003 adults, and 431 of them responded that the President is doing a good job.</p>
+<ol type="a">
+<li><p>What is the null value in this context? (Numeric answer)</p></li>
+<li><p>Multiple-choice: Given the above description, what kind of statistical hypothesis testing do we want to do?</p></li>
+</ol>
+<p>(A) right-sided test</p>
+<p>(B) left-sided test</p>
+<p>(C) two-sided test</p>
+<ol start="3" type="a">
+<li><p>Calculate the sample proportion of people who approved.</p></li>
+<li><p>Calculate the standard error.</p></li>
+<li><p>Calculate the Z statistic.</p></li>
+<li><p>Calculate the p-value.</p></li>
+<li><p>Multiple-choice: At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, what do you conclude?</p></li>
+</ol>
+<p>(A) <span class="math inline">\(H_0\)</span></p>
+<p>(B) <span class="math inline">\(H_1\)</span></p>
+<p>(C) Inconclusive</p>
+<ol start="8" type="a">
+<li>Multiple-choice: The significance level <span class="math inline">\(\alpha = 0.05\)</span> implies that we allowed a probability of 0.05 for…</li>
+</ol>
+<p>(A) concluding <span class="math inline">\(\theta = 0.5\)</span> when <span class="math inline">\(\theta &gt; 0.5\)</span> is true.</p>
+<p>(B) concluding <span class="math inline">\(\theta = 0.5\)</span> when <span class="math inline">\(\theta &lt; 0.5\)</span> is true.</p>
+<p>(C) concluding <span class="math inline">\(\theta = 0.5\)</span> when <span class="math inline">\(\theta \ne 0.5\)</span> is true.</p>
+<p>(D) concluding <span class="math inline">\(\theta &gt; 0.5\)</span> when <span class="math inline">\(\theta = 0.5\)</span> is true.</p>
+<p>(E) concluding <span class="math inline">\(\theta &lt; 0.5\)</span> when <span class="math inline">\(\theta = 0.5\)</span> is true.</p>
+<p>(F) concluding <span class="math inline">\(\theta \ne 0.5\)</span> when <span class="math inline">\(\theta = 0.5\)</span> is true.</p>
+<ol type="i">
+<li>Multiple-choice: Which of the following statement is the most appropriate concluding statement?</li>
+</ol>
+<p>(A) The approval rating is 50%.</p>
+<p>(B) The approval rating is below 50%.</p>
+<p>(C) The sample provides insufficient evidence to conclude that the approval rating is 50%.</p>
+<p>(D) The sample provides sufficient evidence to conclude that the approval rating is 50%.</p>
+<p>(E) The sample provides insufficient evidence to conclude that the approval rating is below 50%.</p>
+<p>(F) The sample provides sufficient evidence to conclude that the approval rating is below 50%.</p>
+</section>
+<section id="problem-2-1" class="level4" data-number="9.0.2">
+<h4 data-number="9.0.2" class="anchored" data-anchor-id="problem-2-1"><span class="header-section-number">9.0.2</span> Problem 2</h4>
+<p>A child, who loves outdoor activities on weekend, believes that it rains more often on weekend (Saturdays and Sundays) than on weekdays (Monday to Friday). Of the last 100 rainy days, 33 days were on Saturdays and Sundays. Does this weather record support the child’s hypothesis? Let <span class="math inline">\(\theta\)</span> be the true proportion of Saturdays and Sundays among all rainy days.</p>
+<ol type="a">
+<li><p>What is the null value in this context? (Numeric answer)</p></li>
+<li><p>Multiple-choice: Which of the following represents the alternative hypothesis?</p></li>
+</ol>
+<p>(A) right-sided test</p>
+<p>(B) left-sided test</p>
+<p>(C) two-sided test</p>
+<ol start="3" type="a">
+<li><p>Calculate the sample proportion?</p></li>
+<li><p>Calculate the standard error.</p></li>
+<li><p>Calculate the Z statistic.</p></li>
+<li><p>Calculate the p-value.</p></li>
+<li><p>Multiple-choice: At a significance level of <span class="math inline">\(\alpha = 0.1\)</span>, what do you conclude?</p></li>
+</ol>
+<p>(A) <span class="math inline">\(H_0\)</span></p>
+<p>(B) <span class="math inline">\(H_1\)</span></p>
+<p>(C) Inconclusive</p>
+<ol start="8" type="a">
+<li>Multiple-choice: In this hypothesis testing, the null hypothesis <span class="math inline">\(H_0\)</span> is that the chance of rain is the same everyday, and the alternative hypothesis <span class="math inline">\(H_1\)</span> is that the chance of rain is higher on Saturday and Sunday than on Monday to Friday. If the p-value is correctly calculated in part f, the p-value is greater than <span class="math inline">\(\alpha = 0.1\)</span>. Which of the following statement is the most appropriate concluding statement?</li>
+</ol>
+<p>(A) Assuming <span class="math inline">\(H_0\)</span> is true, the data provide evidence for <span class="math inline">\(H_0\)</span>.</p>
+<p>(B) Assuming <span class="math inline">\(H_0\)</span> is true, the data provide no evidence against <span class="math inline">\(H_0\)</span>.</p>
+<p>(C) Assuming <span class="math inline">\(H_1\)</span> is true, the data provide evidence for <span class="math inline">\(H_1\)</span>.</p>
+<p>(D) Assuming <span class="math inline">\(H_1\)</span> is true, the data provide no evidence against <span class="math inline">\(H_1\)</span>.</p>
+</section>
+<section id="problem-3-1" class="level4" data-number="9.0.3">
+<h4 data-number="9.0.3" class="anchored" data-anchor-id="problem-3-1"><span class="header-section-number">9.0.3</span> Problem 3</h4>
+<blockquote class="blockquote">
+<p>Suicide prevention begins with recognizing warning signs, listening without judgment, and connecting people with trusted support. Everyone can help by taking concerns seriously, encouraging open conversations, reducing stigma, and guiding someone toward a counselor, healthcare professional, or crisis resource. In the United States, the 988 Suicide &amp; Crisis Lifeline provides free, confidential support 24/7. With compassion, awareness, and timely intervention, suicide can be prevented.</p>
+</blockquote>
+<p>Suicidal behavior is a leading cause of death and injury in the world (Klonsky, 2016). While women are more likely to experience suicidal ideation and attempt, men are more likely to die per attempt. It is known as the <a href="https://cams-care.com/resources/educational-content/the-gender-paradox-of-suicide/">Gender Paradox of Suicide</a>. According to the Centers for Disease Control and Prevention (CDC), men were four times as likely as women to commit suicide in 2021. Download <span class="math inline">\(\texttt{ShandongChina.csv}\)</span>. It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).</p>
+<p>Our goal is to answer two questions: (1) Are women more likely to attempt suicide than men? (2) Are there more men who died as a result of suicide attempt than women? Assume that 50% are men and 50% are women in the general population of Shandong, China. You may modify the following R code for answering the following questions.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### data for question (1)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>shandong <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ShandongChina.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">### subset the data (those who died) for question (2)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>shandong_died <span class="ot">=</span> shandong <span class="sc">|&gt;</span> <span class="fu">filter</span>(Died <span class="sc">==</span> <span class="st">"yes"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><em>Let us focus on the research question (1) in parts a to e.</em></p>
+<ol type="a">
+<li><p>Let <span class="math inline">\(\theta\)</span> be the proportion of women among those who attempt suicide in Shandong, China. State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> in terms of <span class="math inline">\(\theta\)</span>. Is it a right-sided test, left-sided test, or two-sided test?</p></li>
+<li><p>Provide a graphic which summarize the relevant data.</p></li>
+<li><p>Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.</p></li>
+<li><p>At a significance level <span class="math inline">\(\alpha = 0.05\)</span>, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>?</p></li>
+<li><p>State the conclusion in the context.</p></li>
+</ol>
+<p><em>Let us focus on the research question (2) in the following parts.</em></p>
+<ol start="6" type="a">
+<li><p>How would you define <span class="math inline">\(\theta\)</span> in the context of research question (2)?</p></li>
+<li><p>State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> in terms of <span class="math inline">\(\theta\)</span>. Is it a right-sided test, left-sided test, or two-sided test?</p></li>
+<li><p>Provide a graphic which summarize the relevant data.</p></li>
+<li><p>Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.</p></li>
+<li><p>At a significance level <span class="math inline">\(\alpha = 0.05\)</span>, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>?</p></li>
+<li><p>State the conclusion in the context.</p></li>
+</ol>
+<p><strong>References:</strong></p>
+<p>Klonsky, E. D., May, A. M., &amp; Saffer, B. Y. (2016). Suicide, Suicide Attempts, and Suicidal Ideation. Annual review of clinical psychology, 12, 307–330. <a href="https://doi.org/10.1146/annurev-clinpsy-021815-093204" class="uri">https://doi.org/10.1146/annurev-clinpsy-021815-093204</a></p>
+<p>Sun, J., Guo, X., Zhang, J., Wang, M., Jia, C., &amp; Xu, A. (2015). Incidence and fatality of serious suicide attempts in a predominantly rural population in Shandong, China: a public health surveillance study. BMJ open, 5(2), e006762. <a href="https://doi.org/10.1136/bmjopen-2014-006762" class="uri">https://doi.org/10.1136/bmjopen-2014-006762</a></p>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImdnZm9ybXVsYSIsIm1vc2FpYyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6WyJodHRwczovL3Byb2plY3Rtb3NhaWMuci11bml2ZXJzZS5kZXYiXX0sInJlbmRlcl9kZiI6ImRlZmF1bHQifQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV81O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzUgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV81ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl81LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNCwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0zLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjJcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjJcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfMSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItMS1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCIxXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIxXCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyJodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vamNhbm5lci9tYXRoLTMyMC9yZWZzL2hlYWRzL21hc3Rlci9ub3RlLW91dGxpbmVzLzgtaW50cm8tdG8tc3RhdHMva2luZy5jc3YiXQ==
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../note-outlines";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jcanner\.github\.io\/math-320");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../note-outlines/11-intro-confidence-intervals.html" class="pagination-link" aria-label="Introduction to Confidence Intervals">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction to Confidence Intervals</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025, Judith Canner</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
