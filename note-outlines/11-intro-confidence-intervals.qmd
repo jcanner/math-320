@@ -501,7 +501,11 @@ e. Calculate the upper bound $U$ of 99% CI for $\theta$.
 
 #### Problem 2
 
-The fuel efficiency of a car model is important for both environmental and economic perspectives. Even when consumers drive the same car model, the fuel efficiency, measured by miles per gallon, varies depending on their driving habits, maintenance conditions, and road conditions (uphills, downhills, local roads, highways). In this regard, the population average fuel efficiency (miles per gallon) is a benchmark, and it can be estimated by consumers' report. Download [`prius2005`](11-intro-confidence-intervals/prius2005.csv). It is a sample of 204 drivers of 2005 Toyota Prius. Let $\mu$ be the population average to be estimated.
+The fuel efficiency of a car model is important for both environmental and economic perspectives. Even when consumers drive the same car model, the fuel efficiency, measured by miles per gallon, varies depending on their driving habits, maintenance conditions, and road conditions (uphills, downhills, local roads, highways). In this regard, the population average fuel efficiency (miles per gallon) is a benchmark, and it can be estimated by consumers' report.  
+
+- Download [`prius2005`](11-intro-confidence-intervals/prius2005.csv).   
+
+It is a sample of 204 drivers of 2005 Toyota Prius. Let $\mu$ be the population average to be estimated.
 
 a. Calculate the sample mean $\bar{X}$ of miles per gallon.
 
@@ -540,7 +544,11 @@ e. Calculate the upper bound $U$ of 95% CI for $\mu$.
 
 #### Problem 3
 
-Let $\theta$ be the probability of *survival* when a person attempts suicide. Download [`ShandongChina.csv`](11-intro-confidence-intervals/ShandongChina.csv). It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
+Let $\theta$ be the probability of *survival* when a person attempts suicide.  
+
+- Download [`ShandongChina.csv`](11-intro-confidence-intervals/ShandongChina.csv).  
+
+It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
 
 a. Calculate the sample proportion $\bar{X}$ of survived people out of all people who attempted suicide.
 

@@ -523,7 +523,11 @@ h. Multiple-choice: In this hypothesis testing, the null hypothesis $H_0$ is tha
 #### Problem 3 
 >Suicide prevention begins with recognizing warning signs, listening without judgment, and connecting people with trusted support. Everyone can help by taking concerns seriously, encouraging open conversations, reducing stigma, and guiding someone toward a counselor, healthcare professional, or crisis resource. In the United States, the 988 Suicide & Crisis Lifeline provides free, confidential support 24/7. With compassion, awareness, and timely intervention, suicide can be prevented.
 
-Suicidal behavior is a leading cause of death and injury in the world (Klonsky, 2016). While women are more likely to experience suicidal ideation and attempt, men are more likely to die per attempt. It is known as the [Gender Paradox of Suicide](https://cams-care.com/resources/educational-content/the-gender-paradox-of-suicide/). According to the Centers for Disease Control and Prevention (CDC), men were four times as likely as women to commit suicide in 2021. Download $\texttt{ShandongChina.csv}$. It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
+Suicidal behavior is a leading cause of death and injury in the world (Klonsky, 2016). While women are more likely to experience suicidal ideation and attempt, men are more likely to die per attempt. It is known as the [Gender Paradox of Suicide](https://cams-care.com/resources/educational-content/the-gender-paradox-of-suicide/). According to the Centers for Disease Control and Prevention (CDC), men were four times as likely as women to commit suicide in 2021. 
+
+- Download [`ShandongChina.csv`](11-intro-confidence-intervals/ShandongChina.csv). 
+
+It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).
 
 Our goal is to answer two questions: (1) Are women more likely to attempt suicide than men? (2) Are there more men who died as a result of suicide attempt than women? Assume that 50% are men and 50% are women in the general population of Shandong, China. You may modify the following R code for answering the following questions.
 
