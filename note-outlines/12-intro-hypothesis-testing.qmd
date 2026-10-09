@@ -149,8 +149,8 @@ $$
 
 This test statistic is sometimes referred to as a **Z statistic**. 
 
-- The numerator of $Z$ measures the discrepancy between the sample proportion ($\bar{X} = 0.5164$) and the null hypothesis ($\theta_0 = 0.5$).  
-- The denominator $\texttt{SE} = \sqrt{ \frac{\theta_0 (1 - \theta_0) }{n} }$ is called the **standard error** of $\bar{X}$.  
+- The numerator of $Z$ measures the discrepancy between the sample proportion ($\hat{p} = 0.5164$) and the null hypothesis ($\theta_0 = 0.5$).  
+- The denominator $\texttt{SE} = \sqrt{ \frac{\theta_0 (1 - \theta_0) }{n} }$ is called the **standard error** of $\hat{p}$.  
 - The standard error measures uncertainty in the sample proportion given the null hypothesis ($\theta_0 = 0.5$) and sample size ($n = 2500$). 
 
 
@@ -335,90 +335,263 @@ Fill in the blank.
 
 a. A \[h...\] is an assumption about the population or an unknown parameter.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+hypothesis
+:::
+
 b. A \[t... s...\] is a statistic which is used for statistical hypothesis testing.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+test statistic
+:::
 
 c. A \[n... h...\] is assumed to be true in the procedure of statistical hypothesis testing.
 
-d. If data is strongly against the null hypothesis in favor of the \[a... h...\], we conclude the \[a... h...\].
+:::{.callout-tip collapse="true"}
+#### Answer
+null hypothesis
+:::
+
+d. If data provides evidence strongly against the null hypothesis in favor of the \[a... h...\], we conclude the \[a... h...\].
+
+:::{.callout-tip collapse="true"}
+#### Answer
+alternative hypothesis
+:::
 
 e. \[...\] refers to conclusion of $H_1$ when $H_0$ is true.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+Type I Error
+:::
+
 f. \[...\] refers to conclusion of $H_0$ when $H_1$ is true.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Type II Error
+:::
 
 g. A \[s... l...\] is denoted by $\alpha$, and it is a small fixed probability of committing the Type I error.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+significance level
+:::
+
 h. We can compare a p-value to the \[s... l...\] to conclude $H_0$ or $H_1$.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+significance level
+:::
 
 #### Problem 2 
 True or false?
 
 a. If $H_0$ is true, it is possible to conclude $H_1$.
 
+```{r}
+#| label: wrap-2-a
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
+
 b. If $H_1$ is true, it is possible to conclude $H_0$.
+
+```{r}
+#| label: wrap-2-b
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 c. If we fix $\alpha = 0.05$, it implies that we allow a probability of 0.05 for concluding $H_0$ when $H_1$ is true.
 
+```{r}
+#| label: wrap-2-c
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 d. When a p-value is less than $\alpha$, we conclude $H_1$.
+
+```{r}
+#| label: wrap-2-d
+#| echo: false
+checkdown::check_question(answer = "True",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 e. If $H_0$ is concluded, it implies that $H_0$ is true.
 
+```{r}
+#| label: wrap-2-e
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 f. If $H_1$ is concluded, it implies that $H_1$ is true.
 
+```{r}
+#| label: wrap-2-f
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 g. If a p-value is 0.09, it implies that the probability that $H_0$ is true is 0.09.
+
+```{r}
+#| label: wrap-2-g
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 #### Problem 3 
 Suppose a researcher calculated a Z statistic of 2.1. Using R, calculate the p-value for:
 
 a. right-sided test
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+1 - pnorm(2.1)
+```
+
+:::
+
 b. left-sided test
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+pnorm(2.1)
+```
+:::
+
 c. two-sided test
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+2*(1 - pnorm(2.1))
+```
+:::
 
 #### Problem 4 
 Multiple-choice: Suppose we test $H_0$: $\theta = 0.7$ versus $H_1$: $\theta > 0.7$ (right-sided test). Which of the following provides the strongest evidence for $H_1$?
 
-\(A\) $\bar{X} = 0.75$ and $n = 100$
+A. $\hat{p} = 0.75$ and $n = 100$
 
-\(B\) $\bar{X} = 0.72$ and $n = 1000$
+B. $\hat{p} = 0.72$ and $n = 1000$
 
-\(C\) $\bar{X} = 0.71$ and $n = 10000$
+C. $\hat{p} = 0.71$ and $n = 10000$
 
-\(D\) $\bar{X} = 0.7$ and $n = 500$
+D. $\hat{p} = 0.7$ and $n = 500$
 
-\(E\) $\bar{X} = 0.8$ and $n = 50$
+E. $\hat{p} = 0.8$ and $n = 50$
+
+```{r}
+#| label: wrap-4
+#| echo: false
+checkdown::check_question(answer = "C",
+                          options = c("A", "B", "C", "D,", "E"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 #### Problem 5 
 Multiple-choice: Which case results in the smallest p-value in Problem 4?
 
+```{r}
+#| label: wrap-5
+#| echo: false
+checkdown::check_question(answer = "C",
+                          options = c("A", "B", "C", "D,", "E"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
 #### Problem 6 
 Multiple-choice: Suppose we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta < 0.3$ (left-sided test). Which of the following results in the smallest p-value?
 
-\(A\) $\bar{X} = 0.35$ and $n = 500$
+A. $\hat{p} = 0.35$ and $n = 500$
 
-\(B\) $\bar{X} = 0.3$ and $n = 100$
+B. $\hat{p} = 0.3$ and $n = 100$
 
-\(C\) $\bar{X} = 0.29$ and $n = 100$
+C. $\hat{p} = 0.29$ and $n = 100$
 
-\(D\) $\bar{X} = 0.25$ and $n = 100$
+D. $\hat{p} = 0.25$ and $n = 100$
 
-\(E\) $\bar{X} = 0.25$ and $n = 200$
+E. $\hat{p} = 0.25$ and $n = 200$
+
+```{r}
+#| label: wrap-6
+#| echo: false
+checkdown::check_question(answer = "E",
+                          options = c("A", "B", "C", "D,", "E"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 #### Problem 7 
 Multiple-choice: If we test $H_0$: $\theta = 0.3$ versus $H_1$: $\theta \ne 0.3$ (two-sided test), which case in Problem 6 results in the smallest p-value?
 
+```{r}
+#| label: wrap-7
+#| echo: false
+checkdown::check_question(answer = "A",
+                          options = c("A", "B", "C", "D,", "E"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
+
 #### Problem 8 
 Multiple-choice: Which of the following can be a negative value?
 
-\(A\) sample proportion
+```{r}
+#| label: wrap-8
+#| echo: false
+checkdown::check_question(answer = "Z statistic",
+                          options = c("sample proportion",
+                                      "p-value",
+                                      "Z statistic",
+                                      "standard error"),
+                          button_label = "Check Your Answer", 
+                          type = "select")
+```
 
-\(B\) p-value
 
-\(C\) Z statistic
-
-\(D\) standard error
-
-\(E\) There are more than one answer among (A) to (D)
 
 ## Assignment
 
@@ -429,29 +602,66 @@ Let $\theta$ be the U.S. President's approval rating (i.e., the population propo
 
 a. What is the null value in this context? (Numeric answer)
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
+
 b. Multiple-choice: Given the above description, what kind of statistical hypothesis testing do we want to do?
 
-\(A\) right-sided test
+```{r}
+#| label: asn-1-b
+#| echo: false
+checkdown::check_question(answer = "left-sided test",
+                          options = c("right-sided test",
+                                      "left-sided test",
+                                      "two-sided test"),
+                          button_label = "Check Your ", 
+                          type = "radio")
+```
 
-\(B\) left-sided test
-
-\(C\) two-sided test
 
 c. Calculate the sample proportion of people who approved.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
+
 d. Calculate the standard error.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
 
 e. Calculate the Z statistic.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
+
 f. Calculate the p-value.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5
+:::
 
 g. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you conclude?
 
-\(A\) $H_0$
+```{r}
+#| label: asn-1-g
+#| echo: false
+checkdown::check_question(answer = "$H_1$",
+                          options = c("$H_0$",
+                                      "$H_1$",
+                                      "Inconclusive"),
+                          button_label = "Check Your ", 
+                          type = "radio")
+```
 
-\(B\) $H_1$
-
-\(C\) Inconclusive
 
 h. Multiple-choice: The significance level $\alpha = 0.05$ implies that we allowed a probability of 0.05 for...
 
@@ -488,11 +698,17 @@ a. What is the null value in this context? (Numeric answer)
 
 b. Multiple-choice: Which of the following represents the alternative hypothesis?
 
-\(A\) right-sided test
+```{r}
+#| label: asn-2-b
+#| echo: false
+checkdown::check_question(answer = "right-sided test",
+                          options = c("right-sided test",
+                                      "left-sided test",
+                                      "two-sided test"),
+                          button_label = "Check Your ", 
+                          type = "radio")
+```
 
-\(B\) left-sided test
-
-\(C\) two-sided test
 
 c. Calculate the sample proportion?
 
@@ -534,13 +750,14 @@ Our goal is to answer two questions: (1) Are women more likely to attempt suicid
 
 
 ```{r}
+#| label: starter-code
 #| eval: false
 
 ### data for question (1)
 shandong <- read_csv("data/ShandongChina.csv", show_col_types = FALSE) 
 
 ### subset the data (those who died) for question (2)
-shandong_died = shandong |> filter(Died == "yes") 
+shandong_died <- shandong |> filter(Died == "yes") 
 ```
 
 *Let us focus on the research question (1) in parts a to e.*
