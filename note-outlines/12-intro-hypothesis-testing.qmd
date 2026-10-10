@@ -625,28 +625,28 @@ c. Calculate the sample proportion of people who approved.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-0.5
+0.4297
 :::
 
 d. Calculate the standard error.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-0.5
+0.0158
 :::
 
 e. Calculate the Z statistic.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-0.5
+-4.4521
 :::
 
 f. Calculate the p-value.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-0.5
+< 0.0001
 :::
 
 g. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you conclude?
@@ -654,9 +654,9 @@ g. Multiple-choice: At a significance level of $\alpha = 0.05$, what do you conc
 ```{r}
 #| label: asn-1-g
 #| echo: false
-checkdown::check_question(answer = "$H_1$",
-                          options = c("$H_0$",
-                                      "$H_1$",
+checkdown::check_question(answer = "H\u2081",
+                          options = c("H\u2080",
+                                      "H\u2081",
                                       "Inconclusive"),
                           button_label = "Check Your ", 
                           type = "radio")
@@ -665,36 +665,49 @@ checkdown::check_question(answer = "$H_1$",
 
 h. Multiple-choice: The significance level $\alpha = 0.05$ implies that we allowed a probability of 0.05 for...
 
-\(A\) concluding $\theta = 0.5$ when $\theta > 0.5$ is true.
 
-\(B\) concluding $\theta = 0.5$ when $\theta < 0.5$ is true.
+  
+```{r}
+#| label: asn-1-h
+#| echo: false
+checkdown::check_question(answer = "concluding \u03B8 < 0.5 when \u03B8 = 0.5 is true.",
+                          options = c("concluding \u03B8 = 0.5 when \u03B8 > 0.5 is true.",
+                                      "concluding \u03B8 = 0.5 when \u03B8 < 0.5 is true.",
+                                      "concluding \u03B8 = 0.5 when \u03B8 \u2260 0.5 is true.",
+                                      "concluding \u03B8 > 0.5 when \u03B8 = 0.5 is true.",
+                                      "concluding \u03B8 < 0.5 when \u03B8 = 0.5 is true.",
+                                      "concluding \u03B8 \u2260 0.5 when \u03B8 = 0.5 is true."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(C\) concluding $\theta = 0.5$ when $\theta \ne 0.5$ is true.
 
-\(D\) concluding $\theta > 0.5$ when $\theta = 0.5$ is true.
-
-\(E\) concluding $\theta < 0.5$ when $\theta = 0.5$ is true.
-
-\(F\) concluding $\theta \ne 0.5$ when $\theta = 0.5$ is true.
 
 i. Multiple-choice: Which of the following statement is the most appropriate concluding statement?
 
-\(A\) The approval rating is 50%.
-
-\(B\) The approval rating is below 50%.
-
-\(C\) The sample provides insufficient evidence to conclude that the approval rating is 50%.
-
-\(D\) The sample provides sufficient evidence to conclude that the approval rating is 50%.
-
-\(E\) The sample provides insufficient evidence to conclude that the approval rating is below 50%.
-
-\(F\) The sample provides sufficient evidence to conclude that the approval rating is below 50%.
+```{r}
+#| label: asn-1-f
+#| echo: false
+checkdown::check_question(answer = "The sample provides insufficient evidence to conclude that the approval rating is below 50%.",
+                          options = c("The approval rating is 50%.",
+                                      "The approval rating is below 50%.",
+                                      "The sample provides insufficient evidence to conclude that the approval rating is 50%.",
+                                      "The sample provides sufficient evidence to conclude that the approval rating is 50%.",
+                                      "The sample provides insufficient evidence to conclude that the approval rating is below 50%.", 
+                                      "The sample provides sufficient evidence to conclude that the approval rating is below 50%."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 #### Problem 2 
 A child, who loves outdoor activities on weekend, believes that it rains more often on weekend (Saturdays and Sundays) than on weekdays (Monday to Friday). Of the last 100 rainy days, 33 days were on Saturdays and Sundays. Does this weather record support the child's hypothesis? Let $\theta$ be the true proportion of Saturdays and Sundays among all rainy days.
 
 a. What is the null value in this context? (Numeric answer)
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.2857
+:::
 
 b. Multiple-choice: Which of the following represents the alternative hypothesis?
 
@@ -709,32 +722,61 @@ checkdown::check_question(answer = "right-sided test",
                           type = "radio")
 ```
 
-
 c. Calculate the sample proportion?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.33
+:::
 
 d. Calculate the standard error.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0452
+:::
+
 e. Calculate the Z statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.9803
+:::
 
 f. Calculate the p-value.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1635
+:::
+
 g. Multiple-choice: At a significance level of $\alpha = 0.1$, what do you conclude?
 
-\(A\) $H_0$
-
-\(B\) $H_1$
-
-\(C\) Inconclusive
+```{r}
+#| label: asn-2-g
+#| echo: false
+checkdown::check_question(answer = "H\u2080",
+                          options = c("H\u2080",
+                                      "H\u2081",
+                                      "Inconclusive"),
+                          button_label = "Check Your ", 
+                          type = "radio")
+```
 
 h. Multiple-choice: In this hypothesis testing, the null hypothesis $H_0$ is that the chance of rain is the same everyday, and the alternative hypothesis $H_1$ is that the chance of rain is higher on Saturday and Sunday than on Monday to Friday. If the p-value is correctly calculated in part f, the p-value is greater than $\alpha = 0.1$. Which of the following statement is the most appropriate concluding statement?
 
-\(A\) Assuming $H_0$ is true, the data provide evidence for $H_0$.
+```{r}
+#| label: asn-2-h
+#| echo: false
+checkdown::check_question(answer = "Assuming H\u2080 is true, the data provide no evidence against H\u2080.",
+                          options = c("Assuming H\u2080 is true, the data provide evidence for H\u2080.",
+                                      "Assuming H\u2080 is true, the data provide no evidence against H\u2080.",
+                                      "Assuming H\u2081 is true, the data provide evidence for H\u2081.",
+                                      "Assuming H\u2081 is true, the data provide no evidence against H\u2081."),
+                          button_label = "Check Your ", 
+                          type = "radio")
+```
 
-\(B\) Assuming $H_0$ is true, the data provide no evidence against $H_0$.
-
-\(C\) Assuming $H_1$ is true, the data provide evidence for $H_1$.
-
-\(D\) Assuming $H_1$ is true, the data provide no evidence against $H_1$.
 
 #### Problem 3 
 >Suicide prevention begins with recognizing warning signs, listening without judgment, and connecting people with trusted support. Everyone can help by taking concerns seriously, encouraging open conversations, reducing stigma, and guiding someone toward a counselor, healthcare professional, or crisis resource. In the United States, the 988 Suicide & Crisis Lifeline provides free, confidential support 24/7. With compassion, awareness, and timely intervention, suicide can be prevented.
@@ -764,27 +806,91 @@ shandong_died <- shandong |> filter(Died == "yes")
 
 a. Let $\theta$ be the proportion of women among those who attempt suicide in Shandong, China. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_0$: $\theta = 0.5$   
+$H_1$: $\theta > 0.5$.
+
+Be able to write verbally too.  
+:::
+
 b. Provide a graphic which summarize the relevant data.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Use a barplot and counts/proportions
+:::
 
 c. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$\hat{p} = 0.5165305$  
+$z = 1.676362$  
+$p-value = 0.04683362$  
+:::
+
 d. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+We conclude $H_1$: $\theta > 0.5$ ($p = 0.0468$ is less than $\alpha = 0.05$) and is moderate evidence against $H_0$.  
+:::
+
 e. State the conclusion in the context.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+There is statistically discernible evidence that the true proportion is greater than 0.50, but it should be noted that it is not that much bigger. It is only statistically discernible because of the large sample size, it is not obviously it is practically meaningful in difference.  
+:::
 
 *Let us focus on the research question (2) in the following parts.*
 
 f. How would you define $\theta$ in the context of research question (2)?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$\theta$ is the true proportion of women who died as a result of all suicide attempts. (note the research question is about all attempts, but the data only represents a rural area of China - are the results generalizable?)
+:::
+
 g. State $H_0$ and $H_1$ in terms of $\theta$. Is it a right-sided test, left-sided test, or two-sided test?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_0$: $\theta = 0.5$ and $H_1$: $\theta < 0.5$. It is a left-sided test.
+:::
 
 h. Provide a graphic which summarize the relevant data.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+Use barplots, count, and proportions
+:::
+
 i. Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$\hat{p} = 0.4673567$
+$z = -2.313764$
+$p-value = 0.01034034$
+:::
 
 j. At a significance level $\alpha = 0.05$, do you conclude $H_0$ or $H_1$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+We conclude $H_1$ ($p = 0.0103$ is less than $\alpha = 0.05$) due to strong evidence against the null.  
+:::
+
 k. State the conclusion in the context.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+At a significance level of $\alpha = 0.05$, based on a sample of $n = 1256$ subjects who died as a result of suicide attempt (in Shandong, China), it is statistically discernible that the proportion of women is less than 0.5 ($\bar{X} = 0.4674$, $Z = -2.3138$, and $p = 0.0103$). \[In other words, the data suggest that (1) more women attempt suicide than men, but (2) less women die as a result of suicide attempt than men.\]
+
+**Note:** If you defined $\theta$ as the proportion of men, your conclusion should be the same. It is statistically significant that the proportion of men is greater than 0.5 ($\bar{X} = 0.5326$, $Z = +2.3138$, and $p = 0.0103$).
+:::
 
 **References:**
 
