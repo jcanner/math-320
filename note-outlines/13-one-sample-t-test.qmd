@@ -332,6 +332,8 @@ Note - the only time you are guaranteed to have the CI and Test "agree" is when 
 
 Dyslexia is a learning disorder which affects reading, spelling, and writing. Dyslexia is not related to intelligence or vision, but many people with dyslexia have difficulties in decoding letters and words. Most people with dyslexia can overcome the learning difficulties after receiving a specialized education program. Woodcock Johnson Tests are a set of standardized tests in diverse areas, and they are used as an assessment tool in the specialized education program. The standardized tests are designed in a way that the scores follow a normal distribution with a mean of 100. In addition to reading, writing, and spelling, researchers have hypothesized that dyslexia can affect math calculation ability because it requires decoding math symbols. The dataset $\texttt{mathcalculation.csv}$ is a sample of 59 students with dyslexia who received the specialized education program. The column $\texttt{pre}$ is the math calculation test score at the time of entering the program, and the column $\texttt{post}$ is the test score after completing one year of the program. There are two objectives of data analysis. The first objective is to test whether the population average of math calculation score is below the mean of 100 (i.e., comparing to students without dyslexia), and the second objective is to test whether the students with dyslexia improve math calculation score, on average, after completion one year of the program. A significance level is fixed at $\alpha = 0.05$ for both tests.
 
+Download the data here: [`mathcalculation.csv`](data/mathcalculation.csv)
+
 ### Objective 1: Baseline Score
 
 The population of interest is students with dyslexia, and the variable of interest is the baseline math calculation score at the time of entering the program. We want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.
@@ -360,54 +362,165 @@ gf_boxplot(~pre, data = mathscore,
 gf_histogram(~pre, data = mathscore,
      title = "Students with Dyslexia (Baseline)",
      xlab = "Math Calculation Score",
-     binwidth = 5, color = "black")
+     binwidth = 5, color = "black", boundary = 0)
 ```
 
 1.  Identify the following:
 
-Variable and Type: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Variable and Type: 
 
-Population of Interest: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+:::{.callout-tip collapse="true"}
+#### Answer
+Math Calculation Score
+Numeric - Continuous
+:::
 
-Sample: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Population of Interest: 
 
-Type of Sampling: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+:::{.callout-tip collapse="true"}
+#### Answer
+All students with dyslexia
+:::
 
-2.  Identify whether this is an experimental or observational study. Provide a justification in context of your classification of the study type.
+Sample: 
 
-3.  TWe want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.
+:::{.callout-tip collapse="true"}
+#### Answer
+59 students with dyslexia who received the specialized education program
+:::
 
-<!-- -->
+Type of Sampling: 
 
-a.  Write the appropriate symbolic representation of the null and alternative hypotheses.
+:::{.callout-tip collapse="true"}
+#### Answer
+Convenience Sampling - no random process used to select students.
+:::
 
-b.  Write a verbal description of the parameter of interest from the hypothesis above in the context of the scenario.
+2.	Describe the shape, center, and spread of the sample distribution.
 
-<!-- -->
+:::{.callout-tip collapse="true"}
+#### Answer
+Shape:  Roughly Symmetric, unimodal  
+Center: $M  = 85$, $\bar{x} = 83.76271$  
+Spread: $s = 11.18395$, $IQR = 94 - 75 = 19$
+:::
 
-5.  Sketch the null distribution for this scenario, being sure to accurately reflect the shape of the distribution. Label the center of the distribution with the appropriate symbol or value, as applicable.
 
-6.  Calculate the following values and provide their interpretation in context.
 
-<!-- -->
+3.	We want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.
 
-a.  Calculate and interpret the test statistic.
+    a.	Write the appropriate symbolic representation of the null and alternative hypotheses.
 
-b.  Calculate and interpret the associated p-value in the context of the scenario.
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_0: \mu = 100$   
 
-c.  Provide a strength of evidence statement, using a significance level of 0.05.
+$H_1: \mu < 100$   
+:::
 
-d.  Calculate and interpret a 95% confidence interval.
+    b.	Write a verbal description of the parameter of interest from the hypothesis above in the context of the scenario.
 
-e.  Evaluate the confidence interval in the context of the research question.
+:::{.callout-tip collapse="true"}
+#### Answer
+$\mu =$ the true mean math calculation score for all students with dyslexia 
+:::
 
-<!-- -->
+5.	Sketch the null distribution of the t-statistic for this scenario, being sure to accurately reflect the shape of the distribution. Label the center of the distribution with the appropriate symbol or value, as applicable.
 
-7.  Provide at least one piece of evidence from the summary statistics and/or data visualizations provided to support your conclusion about the math calculation score for students with dyslexia. Be sure to cite your evidence and make a conclusion about the parameter(s).
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: null-dist
+#| echo: false
 
-8.  Write out the definition of Type I and Type II Error in the context of the scenario. Then identify which type of error was possible (and its probability of occurring if possible).
+gf_dist("t", df = 58, xlab = "t statistic")
+```
+:::
 
-9.  Identify the population, if any, to which the study can be generalized. Explain why with evidence.
+
+6.	Calculate the following values and provide their interpretation in context.
+    a.	Calculate and interpret the test statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$t = \frac{83.76271 - 100}{\frac{11.18395}{\sqrt{59}}} = -11.15178$
+
+The sample mean is -11.15 standard errors away from the hypothesize mean/null value.  
+:::
+
+
+    b.	Calculate and interpret the associated p-value in the context of the scenario.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: p-value
+pt(-11.15178, df = 59-1)
+```
+There is a <0.0001 probability of observing $t = -11.15$ or less assuming the true mean math calculation score for all students with dyslexia is 100.  
+:::
+
+    c.	Provide a strength of evidence statement, using a significance level of 0.05.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+We have very strong evidence against the null hypothesis and in favor of the alternative that the true mean math calculation score for all students with dyslexia is less than 100 $(t = -11.17, df = 58, p-value < 0.0001, \alpha = 0.05)$
+:::
+
+
+    d.	Calculate and interpret a 95% confidence interval.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: ci
+83.7621 - qt(0.975, df = 58)*(11.18395/sqrt(59))
+83.7621 + qt(0.975, df = 58)*(11.18395/sqrt(59))
+```
+We are 95% confident that the true mean math calcuation score of all students with dyslexia is a single value within the interval 80.8476 and 86.6767.  
+:::
+
+
+
+    e.	Evaluate the confidence interval in the context of the research question.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+The plausible values for the true mean are within the interval (80.85, 86.68) which is entirely below 100, which provides evidence that the true mean math calculation score for students with dyslexia is below 100. 
+:::
+
+
+
+7.	Provide at least one piece of evidence from the summary statistics and/or data visualizations provided to support your conclusion about the math calculation score for students with dyslexia. Be sure to cite your evidence and make a conclusion about the parameter(s).
+
+:::{.callout-tip collapse="true"}
+#### Answer
+We see that $Q_3 = 94$ which indicates that at least 75% of the students' scores are less than 100, which is evidence that the true mean is less than 100.  
+:::
+
+
+
+
+8.	Write out the definition of Type I and Type II Error in the context of the scenario. Then identify which type of error was possible (and its probability of occurring if possible).
+
+:::{.callout-tip collapse="true"}
+#### Answer
+- Type I Error: we find support for the alternative that the true mean is less than 100, when the true mean math calculation  score for all students is actually 100.  
+
+- Type II Error: we find no evidence against the null that true mean is 100, when the true mean math calculation score for all students is actually less than 100.
+
+- Type I Error (or we are correct) is a possibility based on our decision, with a probability of 0.05 of occurring.  
+:::
+
+
+
+9.	Identify the population, if any, to which the study can be generalized. Explain why with evidence.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+We cannot truly generalize to any population since we have a convenience sample which cannot be representative of the population of interest.  
+:::
+
 
 ## Using `t.test()` Function in R
 
@@ -453,9 +566,24 @@ Fill in the blank.
 
 a.  The \[n... a...\] implies that a simple random sample is from a normal distribution.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+normality assumption
+:::
+
 b.  The shape of a T distribution is determined by the \[d... o... f...\], and it is calculated by the sample size minus one for the one-sample t-test.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+degrees of freedom
+:::
+
 c.  In the one-sample t-test, the alternative hypothesis is concluded when the \[p...\] is less than the significance level.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+p-value
+:::
 
 #### Problem 2
 
@@ -463,29 +591,64 @@ For one-sample t-test with a null value of 100, suppose we observed a sample mea
 
 a.  T statistic
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-1.6
+:::
+
 b.  p-value for a left-sided test
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0564
+:::
 
 c.  p-value for a right-sided test
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.9436
+:::
+
 d.  p-value for a two-sided test
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1128
+:::
 
 e.  the length of a 95% CI for the population mean.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+9.9211
+:::
+
 f.  the length of a 90% CI for the population mean.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+8.302
+:::
 
 #### Problem 3
 
 Multiple-choice: Which of the following T statistics results in the smallest p-value for a left-sided test?
 
-\(A\) $T = -2$
+```{r}
+#| label: wrap-3
+#| echo: false
+checkdown::check_question(answer = "T = -2",
+                          options = c("T = -2",
+                                      "T = -1",
+                                      "T = 0",
+                                      "T = 3",
+                                      "insufficient information to answer"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) $T = -1$
 
-\(C\) $T = 0$
-
-\(D\) $T = 3$
-
-\(E\) insufficient information to answer
 
 #### Problem 4
 
@@ -493,13 +656,39 @@ Suppose we want to test $H_0$: $\mu = 80$ versus $H_1$: $\mu < 80$. Calculate th
 
 a.  sample mean
 
+:::{.callout-tip collapse="true"}
+#### Answer
+57
+:::
+
 b.  sample standard deviation
+
+:::{.callout-tip collapse="true"}
+#### Answer
+9.899495
+:::
 
 c.  standard error
 
+:::{.callout-tip collapse="true"}
+#### Answer
+7
+:::
+
 d.  T statistic
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-3.2857
+:::
+
 e.  p-value
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.094
+:::
+
 
 ## Assignment
 
@@ -513,41 +702,78 @@ A massive outbreak of food-borne illness was attributed to *Salmonella enteritid
 
 a.  Multiple-choice: Which of the following is the null hypothesis $H_0$?
 
-\(A\) $\mu = 0.3$
+```{r}
+#| label: asn-1-a
+#| echo: false
+checkdown::check_question(answer = "μ = 0.3",
+                          options = c("μ = 0.3",
+                                      "μ > 0.3",
+                                      "μ < 0.3",
+                                      "μ ≠ 0.3",
+                                      "to be determined after observing data"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) $\mu > 0.3$
 
-\(C\) $\mu < 0.3$
-
-\(D\) $\mu \ne 0.3$
-
-\(E\) to be determined after observing data
 
 b.  Multiple-choice: Which of the following is the alternative hypothesis $H_1$?
 
-\(A\) $\mu = 0.3$
-
-\(B\) $\mu > 0.3$
-
-\(C\) $\mu < 0.3$
-
-\(D\) $\mu \ne 0.3$
-
-\(E\) to be determined after observing data
+```{r}
+#| label: asn-1-b
+#| echo: false
+checkdown::check_question(answer = "μ > 0.3",
+                          options = c("μ = 0.3",
+                                      "μ > 0.3",
+                                      "μ < 0.3",
+                                      "μ ≠ 0.3",
+                                      "to be determined after observing data"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c.  The researchers collected the following data: (0.593, 0.142, 0.329, 0.231, 0.292). Calculate the T statistic.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.2295
+:::
+
 d.  Calculate the p-value.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.4149
+:::
 
 e.  Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_0$
+:::
+
 f.  Calculate the lower bound of 95% CI.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.1069
+:::
 
 g.  Calculate the upper bound of 95% CI.
 
-h.  Draw the Q-Q plot in R (to be shown in the html file), and report the p-value from the Shapiro-Wilk test in the Google form.
+:::{.callout-tip collapse="true"}
+#### Answer
+0.5279
+:::
 
-i.  State the conclusion in the context. Your statement must include the following: (1) conclusion from the one-sample t-test, (2) point and interval estimation, (3) assessment of the normality assumption, and (4) criticism about the formulation of this one-sample t-test.
+
+h.  State the conclusion in the context. Your statement must include the following: (1) conclusion from the one-sample t-test, (2) point and interval estimation, (3) citation of additional evidence to support conclusion.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Write our your statement
+:::
 
 #### Problem 2
 
@@ -567,58 +793,153 @@ A soccer match is 90 minutes (540 seconds) or longer, so players must have high 
 
 The passing time is 9 minutes (considered to be ready for a match the season) excluding the rest times. The YBMI test was performed before the season and in the middle of the season. In the dataset $\texttt{ybmi.csv}$, the column $\texttt{test1}$ is the time to complete the the YBMI test before the season started, and $\texttt{test2}$ is the time in the middle of the season. The time was measured in seconds. Let $\mu_1$ be the expected time (team-average endurance level) before the season started and $\mu_2$ be the expected time in the middle of the season. In this problem, the parameter of interest is $\mu_1$. The coach wanted to test whether the team-average endurance level is ready or not at the time of the YBMI test (prior to the season). Here you can use `t.test()` to evaluate the questions.
 
+Download the data here: [`ybmi.csv`](data/ybmi.csv)
+
 a.  What is the null value (in seconds) in the null hypothesis $H_0$?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+9*60 = 540 seconds
+:::
 
 b.  Multiple-choice: What is the alternative hypothesis $H_1$?
 
-\(A\) same as the null hypothesis (i.e., the parameter is equal to the null value)
+```{r}
+#| label: asn-2-b
+#| echo: false
+checkdown::check_question(answer = "left-sided test (i.e., the parameter is iess than the null value)",
+                          options = c("same as the null hypothesis (i.e., the parameter is equal to the null value)",
+                                      "right-sided test (i.e., the parameter is greater than the null value)",
+                                      "left-sided test (i.e., the parameter is iess than the null value)",
+                                      "two-sided test (i.e., the parameter is not equal to the null value)",
+                                      "to be determined after observing data"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) right-sided test (i.e., the parameter is greater than the null value)
 
-\(C\) left-sided test (i.e., the parameter is iess than the null value)
 
-\(D\) two-sided test (i.e., the parameter is not equal to the null value)
+c. Provide descriptive statistics and boxplot for the variable of interest. Describe in words.
 
-\(E\) to be determined after observing data
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: descriptives
+ybmi <- read_csv("data/ybmi.csv", show_col_types = FALSE)
+df_stats(~test1, data = ybmi)
 
-\*c. Provide descriptive statistics and boxplot for the variable of interest. Describe in words.
+gf_boxplot(~test1, data = ybmi,
+           xlab = "Time to Complete (sec) Pre-Season")
+```
+
+:::
 
 d.  Calculate the T statistic.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+4.4559
+:::
+
 e.  Calculate the p-value.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.9998
+:::
 
 f.  Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_0$
+:::
+
 g.  Calculate the lower bound of 95% CI.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+565.072
+:::
+
 h.  Calculate the upper bound of 95% CI.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+611.053
+:::
 
 #### Problem 3
 
-In this problem, the parameter of interest is $\mu_2$. The coach wanted to test if the team-level endurance level is ready at the time of the YBMI test (in the middle of the season). Repeat parts a to i of Problem 2 for this objective.
+In this problem, the parameter of interest is $\mu_2$. The coach wanted to test if the team-level endurance level is ready at the time of the YBMI test (in the middle of the season). Repeat parts a to h of Problem 2 for this objective.
 
 a.  What is the null value (in seconds) in the null hypothesis $H_0$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+540
+:::
+
 b.  Multiple-choice: What is the alternative hypothesis $H_1$?
 
-\(A\) same as the null hypothesis (i.e., the parameter is equal to the null value)
-
-\(B\) right-sided test (i.e., the parameter is greater than the null value)
-
-\(C\) left-sided test (i.e., the parameter is iess than the null value)
-
-\(D\) two-sided test (i.e., the parameter is not equal to the null value)
-
-\(E\) to be determined after observing data
+```{r}
+#| label: asn-3-b
+#| echo: false
+checkdown::check_question(answer = "left-sided test (i.e., the parameter is iess than the null value)",
+                          options = c("same as the null hypothesis (i.e., the parameter is equal to the null value)",
+                                      "right-sided test (i.e., the parameter is greater than the null value)",
+                                      "left-sided test (i.e., the parameter is iess than the null value)",
+                                      "two-sided test (i.e., the parameter is not equal to the null value)",
+                                      "to be determined after observing data"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c.  Provide descriptive statistics and boxplot for the variable of interest. Describe in words.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: test-2
+df_stats(~test2, data = ybmi)
+
+gf_boxplot(~test2, data = ybmi,
+           xlab = "Time to Complete (sec) Mid-Season")
+```
+
+:::
+
 d.  Calculate the T statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+-3.9002
+:::
 
 e.  Calculate the p-value.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0007
+:::
+
 f.  Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+$H_1$
+:::
 
 g.  Calculate the lower bound of 95% CI.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+502.594
+:::
+
 h.  Calculate the upper bound of 95% CI.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+529.031
+:::

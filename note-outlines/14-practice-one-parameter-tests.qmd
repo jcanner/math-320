@@ -273,6 +273,9 @@ gf_boxplot(~ph, data = florida,
 t.test(~ph, data = florida, mu = 6.5, alternative = "less")
 ```
 
+:::
+
+
 19. Interpret the provided p-value in the context of the scenario.
 
 :::{.callout-tip collapse="true"}
