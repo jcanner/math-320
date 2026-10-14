@@ -293,11 +293,11 @@ Rewrite this in the context of the problem:
 
 We can **evaluate** p-values based on its proximity to the the **significance** level:
 
-![Evidence against the null hypothesis](../12-intro-hypothesis-tests/pvalue-generic.png)
+![Evidence against the null hypothesis](12-intro-hypothesis-tests/pvalue-generic.png)
 
 To scale this to our $\alpha = 0.05$, we would use the following scale
 
-![Evidence against the null hypothesis $\alpha = 0.05$](../12-intro-hypothesis-tests/pvalue-05.png)
+![Evidence against the null hypothesis $\alpha = 0.05$](12-intro-hypothesis-tests/pvalue-05.png)
 
 
 Therefore, with our $p-value = 0.0505$ we have **moderate** evidence against the null hypothesis, and therefore find support for the alternative hypothesis.
@@ -887,9 +887,9 @@ k. State the conclusion in the context.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-At a significance level of $\alpha = 0.05$, based on a sample of $n = 1256$ subjects who died as a result of suicide attempt (in Shandong, China), it is statistically discernible that the proportion of women is less than 0.5 ($\bar{X} = 0.4674$, $Z = -2.3138$, and $p = 0.0103$). \[In other words, the data suggest that (1) more women attempt suicide than men, but (2) less women die as a result of suicide attempt than men.\]
+At a significance level of $\alpha = 0.05$, based on a sample of $n = 1256$ subjects who died as a result of suicide attempt (in Shandong, China), it is statistically discernible that the proportion of women who died as a restul of a suicide attempt is less than 0.5 ($\bar{X} = 0.4674$, $Z = -2.3138$, and $p = 0.0103$). \[In other words, the data suggest that (1) more women attempt suicide than men, but (2) less women die as a result of suicide attempt than men.\]
 
-**Note:** If you defined $\theta$ as the proportion of men, your conclusion should be the same. It is statistically significant that the proportion of men is greater than 0.5 ($\bar{X} = 0.5326$, $Z = +2.3138$, and $p = 0.0103$).
+**Note:** If you defined $\theta$ as the proportion of men, your conclusion should be the same. It is statistically discerna le that the proportion of men is greater than 0.5 ($\bar{X} = 0.5326$, $Z = +2.3138$, and $p = 0.0103$).
 :::
 
 **References:**

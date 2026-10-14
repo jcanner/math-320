@@ -76,7 +76,11 @@ website:
       - href: note-outlines/11-intro-confidence-intervals.qmd
         text: "Introduction to Confidence Intervals"
       - href: note-outlines/12-intro-hypothesis-testing.qmd
-        text: "Introduction to Hypothesis Testing"        
+        text: "Introduction to Hypothesis Testing"
+      - href: note-outlines/13-one-sample-t-test.qmd
+        text: "One Sample t-Tests"  
+      - href: note-outlines/14-practice-one-parameter-tests.qmd
+        text: "Practice with One Parameter Inference"  
         
 format:
   html:

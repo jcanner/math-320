@@ -1,0 +1,411 @@
+---
+title: "One Sample Inference Practice"
+subtitle: "The Health of Lakes in Florida"
+format: html
+execute:
+  echo: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(mosaic)
+library(ggformula)
+library(tidyverse)
+```
+
+
+
+The USGS keeps data on the water chemistry of lakes across the United States. These data are publicly available, and were used by other researchers who are interested in estimating the pH of lakes in Florida.
+
+To obtain the data, a list of all documented lakes was used and the USGS used a random number generator to select lakes within each state. USGS scientists from the local offices then went and took multiple water samples from each lake and reported the multiple characteristics. 
+
+
+Import the data here:
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: read-data
+florida <- read_csv("data/florida-lakes.csv", show_col_types = FALSE)
+```
+
+```{r}
+#| label: explore-data
+#glimpse(florida)
+head(florida, 5)
+```
+:::
+
+Here are some symbols that may be helpful.  
+
+- Greek letters: $\alpha$, $\theta$, $\mu$  
+- Statistics symbols: $\bar{x}$, $\hat{p}$, $H_0$, $H_1$  
+- Mathematical symbols: $\neq$, $>$, $<$, $\pm$  
+
+
+
+1.	Identify the population of interest 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>All lakes in Florida
+
+:::
+
+
+2.	Identify the sample and sampling method used 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Sample: 53 lakes in Florida
+>Sampling Method: Random Sample of All Lakes in Flordia
+
+:::
+
+3. Are we able to generalize to our population of interest based on results generated from this sample?  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+> Yes! Since the sample is a random sample from all lakes in Florida, it should be representative of all lakes in Florida since the random sample allows us to mitigate sources of bias in our sample.  
+
+:::
+
+4.	Identify the variables and types of variables measured 
+
+- `id`: An identifying number for each lake 
+- `lake`:	Name of the lake
+- `alkalinity`:	Concentration of calcium carbonate (in mg/L)
+- `ph`:	Acidity
+- `calcium`: Amount of calcium in water
+- `chlorophyll`: Amount of chlorophyll in water
+- `avg_mercury`: Average mercury level for a sample of fish (large mouth bass) from each lake
+- `num_samples`: Number of fish sampled at each lake
+- `min_mercury`: Minimum mercury level in a sampled fish
+- `max_mercury`: Maximum mercury level in a sampled fish
+- `three_yr_std_mercury`: Adjusted mercury level to account for the age of the fish
+- `age_data`: Mean age of fish in each sample
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>`id` is not a variable  
+> categorical nominal: `lake`  
+> numeric - discrete: `num_samples`  
+> numeric - continuous: all remaining variables  
+
+:::
+
+
+
+## Goal 1: Estimate the alkalinity of lakes in Florida
+
+We want to estimate the alkalinity of lakes, which is based on the concentration of calcium carbonate (in mg/L) in Florida using our data (variable name is `alkalinity`).  
+
+5.	Write the parameter of interest (verbally and symbolically), in context of the scenario.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>$\mu_a =$ the population mean concentration of calcium carbonate (mg/L) for all lakes in Florida
+
+:::
+
+
+
+7. Using R, calculate the summary statistics and create a well-labeled data visualization for the concentration of calcium carbonate (mg/L) (`alkalinity`)
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: summary-stats-alkalinity
+df_stats(~alkalinity, data = florida)
+```
+
+```{r}
+#| label: histogram-alkalinity
+gf_histogram(~alkalinity, data = florida, 
+             title = "Alkalinity of n = 53 Lakes in Florida", 
+             xlab = "Concentration of Calcium Carbonate (mg/L)", 
+             ylab = "Number of Lakes", 
+             binwidth = 10, 
+             boundary = 0,
+             color = "black")
+```
+
+```{r}
+#| label: boxplot-alkalinity
+gf_boxplot(~alkalinity, data = florida, 
+           title = "Alkalinity of n = 53 Lakes in Florida", 
+           xlab = "Concentration of Calcium Carbonate (mg/L)") |> 
+  gf_theme(axis.text.y = element_blank())
+```
+
+:::
+
+8. Describe the shape (symmetry/modality), center, and spread of the sample distribution of concentrations of calcium carbonate.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Shape: Skewed Right, Unimodal (histogram)   
+>Center: $M = 19.6 mg/L$, $\bar{x} = 37.53 mg/L$  
+>Spread: $IQR = 59.9 mg/L$ , $s = 38.20353 mg/L$, $range = 126.8 mg/L$  
+
+:::
+
+
+9. Calculate a 95% confidence interval for the parameter of interest. Use `t.test()`.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: ci-alkalinity
+t.test(~alkalinity, data = florida, conf.level=0.95)$conf.int
+```
+ 
+:::
+
+10.	Interpret the confidence interval in the context of the question. 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Based on our sample of 53 lakes, we are 95% confident that the population mean concentration of calcium carbonate for all lakes in Florida is a single value in the interval 26.99 mg/L and 48.06038 mg/L.  
+
+:::
+
+
+
+11.	Biological activity causes daily and seasonal pH fluctuations. During daylight hours, photosynthesis by algae consumes carbon dioxide, pushing pH upward. At night, respiration adds CO2 back, pulling pH down. Acid rain, decomposing organic matter, and certain fertilizer runoff all tend to lower pH over time. Conversely, heavy algae blooms can temporarily drive pH above 9, which can be toxic to some fish species. Low alkalinity, below 20 mg/L concentration of calcium carbonate, signals vulnerability to pH swings.  Using the confidence interval, is it plausible that the true mean concentration of calcium carbonate of lakes in Florida is less than 20mg/L? Explain and justify your answer in context. 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>The range of plausible values for the true mean concentration of calcium carbonate, based on the confidence interval, are (29.99, 48.06) mg/L. The interval is entirely greater than 20 mg/L indicating that the true mean calcium carbonate is greater than 20 mg/L and therefore not vulnerable to pH swings.  
+
+:::
+
+
+12. Looking at your data, do you have any concerns about the conclusions you made in the previous question. Use evidence from your data that supports or doesn't support your claim above and explain why. Be sure to cite specific values if appropriate. 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>The distribution of concentrations is very skewed left which would cause our mean to be bigger than our median, which is 19.6 mg/L. The median indicates that at least 50% of our lakes have a concentration below 20 mg/L since it is 19.6 mg/L, which would make them vulnerable to pH swings. So even though our confidence interval indicates the true mean is greater than 20 mg/L, that may be due to the skew in our data and the mean may not be the best parameter to use to answer our research question (are lakes healthy).  
+
+:::
+
+
+## Goal 2: Test the acidity of lakes in Florida
+Most freshwater lakes have a pH that falls between 6.5 and 9.0, and most aquatic organisms are comfortable in the range of 6.5 to 8.5.  We are concerned about the health of the lakes in Florida and want to determine if their pH is less than 6.5 (there are no units on pH).  
+
+
+13. Write the parameter of interest (verbally and symbolically), in context of the scenario.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>$\mu_{ph} =$ the population mean pH for all lakes in Florida
+
+:::
+
+
+14.	Identify the statistical research question:
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Is the true mean pH for all lakes in Florida less than 6.5?
+
+:::
+
+
+
+15. Using R, calculate the summary statistics and create a well-labeled data visualization for the pH (`ph`)
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: summary-stats-ph
+df_stats(~ph, data = florida)
+```
+
+```{r}
+#| label: histogram-ph
+gf_histogram(~ph, data = florida, 
+             title = "pH of n = 53 Lakes in Florida", 
+             xlab = "pH", 
+             ylab = "Number of Lakes", 
+             binwidth = 0.5, 
+             boundary = 0,
+             color = "black")
+```
+
+```{r}
+#| label: boxplot-ph
+gf_boxplot(~ph, data = florida, 
+           title = "pH of n = 53 Lakes in Florida", 
+           xlab = "pH") |> 
+  gf_theme(axis.text.y = element_blank())
+```
+
+:::
+
+16. Describe the shape (symmetry/modality), center, and spread of the sample distribution of pH.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Shape: roughly symmetric (slight skew left), unimodal (histogram)  
+>Center: $M = 6.8$, $\bar{x} = 6.590566$  
+>Spread: $s = 1.288449$, $IQR = 7.4 - 5.8 = 1.6$   
+
+:::
+
+17. Set up the null and alternative for our research question.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>$H_0: \mu_{ph} = 6.5$, the true mean pH for all lakes in Florida is 6.5  
+
+>$H_1: \mu_{ph} < 6.5$, the true mean pH for all lakes in Florida is less than 6.5  
+
+:::
+
+18. Calculate the appropriate test statistic and p-value for the test. Use `t.test()`.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: test-ph
+t.test(~ph, data = florida, mu = 6.5, alternative = "less")
+```
+
+19. Interpret the provided p-value in the context of the scenario.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>There is a 0.6945 probability of observing a test statistics $t = 0.51172$ or less assuming the null hypothesis that the true mean pH for all lakes in Florida is 6.5 is true. 
+
+:::
+
+20.	Provide a strength of evidence statement, using a significance level of 0.05.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+> There is no evidence against the null hypothesis that the true mean pH for all lakes in Florida is 6.5 $(t = 0.51172, df = 52, \alpha = 0.05, p-value = 0.6945).  
+
+:::
+
+21.	Write out what each type of error would be in context and identify which type of error is possible in our test.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Type I Error: we decide that the true mean pH is less than 6.5 when it is not.  
+>Type II Error: we decide that there no evidence that the true mean pH is less than 6.5, when the true mean pH is less than 6.5.
+
+>Since we found no evidence against the null, we may have a Type II Error or we may be Correct.  
+
+:::
+
+
+22. Using the summary statistics and data visualizations, provide additional evidence to support your claim from the hypothesis test.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>The median pH is 6.8 which indicates that at least 50% of the lakes in the sample have a pH above 6.5 (from the histogram approximately 31 of the 53 lakes are above 6.5 pH). That said, there are still a fair number of lakes with a lower than 6.5 pH (more than 25% since $Q_1 = 5.8$).  
+
+:::
+
+
+## Goal 3: What proportion of lakes are healthy?
+As you have seen, pH or alkalinity alone are not sufficient to determine if a lake is healthy, we must look at the values together. A healthy range for pH is 6.5-8.5 and alkalinity should be greater than 20 mg/L. Though there are other indicators for lake health, we will consider just these two and identify a lake as "healthy" if its pH and alkalinity are within the desired range(s). 
+
+Here is code to create a new variable called `health` that identifies if the lake is healthy or not.  
+
+```{r}
+#| label: create-health
+florida <- florida |> 
+  mutate(health = case_when(ph >= 6.5 & ph <= 8.5 & alkalinity > 20 ~ "Healthy",
+                            TRUE ~ "Not Healthy")) #anything else is not healthy
+```
+
+
+We want to estimate the true proportion of lakes in Florida that are healthy.  (variable name is `health`).  
+
+23.	Write the parameter of interest (verbally and symbolically), in context of the scenario.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>$\theta =$ the population proportion of healthy lakes in Florida
+
+:::
+
+
+24.	Identify the statistical research question:
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>What is the true mean concentration of calcium carbonate for all lakes in Florida?
+
+:::
+
+
+
+25. Using R, calculate the summary statistics and create a well-labeled data visualization for the classification of lakes as healthy or not (`health`)
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: summary-stats-health
+tally(~health, data = florida)
+tally(~health, data = florida, forma = "prop")
+```
+
+```{r}
+#| label: barplot-health
+gf_props(~health, data = florida, 
+             title = "Health of n = 53 Lakes in Florida Based on pH and Alkalinity", 
+             xlab = "Health of the Lake", 
+             ylab = "Proportion of Lakes in Florida")
+```
+
+:::
+
+
+26. Describe the distribution of healthy lakes in the Florida sample.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>The proportion of not healthy lakes is $0.6038$ which is greater than the proportion of healthy lakes ($\hat{p} = 0.3962$).    
+
+:::
+
+
+27. Calculate a 95% confidence interval for the parameter of interest ("by hand"), the true proportion of healthy lakes in Florida.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: ci-health
+phat <- 0.3962
+se <- sqrt((phat*(1-phat))/53)
+
+phat - qnorm(0.975)*se
+phat + qnorm(0.975)*se
+```
+
+:::
+
+28.	Interpret the confidence interval in the context of the question. 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>Based on our sample of 53 lakes in Florida, we are 95% confident that the true proportion of healthy lakes in Florida is a single value in the interval 0.2645 and 0.5279.  
+
+:::
+
+29. Based on your confidence interval, is there evidence that less than a majority (51%) of lakes in Florida are healthy?  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+>The confidence interval contains 51% so it would be plausible that the true proportion is greater than 51%, this is not conclusive, but it is plausible.  
+
+:::
+
+
+## Final Conclusion
+Write a summary of your findings for the Florida branch of the USGS on the overall health of the lakes in Florida. 
+

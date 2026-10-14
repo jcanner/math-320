@@ -1,0 +1,830 @@
+---
+title: "Introduction to Inference: Hypothesis Testing"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      resources:
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/king.csv
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: false
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}
+
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+In a previous chapter, we discussed statistical hypothesis testing for the population proportion $\theta$ when a categorical variable has two levels (e.g., the proportion of newborn boys). Let us review the general procedure of statistical hypothesis testing:
+
+1.  Choose a parameter of interest, and state $H_0$ and $H_1$ in terms of the parameter. It depends on the research question.
+2.  Fix a significance level $\alpha$. It is a small fixed probability of committing Type I error (concluding $H_1$ when $H_0$ is true).
+3.  Calculate a test statistic and p-value under the assumption of $H_0$.
+4.  Evaluate the p-value and the level of evidence against $H_0$ based on $\alpha$.
+5.  State the conclusion in the context.
+
+In this chapter, we discuss statistical hypothesis testing for the population average $\mu$. This statistical hypothesis testing for $\mu$ is known as the **one-sample t-test**.
+
+
+## Three Kinds of Alternative Hypothesis
+
+Let $\mu$ be the unknown parameter (the population mean) to be tested.  
+
+- The null hypothesis is $H_0$: $\mu = \mu_0$ where $\mu_0$ is referred to as the **null value**.   
+
+There are three forms of alternative hypothesis $H_1$
+
+- $H_1$: $\mu > \mu_0$ which is referred to as the **right-sided test**.
+
+- $H_1$: $\mu < \mu_0$ which is referred to as the **left-sided test**.
+
+- $H_1$: $\mu \ne \mu_0$ which is referred to as the **two-sided test**.
+
+Given $H_0$: $\mu = \mu_0$, the direction of $H_1$ depends on the researcher's question of interest.
+
+
+Here are the generic symbolic and verbal structures of the hypotheses:
+
+- $H_0: μ = 0$  The population mean of the [ response variable + units] of the [population context] is zero.
+
+- $H_1: μ \{\neq, > , <\}  0$  The population mean of the [ response variable + units] of the [population context] is {not equal to/greater than/less than} zero.
+
+
+
+
+## Test Statistic {#sec-stat}
+
+Given a simple random sample $(X_1, X_2, \dots, X_n)$ of size $n \ge 2$ from any population distribution, let $\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i$ be the sample mean and $S = \sqrt{ \frac{1}{n - 1} \sum_{i=1}^n (X_i - \bar{X})^2 }$ be the sample standard deviation. Under the null hypothesis $H_0$: $\mu = \mu_0$, a test statistic is given by
+
+$$
+T = \frac{\bar{X} - \mu_0}{ \frac{S}{\sqrt{n}} }
+$$
+
+This test statistic is referred to as a **T statistic**. The numerator of $T$ measures the discrepancy between the sample mean $\bar{X}$ and the null value $\mu_0$, and the denominator $\texttt{SE} = \frac{S}{\sqrt{n}}$ (which is referred to as the standard error of $\bar{X}$) quantifies the uncertainty about the sample mean $\bar{X}$.
+
+A large magnitude of $T$ is evidence against the null hypothesis $H_0$: $\mu = \mu_0$. Under the assumption of $H_0$, the reference probability model for the T statistic is the T distribution with $\nu = n - 1$ degrees of freedom, and we write $T \sim \mathcal{T}(\nu)$. 
+
+It is also called the **null distribution** of $T$ (the sampling distribution of $T$ under the assumption of $H_0$). The below figure shows the T distribution with $\nu =$ 2, 3, 5, and 10 degrees of freedom. As $\nu$ increases (i.e., the sample size $n$ increases), the T distribution converges to the standard normal distribution.
+
+```{r}
+#| label: t-distribution
+#| echo: false
+#| fig-alt: "T-Distribution Comparison of different degrees of freedom."
+
+
+mu <- 0
+sigma <- 1
+x <- seq(-10, 10, 0.001)
+
+df <- data.frame(
+  x = x,
+  norm = dnorm(x, mean = mu, sd = sigma),
+  t_2 = dt(x, df = 2),
+  t_3 = dt(x, df = 3),
+  t_5 = dt(x, df = 5),
+  t_10 = dt(x, df = 10)
+)
+
+df_long <- reshape(
+  df,
+  varying = names(df)[-1],
+  v.names = "density",
+  timevar = "distribution",
+  times = names(df)[-1],
+  direction = "long"
+) |> 
+  mutate(distribution = case_when(
+    distribution == "norm" ~ "N(0,1)",
+    distribution == "t_2" ~ "T(2)",
+    distribution == "t_3" ~ "T(3)",
+    distribution == "t_5" ~ "T(5)",
+    distribution == "t_10" ~ "T(10)"
+  ),
+  distribution = factor(distribution, 
+                        levels = c("T(2)",
+                                   "T(3)",
+                                   "T(5)",
+                                   "T(10)",
+                                   "N(0,1)") ))
+  
+
+ggplot(df_long, aes(x = x, y = density,
+                    color = fct_rev(distribution),
+                    linetype =fct_rev(distribution))) +
+  geom_line(linewidth = 1) +
+  geom_hline(yintercept = 0, color = "black") +
+  scale_color_manual(
+    values = c(
+      "N(0,1)" = "black",
+      "T(2)" = "purple",
+      "T(3)" = "orange",
+      "T(5)" = "darkgreen",
+      "T(10)" = "lightblue"
+    )
+  ) +
+  scale_linetype_manual(
+    values = c(
+      "N(0,1)" = "solid",
+      "T(2)" = "dashed",
+      "T(3)" = "dotted",
+      "T(5)" = "dotdash",
+      "T(10)" = "twodash"
+    )
+  ) +
+  coord_cartesian(xlim = c(-6, 6)) +
+  labs(
+    title = "T Distribution vs. Standard Normal Distribution",
+    x = "T Statistic",
+    y = "Density",
+    color = NULL,
+    linetype = NULL
+  ) +
+  theme_light() +
+  theme(
+    legend.position = c(0.85, 0.85),
+    plot.title = element_text(hjust = 0.5)
+  )
+```
+
+
+### Decision Based on P-value
+
+Remember that the **p-value** is defined as the probability of observing an observed outcome or a more more extreme under the assumption of $H_0$. After calculating $T = \texttt{t}$, the calculation of p-value depends on the direction of $H_1$ as follows:
+
+- [Right-sided test]{.underline}: p = `1 - pt(t, df)`
+
+<!-- -->
+
+- [Left-sided test]{.underline}: p = `pt(t, df)`
+
+- [Two-sided test]{.underline}: p = `2 * pt(t, df)` if $\texttt{t} < 0$ or p = `2 * (1 - pt(t, df)` if $\texttt{t} > 0$
+
+```{r}
+#| label: shaded-curves
+#| echo: false
+#| fig-width: 6.5
+mu <- 0
+sigma <- 1
+z <- 1.5
+
+# Normal curve
+curve_data <- data.frame(
+  x = seq(-4, 4, by = 0.001)
+)
+curve_data$y <- dnorm(curve_data$x, mu, sigma)
+
+# X-values used for the P-value lines
+grid <- seq(-4, 4, by = 0.01)
+
+pvalue_data <- rbind(
+  data.frame(
+    test = "Left-sided Test",
+    x = grid[grid <= -z]
+  ),
+  data.frame(
+    test = "Right-sided Test",
+    x = grid[grid >= z]
+  ),
+  data.frame(
+    test = "Two-sided Test",
+    x = grid[abs(grid) >= z]
+  )
+)
+
+pvalue_data$y <- dnorm(pvalue_data$x, mu, sigma)
+
+ggplot() +
+  # Normal density curve
+  geom_line(
+    data = curve_data,
+    aes(x = x, y = y),
+    linewidth = 0.8
+  ) +
+
+  # Gold P-value lines
+  geom_segment(
+    data = pvalue_data,
+    aes(
+      x = x,
+      xend = x,
+      y = 0,
+      yend = y,
+      color = "P-value"
+    ),
+    linewidth = 0.5
+  ) +
+
+  facet_wrap(~ test, nrow = 1) +
+
+  scale_color_manual(
+    values = c("P-value" = "darkgrey")
+  ) +
+
+  scale_x_continuous(
+    name = "T Statistic",
+    breaks = c(-z, 0, z),
+    labels = c("-|t|", "0", "|t|"),
+    limits = c(-4, 4)
+  ) +
+
+  scale_y_continuous(
+    name = NULL,
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+
+  labs(color = NULL) +
+
+  theme_light() +
+  theme(
+    legend.position = c(0.94, 0.9),
+    legend.background = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+### Interpretation of the P-value
+
+The universal definition of **p-value** is the probability of observing the currently observed test statistic or more extreme/greater/less under the assumption of $H_0$, depending on the direction of the alternative.. 
+
+Here is a more generic interpretation:
+
+There is a probability of {p-value} of observing {test statistic (with associated degrees of freedom)} or … {/more extreme/greater/less}… , if {context of null hypothesis} is true.  
+
+
+Which alternative test uses...
+
+
+- more extreme....
+
+
+- greater....
+
+
+- less... 
+
+
+
+### Evaluation of the P-value
+
+We can **evaluate** p-values based on its proximity to the the **significance** level:
+
+![Evidence against the null hypothesis](12-intro-hypothesis-tests/pvalue-generic.png)
+
+To scale this to our $\alpha = 0.05$, we would use the following scale
+
+![Evidence against the null hypothesis $\alpha = 0.05$](12-intro-hypothesis-tests/pvalue-05.png)
+
+
+Using the above scale we can write the following evaluation:
+
+We have {very strong/strong/moderate/some/little} evidence against the null hypothesis (in favor of the alternative hypothesis) that the {parameter}… {context of indicated hypothesis} (t={xx}, df={xx}, p-value = {xx}, $\alpha$ = {xxx}).
+
+
+
+
+## Confidence Interval for Population Mean
+
+In some sense, the conclusion of one-sample t-test is $H_1$ (statistically discernible evidence for $H_1$) or $H_0$ (no evidence against $H_0$). In addition to this conclusion, it is important to provide both point estimate $\bar{X}$ and confidence interval $(L, U)$, and they are interpretable in the context. At a confidence level of $1 - \alpha$, a confidence interval (CI) for $\mu$ is
+
+$$
+\left( \bar{X} - t^* \cdot \frac{S}{ \sqrt{n} } , \, \bar{X} + t^* \cdot \frac{S}{ \sqrt{n} } \right)
+$$
+
+where the critical value $t^*$ is calculated by `qt(1 - $\alpha$ / 2, n - 1)`.
+
+
+### Interpretation of a Confidence Interval
+
+Based on our sample, with $(1-\alpha)\%$ confidence, the {parameter} of the {measured variable} {context of population} is a single value within the interval {lower bound} and {upper bound} {insert units}.
+
+
+### Evaluation of a Confidence Interval
+We can use the confidence interval to help evaluate a claim about the parameter:
+
+- State that the confidence interval describes plausible values of the parameter, and identify those plausible values of the parameter based on the confidence interval  
+- Discuss the entirety of the interval and the relation of the entire interval to the specified value of the estimated population parameter. This could take the form of stating that even the upper bound is less than the specified value, so thus all plausible values are less.  
+- Conclude if value or range is plausible based on the entirety of the interval and if that supports the claim about the parameter.  
+
+
+
+Note - the only time you are guaranteed to have the CI and Test "agree" is when you are doing a two-sided test where the confidence level and significance level are complements (95% and 5%). 
+
+
+## Case Study I: Students with Dyslexia {#sec-casestudy1}
+
+Dyslexia is a learning disorder which affects reading, spelling, and writing. Dyslexia is not related to intelligence or vision, but many people with dyslexia have difficulties in decoding letters and words. Most people with dyslexia can overcome the learning difficulties after receiving a specialized education program. Woodcock Johnson Tests are a set of standardized tests in diverse areas, and they are used as an assessment tool in the specialized education program. The standardized tests are designed in a way that the scores follow a normal distribution with a mean of 100. In addition to reading, writing, and spelling, researchers have hypothesized that dyslexia can affect math calculation ability because it requires decoding math symbols. The dataset $\texttt{mathcalculation.csv}$ is a sample of 59 students with dyslexia who received the specialized education program. The column $\texttt{pre}$ is the math calculation test score at the time of entering the program, and the column $\texttt{post}$ is the test score after completing one year of the program. There are two objectives of data analysis. The first objective is to test whether the population average of math calculation score is below the mean of 100 (i.e., comparing to students without dyslexia), and the second objective is to test whether the students with dyslexia improve math calculation score, on average, after completion one year of the program. A significance level is fixed at $\alpha = 0.05$ for both tests.
+
+### Objective 1: Baseline Score
+
+The population of interest is students with dyslexia, and the variable of interest is the baseline math calculation score at the time of entering the program. We want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.  
+
+
+```{r}
+#| label: read-math-calc
+mathscore <- read_csv("data/mathcalculation.csv", show_col_types = FALSE)
+head(mathscore, 5)
+```
+
+```{r}
+#| label: math-pre-stats
+df_stats(~pre, data = mathscore) ### descriptive statistics
+```
+
+
+```{r}
+#| label: math-pre-box
+gf_boxplot(~pre, data = mathscore,
+        title = "Students with Dyslexia (Baseline)",
+        xlab = "Math Calculation Score") |> 
+  gf_theme(axis.text.y = element_blank())
+```
+
+```{r}
+#| label: math-pre-hist
+gf_histogram(~pre, data = mathscore,
+     title = "Students with Dyslexia (Baseline)",
+     xlab = "Math Calculation Score",
+     binwidth = 5, color = "black")
+```
+
+
+1.	Identify the following:
+
+Variable and Type: ____________________________________
+
+Population of Interest:   _____________________________________
+
+Sample:   _____________________________________
+
+Type of Sampling:  _____________________________________
+
+2. Identify whether this is an experimental or observational study. Provide a justification in context of your classification of the study type. 
+
+
+
+3. TWe want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.  
+
+a.	Write the appropriate symbolic representation of the null and alternative hypotheses.
+
+
+
+
+
+b.	Write a verbal description of the parameter of interest from the hypothesis above in the context of the scenario. 
+
+
+
+
+5.	Sketch the null distribution for this scenario, being sure to accurately reflect the shape of the distribution.  Label the center of the distribution with the appropriate symbol or value, as applicable.
+
+
+
+
+
+6. Calculate the following values and provide their interpretation in context.  
+
+a. Calculate and interpret the test statistic.
+
+
+
+
+
+b. Calculate and interpret the associated p-value in the context of the scenario.
+
+
+
+
+
+c.	Provide a strength of evidence statement, using a significance level of 0.05.
+
+
+
+
+
+
+d. Calculate and interpret a 95% confidence interval. 
+
+
+
+
+
+e. Evaluate the confidence interval in the context of the research question.  
+
+
+
+
+
+
+
+7. Provide at least one piece of evidence from the summary statistics and/or data visualizations provided to support your conclusion about the math calculation score for students with dyslexia. Be sure to cite your evidence and make a conclusion about the parameter(s).
+
+
+
+
+
+8. Write out the definition of Type I and Type II Error in the context of the scenario. Then identify which type of error was possible (and its probability of occuring if possible).
+
+
+
+
+9.	Identify the population, if any, to which the study can be generalized. Explain why with evidence. 
+
+
+
+
+
+## Paired T-Test
+
+In situations where we have two measurements on the same individual, we can calculate the difference in the values. This will change our parameter to the **true mean of the differences**, denoted as $\mu_d$.
+
+
+### Objective 2: Change in Score
+
+In the population of students with dyslexia, we are now interested in the average change in the math calculation score after one year of the program. Here, the "change" means the post-score minus pre-score, and we can measure the individual student's change in the data.
+
+```{r}
+head(mathscore, 5)
+mathscore$change = mathscore$post - mathscore$pre ### create new column change in the data
+head(mathscore, 5)
+```
+
+Now, let $\mu_D$ be the population average change in the math calculation score, and statistical hypothesis testing for $\mu_D$ can be formulated as $H_0$: $\mu_D = 0$ versus $H_1$: $\mu_D > 0$ (right-sided test) according to the second objective. The sample size is still $n = 59$ students, the sample average change is $\bar{D} = 83.8$, and the sample standard deviation is $S_D = 11.2$.
+
+```{r, fig.height = 4.5, fig.width = 10, out.height = "90%", out.width = "90%", fig.alt = "Boxplot of change in math calculation score"}
+stat = favstats(~change, data = mathscore) ### descriptive statistics
+stat
+
+par( mfrow = c(1, 2) ) ### 1 by 2 graphic panels
+boxplot(mathscore$change,
+        horizontal = TRUE,
+        main = "Students with Dyslexia (Change Over One Year)",
+        xlab = "Change in Math Calculation Score",
+        col = 3)
+hist(mathscore$change,
+     main = "Students with Dyslexia (Change Over One Year)",
+     xlab = "Change in Math Calculation Score",
+     breaks = seq(-50, 50, 5),
+     col = 4, border = "white")
+```
+
+Below is the calculation of T statistic and p-value for the second objective.
+
+```{r}
+mu0_d = 0 ### null value
+dbar = stat$mean ### sample mean
+s_d = stat$sd ### sample standard deviation
+n = stat$n ### sample size
+se = s_d / sqrt(n) ### standard error
+t = (dbar - mu0_d) / se ### test statistic
+p = 1 - pt(t, n - 1) ### p-value for right-sided test
+t
+p
+```
+
+The calculated T statistic is $T = 1.14$, and the calculated p-value is 0.129. To this end, we conclude $H_0$: $\mu_D = 0$ at a significance level of $\alpha = 0.05$. In other words, the data provide a lack of evidence to conclude that the average change in math calculation score is positive. We estimate that the one-year effect of the special education program is $\bar{D} = 1.14$, and we are 95% confident that the true average change in math calculation score is between \$L = -1.0\$ and \$U = 3.5\$ (covering the null value $\mu_D = 0$). Even if the program was effective, the effect size might be too small to observe statistical significance from the sample of $n = 59$ students.
+
+```{r}
+dbar
+conf_level = 0.95 ### confidence level
+alpha = 1 - conf_level ### probability allowed for missing true population mean
+c = qt(1 - alpha/2, n - 1) ### critical value
+c
+L = dbar - c * se ### lower bound of confidence interval
+U = dbar + c * se ### upper bound of confidence interval
+round(L, 1)
+round(U, 1)
+```
+
+## Checking Normality Assumption
+
+The one-sample t-test for the population mean $\mu$ is formulated assuming that a simple random sample is from a normal distribution. This assumption is referred to as the **normality assumption**. The one-sample t-test and CI for $\mu$ are valid under the normality assumption [or]{.underline} a large sample size (at least $n = 30$).
+
+There are two methods of checking the normality assumption. The first method is a graphic assessment which is known as the **Q-Q plot**. If the data points substantially deviate from a straight line, it is a sign of violating the normality assumption. This graphic method is somewhat vague. The second method is a formal statistical test for the normality assumption which is known as the **Shapiro-Wilk test**. The null hypothesis of the Shapiro-Wilk test is that a sample is from a normal distribution, and the alternative hypothesis is that a sample is not from a normal distribution. If the p-value of the Shapiro-Wilk test is less than a significance level of $\alpha$ (typically 0.05), the alternative hypothesis is concluded (i.e., violation of normality assumption). The calculation of the p-value of the Shapiro-Wilk test is not a scope of this chapter.
+
+```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Q-Q plot of baseilne score"}
+qqnorm(mathscore$pre) ### Q-Q plot
+qqline(mathscore$pre) ### superimpose straight line
+shapiro.test(mathscore$pre)$p.value ### Shapiro-Wilk test
+```
+
+The tails of Q-Q plot substantially deviate from the superimposed straight line, and the Shapiro-Wilk test results in a p-value of 0.0047. It indicates that the sample of baseline score ($\texttt{pre}$) is not from a normal distribution. This evidence of violating the normality assumption is not a big concern in this analysis because the sample size is $n = 59$ (at least $n = 30$). For the purpose of demonstration, let us test whether the change in score follows the normality assumption.
+
+```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Q-Qplot of change in score"}
+
+gf_qq(~change, data = mathscore)
+qqnorm(mathscore$change) ### Q-Q plot
+qqline(mathscore$change) ### superimpose straight line
+shapiro.test(mathscore$change)$p.value ### Shapiro-Wilk test
+```
+
+The Q-Q plot is fairly straight when compared to the superimposed straight line, and the Shapiro-Wilk test results in a p-value of 0.5359. To this end, the normality assumption is satisfied (and the sample size is at least 30). To this end, the results from the one-sample t-test and 95% CI in @sec-casestudy1 (both objectives) are valid.
+
+### Evaluating a QQ Plot
+
+- Discuss the pattern of the data/residuals compared to the 1:1 line that represents perfect normality
+- Describe specific details about the pattern such as if there are any deviations, where the deviations are located along the 1:1 line, and the magnitude of the deviations
+- Evaluate the severity of the deviations from the 1:1 line relative to the sample size, which should be cited.
+- Identify if the cumulative frequency of the data/residuals increases at the same rate  as the normal distribution (as represented by the 1:1 line)
+
+
+### Evaluating Sufficient Sample Size Conditions
+
+●	Evaluate if the sample size is sufficiently large based on whether the distribution of the sample is symmetric/normally distributed, or meets the appropriate conditions based on the type of statistical inference test being performed.
+
+## Case Study II: CD4 Cells Count {#sec-cd4}
+
+CD4 cells are white blood cells that fight infection in human body. The count of CD4 cells is between 500 to 1500 cells/mm$^3$ for healthy humans. HIV-positive patients suffer from a low count of CD4 cells because the human immunodeficiency virus (HIV) kills CD4 cells. A low count of CD4 cells can lead to the death of a HIV-positive patient. Researchers developed a new treatment to increase CD4 cells for HIV-positive patients, and one-sample t-test can be applied to determine whether the treatment is effective or not, on average. The dataset $\texttt{cd4.csv}$ is a sample of 20 HIV-positive patients. The column $\texttt{id}$ is the patient identification number, $\texttt{pre}$ is the count of CD4 cells prior to the treatment, and $\texttt{post}$ is the count after the treatment for one year. The treatment effect on each individual patient is measured by \$\\texttt{change} = \texttt{post} - \texttt{pre}\$.
+
+```{r}
+cd4 = read.csv("Data/cd4.csv")
+head(cd4, 5)
+cd4$change = cd4$post - cd4$pre
+head(cd4, 5)
+```
+
+Let $\mu_D$ be the expected (population average) change in the CD4 count after one year of the treatment among HIV-positive patients. Our goal is to test $H_0$: $\mu_D = 0$ (no treatment effect, on average) versus $H_1$: $\mu_D > 0$ (beneficial effect, on average) at a significance level of $\alpha = 0.05$.
+
+### Exploratory Data Analysis
+
+Before formally conduct the one-sample t-test for $\mu_D$, let us explore the data by calculating descriptive statistics and visualizing the data.
+
+```{r, message = FALSE, warning = FALSE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Boxplot of change in CD4 count"}
+library(mosaic)
+favstats(~pre, data = cd4) ### count prior to the treatment
+favstats(~post, data = cd4) ### count after one year of treatment
+favstats(~change, data = cd4) ### change in the count
+boxplot(cd4$change,
+        horizontal = TRUE,
+        main = "HIV+ Patients (Change Over One Year)",
+        xlab = "Change in the count of CD4 cells (per cubic millimeter)",
+        col = "gold")
+stripchart(cd4$change, 
+           add = TRUE, 
+           pch = 19,
+           col = "blue",
+           offset = 0.1,
+           method = "stack")
+```
+
+Prior to the treatment, the sample mean of CD4 count was 328.8 cells/mm$^3$ prior to the treatment and 409.3 cells/mm$^3$, and the sample average change in CD4 count was 80.5 cells/mm$^3$. More than 75% of patients observed a positive change of 26.75 cells/mm$^3$ or more, and the sample maximum change was 232 cells/mm$^3$. Based on these statistics and the above boxplot (18 out of 20 patients showed positive changes), the treatment appears to be effective on increasing the CD4 count, on average.
+
+### One-sample T-test
+
+Our goal is to test $H_0$: $\mu_D = 0$ (no treatment effect, on average) versus $H_1$: $\mu_D > 0$ at a significance level of $\alpha = 0.05$. For this right-sided test, the T statistic and p-value can be calculated using the $\texttt{t.test}$ function as follows.
+
+```{r}
+t.test(cd4$change, mu = 0, alternative = "greater")
+```
+
+Based on a sample of $n = 20$ patients, the calculated T statistic is 4.49 ($\nu = 19$ degrees of freedom), and the calculated p-value is 0.000125. At a significance level of $\alpha = 0.05$, it is statistically significant that the one-year treatment increases the count of CD4 cells, on average, for HIV-positive patients.
+
+### Confidence Interval
+
+The 95% CI for $\mu_D$ can be calculated using the $\texttt{t.test}$ function as well.
+
+```{r}
+t.test(cd4$change, conf.level = 0.95)$conf.int
+```
+
+We estimate that the average change in CD4 count is 80.5 cells/mm$^3$, and we are 95% confident that the true average change is between 43.0 and 118.0 cells/mm$^3$.
+
+### Checking Normality Assumption
+
+As the sample size $n = 20$ is small (less than 30), checking the normality assumption is important to ensure the conclusion and interval estimation are valid.
+
+```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Q-Q plot of change in CD4 count"}
+qqnorm(cd4$change) ### Q-Q plot
+qqline(cd4$change) ### superimpose straight line
+shapiro.test(cd4$change)$p.value ### Shapiro-Wilk test
+```
+
+The Q-Q plot is fairly straight, and the Shapiro-Wilk test results in a p-value of 0.496. At a significance level $\alpha = 0.05$, we do not have a strong evidence against the null hypothesis (the normality assumption).
+
+## Using $\texttt{t.test}$ Function in R
+
+As shown in the previous case study, the $\texttt{t.test}$ function is useful for the one-sample t-test and CI. When it is used for one-sample t.test:
+
+- The first argument is the sample (column of dataset).
+
+- $\texttt{mu}$ is the null value.
+
+- $\texttt{alternative}$ is the direction of alternative hypothesis. Specify $\texttt{"greater"}$ for a right-sided test, $\texttt{"less"}$ for a left-sided test, or $\texttt{"two.sided"}$ for a two-sided test.
+
+When it is used for the calculation of CI:
+
+- The first argument is the sample (column of dataset).
+
+- $\texttt{conf.level}$ is the confidence level.
+
+## Warm-up
+
+*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSc-b22CFpKPpFd6nnWWLoUMfBcvzJrgXB24PDd6ZXf8rTWt1Q/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+
+**Problem 1.** Fill in the blank.
+
+a. The \[n... a...\] implies that a simple random sample is from a normal distribution.
+
+b. The shape of a T distribution is determined by the \[d... o... f...\], and it is calculated by the sample size minus one for the one-sample t-test.
+
+c. In the one-sample t-test, the alternative hypothesis is concluded when the \[p...\] is less than the significance level.
+
+d. The Q-Q plot is a graphical assessment of the normality assumption, and the \[S... t...\] is a formal test for the normality assumption.
+
+**Problem 2.** For one-sample t-test with a null value of 100, suppose we observed a sample mean of 96 and a sample standard deviation of 25 from a sample of size 100. Calculate the following.
+
+a. T statistic
+
+b. p-value for a left-sided test
+
+c. p-value for a right-sided test
+
+d. p-value for a two-sided test
+
+e. the length of a 95% CI for the population mean.
+
+f. the length of a 90% CI for the population mean.
+
+**Problem 3.** In the case study in @sec-cd4, the T statistic is 4.4908, and the p-value (for the right-sided test) is 0.000125. If the researchers were interested in the two-sided test, that is $H_0$: $\mu_D = 0$ versus $H_1$: $\mu_D \ne 0$, what would be the p-value given the same sample?
+
+**Problem 4.** Multiple-choice: Which of the following T statistics results in the smallest p-value for a left-sided test?
+
+\(A\) $T = -2$
+
+\(B\) $T = -1$
+
+\(C\) $T = 0$
+
+\(D\) $T = 3$
+
+\(E\) insufficient information to answer
+
+**Problem 5.** Multiple-choice: Which of the following is a sign of violating the normality assumption?
+
+\(A\) The Q-Q plot is fairly straight.
+
+\(B\) The Q-Q plot severely deviates from the straight line.
+
+\(C\) The Shapiro-Wilk test results in a p-value of 0.999.
+
+\(D\) The one-sample t-test results in a p-value of 0.001.
+
+\(E\) The one-sample t-test results in a p-value of 0.999.
+
+\(F\) (B) and (C)
+
+\(G\) (C) and (D)
+
+**Problem 6.** True or false: If a sample size is very large (substantially larger than 30) and the Shapiro-Wilk test indicates violation of the normality assumption, the one-sample t-test and CI are [not]{.underline} valid.
+
+**Problem 7.** Suppose we want to test $H_0$: $\mu = 80$ versus $H_1$: $\mu < 80$. Calculate the following statistics given a sample $(50, 64)$ of size two.
+
+a. sample mean
+
+b. sample standard deviation
+
+c. standard error
+
+d. T statistic
+
+e. p-value
+
+## Assignment
+
+***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSeTGKgSYHlUHGIRMd4jUmgSMKqQmzzKOMUCavkFbUGRpsQW2A/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+
+***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
+
+**Problem 1.** A massive outbreak of food-borne illness was attributed to *Salmonella enteritidis* which can cause fever, abdominal cramps, and diarrhea beginning 12 to 72 hours after consuming a contaminated food or beverage. The illness usually lasts 4 to 7 days, and most people recover without antibiotic treatment. However, the person may be ill enough to require hospitalization. After the outbreak of food-borne illness, investigators identified an ice cream company, and five production runs of the ice cream company were randomly sampled. Let $\mu$ be the population average level of S. enteritidis among all production runs of the ice cream company. A level of *S. enteritidis* greater than 0.3 MPN/g (most probable number per gram) is considered to be dangerous in public health. The investigators' goal is to test if the population average level of *S. enteritidis* is above the dangerous level.
+
+**Note:** In this problem, use other functions than $\texttt{t.test}$ in R.
+
+a. Multiple-choice: Which of the following is the null hypothesis $H_0$?
+
+\(A\) $\mu = 0.3$
+
+\(B\) $\mu > 0.3$
+
+\(C\) $\mu < 0.3$
+
+\(D\) $\mu \ne 0.3$
+
+\(E\) to be determined after observing data
+
+b. Multiple-choice: Which of the following is the alternative hypothesis $H_1$?
+
+\(A\) $\mu = 0.3$
+
+\(B\) $\mu > 0.3$
+
+\(C\) $\mu < 0.3$
+
+\(D\) $\mu \ne 0.3$
+
+\(E\) to be determined after observing data
+
+c. The researchers collected the following data: (0.593, 0.142, 0.329, 0.231, 0.292). Calculate the T statistic.
+
+d. Calculate the p-value.
+
+e. Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
+
+f. Calculate the lower bound of 95% CI.
+
+g. Calculate the upper bound of 95% CI.
+
+h. Draw the Q-Q plot in R (to be shown in the html file), and report the p-value from the Shapiro-Wilk test in the Google form.
+
+\*i. State the conclusion in the context. Your statement must include the following: (1) conclusion from the one-sample t-test, (2) point and interval estimation, (3) assessment of the normality assumption, and (4) criticism about the formulation of this one-sample t-test.
+
+**Problem 2.** A soccer match is 90 minutes (540 seconds) or longer, so players must have high endurance. Many years ago, the CSUMB Women Soccer Team performed a fitness test known as the YBMI which stands for "You Better Make It." It was a popular endurance test for college soccer players. It is designed as follows:
+
+- Run 800 meters (2-minute rest)
+
+- Run 400 meters (2-minute rest)
+
+- Sprint 6 yards and back, 18 yards and back, and 60 yards and back (1-minute rest)
+
+- Sprint 6 yards and back, 18 yards and back, and 60 yards and back (1-minute rest)
+
+- Run 400 meters (2-minute rest)
+
+- Run 800 meters (done)
+
+The passing time is 9 minutes (considered to be ready for a match the season) excluding the rest times. The YBMI test was performed before the season and in the middle of the season. In the dataset $\texttt{ybmi.csv}$, the column $\texttt{test1}$ is the time to complete the the YBMI test before the season started, and $\texttt{test2}$ is the time in the middle of the season. The time was measured in seconds. Let $\mu_1$ be the expected time (team-average endurance level) before the season started, let $\mu_{D}$ be the average change in the time (where $D = \texttt{test2} - \texttt{test1}$), and $\mu_2$ be the expected time in the middle of the season. In this problem, the parameter of interest is $\mu_1$. The coach wanted to test whether the team-average endurance level is ready or not at the time of the YBMI test (prior to the season).
+
+a. What is the null value (in seconds) in the null hypothesis $H_0$?
+
+b. Multiple-choice: What is the alternative hypothesis $H_1$?
+
+\(A\) same as the null hypothesis (i.e., the parameter is equal to the null value)
+
+\(B\) right-sided test (i.e., the parameter is greater than the null value)
+
+\(C\) left-sided test (i.e., the parameter is iess than the null value)
+
+\(D\) two-sided test (i.e., the parameter is not equal to the null value)
+
+\(E\) to be determined after observing data
+
+\*c. Provide descriptive statistics and boxplot for the variable of interest. Describe in words.
+
+d. Calculate the T statistic.
+
+e. Calculate the p-value.
+
+f. Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
+
+g. Calculate the lower bound of 95% CI.
+
+h. Calculate the upper bound of 95% CI.
+
+i. True or false: According to the Shapiro-Wilk test, at a significance level of $\alpha = 0.05$, there is a sign of violating the normality assumption, so the above results are not valid.
+
+**Problem 3.** In this problem, the parameter of interest is $\mu_D$. The coach wanted to test if players' endurance levels have improved during the season on average. Repeat parts a to i of Problem 2 for this objective.
+
+**Problem 4.** In this problem, the parameter of interest is $\mu_2$. The coach wanted to test if the team-level endurance level is ready at the time of the YBMI test (in the middle of the season). Repeat parts a to i of Problem 2 for this objective.
+
+**\*Problem 5.** Combine your results of Problems 2 to 4, and write a short statistical report for the coach in 200-300 words. Include one table and one graphic (or one set of graphics).
+
