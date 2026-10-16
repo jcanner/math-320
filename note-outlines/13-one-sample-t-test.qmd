@@ -9,8 +9,6 @@ format:
         - tidyverse
       repos:
         - https://projectmosaic.r-universe.dev
-      resources:
-        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/8-intro-to-stats/king.csv
       cell-options:
         warning: true
         completion: false
@@ -409,7 +407,7 @@ Spread: $s = 11.18395$, $IQR = 94 - 75 = 19$
 
 3.	We want to determine if the math calculation score at baseline for students with dyslexia is less than that of students without dyslexia, who average 100 on the assessment.
 
-    a.	Write the appropriate symbolic representation of the null and alternative hypotheses.
+a.	Write the appropriate symbolic representation of the null and alternative hypotheses.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -418,7 +416,7 @@ $H_0: \mu = 100$
 $H_1: \mu < 100$   
 :::
 
-    b.	Write a verbal description of the parameter of interest from the hypothesis above in the context of the scenario.
+b.	Write a verbal description of the parameter of interest from the hypothesis above in the context of the scenario.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -439,7 +437,8 @@ gf_dist("t", df = 58, xlab = "t statistic")
 
 
 6.	Calculate the following values and provide their interpretation in context.
-    a.	Calculate and interpret the test statistic.
+
+a. Calculate and interpret the test statistic.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -449,7 +448,7 @@ The sample mean is -11.15 standard errors away from the hypothesize mean/null va
 :::
 
 
-    b.	Calculate and interpret the associated p-value in the context of the scenario.
+b. Calculate and interpret the associated p-value in the context of the scenario.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -460,7 +459,7 @@ pt(-11.15178, df = 59-1)
 There is a <0.0001 probability of observing $t = -11.15$ or less assuming the true mean math calculation score for all students with dyslexia is 100.  
 :::
 
-    c.	Provide a strength of evidence statement, using a significance level of 0.05.
+c. Provide a strength of evidence statement, using a significance level of 0.05.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -468,7 +467,7 @@ We have very strong evidence against the null hypothesis and in favor of the alt
 :::
 
 
-    d.	Calculate and interpret a 95% confidence interval.
+d. Calculate and interpret a 95% confidence interval.
 
 :::{.callout-tip collapse="true"}
 #### Answer
@@ -482,7 +481,7 @@ We are 95% confident that the true mean math calcuation score of all students wi
 
 
 
-    e.	Evaluate the confidence interval in the context of the research question.
+e. Evaluate the confidence interval in the context of the research question.
 
 :::{.callout-tip collapse="true"}
 #### Answer
