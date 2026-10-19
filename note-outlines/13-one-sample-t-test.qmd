@@ -82,9 +82,9 @@ Given $H_0$: $\mu = \mu_0$, the direction of $H_1$ depends on the researcher's q
 
 Here are the generic symbolic and verbal structures of the hypotheses:
 
-- $H_0: μ = 0$ The population mean of the \[ response variable + units\] of the \[population context\] is zero.
+- $H_0: μ = 0$ The population mean of the \[ response variable + units\] of the \[population context\] is the null value.
 
-- $H_1: μ \{\neq, > , <\}  0$ The population mean of the \[ response variable + units\] of the \[population context\] is {not equal to/greater than/less than} zero.
+- $H_1: μ \{\neq, > , <\}  0$ The population mean of the \[ response variable + units\] of the \[population context\] is {not equal to/greater than/less than} the null value.
 
 ## Test Statistic {#sec-stat}
 
@@ -824,6 +824,7 @@ c. Provide descriptive statistics and boxplot for the variable of interest. Desc
 #### Answer
 ```{r}
 #| label: descriptives
+#| echo: false
 ybmi <- read_csv("data/ybmi.csv", show_col_types = FALSE)
 df_stats(~test1, data = ybmi)
 
@@ -900,6 +901,7 @@ c.  Provide descriptive statistics and boxplot for the variable of interest. Des
 #### Answer
 ```{r}
 #| label: test-2
+#| echo: false
 df_stats(~test2, data = ybmi)
 
 gf_boxplot(~test2, data = ybmi,

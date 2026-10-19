@@ -307,6 +307,12 @@ window.Quarto = {
  <span class="menu-text">Practice with One Parameter Inference</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/15-paired-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Paired Data</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -407,8 +413,8 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <p>Given <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu = \mu_0\)</span>, the direction of <span class="math inline">\(H_1\)</span> depends on the researcher’s question of interest.</p>
 <p>Here are the generic symbolic and verbal structures of the hypotheses:</p>
 <ul>
-<li><p><span class="math inline">\(H_0: μ = 0\)</span> The population mean of the [ response variable + units] of the [population context] is zero.</p></li>
-<li><p><span class="math inline">\(H_1: μ \{\neq, &gt; , &lt;\}  0\)</span> The population mean of the [ response variable + units] of the [population context] is {not equal to/greater than/less than} zero.</p></li>
+<li><p><span class="math inline">\(H_0: μ = 0\)</span> The population mean of the [ response variable + units] of the [population context] is the null value.</p></li>
+<li><p><span class="math inline">\(H_1: μ \{\neq, &gt; , &lt;\}  0\)</span> The population mean of the [ response variable + units] of the [population context] is {not equal to/greater than/less than} the null value.</p></li>
 </ul>
 </section>
 <section id="sec-stat" class="level2" data-number="2">
@@ -1126,38 +1132,38 @@ attr(,"conf.level")
 <p>Multiple-choice: Which of the following T statistics results in the smallest p-value for a left-sided test?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_40549" onsubmit="return validate_form_40549()" method="post">
+<form name="form_59543" onsubmit="return validate_form_59543()" method="post">
 <label>
-<input type="radio" name="answer_40549" id="answer_40549_1" value="T = -2">
+<input type="radio" name="answer_59543" id="answer_59543_1" value="T = -2">
 T = -2
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40549" id="answer_40549_2" value="T = -1">
+<input type="radio" name="answer_59543" id="answer_59543_2" value="T = -1">
 T = -1
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40549" id="answer_40549_3" value="T = 0">
+<input type="radio" name="answer_59543" id="answer_59543_3" value="T = 0">
 T = 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40549" id="answer_40549_4" value="T = 3">
+<input type="radio" name="answer_59543" id="answer_59543_4" value="T = 3">
 T = 3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40549" id="answer_40549_5" value="insufficient information to answer">
+<input type="radio" name="answer_59543" id="answer_59543_5" value="insufficient information to answer">
 insufficient information to answer
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_40549"></div>
+<div id="result_59543"></div>
 </form>
-<script>function validate_form_40549() {var x, text; var x = document.forms['form_40549']['answer_40549'].value;if (x == 'T = -2'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_40549').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_59543() {var x, text; var x = document.forms['form_59543']['answer_59543'].value;if (x == 'T = -2'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_59543').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_40549').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_59543').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1275,38 +1281,38 @@ insufficient information to answer
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_15085" onsubmit="return validate_form_15085()" method="post">
+<form name="form_49422" onsubmit="return validate_form_49422()" method="post">
 <label>
-<input type="radio" name="answer_15085" id="answer_15085_1" value="μ = 0.3">
+<input type="radio" name="answer_49422" id="answer_49422_1" value="μ = 0.3">
 μ = 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_15085" id="answer_15085_2" value="μ > 0.3">
+<input type="radio" name="answer_49422" id="answer_49422_2" value="μ > 0.3">
 μ &gt; 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_15085" id="answer_15085_3" value="μ < 0.3">
+<input type="radio" name="answer_49422" id="answer_49422_3" value="μ < 0.3">
 μ &lt; 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_15085" id="answer_15085_4" value="μ ≠ 0.3">
+<input type="radio" name="answer_49422" id="answer_49422_4" value="μ ≠ 0.3">
 μ ≠ 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_15085" id="answer_15085_5" value="to be determined after observing data">
+<input type="radio" name="answer_49422" id="answer_49422_5" value="to be determined after observing data">
 to be determined after observing data
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_15085"></div>
+<div id="result_49422"></div>
 </form>
-<script>function validate_form_15085() {var x, text; var x = document.forms['form_15085']['answer_15085'].value;if (x == 'μ = 0.3'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_15085').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_49422() {var x, text; var x = document.forms['form_49422']['answer_49422'].value;if (x == 'μ = 0.3'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_49422').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_40549').innerText == 'Correct'; res2 = document.getElementById('result_15085').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_59543').innerText == 'Correct'; res2 = document.getElementById('result_49422').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1316,38 +1322,38 @@ to be determined after observing data
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_55753" onsubmit="return validate_form_55753()" method="post">
+<form name="form_59398" onsubmit="return validate_form_59398()" method="post">
 <label>
-<input type="radio" name="answer_55753" id="answer_55753_1" value="μ = 0.3">
+<input type="radio" name="answer_59398" id="answer_59398_1" value="μ = 0.3">
 μ = 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_55753" id="answer_55753_2" value="μ > 0.3">
+<input type="radio" name="answer_59398" id="answer_59398_2" value="μ > 0.3">
 μ &gt; 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_55753" id="answer_55753_3" value="μ < 0.3">
+<input type="radio" name="answer_59398" id="answer_59398_3" value="μ < 0.3">
 μ &lt; 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_55753" id="answer_55753_4" value="μ ≠ 0.3">
+<input type="radio" name="answer_59398" id="answer_59398_4" value="μ ≠ 0.3">
 μ ≠ 0.3
 </label>
 <br>
 <label>
-<input type="radio" name="answer_55753" id="answer_55753_5" value="to be determined after observing data">
+<input type="radio" name="answer_59398" id="answer_59398_5" value="to be determined after observing data">
 to be determined after observing data
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_55753"></div>
+<div id="result_59398"></div>
 </form>
-<script>function validate_form_55753() {var x, text; var x = document.forms['form_55753']['answer_55753'].value;if (x == 'μ > 0.3'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_55753').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_59398() {var x, text; var x = document.forms['form_59398']['answer_59398'].value;if (x == 'μ > 0.3'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_59398').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_40549').innerText == 'Correct'; res2 = document.getElementById('result_15085').innerText == 'Correct'; res3 = document.getElementById('result_55753').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_59543').innerText == 'Correct'; res2 = document.getElementById('result_49422').innerText == 'Correct'; res3 = document.getElementById('result_59398').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1504,38 +1510,38 @@ to be determined after observing data
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_85261" onsubmit="return validate_form_85261()" method="post">
+<form name="form_18646" onsubmit="return validate_form_18646()" method="post">
 <label>
-<input type="radio" name="answer_85261" id="answer_85261_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
+<input type="radio" name="answer_18646" id="answer_18646_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
 same as the null hypothesis (i.e., the parameter is equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_85261" id="answer_85261_2" value="right-sided test (i.e., the parameter is greater than the null value)">
+<input type="radio" name="answer_18646" id="answer_18646_2" value="right-sided test (i.e., the parameter is greater than the null value)">
 right-sided test (i.e., the parameter is greater than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_85261" id="answer_85261_3" value="left-sided test (i.e., the parameter is iess than the null value)">
+<input type="radio" name="answer_18646" id="answer_18646_3" value="left-sided test (i.e., the parameter is iess than the null value)">
 left-sided test (i.e., the parameter is iess than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_85261" id="answer_85261_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
+<input type="radio" name="answer_18646" id="answer_18646_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
 two-sided test (i.e., the parameter is not equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_85261" id="answer_85261_5" value="to be determined after observing data">
+<input type="radio" name="answer_18646" id="answer_18646_5" value="to be determined after observing data">
 to be determined after observing data
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_85261"></div>
+<div id="result_18646"></div>
 </form>
-<script>function validate_form_85261() {var x, text; var x = document.forms['form_85261']['answer_85261'].value;if (x == 'left-sided test (i.e., the parameter is iess than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_85261').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_18646() {var x, text; var x = document.forms['form_18646']['answer_18646'].value;if (x == 'left-sided test (i.e., the parameter is iess than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_18646').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_40549').innerText == 'Correct'; res2 = document.getElementById('result_15085').innerText == 'Correct'; res3 = document.getElementById('result_55753').innerText == 'Correct'; res4 = document.getElementById('result_85261').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_59543').innerText == 'Correct'; res2 = document.getElementById('result_49422').innerText == 'Correct'; res3 = document.getElementById('result_59398').innerText == 'Correct'; res4 = document.getElementById('result_18646').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1556,14 +1562,10 @@ to be determined after observing data
 <div id="callout-38" class="callout-38-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ybmi <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ybmi.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span>test1, <span class="at">data =</span> ybmi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response min     Q1 median     Q3 max     mean       sd  n missing
 1    test1 520 553.75  597.5 620.25 660 588.0625 43.14544 16       0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(<span class="sc">~</span>test1, <span class="at">data =</span> ybmi,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">"Time to Complete (sec) Pre-Season"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1698,38 +1700,38 @@ to be determined after observing data
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_96936" onsubmit="return validate_form_96936()" method="post">
+<form name="form_48683" onsubmit="return validate_form_48683()" method="post">
 <label>
-<input type="radio" name="answer_96936" id="answer_96936_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
+<input type="radio" name="answer_48683" id="answer_48683_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
 same as the null hypothesis (i.e., the parameter is equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_96936" id="answer_96936_2" value="right-sided test (i.e., the parameter is greater than the null value)">
+<input type="radio" name="answer_48683" id="answer_48683_2" value="right-sided test (i.e., the parameter is greater than the null value)">
 right-sided test (i.e., the parameter is greater than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_96936" id="answer_96936_3" value="left-sided test (i.e., the parameter is iess than the null value)">
+<input type="radio" name="answer_48683" id="answer_48683_3" value="left-sided test (i.e., the parameter is iess than the null value)">
 left-sided test (i.e., the parameter is iess than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_96936" id="answer_96936_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
+<input type="radio" name="answer_48683" id="answer_48683_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
 two-sided test (i.e., the parameter is not equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_96936" id="answer_96936_5" value="to be determined after observing data">
+<input type="radio" name="answer_48683" id="answer_48683_5" value="to be determined after observing data">
 to be determined after observing data
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_96936"></div>
+<div id="result_48683"></div>
 </form>
-<script>function validate_form_96936() {var x, text; var x = document.forms['form_96936']['answer_96936'].value;if (x == 'left-sided test (i.e., the parameter is iess than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_96936').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_48683() {var x, text; var x = document.forms['form_48683']['answer_48683'].value;if (x == 'left-sided test (i.e., the parameter is iess than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_48683').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_40549').innerText == 'Correct'; res2 = document.getElementById('result_15085').innerText == 'Correct'; res3 = document.getElementById('result_55753').innerText == 'Correct'; res4 = document.getElementById('result_85261').innerText == 'Correct'; res5 = document.getElementById('result_96936').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_59543').innerText == 'Correct'; res2 = document.getElementById('result_49422').innerText == 'Correct'; res3 = document.getElementById('result_59398').innerText == 'Correct'; res4 = document.getElementById('result_18646').innerText == 'Correct'; res5 = document.getElementById('result_48683').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1750,13 +1752,10 @@ to be determined after observing data
 <div id="callout-45" class="callout-45-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span>test2, <span class="at">data =</span> ybmi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response min     Q1 median    Q3 max     mean      sd  n missing
 1    test2 473 500.25  511.5 534.5 554 515.8125 24.8065 16       0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(<span class="sc">~</span>test2, <span class="at">data =</span> ybmi,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">"Time to Complete (sec) Mid-Season"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

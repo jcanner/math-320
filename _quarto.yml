@@ -81,6 +81,8 @@ website:
         text: "One Sample t-Tests"  
       - href: note-outlines/14-practice-one-parameter-tests.qmd
         text: "Practice with One Parameter Inference"  
+      - href: note-outlines/15-paired-t-tests.qmd
+        text: "Inference for Paired Data"  
         
 format:
   html:
