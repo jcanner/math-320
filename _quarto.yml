@@ -83,6 +83,8 @@ website:
         text: "Practice with One Parameter Inference"  
       - href: note-outlines/15-paired-t-tests.qmd
         text: "Inference for Paired Data"  
+      - href: note-outlines/16-independent-t-tests.qmd
+        text: "Inference for Independent Groups"  
         
 format:
   html:
