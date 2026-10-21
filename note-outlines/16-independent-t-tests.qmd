@@ -223,8 +223,7 @@ As in the one-sample t-test, the normality condition can be visually assessed by
 
 ```{r}
 #| label: sample-code-qq
-#| echo: false
-
+#| eval: false
 gf_qq(~response | explanatory, data = mydata,
       xlab = "Theoretical Z-Scores",
       ylab = "Observed Sample Values") |> 
@@ -391,6 +390,7 @@ t.test(bwt ~ smoke, data = birthwt2,
 Let us estimate $\mu_N - \mu_Y$ using the point estimation and 95% CI.
 
 ```{r}
+#| label: ci-bwt
 t.test(bwt ~ smoke, data = birthwt, conf.level = 0.95, var.equal = TRUE)$conf.int
 ```
 

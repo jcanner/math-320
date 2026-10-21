@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Inference for Paired Samples – MATH 320: Applied Probability and Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../note-outlines/15-paired-t-tests.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/16-independent-t-tests.html">Inference for Independent Groups</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">MATH 320: Applied Probability and Statistics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/jcanner/math-320" title="GitHub Organization" class="quarto-navigation-tool px-1" aria-label="GitHub Organization"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Getting Started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RStudio Orientation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/intro-to-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/install-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install R and RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Note Outlines</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/1-intro-r-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to R and Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/2-intro-probability-i.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/3-intro-probability-ii.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability II</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/4-bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/5-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/6-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/7-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Central Limit Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/8-intro-to-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/9-summarizing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summarizing and Visualizing Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/10-sampling-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling Methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/11-intro-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/12-intro-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/13-one-sample-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One Sample t-Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/14-practice-one-parameter-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practice with One Parameter Inference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/15-paired-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Paired Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/16-independent-t-tests.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Inference for Independent Groups</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#null-and-alternative-hypothesis" id="toc-null-and-alternative-hypothesis" class="nav-link active" data-scroll-target="#null-and-alternative-hypothesis"><span class="header-section-number">1</span> Null and Alternative Hypothesis</a></li>
+  <li><a href="#data-collection-for-two-samples" id="toc-data-collection-for-two-samples" class="nav-link" data-scroll-target="#data-collection-for-two-samples"><span class="header-section-number">2</span> Data Collection for Two Samples</a>
+  <ul class="collapse">
+  <li><a href="#random-sampling-from-independent-groups" id="toc-random-sampling-from-independent-groups" class="nav-link" data-scroll-target="#random-sampling-from-independent-groups"><span class="header-section-number">2.1</span> Random Sampling from Independent Groups</a></li>
+  <li><a href="#randomized-assignment-of-treatments-to-independent-groups" id="toc-randomized-assignment-of-treatments-to-independent-groups" class="nav-link" data-scroll-target="#randomized-assignment-of-treatments-to-independent-groups"><span class="header-section-number">2.2</span> Randomized Assignment of Treatments to Independent Groups</a></li>
+  </ul></li>
+  <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic"><span class="header-section-number">3</span> Test Statistic</a>
+  <ul class="collapse">
+  <li><a href="#decision-based-on-the-p-value" id="toc-decision-based-on-the-p-value" class="nav-link" data-scroll-target="#decision-based-on-the-p-value"><span class="header-section-number">3.1</span> Decision Based on the P-value</a></li>
+  </ul></li>
+  <li><a href="#confidence-interval" id="toc-confidence-interval" class="nav-link" data-scroll-target="#confidence-interval"><span class="header-section-number">4</span> Confidence Interval</a></li>
+  <li><a href="#conditions-for-inference" id="toc-conditions-for-inference" class="nav-link" data-scroll-target="#conditions-for-inference"><span class="header-section-number">5</span> Conditions for Inference</a>
+  <ul class="collapse">
+  <li><a href="#normalitysufficient-sample-size-condition" id="toc-normalitysufficient-sample-size-condition" class="nav-link" data-scroll-target="#normalitysufficient-sample-size-condition"><span class="header-section-number">5.1</span> Normality/Sufficient Sample Size Condition</a></li>
+  <li><a href="#equal-variance-condition" id="toc-equal-variance-condition" class="nav-link" data-scroll-target="#equal-variance-condition"><span class="header-section-number">5.2</span> Equal Variance Condition</a></li>
+  </ul></li>
+  <li><a href="#calculations-in-r" id="toc-calculations-in-r" class="nav-link" data-scroll-target="#calculations-in-r"><span class="header-section-number">6</span> Calculations in R</a></li>
+  <li><a href="#case-study-smoking-and-birth-weight" id="toc-case-study-smoking-and-birth-weight" class="nav-link" data-scroll-target="#case-study-smoking-and-birth-weight"><span class="header-section-number">7</span> Case Study: Smoking and Birth Weight</a>
+  <ul class="collapse">
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">7.1</span> Exploratory Data Analysis</a></li>
+  <li><a href="#set-up-the-hypotheses" id="toc-set-up-the-hypotheses" class="nav-link" data-scroll-target="#set-up-the-hypotheses"><span class="header-section-number">7.2</span> Set up the Hypotheses</a></li>
+  <li><a href="#assessing-normality-condition" id="toc-assessing-normality-condition" class="nav-link" data-scroll-target="#assessing-normality-condition"><span class="header-section-number">7.3</span> Assessing Normality condition</a></li>
+  <li><a href="#assessing-equal-variance-condition" id="toc-assessing-equal-variance-condition" class="nav-link" data-scroll-target="#assessing-equal-variance-condition"><span class="header-section-number">7.4</span> Assessing Equal Variance Condition</a></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">7.5</span> Two-sample T-test</a></li>
+  <li><a href="#confidence-interval-1" id="toc-confidence-interval-1" class="nav-link" data-scroll-target="#confidence-interval-1"><span class="header-section-number">7.6</span> Confidence Interval</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">8</span> Wrap-up</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">9</span> Assignment</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/16-independent-t-tests.html">Inference for Independent Groups</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Inference for Paired Samples</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJ3ZWJyOjppbnN0YWxsKFwiZ3JhZGV0aGlzXCIsIHF1aWV0ID0gVFJVRSlcbmxpYnJhcnkoZ3JhZGV0aGlzKVxub3B0aW9ucyh3ZWJyLmV4ZXJjaXNlLmNoZWNrZXIgPSBmdW5jdGlvbihcbiAgbGFiZWwsIHVzZXJfY29kZSwgc29sdXRpb25fY29kZSwgY2hlY2tfY29kZSwgZW52aXJfcmVzdWx0LCBldmFsdWF0ZV9yZXN1bHQsXG4gIGVudmlyX3ByZXAsIGxhc3RfdmFsdWUsIGVuZ2luZSwgc3RhZ2UsIC4uLlxuKSB7XG4gIGlmIChpcy5udWxsKGNoZWNrX2NvZGUpKSB7XG4gICAgIyBObyBncmFkaW5nIGNvZGUsIHNvIGp1c3Qgc2tpcCBncmFkaW5nXG4gICAgaW52aXNpYmxlKE5VTEwpXG4gIH0gZWxzZSBpZiAoaXMubnVsbChsYWJlbCkpIHtcbiAgICBsaXN0KFxuICAgICAgY29ycmVjdCA9IEZBTFNFLFxuICAgICAgdHlwZSA9IFwid2FybmluZ1wiLFxuICAgICAgbWVzc2FnZSA9IFwiQWxsIGV4ZXJjaXNlcyBtdXN0IGhhdmUgYSBsYWJlbC5cIlxuICAgIClcbiAgfSBlbHNlIGlmIChpcy5udWxsKHNvbHV0aW9uX2NvZGUpKSB7XG4gICAgbGlzdChcbiAgICAgIGNvcnJlY3QgPSBGQUxTRSxcbiAgICAgIHR5cGUgPSBcIndhcm5pbmdcIixcbiAgICAgIG1lc3NhZ2UgPSBodG1sdG9vbHM6OnRhZ3MkZGl2KFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcIkEgcHJvYmxlbSBvY2N1cnJlZCBncmFkaW5nIHRoaXMgZXhlcmNpc2UuXCIpLFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcbiAgICAgICAgICBcIk5vIHNvbHV0aW9uIGNvZGUgd2FzIGZvdW5kLiBOb3RlIHRoYXQgZ3JhZGluZyBleGVyY2lzZXMgdXNpbmcgdGhlIFwiLFxuICAgICAgICAgIGh0bWx0b29sczo6dGFncyRjb2RlKFwiZ3JhZGV0aGlzXCIpLFxuICAgICAgICAgIFwicGFja2FnZSByZXF1aXJlcyBhIG1vZGVsIHNvbHV0aW9uIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBkb2N1bWVudC5cIlxuICAgICAgICApXG4gICAgICApXG4gICAgKVxuICB9IGVsc2Uge1xuICAgIGdyYWRldGhpczo6Z3JhZGV0aGlzX2V4ZXJjaXNlX2NoZWNrZXIoXG4gICAgICBsYWJlbCA9IGxhYmVsLCBzb2x1dGlvbl9jb2RlID0gc29sdXRpb25fY29kZSwgdXNlcl9jb2RlID0gdXNlcl9jb2RlLFxuICAgICAgY2hlY2tfY29kZSA9IGNoZWNrX2NvZGUsIGVudmlyX3Jlc3VsdCA9IGVudmlyX3Jlc3VsdCxcbiAgICAgIGV2YWx1YXRlX3Jlc3VsdCA9IGV2YWx1YXRlX3Jlc3VsdCwgZW52aXJfcHJlcCA9IGVudmlyX3ByZXAsXG4gICAgICBsYXN0X3ZhbHVlID0gbGFzdF92YWx1ZSwgc3RhZ2UgPSBzdGFnZSwgZW5naW5lID0gZW5naW5lKVxuICB9XG59KSJ9
+</script>
+</div>
+</div>
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwiOnRydWUsImluY2x1ZGUiOmZhbHNlLCJsYWJlbCI6InRoZW1lIiwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGdncGxvdDIpXG50aGVtZV9zZXQodGhlbWVfbGlnaHQoKSlcbm9wdGlvbnMoZ2dwbG90Mi5jb250aW51b3VzLmNvbG9yID0gc2NhbGVfY29sb3JfdmlyaWRpc19jLCBcbiAgICAgICAgZ2dwbG90Mi5jb250aW51b3VzLmZpbGwgPSBzY2FsZV9maWxsX3ZpcmlkaXNfYyxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5jb2xvciA9IHNjYWxlX2NvbG9yX3ZpcmlkaXNfZCxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5maWxsID0gc2NhbGVfZmlsbF92aXJpZGlzX2QpIn0=
+</script>
+</div>
+</div>
+<p>In the last chapter, we discussed the <strong>one-sample t-test</strong> for the population mean <span class="math inline">\(\mu\)</span> under the normality/sufficient sample size conditions. The unknown parameter <span class="math inline">\(\mu\)</span> is estimated by the sample mean <span class="math inline">\(\bar{X}\)</span>, and the standard error of <span class="math inline">\(\bar{X}\)</span> is estimated by <span class="math inline">\(\frac{S}{\sqrt{n}}\)</span> to quantify the uncertainty of <span class="math inline">\(\bar{X}\)</span> (where <span class="math inline">\(S\)</span> is the sample standard deviation and <span class="math inline">\(n\)</span> is the sample size). The one-sample t-test is used to test for the mean of a population. It can be also used to test for the expected change within subjects (i.e.&nbsp;the paired t-test).</p>
+<p>Researchers often compare two groups (sub-populations). For example, are men taller than women? Some men are taller than women and vice versa, so it is not easy to answer the question. We can simply the question as follows:</p>
+<ul>
+<li>Are men taller than women, on average?</li>
+</ul>
+<p>It leads to a clear answer because the population average is a number. We can compare whether the population average height of men is greater than the population average height of women or not. More formally, let <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span> be the population mean height of men and of women, respectively.</p>
+<section id="null-and-alternative-hypothesis" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="null-and-alternative-hypothesis"><span class="header-section-number">1</span> Null and Alternative Hypothesis</h2>
+<p>We can formulate statistical hypothesis testing with the null and alternative hypothesis:</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 - \mu_2 = 0\)</span> (i.e., <span class="math inline">\(\mu_1 = \mu_2\)</span>)</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 - \mu_2 &gt; 0\)</span>.</p></li>
+</ul>
+<p>In words, <span class="math inline">\(H_0\)</span> states that the true mean height of men and of women are the same in the population, and <span class="math inline">\(H_1\)</span> states that men are taller than women, on average, in the population. To perform the hypothesis testing for <span class="math inline">\(\mu_1 - \mu_2\)</span>, we need a sample of <span class="math inline">\(n_1\)</span> men and a sample of <span class="math inline">\(n_2\)</span> women. Given two samples, the following statistics can be calculated:</p>
+<ul>
+<li><p><span class="math inline">\(\bar{X}_1\)</span>: sample mean height of men</p></li>
+<li><p><span class="math inline">\(\bar{X}_2\)</span>: sample mean height of women</p></li>
+<li><p><span class="math inline">\(S_1\)</span>: sample standard deviation of men</p></li>
+<li><p><span class="math inline">\(S_2\)</span>: sample standard deviation of women</p></li>
+</ul>
+<p>We can combine these statistics to test for <span class="math inline">\(\mu_1 - \mu_2\)</span>, and it is known as the <strong>two-sample t-test</strong>.</p>
+</section>
+<section id="data-collection-for-two-samples" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="data-collection-for-two-samples"><span class="header-section-number">2</span> Data Collection for Two Samples</h2>
+<p>In many cases, we may not (or cannot) want to pair observations, but instead compare multiple independent groups (2 or more). These are Independent Samples, in which we randomly sample individuals from distinct groups.</p>
+<section id="random-sampling-from-independent-groups" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="random-sampling-from-independent-groups"><span class="header-section-number">2.1</span> Random Sampling from Independent Groups</h3>
+<p>We have already discussed one sampling strategy for independent samples:</p>
+<ul>
+<li><strong>Stratified Random Sample</strong>: Divide your population into distinct/independent strata and randomly sample from within each stratum</li>
+</ul>
+<p><strong>Scenario:</strong> A sociologist wishes to compare the annual salaries of men and women. She obtains a random sample of 50 males and a random sample of 50 females and determines each person’s annual salary. Discuss the type of sampling scheme used in this study and identify the response and explanatory variables measured and the type (categorical, quantitative, etc.).</p>
+<p>Response: Income – Quantitative/Continuous</p>
+<p>Explanatory: Gender – Categorical/Nominal</p>
+<p>Stratified Random Sample: the two groups (male/female) are independent because they are randomly sampled from two separate and unconnected groups (strata – gender), so the income of one individual has no influence on the income of another individual.</p>
+<p>Unfortunately, observational studies cannot infer cause-and-effect because there is always a danger of confounding variables.</p>
+<p><strong>Confounding variables:</strong> an unaccounted-for explanatory variable which has an effect on the response variable. Its effect on the response cannot be separated out from the measured explanatory variable, preventing any conclusions about cause and effect from observational studies</p>
+<p><strong>Example:</strong> We measure a statistically meaningful relationship between drinking habits and heart disease, but is drinking alone the only possible cause of heart disease?</p>
+<ul>
+<li>High levels of drinking may also be associated with poor diet or lifestyle. Therefore, it could be a combination of drinking, diet and lifestyle that lead to higher rates of heart disease; diet and lifestyle are confounding variables.</li>
+</ul>
+</section>
+<section id="randomized-assignment-of-treatments-to-independent-groups" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="randomized-assignment-of-treatments-to-independent-groups"><span class="header-section-number">2.2</span> Randomized Assignment of Treatments to Independent Groups</h3>
+<p>In order to measure a cause-and-effect relationship, we must perform an experiment.</p>
+<p><strong>Randomizing the type of treatment (Independent):</strong> An experiment that uses both comparison of two or more treatments and random assignments of subjects to treatments is a <strong>completely randomized design</strong>. Why is it important to randomly assign the experimental units to each treatment group?</p>
+<ul>
+<li>We randomize group assignment to make sure that our results are causal and not due to some confounding variable associated with individuals.</li>
+</ul>
+</section>
+</section>
+<section id="test-statistic" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="test-statistic"><span class="header-section-number">3</span> Test Statistic</h2>
+<p>Suppose we take a random sample of size <span class="math inline">\(n_1\)</span> from <span class="math inline">\(N(\mu_1, \sigma_1)\)</span> and a random sample of size <span class="math inline">\(n_2\)</span> from <span class="math inline">\(N(\mu_2, \sigma_2)\)</span> where <span class="math inline">\(\mu_1 - \mu_2\)</span> is the unknown parameter to be tested. In most research questions, the null hypothesis is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 - \mu_2 = 0\)</span> (i.e., the same population mean), and the alternative hypothesis is one of the following three forms depending on the research question.</p>
+<ul>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 - \mu_2 &gt; 0\)</span> (right-sided test)</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 - \mu_2 &lt; 0\)</span> (left-sided test)</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 - \mu_2 \ne 0\)</span> (two-sided test)</p></li>
+</ul>
+<p>For the two-sample t-test for <span class="math inline">\(\mu_1 - \mu_2\)</span>, the test statistic is given by</p>
+<p><span class="math display">\[
+T = \frac{\bar{X}_1 - \bar{X}_2 - 0}{\texttt{SE}} \, ,
+\]</span></p>
+<p>where the standard error <span class="math inline">\(\texttt{SE}\)</span> is calculated as follows:</p>
+<p><span id="eq-se"><span class="math display">\[
+\texttt{SE} =
+\begin{cases}
+\sqrt{ \frac{ (n_1 - 1) \, S_1^2 + (n_2 - 1) \, S_2^2 }{ n_1 + n_2 - 2 } \, \left( \frac{1}{n_1} + \frac{1}{n_2} \right) } \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
+\\
+\sqrt{ \frac{S_1^2}{n_1} + \frac{S_2^2}{n_2} } \,\,\, \mathrm{under \,\, unequal \,\, variance \,\, condition}
+\end{cases}
+\tag{1}\]</span></span></p>
+<p>Under the condition of <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 - \mu_2 = 0\)</span>, the null distribution of the test statistic is <span class="math inline">\(T \sim \mathcal{T}(\nu)\)</span>, the T distribution with <span class="math inline">\(\nu\)</span> degrees of freedom, where <span class="math inline">\(\nu\)</span> is calculated as follows:</p>
+<p><span id="eq-df"><span class="math display">\[
+\nu =
+\begin{cases}
+n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
+\frac{\left( \frac{S_1^2}{n_1} + \frac{S_2^2}{n_2} \right)^2}{ \frac{ \left( S_1^2 \, / \, n_1 \right)^2 }{n_1 - 1} + \frac{ \left( S_2^2 \, / \, n_2 \right)^2 }{n_2 - 1} } \,\,\, \mathrm{under \,\, unequal \,\, variance \,\, condition}
+\end{cases}
+\tag{2}\]</span></span></p>
+<p>The long formula of <span class="math inline">\(\nu\)</span> under unequal variance condition is known as the <strong>Welch-Satterthwaite formula</strong>.</p>
+<section id="decision-based-on-the-p-value" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="decision-based-on-the-p-value"><span class="header-section-number">3.1</span> Decision Based on the P-value</h3>
+<p>After calculating <span class="math inline">\(T = \texttt{t}\)</span>, the calculation of p-value depends on the direction of <span class="math inline">\(H_1\)</span> as follows:</p>
+<ul>
+<li><p><u>Right-sided test</u>: p = <span class="math inline">\(1 - \texttt{pt}(\texttt{t}, \nu)\)</span></p></li>
+<li><p><u>Left-sided test</u>: p = <span class="math inline">\(\texttt{pt}(\texttt{t}, \nu)\)</span></p></li>
+<li><p><u>Two-sided test</u>: p = <span class="math inline">\(2 * \texttt{pt}(\texttt{t}, \nu)\)</span> if <span class="math inline">\(\texttt{t} &lt; 0\)</span> or p = <span class="math inline">\(2 * (1 - \texttt{pt}(\texttt{t}, \nu))\)</span> if <span class="math inline">\(\texttt{t} &gt; 0\)</span></p></li>
+</ul>
+<p>If p-value is less than <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>.</p>
+<p>INTERPRETATION AND EVALUATION IS THE SAME AS BEFORE!!!</p>
+</section>
+</section>
+<section id="confidence-interval" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="confidence-interval"><span class="header-section-number">4</span> Confidence Interval</h2>
+<p>The conclusion of two-sample t-test for the <strong>difference between two means</strong> <span class="math inline">\(\mu_1 - \mu_2\)</span> is either <span class="math inline">\(H_1\)</span> (evidence against <span class="math inline">\(H_0\)</span> exists) or <span class="math inline">\(H_0\)</span> (lack of evidence against <span class="math inline">\(H_0\)</span>). In addition, it is important to estimate the unknown parameter <span class="math inline">\(\mu_1 - \mu_2\)</span>. The point estimation for <span class="math inline">\(\mu_1 - \mu_2\)</span> is given by <span class="math inline">\(\bar{X}_1 - \bar{X}_2\)</span>. At a confidence level of <span class="math inline">\(1 - \alpha\)</span>, a confidence interval (CI) for <span class="math inline">\(\mu_1 - \mu_2\)</span> is given by</p>
+<p><span class="math display">\[ (\bar{X}_1 - \bar{X}_2) \pm t^* SE\]</span></p>
+<p>where the standard error <span class="math inline">\(\texttt{SE}\)</span> is given in <a href="#eq-se" class="quarto-xref">Equation&nbsp;1</a>, and the critical value <span class="math inline">\(c\)</span> is calculated by <span class="math inline">\(\texttt{qt}(1 - \alpha / 2, \nu)\)</span> where the degrees of freedom <span class="math inline">\(\nu\)</span> is given in <a href="#eq-df" class="quarto-xref">Equation&nbsp;2</a>.</p>
+</section>
+<section id="conditions-for-inference" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conditions-for-inference"><span class="header-section-number">5</span> Conditions for Inference</h2>
+<p>Suppose a researcher wants to compare the two populations, say Populations 1 and 2, and assume both populations follow normal distributions, say <span class="math inline">\(N(\mu_1, \sigma_1)\)</span> and <span class="math inline">\(N(\mu_2, \sigma_2\)</span>). This condition is referred to as the <strong>normality condition</strong>. Let <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\sigma_1\)</span> be the population mean and standard deviation of Population 1. Let <span class="math inline">\(\mu_2\)</span> and <span class="math inline">\(\sigma_2\)</span> be the population mean and standard deviation of Population 2.</p>
+<p>There is also the condition of <span class="math inline">\(\sigma_1^2 = \sigma_2^2\)</span> (which is equivalent to the condition of <span class="math inline">\(\sigma_1 = \sigma_2\)</span>) is referred to as the <strong>equal variance condition</strong> (or <strong>homoscedasticity</strong>). The left figure below shows the normality condition with the equal variance condition, and the right figure shows the normality condition with the unequal variance condition.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-independent-t-tests_files/figure-html/unnamed-chunk-3-1.png" style="width:100.0%;height:100.0%" alt="Two normal distributions" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="normalitysufficient-sample-size-condition" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="normalitysufficient-sample-size-condition"><span class="header-section-number">5.1</span> Normality/Sufficient Sample Size Condition</h3>
+<p>As in the one-sample t-test, the normality condition can be visually assessed by the <strong>QQ plot</strong> on both samples. If data points of QQ plot substantially deviate from a straight line, it is a sign of violating the normality condition, but this visual assessment is somewhat subjective and vague.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span>response <span class="sc">|</span> explanatory, <span class="at">data =</span> mydata,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Theoretical Z-Scores"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Observed Sample Values"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The violation of the normality condition is not a big concern when <span class="math inline">\(n_1 \ge 30\)</span> and <span class="math inline">\(n_2 \ge 30\)</span>, as the t-test is <strong>robust</strong> to violation of that condition if there is sufficient sample size. In general, the minimum sample size per group, if the normality condition is met, is <span class="math inline">\(n_1 \ge 10\)</span> and <span class="math inline">\(n_2 \ge 10\)</span>.</p>
+</section>
+<section id="equal-variance-condition" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="equal-variance-condition"><span class="header-section-number">5.2</span> Equal Variance Condition</h3>
+<p>The population variances <span class="math inline">\(\sigma_1^2\)</span> and <span class="math inline">\(\sigma_2^2\)</span> can be estimated by the sample variances <span class="math inline">\(S_1^2\)</span> and <span class="math inline">\(S_2^2\)</span>, respectively. As a <strong>simple rule of thumb of checking equal variance condition</strong>, if <span class="math inline">\(\frac{1}{4} \le \frac{S_1^2}{S_2^2} \le 4\)</span> (i.e., the two sample variances are within 4-fold), we may proceed the two-sample t-test with the equal variance condition. Otherwise, we may proceed with the unequal variance condition.</p>
+</section>
+</section>
+<section id="calculations-in-r" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="calculations-in-r"><span class="header-section-number">6</span> Calculations in R</h2>
+<p>For the hypothesis test, we can calculate the t-test and p-value as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance test</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span>), <span class="at">var.equal =</span> <span class="cn">TRUE</span> )</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#unequal variance test</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span>), <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For the confidence interval:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance ci</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#unequal variance ci</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">var.equal =</span> <span class="cn">FALSE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="case-study-smoking-and-birth-weight" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="case-study-smoking-and-birth-weight"><span class="header-section-number">7</span> Case Study: Smoking and Birth Weight</h2>
+<p>A low birth weight is known to be associated with negative health outcome of newborn babies in both short-term and long-term. It is hypothesized that smoking during pregnancy is associated with a high risk of low birth weight. The dataset <span class="math inline">\(\texttt{birthwt.csv}\)</span> is a sample of 189 women who gave a birth at the Baystate Medical Center in 1986 in Springfield, Massachusetts. The column <span class="math inline">\(\texttt{smoke}\)</span> is the smoking status during pregnancy (<span class="math inline">\(\texttt{N}\)</span> or <span class="math inline">\(\texttt{Y}\)</span>), and the column <span class="math inline">\(\texttt{bwt}\)</span> is the newborn baby’s birth weight in pounds.</p>
+<section id="exploratory-data-analysis" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">7.1</span> Exploratory Data Analysis</h3>
+<p>Let us explore the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>birthwt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/birthwt.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birthwt, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+     id smoke   bwt
+  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+1     1 N      5.12
+2     2 N      8.42
+3     3 Y      4.68
+4     4 N      8.36
+5     5 N      5.77</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt) <span class="do">### descriptive stats by group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response smoke  min     Q1 median    Q3   max     mean       sd   n missing
+1      bwt     N 2.25 5.5200  6.820 7.965 10.98 6.722435 1.655806 115       0
+2      bwt     Y 1.56 5.2175  6.105 7.140  9.32 6.098514 1.450623  74       0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(smoke <span class="sc">~</span> bwt, <span class="at">data =</span> birthwt, <span class="co">#note switched order for horizontal boxplots</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Birth weight (pounds)"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Smoked during pregnancy?"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Sample from the Medical Center in 1986"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="at">height =</span> <span class="fl">0.1</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-independent-t-tests_files/figure-html/boxplot-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Smoked during pregnancy? by Birth weight (pounds), titled “Sample from the Medical Center in 1986”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Clinically, a low birth weight is defined as a birth weight below 5.5 pounds. We can estimate that about 25.2% and 40.5% of babies in the non-smoking group and smoking group have a low birth weight, respectively, as follows.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Note: A low birth weight is defined as bwt &lt; 5.5.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((bwt <span class="sc">&lt;</span> <span class="fl">5.5</span>) <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt ) <span class="do">### proportions by group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        N         Y 
+0.2521739 0.4054054 </code></pre>
+</div>
+</div>
+</section>
+<section id="set-up-the-hypotheses" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="set-up-the-hypotheses"><span class="header-section-number">7.2</span> Set up the Hypotheses</h3>
+<p>Set up the null and alternative hypothesis (note there is more than one way to do this) for the research hypothesis that those who smoke give birth to infants who weight less than those who do not smoke:</p>
+</section>
+<section id="assessing-normality-condition" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="assessing-normality-condition"><span class="header-section-number">7.3</span> Assessing Normality condition</h3>
+<p>Let us first assess the normality condition using the QQ plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span> bwt <span class="sc">|</span> smoke, <span class="at">data =</span> birthwt,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Theoretical Z-Scores"</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Observed Birth Weights (lbs)"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16-independent-t-tests_files/figure-html/qqplots-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and line chart split into 2 small charts arranged in a 1-row by 2-column grid." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Remember to consider the following:</p>
+<ol type="1">
+<li>pattern compared to 1:1 line (not the same as y = x)</li>
+<li>pattern of the data points</li>
+<li>pattern assessed relative to sample size, n</li>
+<li>discuss if the values increase at the same rate as the cumulative frequency</li>
+</ol>
+</section>
+<section id="assessing-equal-variance-condition" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="assessing-equal-variance-condition"><span class="header-section-number">7.4</span> Assessing Equal Variance Condition</h3>
+<p>Use the provided summary statistics to evaluate if the equal variance assumptions is met.</p>
+</section>
+<section id="two-sample-t-test" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">7.5</span> Two-sample T-test</h3>
+<p>Now, let us perform the two-sample t-test for <span class="math inline">\(\mu_N - \mu_Y\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span> using the <span class="math inline">\(\texttt{t.test}\)</span> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  bwt by smoke
+t = 2.6516, df = 187, p-value = 0.004349
+alternative hypothesis: true difference in means between group N and group Y is greater than 0
+95 percent confidence interval:
+ 0.2349654       Inf
+sample estimates:
+mean in group N mean in group Y 
+       6.722435        6.098514 </code></pre>
+</div>
+</div>
+<p>Interpret and evaluate the p-value in the context of the scenario.</p>
+<p><strong>Quick Note</strong>: R defaults to alphabetical order for the differences (so N - Y). If we wanted to reverse it we would have to do the following.</p>
+<ol type="1">
+<li>Reorder the variable values in R.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>birthwt2 <span class="ot">&lt;-</span> birthwt <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">smoke =</span> <span class="fu">factor</span>(smoke, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li>Calculate the test statistics and p-value, adjusting the alternative for the level order.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt2,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  bwt by smoke
+t = -2.6516, df = 187, p-value = 0.004349
+alternative hypothesis: true difference in means between group Y and group N is less than 0
+95 percent confidence interval:
+       -Inf -0.2349654
+sample estimates:
+mean in group Y mean in group N 
+       6.098514        6.722435 </code></pre>
+</div>
+</div>
+</section>
+<section id="confidence-interval-1" class="level3" data-number="7.6">
+<h3 data-number="7.6" class="anchored" data-anchor-id="confidence-interval-1"><span class="header-section-number">7.6</span> Confidence Interval</h3>
+<p>Let us estimate <span class="math inline">\(\mu_N - \mu_Y\)</span> using the point estimation and 95% CI.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1597438 1.0880988
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>Interpret the Confidence Interval and evaluate it in consideration of the hypothesis test.</p>
+</section>
+</section>
+<section id="wrap-up" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">8</span> Wrap-up</h2>
+<p>In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.</p>
+<section id="problem-1" class="level4" data-number="8.0.1">
+<h4 data-number="8.0.1" class="anchored" data-anchor-id="problem-1"><span class="header-section-number">8.0.1</span> Problem 1</h4>
+<p>Multiple-choice: Which of the following tests is for comparing the two population means under the normality condition?</p>
+<p>(A) one-sample t-test</p>
+<p>(B) two-sample t-test</p>
+<p>(C) matched-pairs t-test</p>
+</section>
+<section id="problem-2" class="level4" data-number="8.0.2">
+<h4 data-number="8.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">8.0.2</span> Problem 2</h4>
+<p>Fill in the blanks. In general, a small p-value is statistical evidence against [part a] in favor of [part b], so we conclude [part c] when a p-value is smaller than a fixed [part d]. (Word choice: p-value, significance level, test statistic, null hypothesis, alternative hypothesis, normality condition)</p>
+</section>
+<section id="problem-3" class="level4" data-number="8.0.3">
+<h4 data-number="8.0.3" class="anchored" data-anchor-id="problem-3"><span class="header-section-number">8.0.3</span> Problem 3</h4>
+<p>Multiple-choice: Which of the following statements is the <u>null hypothesis</u> of <u>two-sample t-test</u>?</p>
+<p>(A) The two populations (groups) have the same average.</p>
+<p>(B) The two populations have different averages.</p>
+<p>(C) The two populations follow normal distributions.</p>
+<p>(D) At least one of two populations does not follow normal distributions.</p>
+<p>(E) The two populations have the equal variance.</p>
+<p>(F) The two populations have unequal variances.</p>
+</section>
+<section id="problem-4" class="level4" data-number="8.0.4">
+<h4 data-number="8.0.4" class="anchored" data-anchor-id="problem-4"><span class="header-section-number">8.0.4</span> Problem 4</h4>
+<p>Multiple-choice: Which of the above statements is the <u>alternative hypothesis</u> of <u>two-sample t-test</u>?</p>
+<p>(A) The two populations (groups) have the same average.</p>
+<p>(B) The two populations have different averages.</p>
+<p>(C) The two populations follow normal distributions.</p>
+<p>(D) At least one of two populations does not follow normal distributions.</p>
+<p>(E) The two populations have the equal variance.</p>
+<p>(F) The two populations have unequal variances.</p>
+</section>
+<section id="problem-5" class="level4" data-number="8.0.5">
+<h4 data-number="8.0.5" class="anchored" data-anchor-id="problem-5"><span class="header-section-number">8.0.5</span> Problem 5</h4>
+<p>Multiple-choice: Which of the above statements is a reasonable guess when data points of QQ plot severely deviate from a straight line?</p>
+<p>(A) The two populations (groups) have the same average.</p>
+<p>(B) The two populations have different averages.</p>
+<p>(C) The two populations follow normal distributions.</p>
+<p>(D) At least one of two populations does not follow normal distributions.</p>
+<p>(E) The two populations have the equal variance.</p>
+<p>(F) The two populations have unequal variances.</p>
+</section>
+<section id="problem-6" class="level4" data-number="8.0.6">
+<h4 data-number="8.0.6" class="anchored" data-anchor-id="problem-6"><span class="header-section-number">8.0.6</span> Problem 6</h4>
+<p>Multiple-choice: Which of the following cases makes the two-sample t-test not valid?</p>
+<p>(A) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; QQ Plot with deviations from the 1:1 line,</p>
+<p>(B) <span class="math inline">\(n_1 = 100\)</span>; <span class="math inline">\(n_2 = 200\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.001 from Bartlett test</p>
+<p>(C) <span class="math inline">\(n_1 = 100\)</span>; <span class="math inline">\(n_2 = 200\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.5 from Bartlett test</p>
+<p>(D) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.3 from Bartlett test</p>
+<p>(E) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; p = 0.5 from Shapiro-Wilk test; p = 0.7 from Bartlett test</p>
+</section>
+</section>
+<section id="assignment" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="assignment"><span class="header-section-number">9</span> Assignment</h2>
+<p><strong>New Instruction:</strong> You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</p>
+<section id="problem-1-1" class="level4" data-number="9.0.1">
+<h4 data-number="9.0.1" class="anchored" data-anchor-id="problem-1-1"><span class="header-section-number">9.0.1</span> Problem 1</h4>
+<p>Let <span class="math inline">\(\mu_1 - \mu_2\)</span> be the parameter of interest. Suppose the sample means are <span class="math inline">\(\bar{X}_1 = 100\)</span> and <span class="math inline">\(\bar{X}_2 = 120\)</span>, sample standard deviations are <span class="math inline">\(S_1 = 10\)</span> and <span class="math inline">\(S_2 = 40\)</span>, and sample sizes are <span class="math inline">\(n_1 = 20\)</span> and <span class="math inline">\(n_2 = 25\)</span>. Calculate the following without using the <span class="math inline">\(\texttt{t.test}\)</span> function. (You must show your work in R.)</p>
+<ol type="a">
+<li><p>standard error under the condition of equal variance</p></li>
+<li><p>degrees of freedom under the condition of equal variance</p></li>
+<li><p>T statistic under the condition of equal variance</p></li>
+<li><p>p-value for the left-sided test</p></li>
+<li><p>standard error under the condition of unequal variances</p></li>
+<li><p>degrees of freedom under the condition of unequal variances</p></li>
+<li><p>T statistic under the condition of unequal variances</p></li>
+<li><p>p-value for the two-sided test</p></li>
+</ol>
+</section>
+<section id="problem-2-1" class="level4" data-number="9.0.2">
+<h4 data-number="9.0.2" class="anchored" data-anchor-id="problem-2-1"><span class="header-section-number">9.0.2</span> Problem 2</h4>
+<p>When calves are infected by a bacterium known as <em>M. paratuberculosis</em>, they suffer from chronic diarrhea and lose weight. Researchers hypothesized that iron will promote bacterium growth, so infected calves will lose even more weight by the iron supplementation. (Therefore, if this hypothesis is confirmed, the treatment of <em>M. paratuberculosis</em> shall not include iron.) The researchers randomly sampled 19 calves infected by <em>M. paratuberculosis</em>, and randomly assigned 9 calves to the control group (no iron supplementation) and 10 calves to the active group (iron supplementation). The dataset <span class="math inline">\(\texttt{calves.csv}\)</span> includes the 19 calves. The column <span class="math inline">\(\texttt{weight}\)</span> is the body weight measured in pounds, and <span class="math inline">\(\texttt{group}\)</span> is the group assignment (<span class="math inline">\(\texttt{Control}\)</span> or <span class="math inline">\(\texttt{Iron}\)</span>). Let <span class="math inline">\(\mu_C\)</span> denote the expected weight (pounds) in the control group and <span class="math inline">\(\mu_I\)</span> denote the expected weight in the experimental group. By the alphabetical order of the group names, <span class="math inline">\(\texttt{Control}\)</span> and <span class="math inline">\(\texttt{Iron}\)</span>, the parameter of interest will be defined as <span class="math inline">\(\mu_C - \mu_I\)</span> in R. Use a significance level of <span class="math inline">\(\alpha = 0.05\)</span> for all hypothesis testing in this exercise.</p>
+<p>Download the data here: <a href="data/calves.csv">calves.csv</a></p>
+<ol type="a">
+<li>What is the null hypothesis <span class="math inline">\(H_0\)</span>? Write a verbal description as well.</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_C - \mu_I = 0\)</span></p>
+<p>(B) <span class="math inline">\(\mu_C - \mu_I &gt; 0\)</span></p>
+<p>(C) <span class="math inline">\(\mu_C - \mu_I &lt; 0\)</span></p>
+<p>(D) <span class="math inline">\(\mu_C - \mu_I \ne 0\)</span></p>
+<ol start="2" type="a">
+<li>What is the alternative hypothesis <span class="math inline">\(H_1\)</span>? Write a verbal description as well.</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_C - \mu_I = 0\)</span></p>
+<p>(B) <span class="math inline">\(\mu_C - \mu_I &gt; 0\)</span></p>
+<p>(C) <span class="math inline">\(\mu_C - \mu_I &lt; 0\)</span></p>
+<p>(D) <span class="math inline">\(\mu_C - \mu_I \ne 0\)</span></p>
+<ol start="3" type="a">
+<li><p>Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.</p></li>
+<li><p>Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance.</p></li>
+<li><p>Use R and <code>t.test()</code> to find the test statistics and p-value.</p></li>
+<li><p>Report the T statistic.</p></li>
+<li><p>Calculate the p-value. Interpret the p-value.</p></li>
+<li><p>From the two-sample t-test, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>? Evaluate the p-value.</p></li>
+<li><p>Calculate the lower bound of 95% CI.</p></li>
+<li><p>Calculate the upper bound of 95% CI.</p></li>
+<li><p>Interpret the confidence interval.</p></li>
+<li><p>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_C - \mu_I\)</span> in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for <span class="math inline">\(\mu_C - \mu_I\)</span>, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.</p></li>
+</ol>
+</section>
+<section id="problem-3-1" class="level4" data-number="9.0.3">
+<h4 data-number="9.0.3" class="anchored" data-anchor-id="problem-3-1"><span class="header-section-number">9.0.3</span> Problem 3</h4>
+<p>Researchers have hypothesized that the body size (measured by weight) of wild animals is different depending on environment. For a pilot study, the researchers randomly selected eight young deer raised in ranch and eight young deer raised in an wild environment. The dataset <span class="math inline">\(\texttt{deer.csv}\)</span> includes the 16 deer. The column <span class="math inline">\(\texttt{weight}\)</span> is the body weight measured in pounds, and <span class="math inline">\(\texttt{environment}\)</span> is the group (<span class="math inline">\(\texttt{Ranch}\)</span> or <span class="math inline">\(\texttt{Wild}\)</span>). Let <span class="math inline">\(\mu_R\)</span> denote the expected weight in the ranch group and <span class="math inline">\(\mu_W\)</span> denote the expected weight in the wild group. By the alphabetical order of group names, <span class="math inline">\(\texttt{Ranch}\)</span> and <span class="math inline">\(\texttt{Wild}\)</span>, the parameter of interest will be defined as <span class="math inline">\(\mu_R - \mu_W\)</span> in R. In this pilot study, due to lack of prior studies, the researchers could not specify which group has a higher average of body weight. Use a significance level of <span class="math inline">\(\alpha = 0.05\)</span> for all hypothesis testing in this exercise.</p>
+<p>Download the data here: <a href="data/deer.csv">deer.csv</a></p>
+<ol type="a">
+<li>What is the null hypothesis <span class="math inline">\(H_0\)</span>? Write a verbal description as well.</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_R - \mu_W = 0\)</span></p>
+<p>(B) <span class="math inline">\(\mu_R - \mu_W &gt; 0\)</span></p>
+<p>(C) <span class="math inline">\(\mu_R - \mu_W &lt; 0\)</span></p>
+<p>(D) <span class="math inline">\(\mu_R - \mu_W \ne 0\)</span></p>
+<ol start="2" type="a">
+<li>What is the alternative hypothesis <span class="math inline">\(H_1\)</span>? Write a verbal description as well.</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_R - \mu_W = 0\)</span></p>
+<p>(B) <span class="math inline">\(\mu_R - \mu_W &gt; 0\)</span></p>
+<p>(C) <span class="math inline">\(\mu_R - \mu_W &lt; 0\)</span></p>
+<p>(D) <span class="math inline">\(\mu_R - \mu_W \ne 0\)</span></p>
+<ol start="3" type="a">
+<li><p>Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.</p></li>
+<li><p>Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance.</p></li>
+<li><p>Use R and <code>t.test()</code> to find the test statistics and p-value.</p></li>
+<li><p>Report the T statistic.</p></li>
+<li><p>Calculate the p-value. Interpret the p-value.</p></li>
+<li><p>From the two-sample t-test, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>? Evaluate the p-value.</p></li>
+<li><p>Calculate the lower bound of 95% CI.</p></li>
+<li><p>Calculate the upper bound of 95% CI.</p></li>
+<li><p>Interpret the confidence interval.</p></li>
+<li><p>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_R - \mu_W\)</span> in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for <span class="math inline">\(\mu_R - \mu_W\)</span>, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.</p></li>
+</ol>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImdnZm9ybXVsYSIsIm1vc2FpYyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6WyJodHRwczovL3Byb2plY3Rtb3NhaWMuci11bml2ZXJzZS5kZXYiXX0sInJlbmRlcl9kZiI6ImRlZmF1bHQifQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjJcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjJcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfMSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItMS1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCIxXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIxXCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../note-outlines";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jcanner\.github\.io\/math-320");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../note-outlines/15-paired-t-tests.html" class="pagination-link" aria-label="Inference for Paired Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Inference for Paired Data</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025, Judith Canner</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
