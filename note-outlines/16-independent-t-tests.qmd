@@ -1,5 +1,5 @@
 ---
-title: "Inference for Paired Samples"
+title: "Inference for Two Independent Samples"
 format: 
   live-html:
     webr:
@@ -54,6 +54,8 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
         ggplot2.discrete.color = scale_color_viridis_d,
         ggplot2.discrete.fill = scale_fill_viridis_d)
 ```
+
+
 
 In the last chapter, we discussed the **one-sample t-test** for the population mean $\mu$ under the normality/sufficient sample size conditions. The unknown parameter $\mu$ is estimated by the sample mean $\bar{X}$, and the standard error of $\bar{X}$ is estimated by $\frac{S}{\sqrt{n}}$ to quantify the uncertainty of $\bar{X}$ (where $S$ is the sample standard deviation and $n$ is the sample size). The one-sample t-test is used to test for the mean of a population. It can be also used to test for the expected change within subjects (i.e. the paired t-test).
 
@@ -177,7 +179,7 @@ After calculating $T = \texttt{t}$, the calculation of p-value depends on the di
 
 If p-value is less than $\alpha$, we conclude $H_1$. Otherwise, we conclude $H_0$. 
 
-INTERPRETATION AND EVALUATION IS THE SAME AS BEFORE!!!
+**INTERPRETATION AND EVALUATION ARE THE SAME AS PREVIOUS TESTS!!!**
 
 
 ## Confidence Interval
@@ -304,6 +306,11 @@ Clinically, a low birth weight is defined as a birth weight below 5.5 pounds. We
 mean((bwt < 5.5) ~ smoke, data = birthwt ) ### proportions by group
 ```
 
+Interpret the summary statistics and data visualization on the context of our research hypothesis.
+
+
+
+
 ### Set up the Hypotheses
 Set up the null and alternative hypothesis (note there is more than one way to do this) for the research hypothesis that those who smoke give birth to infants who weight less than those who do not smoke:
 
@@ -400,6 +407,10 @@ Interpret the Confidence Interval and evaluate it in consideration of the hypoth
 
 
 
+### Write A Conclusion
+Using all of the above information, write a report about how smoking impacts birth weights using statistical reasoning.  
+
+
 
 
 ## Wrap-up
@@ -463,18 +474,6 @@ Multiple-choice: Which of the above statements is a reasonable guess when data p
 
 \(F\) The two populations have unequal variances.
 
-#### Problem 6 
-Multiple-choice: Which of the following cases makes the two-sample t-test not valid?
-
-\(A\) $n_1 = 10$; $n_2 = 5$; QQ Plot with deviations from the 1:1 line, 
-
-\(B\) $n_1 = 100$; $n_2 = 200$; p = 0.001 from Shapiro-Wilk test; p = 0.001 from Bartlett test
-
-\(C\) $n_1 = 100$; $n_2 = 200$; p = 0.001 from Shapiro-Wilk test; p = 0.5 from Bartlett test
-
-\(D\) $n_1 = 10$; $n_2 = 5$; p = 0.001 from Shapiro-Wilk test; p = 0.3 from Bartlett test
-
-\(E\) $n_1 = 10$; $n_2 = 5$; p = 0.5 from Shapiro-Wilk test; p = 0.7 from Bartlett test
 
 ## Assignment
 

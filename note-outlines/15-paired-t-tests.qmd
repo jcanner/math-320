@@ -433,34 +433,64 @@ Fill in the blank.
 
 a. The \[n... a...\] implies that a simple random sample is from a normal distribution.
 
-b. The Q-Q plot is a graphical assessment of the normality assumption, and the \[S... t...\] is a formal test for the normality assumption.
+:::{.callout-tip collapse="true"}
+#### Answer
+normal condition/assumption
+:::
+
+b. The \[Q... p...\] is a graphical assessment of the normality condition.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+QQ plot
+:::
 
 c. The \[p... t...\] is the same as the one-sample t-test, expected all calculations and inferences are made about the differences between two values. 
 
+:::{.callout-tip collapse="true"}
+#### Answer
+paired t-test
+:::
+
 
 #### Problem 2
-In a study where the T statistic is 4.4908, and the p-value (for the right-sided test) is 0.000125. If the researchers were interested in the two-sided test, that is $H_0$: $\mu_D = 0$ versus $H_1$: $\mu_D \ne 0$, what would be the p-value given the same sample?
+In a study where the T statistic is 4.4908, and the p-value (for the right-sided test) is 0.00025. If the researchers were interested in the two-sided test, that is $H_0$: $\mu_D = 0$ versus $H_1$: $\mu_D \ne 0$, what would be the p-value given the same sample?
 
-
+:::{.callout-tip collapse="true"}
+#### Answer
+0.00025
+:::
 
 #### Problem 3
-Multiple-choice: Which of the following is a sign of violating the normality assumption?
+Multiple-choice: Which of the following is a sign of violating the normality condition?
 
-\(A\) The Q-Q plot is fairly straight.
+```{r}
+#| label: wrap-3
+#| echo: false
+checkdown::check_question(answer = "The Q-Q plot severely deviates from the straight line.",
+                          options = c("The Q-Q plot is fairly straight.",
+                                      "The Q-Q plot severely deviates from the straight line.",
+                                      "The t-test results in a p-value of 0.001.",
+                                      "The t-test results in a p-value of 0.999.",
+                                      "(B) and (C)",
+                                      "(B) and (D)"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) The Q-Q plot severely deviates from the straight line.
-
-\(C\) The t-test results in a p-value of 0.001.
-
-\(D\) The t-test results in a p-value of 0.999.
-
-\(E\) (B) and (C)
-
-\(F\) (B) and (D)
 
 #### Problem 4
 True or false: If a sample size is very large (substantially larger than 30) and the QQ Plots indicates violation of the normality assumption, the one-sample t-test and CI are [not]{.underline} valid.
 
+```{r}
+#| label: wrap-4
+#| echo: false
+checkdown::check_question(answer = "False",
+                          options = c("True",
+                                      "False"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
 
 ## Assignment
 
@@ -477,6 +507,20 @@ The researchers collected the following data: (0.593, 0.142, 0.329, 0.231, 0.292
 mpn <- c(0.593, 0.142, 0.329, 0.231, 0.292)
 ```
 
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-1-solution
+#| echo: false
+
+gf_qq(~mpn, 
+      xlab = "Theoretical Z Scores",
+      ylab = "Observe MPN Values") |> 
+  gf_qqline()
+```
+:::
 
 
 
@@ -501,34 +545,139 @@ Download the data here: [`ybmi.csv`](data/ybmi.csv)
 
 a. What is the null value (in seconds) in the null hypothesis $H_0$?
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0
+:::
+
 b. Multiple-choice: What is the alternative hypothesis $H_1$?
 
-\(A\) same as the null hypothesis (i.e., the parameter is equal to the null value)
-
-\(B\) right-sided test (i.e., the parameter is greater than the null value)
-
-\(C\) left-sided test (i.e., the parameter is less than the null value)
-
-\(D\) two-sided test (i.e., the parameter is not equal to the null value)
-
-\(E\) to be determined after observing data
+```{r}
+#| label: asn-2-b
+#| echo: false
+checkdown::check_question(answer = "left-sided test (i.e., the parameter is less than the null value)",
+                          options = c("same as the null hypothesis (i.e., the parameter is equal to the null value)",
+                                      "right-sided test (i.e., the parameter is greater than the null value)",
+                                      "left-sided test (i.e., the parameter is less than the null value)",
+                                      "two-sided test (i.e., the parameter is not equal to the null value)",
+                                      "to be determined after observing data"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Provide descriptive statistics and boxplot for the variable of interest. Describe in words.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: descriptive-2-c
+#| echo: false
+
+ybmi <- read_csv("data/ybmi.csv", show_col_types = FALSE)
+
+df_stats(~(test2 - test1), data = ybmi)
+
+gf_boxplot(~(test2 - test1), data = ybmi,
+           xlab = "Difference betweeen Test 2 (mid-season) and Test 1 (pre-season) YMBI Times (seconds)",
+           ylab = "") |> 
+  gf_theme(axis.text.y = element_blank())
+
+gf_histogram(~(test2 - test1), data = ybmi,
+           xlab = "Difference betweeen Test 2 (mid-season) and Test 1 (pre-season) YMBI Times (seconds)",
+           ylab = "Number of Players",
+           binwidth = 15,
+           color = "black") 
+
+```
+
+:::
+
 d. Calculate the T statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-d
+#| echo: false
+
+t.test(~(test2 - test1), data = ybmi, mu = 0, alternative = "less")
+```
+:::
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+t = -5.8632
+:::
 
 e. Calculate the p-value.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+p-value < 0.0001  (when you have a tiny p-value, this is acceptable)
+:::
+
 f. Do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$?
+
+:::{.callout-tip collapse="true"}
+#### Answer
+VERY STRONG evidence against the null in favor of the alternative
+:::
 
 g. Calculate the lower bound of 95% CI.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-g
+#| echo: false
+
+t.test(~(test2 - test1), data = ybmi, conf.level = 0.95)$conf.int
+```
+:::
+
+:::{.callout-tip collapse="true"}
+#### Answer
+-98.51495
+:::
+
 h. Calculate the upper bound of 95% CI.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+-45.98505
+:::
 
 i. Create a QQ-Plot for the data
 
-i. True or false: According to the QQ Plot there is a sign of violating the normality assumption, so the above results are not valid.
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: qqplot-asn-2
+#| echo: false
+
+gf_qq(~(test2 - test1), data = ybmi,
+      ylab = "Difference betweeen Test 2 (mid-season) and Test 1 (pre-season) YMBI Times (seconds)",
+      xlab = "Theoretical Z-Scores") |> 
+  gf_qqline()
+```
+
+:::
+
+i. True or false: According to the QQ Plot there is a sign of violating the normality condition, so the above results are not valid.
+```{r}
+#| label: asn-2-i
+#| echo: false
+checkdown::check_question(answer = "False. Deviations in the tails are expected given the sample size",
+                          options = c("True. Deviations in the tails are extreme given the sample size",
+                                      "False. Deviations in the tails are expected given the sample size"),
+                          type = "select",
+                          button_label = "Check Your Answer")
+```
+
 
 
 #### Problem 3
 Combine your results of Problems 2 and from One Sample t-Test 2 & 3, and write a short statistical report for the coach in 200-300 words. Include one table and one graphic (or one set of graphics).
+
+>Be sure that you can write all interpreations and evaluations in context for the above inferences.

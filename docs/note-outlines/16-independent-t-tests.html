@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Inference for Paired Samples – MATH 320: Applied Probability and Statistics</title>
+<title>Inference for Two Independent Samples – MATH 320: Applied Probability and Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -355,6 +355,7 @@ window.Quarto = {
   <li><a href="#assessing-equal-variance-condition" id="toc-assessing-equal-variance-condition" class="nav-link" data-scroll-target="#assessing-equal-variance-condition"><span class="header-section-number">7.4</span> Assessing Equal Variance Condition</a></li>
   <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">7.5</span> Two-sample T-test</a></li>
   <li><a href="#confidence-interval-1" id="toc-confidence-interval-1" class="nav-link" data-scroll-target="#confidence-interval-1"><span class="header-section-number">7.6</span> Confidence Interval</a></li>
+  <li><a href="#write-a-conclusion" id="toc-write-a-conclusion" class="nav-link" data-scroll-target="#write-a-conclusion"><span class="header-section-number">7.7</span> Write A Conclusion</a></li>
   </ul></li>
   <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">8</span> Wrap-up</a></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">9</span> Assignment</a></li>
@@ -366,7 +367,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/16-independent-t-tests.html">Inference for Independent Groups</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Inference for Paired Samples</h1>
+<h1 class="title">Inference for Two Independent Samples</h1>
 </div>
 
 
@@ -493,7 +494,7 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <li><p><u>Two-sided test</u>: p = <span class="math inline">\(2 * \texttt{pt}(\texttt{t}, \nu)\)</span> if <span class="math inline">\(\texttt{t} &lt; 0\)</span> or p = <span class="math inline">\(2 * (1 - \texttt{pt}(\texttt{t}, \nu))\)</span> if <span class="math inline">\(\texttt{t} &gt; 0\)</span></p></li>
 </ul>
 <p>If p-value is less than <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>.</p>
-<p>INTERPRETATION AND EVALUATION IS THE SAME AS BEFORE!!!</p>
+<p><strong>INTERPRETATION AND EVALUATION ARE THE SAME AS PREVIOUS TESTS!!!</strong></p>
 </section>
 </section>
 <section id="confidence-interval" class="level2" data-number="4">
@@ -601,6 +602,7 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 0.2521739 0.4054054 </code></pre>
 </div>
 </div>
+<p>Interpret the summary statistics and data visualization on the context of our research hypothesis.</p>
 </section>
 <section id="set-up-the-hypotheses" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="set-up-the-hypotheses"><span class="header-section-number">7.2</span> Set up the Hypotheses</h3>
@@ -697,6 +699,10 @@ attr(,"conf.level")
 </div>
 <p>Interpret the Confidence Interval and evaluate it in consideration of the hypothesis test.</p>
 </section>
+<section id="write-a-conclusion" class="level3" data-number="7.7">
+<h3 data-number="7.7" class="anchored" data-anchor-id="write-a-conclusion"><span class="header-section-number">7.7</span> Write A Conclusion</h3>
+<p>Using all of the above information, write a report about how smoking impacts birth weights using statistical reasoning.</p>
+</section>
 </section>
 <section id="wrap-up" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">8</span> Wrap-up</h2>
@@ -741,15 +747,6 @@ attr(,"conf.level")
 <p>(D) At least one of two populations does not follow normal distributions.</p>
 <p>(E) The two populations have the equal variance.</p>
 <p>(F) The two populations have unequal variances.</p>
-</section>
-<section id="problem-6" class="level4" data-number="8.0.6">
-<h4 data-number="8.0.6" class="anchored" data-anchor-id="problem-6"><span class="header-section-number">8.0.6</span> Problem 6</h4>
-<p>Multiple-choice: Which of the following cases makes the two-sample t-test not valid?</p>
-<p>(A) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; QQ Plot with deviations from the 1:1 line,</p>
-<p>(B) <span class="math inline">\(n_1 = 100\)</span>; <span class="math inline">\(n_2 = 200\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.001 from Bartlett test</p>
-<p>(C) <span class="math inline">\(n_1 = 100\)</span>; <span class="math inline">\(n_2 = 200\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.5 from Bartlett test</p>
-<p>(D) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; p = 0.001 from Shapiro-Wilk test; p = 0.3 from Bartlett test</p>
-<p>(E) <span class="math inline">\(n_1 = 10\)</span>; <span class="math inline">\(n_2 = 5\)</span>; p = 0.5 from Shapiro-Wilk test; p = 0.7 from Bartlett test</p>
 </section>
 </section>
 <section id="assignment" class="level2" data-number="9">
