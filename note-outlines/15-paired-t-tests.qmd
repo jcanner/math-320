@@ -680,4 +680,4 @@ checkdown::check_question(answer = "False. Deviations in the tails are expected 
 #### Problem 3
 Combine your results of Problems 2 and from One Sample t-Test 2 & 3, and write a short statistical report for the coach in 200-300 words. Include one table and one graphic (or one set of graphics).
 
->Be sure that you can write all interpreations and evaluations in context for the above inferences.
+>Be sure that you can write all interpretations and evaluations in context for the above inferences.

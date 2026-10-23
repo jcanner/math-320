@@ -419,60 +419,79 @@ In your groups work on the following problems. You can check your answers below.
 #### Problem 1 
 Multiple-choice: Which of the following tests is for comparing the two population means under the normality condition?
 
-\(A\) one-sample t-test
+```{r}
+#| label: wrap-2
+#| echo: false
+checkdown::check_question(answer = "two-sample t-test",
+                          options = c("one-sample t-test",
+                                      "two-sample t-test",
+                                      "matched-pairs t-test"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) two-sample t-test
-
-\(C\) matched-pairs t-test
 
 #### Problem 2 
 Fill in the blanks. In general, a small p-value is statistical evidence against \[part a\] in favor of \[part b\], so we conclude \[part c\] when a p-value is smaller than a fixed \[part d\]. 
 (Word choice: p-value, significance level, test statistic, null hypothesis, alternative hypothesis, normality condition)
 
+:::{.callout-tip collapse="true"}
+#### Answer
+a.	null hypothesis
+b.	alternative hypothesis
+c.	alternative hypothesis
+d.	significance level
+
+:::
+
+
 #### Problem 3 
 Multiple-choice: Which of the following statements is the [null hypothesis]{.underline} of [two-sample t-test]{.underline}?
 
-\(A\) The two populations (groups) have the same average.
-
-\(B\) The two populations have different averages.
-
-\(C\) The two populations follow normal distributions.
-
-\(D\) At least one of two populations does not follow normal distributions.
-
-\(E\) The two populations have the equal variance.
-
-\(F\) The two populations have unequal variances.
+```{r}
+#| label: wrap-3
+#| echo: false
+checkdown::check_question(answer = "The two populations (groups) have the same average.",
+                          options = c("The two populations (groups) have the same average.",
+                                      "The two populations have different averages.",
+                                      "The two populations follow normal distributions.",
+                                      "The two populations have the equal variance.",
+                                      "The two populations have unequal variances."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 #### Problem 4 
-Multiple-choice: Which of the above statements is the [alternative hypothesis]{.underline} of [two-sample t-test]{.underline}?
+Multiple-choice: Which of the statements is the [alternative hypothesis]{.underline} of [two-sample t-test]{.underline}?
 
-\(A\) The two populations (groups) have the same average.
-
-\(B\) The two populations have different averages.
-
-\(C\) The two populations follow normal distributions.
-
-\(D\) At least one of two populations does not follow normal distributions.
-
-\(E\) The two populations have the equal variance.
-
-\(F\) The two populations have unequal variances.
+```{r}
+#| label: wrap-4
+#| echo: false
+checkdown::check_question(answer = "The two populations have different averages.",
+                          options = c("The two populations (groups) have the same average.",
+                                      "The two populations have different averages.",
+                                      "The two populations follow normal distributions.",
+                                      "The two populations have the equal variance.",
+                                      "The two populations have unequal variances."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 #### Problem 5
-Multiple-choice: Which of the above statements is a reasonable guess when data points of QQ plot severely deviate from a straight line?
+Multiple-choice: Which of the statements is a reasonable guess when data points of a QQ plot follow the 1:1 line?
 
-\(A\) The two populations (groups) have the same average.
-
-\(B\) The two populations have different averages.
-
-\(C\) The two populations follow normal distributions.
-
-\(D\) At least one of two populations does not follow normal distributions.
-
-\(E\) The two populations have the equal variance.
-
-\(F\) The two populations have unequal variances.
+```{r}
+#| label: wrap-5
+#| echo: false
+checkdown::check_question(answer = "The two populations have different averages.",
+                          options = c("The two populations (groups) have the same average.",
+                                      "The two populations have different averages.",
+                                      "The two populations follow normal distributions.",
+                                      "The two populations have the equal variance.",
+                                      "The two populations have unequal variances."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 
 ## Assignment
@@ -484,19 +503,59 @@ Let $\mu_1 - \mu_2$ be the parameter of interest. Suppose the sample means are $
 
 a. standard error under the condition of equal variance
 
+:::{.callout-tip collapse="true"}
+#### Answer
+9.1842
+:::
+
 b. degrees of freedom under the condition of equal variance
+
+:::{.callout-tip collapse="true"}
+#### Answer
+43
+:::
 
 c. T statistic under the condition of equal variance
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-2.1777
+:::
+
 d. p-value for the left-sided test
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.0175
+:::
 
 e. standard error under the condition of unequal variances
 
+:::{.callout-tip collapse="true"}
+#### Answer
+8.3066
+:::
+
 f. degrees of freedom under the condition of unequal variances
+
+:::{.callout-tip collapse="true"}
+#### Answer
+27.6831
+:::
 
 g. T statistic under the condition of unequal variances
 
+:::{.callout-tip collapse="true"}
+#### Answer
+-2.4077
+:::
+
 h. p-value for the two-sided test
+
+:::{.callout-tip collapse="true"}
+#### Answer
+0.023
+:::
 
 #### Problem 2 
 When calves are infected by a bacterium known as *M. paratuberculosis*, they suffer from chronic diarrhea and lose weight. Researchers hypothesized that iron will promote bacterium growth, so infected calves will lose even more weight by the iron supplementation. (Therefore, if this hypothesis is confirmed, the treatment of *M. paratuberculosis* shall not include iron.) The researchers randomly sampled 19 calves infected by *M. paratuberculosis*, and randomly assigned 9 calves to the control group (no iron supplementation) and 10 calves to the active group (iron supplementation). The dataset $\texttt{calves.csv}$ includes the 19 calves. The column $\texttt{weight}$ is the body weight measured in pounds, and $\texttt{group}$ is the group assignment ($\texttt{Control}$ or $\texttt{Iron}$). Let $\mu_C$ denote the expected weight (pounds) in the control group and $\mu_I$ denote the expected weight in the experimental group. By the alphabetical order of the group names, $\texttt{Control}$ and $\texttt{Iron}$, the parameter of interest will be defined as $\mu_C - \mu_I$ in R. Use a significance level of $\alpha = 0.05$ for all hypothesis testing in this exercise.
@@ -505,46 +564,157 @@ Download the data here: [calves.csv](data/calves.csv)
 
 a. What is the null hypothesis $H_0$? Write a verbal description as well. 
 
-\(A\) $\mu_C - \mu_I = 0$
-
-\(B\) $\mu_C - \mu_I > 0$
-
-\(C\) $\mu_C - \mu_I < 0$
-
-\(D\) $\mu_C - \mu_I \ne 0$
+```{r}
+#| label: wrap-asn-2-a
+#| echo: false
+checkdown::check_question(answer = "μ_C − μ_I = 0",
+                          options = c("μ_C − μ_I = 0",
+                                      "μ_C − μ_I > 0",
+                                      "μ_C − μ_I < 0",
+                                      "μ_C − μ_I ≠ 0"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 b. What is the alternative hypothesis $H_1$? Write a verbal description as well. 
 
-\(A\) $\mu_C - \mu_I = 0$
-
-\(B\) $\mu_C - \mu_I > 0$
-
-\(C\) $\mu_C - \mu_I < 0$
-
-\(D\) $\mu_C - \mu_I \ne 0$
+```{r}
+#| label: wrap-asn-2-b
+#| echo: false
+checkdown::check_question(answer = "μ_C − μ_I > 0",
+                          options = c("μ_C − μ_I = 0",
+                                      "μ_C − μ_I > 0",
+                                      "μ_C − μ_I < 0",
+                                      "μ_C − μ_I ≠ 0"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-c
+#| echo: false
+
+calves <- read_csv("data/calves.csv", show_col_types = FALSE)
+df_stats(weight ~ group, data = calves)
+
+gf_boxplot(group ~ weight, data = calves,
+           xlab = "Weight of Infected Calves (lbs)",
+           ylab = "Treatment Group", 
+           outlier.shape = NA) |> 
+  gf_jitter(height = 0.1)
+```
+
+:::
+  
+
 d. Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance. 
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-d
+#| echo: false
 
+gf_qq(~weight | group, data = calves, 
+      ylab = "Weight of Infected Calves (lbs)",
+      xlab = "Theoretical Z-Scores") |> 
+  gf_qqline()
+```
+
+```{r}
+(33.6134^2)/(40.01389^2) #greater than 1/4 and less than 4, so equal variance
+```
+
+Note sample sizes!
+
+:::
+  
 
 e. Use R and `t.test()` to find the test statistics and p-value.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-e
+#| echo: false
+
+t.test(weight ~ group, data = calves, mu = 0, alternative = "greater", equal.var = TRUE)
+```
+
+:::
+  
+
 f. Report the T statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+1.8868
+:::
+  
 
 g. Calculate the p-value. Interpret the p-value.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.03823
+Be sure to interpret in context. 
+:::
+  
+
 h. From the two-sample t-test, do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$? Evaluate the p-value.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Strong evidence against the null in favor of the alternative
+:::
+  
 
 i. Calculate the lower bound of 95% CI.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-i
+#| echo: false
+
+t.test(weight ~ group, data = calves, conf.level = 0.95, equal.var = TRUE)$conf.int
+```
+:::
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+-3.780117
+:::
+
+
 j. Calculate the upper bound of 95% CI.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+67.557895
+:::
+  
 
 k. Interpret the confidence interval.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+Remember, the parameter is now the "difference between true mean weight for calves taking no iron (control) and the true mean weight for calves taking iron"
+:::
+
 
 l. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_C - \mu_I$ in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for $\mu_C - \mu_I$, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Note that the CI and Test do not "agree", this is because the alternative is one-sided and the Confidence Interval only agrees with the two-sided test.  This is why it is important to consider ALL the evidence.  
+:::
+  
 
 #### Problem 3 
 Researchers have hypothesized that the body size (measured by weight) of wild animals is different depending on environment. For a pilot study, the researchers randomly selected eight young deer raised in ranch and eight young deer raised in an wild environment. The dataset $\texttt{deer.csv}$ includes the 16 deer. The column $\texttt{weight}$ is the body weight measured in pounds, and $\texttt{environment}$ is the group ($\texttt{Ranch}$ or $\texttt{Wild}$). Let $\mu_R$ denote the expected weight in the ranch group and $\mu_W$ denote the expected weight in the wild group. By the alphabetical order of group names, $\texttt{Ranch}$ and $\texttt{Wild}$, the parameter of interest will be defined as $\mu_R - \mu_W$ in R. In this pilot study, due to lack of prior studies, the researchers could not specify which group has a higher average of body weight. Use a significance level of $\alpha = 0.05$ for all hypothesis testing in this exercise.
@@ -553,43 +723,156 @@ Download the data here: [deer.csv](data/deer.csv)
 
 a. What is the null hypothesis $H_0$? Write a verbal description as well. 
 
-\(A\) $\mu_R - \mu_W = 0$
+```{r}
+#| label: wrap-asn-3-a
+#| echo: false
+checkdown::check_question(answer = "μ_R − μ_W = 0",
+                          options = c("μ_R − μ_W = 0",
+                                      "μ_R − μ_W > 0",
+                                      "μ_R − μ_W < 0",
+                                      "μ_R − μ_W ≠ 0"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) $\mu_R - \mu_W > 0$
-
-\(C\) $\mu_R - \mu_W < 0$
-
-\(D\) $\mu_R - \mu_W \ne 0$
 
 b. What is the alternative hypothesis $H_1$? Write a verbal description as well. 
 
-\(A\) $\mu_R - \mu_W = 0$
 
-\(B\) $\mu_R - \mu_W > 0$
-
-\(C\) $\mu_R - \mu_W < 0$
-
-\(D\) $\mu_R - \mu_W \ne 0$
+```{r}
+#| label: wrap-asn-3-b
+#| echo: false
+checkdown::check_question(answer = "μ_R − μ_W ≠ 0",
+                          options = c("μ_R − μ_W = 0",
+                                      "μ_R − μ_W > 0",
+                                      "μ_R − μ_W < 0",
+                                      "μ_R − μ_W ≠ 0"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-3-c
+#| echo: false
+
+deer <- read_csv("data/deer.csv", show_col_types = FALSE)
+df_stats(weight ~ environment, data = deer)
+
+gf_boxplot(environment ~ weight, data = deer,
+           xlab = "Weight of Deer (lbs)",
+           ylab = "Location", 
+           outlier.shape = NA) |> 
+  gf_jitter(height = 0.1)
+```
+
+:::
+  
+
 d. Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance. 
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-3-d
+#| echo: false
 
+gf_qq(~weight | environment, data = deer, 
+      ylab = "Weight of Deer (lbs)",
+      xlab = "Theoretical Z-Scores") |> 
+  gf_qqline()
+```
+
+```{r}
+(30.43257^2)/(8.44113^2) #greater than 4, so unequal variance
+```
+
+Note sample sizes!
+
+:::
+  
 
 e. Use R and `t.test()` to find the test statistics and p-value.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-3-e
+#| echo: false
+
+t.test(weight ~ environment, data = deer, mu = 0, alternative = "two.sided", equal.var = FALSE)
+```
+
+:::
+  
+
 f. Report the T statistic.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+t = -0.41197
+:::
+  
 
 g. Calculate the p-value. Interpret the p-value.  
 
+:::{.callout-tip collapse="true"}
+#### Answer
+p-value = 0.6911
+Be sure to interpret in context. 
+:::
+  
+
 h. From the two-sample t-test, do you conclude $H_0$ or $H_1$ at a significance level of $\alpha = 0.05$? Evaluate the p-value.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+No evidence against the null in favor of the alternative
+:::
+  
 
 i. Calculate the lower bound of 95% CI.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-3-i
+#| echo: false
+
+t.test(weight ~ environment, data = deer, conf.level = 0.95, equal.var = FALSE)$conf.int
+```
+:::
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
+-30.30906
+:::
+
+
 j. Calculate the upper bound of 95% CI.
 
-k. Interpret the confidence interval.
+:::{.callout-tip collapse="true"}
+#### Answer
+21.10906
+:::
+  
+
+k. Interpret the confidence interval.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Remember, the parameter is now the "difference between true mean weight for deer raised on ranches and the true mean weight for deer raised in the wild"
+:::
 
 l. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_R - \mu_W$ in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for $\mu_R - \mu_W$, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+Note the small sample size - should we trust the results given by the t-distribution? 
+:::
+  
 
