@@ -85,6 +85,8 @@ website:
         text: "Inference for Paired Data"  
       - href: note-outlines/16-independent-t-tests.qmd
         text: "Inference for Independent Groups"  
+      - href: note-outlines/17-multiple-comparisons.qmd
+        text: "Multiple Comparisons"  
         
 format:
   html:
