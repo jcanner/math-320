@@ -642,7 +642,7 @@ e. Use R and `t.test()` to find the test statistics and p-value.
 #| label: asn-2-e
 #| echo: false
 
-t.test(weight ~ group, data = calves, mu = 0, alternative = "greater", equal.var = TRUE)
+t.test(weight ~ group, data = calves, mu = 0, alternative = "greater", var.equal = TRUE)
 ```
 
 :::
@@ -652,7 +652,7 @@ f. Report the T statistic.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-1.8868
+1.8687
 :::
   
 
@@ -660,7 +660,7 @@ g. Calculate the p-value. Interpret the p-value.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-0.03823
+0.0395
 Be sure to interpret in context. 
 :::
   
@@ -681,14 +681,14 @@ i. Calculate the lower bound of 95% CI.
 #| label: asn-2-i
 #| echo: false
 
-t.test(weight ~ group, data = calves, conf.level = 0.95, equal.var = TRUE)$conf.int
+t.test(weight ~ group, data = calves, conf.level = 0.95, var.equal = TRUE)$conf.int
 ```
 :::
 
 
 :::{.callout-tip collapse="true"}
 #### Answer
--3.780117
+-4.113947
 :::
 
 
@@ -696,7 +696,7 @@ j. Calculate the upper bound of 95% CI.
 
 :::{.callout-tip collapse="true"}
 #### Answer
-67.557895
+67.891725
 :::
   
 
@@ -803,7 +803,7 @@ e. Use R and `t.test()` to find the test statistics and p-value.
 #| label: asn-3-e
 #| echo: false
 
-t.test(weight ~ environment, data = deer, mu = 0, alternative = "two.sided", equal.var = FALSE)
+t.test(weight ~ environment, data = deer, mu = 0, alternative = "two.sided", var.equal = FALSE)
 ```
 
 :::
@@ -842,7 +842,7 @@ i. Calculate the lower bound of 95% CI.
 #| label: asn-3-i
 #| echo: false
 
-t.test(weight ~ environment, data = deer, conf.level = 0.95, equal.var = FALSE)$conf.int
+t.test(weight ~ environment, data = deer, conf.level = 0.95, var.equal = FALSE)$conf.int
 ```
 :::
 
