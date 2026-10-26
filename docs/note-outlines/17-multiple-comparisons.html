@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Multiple Comparisons – MATH 320: Applied Probability and Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../note-outlines/16-independent-t-tests.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/17-multiple-comparisons.html">Multiple Comparisons</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">MATH 320: Applied Probability and Statistics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/jcanner/math-320" title="GitHub Organization" class="quarto-navigation-tool px-1" aria-label="GitHub Organization"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Getting Started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RStudio Orientation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/intro-to-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/install-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install R and RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Note Outlines</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/1-intro-r-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to R and Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/2-intro-probability-i.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/3-intro-probability-ii.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability II</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/4-bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/5-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/6-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/7-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Central Limit Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/8-intro-to-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/9-summarizing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summarizing and Visualizing Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/10-sampling-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling Methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/11-intro-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/12-intro-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/13-one-sample-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One Sample t-Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/14-practice-one-parameter-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practice with One Parameter Inference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/15-paired-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Paired Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/16-independent-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Independent Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/17-multiple-comparisons.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multiple Comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#types-of-errors" id="toc-types-of-errors" class="nav-link active" data-scroll-target="#types-of-errors"><span class="header-section-number">1</span> Types of Errors</a>
+  <ul class="collapse">
+  <li><a href="#how-do-we-control-for-types-of-error" id="toc-how-do-we-control-for-types-of-error" class="nav-link" data-scroll-target="#how-do-we-control-for-types-of-error"><span class="header-section-number">1.1</span> How do we control for types of error?</a></li>
+  </ul></li>
+  <li><a href="#ethics-in-decision-making-p-hacking-is-a-reality" id="toc-ethics-in-decision-making-p-hacking-is-a-reality" class="nav-link" data-scroll-target="#ethics-in-decision-making-p-hacking-is-a-reality"><span class="header-section-number">2</span> Ethics in Decision Making: P-hacking is a Reality</a></li>
+  <li><a href="#estimating-the-effect-size" id="toc-estimating-the-effect-size" class="nav-link" data-scroll-target="#estimating-the-effect-size"><span class="header-section-number">3</span> Estimating the Effect Size</a>
+  <ul class="collapse">
+  <li><a href="#sample-size-and-effect-size" id="toc-sample-size-and-effect-size" class="nav-link" data-scroll-target="#sample-size-and-effect-size"><span class="header-section-number">3.1</span> Sample Size and Effect Size</a></li>
+  </ul></li>
+  <li><a href="#the-p-value-alone-is-not-enough-evidence" id="toc-the-p-value-alone-is-not-enough-evidence" class="nav-link" data-scroll-target="#the-p-value-alone-is-not-enough-evidence"><span class="header-section-number">4</span> The p-value alone is not enough evidence</a>
+  <ul class="collapse">
+  <li><a href="#the-strength-of-evidence-depends-on-the-field-of-study" id="toc-the-strength-of-evidence-depends-on-the-field-of-study" class="nav-link" data-scroll-target="#the-strength-of-evidence-depends-on-the-field-of-study"><span class="header-section-number">4.1</span> The strength of evidence depends on the field of study</a></li>
+  <li><a href="#the-strength-of-evidence-depends-on-the-alternative-hypothesis" id="toc-the-strength-of-evidence-depends-on-the-alternative-hypothesis" class="nav-link" data-scroll-target="#the-strength-of-evidence-depends-on-the-alternative-hypothesis"><span class="header-section-number">4.2</span> The strength of evidence depends on the alternative hypothesis</a></li>
+  <li><a href="#the-strength-of-evidence-can-be-impacted-by-sample-size" id="toc-the-strength-of-evidence-can-be-impacted-by-sample-size" class="nav-link" data-scroll-target="#the-strength-of-evidence-can-be-impacted-by-sample-size"><span class="header-section-number">4.3</span> The strength of evidence can be impacted by sample size</a></li>
+  </ul></li>
+  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons"><span class="header-section-number">5</span> Multiple Comparisons</a>
+  <ul class="collapse">
+  <li><a href="#why-anova-and-not-multiple-t-tests" id="toc-why-anova-and-not-multiple-t-tests" class="nav-link" data-scroll-target="#why-anova-and-not-multiple-t-tests"><span class="header-section-number">5.1</span> Why ANOVA and not Multiple T-Tests?</a></li>
+  <li><a href="#anova-hypothesis" id="toc-anova-hypothesis" class="nav-link" data-scroll-target="#anova-hypothesis"><span class="header-section-number">5.2</span> ANOVA Hypothesis</a></li>
+  <li><a href="#constructing-a-new-test-statistic" id="toc-constructing-a-new-test-statistic" class="nav-link" data-scroll-target="#constructing-a-new-test-statistic"><span class="header-section-number">5.3</span> Constructing a New Test Statistic</a></li>
+  <li><a href="#example-1-comparing-penguin-body-mass-across-species" id="toc-example-1-comparing-penguin-body-mass-across-species" class="nav-link" data-scroll-target="#example-1-comparing-penguin-body-mass-across-species"><span class="header-section-number">5.4</span> Example 1: Comparing Penguin Body Mass Across Species</a></li>
+  <li><a href="#example-2-comparing-adelie-penguin-body-mass-between-islands" id="toc-example-2-comparing-adelie-penguin-body-mass-between-islands" class="nav-link" data-scroll-target="#example-2-comparing-adelie-penguin-body-mass-between-islands"><span class="header-section-number">5.5</span> Example 2: Comparing Adelie Penguin Body Mass Between Islands</a></li>
+  </ul></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">6</span> Wrap-up</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">7</span> Assignment</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/17-multiple-comparisons.html">Multiple Comparisons</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Multiple Comparisons</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJ3ZWJyOjppbnN0YWxsKFwiZ3JhZGV0aGlzXCIsIHF1aWV0ID0gVFJVRSlcbmxpYnJhcnkoZ3JhZGV0aGlzKVxub3B0aW9ucyh3ZWJyLmV4ZXJjaXNlLmNoZWNrZXIgPSBmdW5jdGlvbihcbiAgbGFiZWwsIHVzZXJfY29kZSwgc29sdXRpb25fY29kZSwgY2hlY2tfY29kZSwgZW52aXJfcmVzdWx0LCBldmFsdWF0ZV9yZXN1bHQsXG4gIGVudmlyX3ByZXAsIGxhc3RfdmFsdWUsIGVuZ2luZSwgc3RhZ2UsIC4uLlxuKSB7XG4gIGlmIChpcy5udWxsKGNoZWNrX2NvZGUpKSB7XG4gICAgIyBObyBncmFkaW5nIGNvZGUsIHNvIGp1c3Qgc2tpcCBncmFkaW5nXG4gICAgaW52aXNpYmxlKE5VTEwpXG4gIH0gZWxzZSBpZiAoaXMubnVsbChsYWJlbCkpIHtcbiAgICBsaXN0KFxuICAgICAgY29ycmVjdCA9IEZBTFNFLFxuICAgICAgdHlwZSA9IFwid2FybmluZ1wiLFxuICAgICAgbWVzc2FnZSA9IFwiQWxsIGV4ZXJjaXNlcyBtdXN0IGhhdmUgYSBsYWJlbC5cIlxuICAgIClcbiAgfSBlbHNlIGlmIChpcy5udWxsKHNvbHV0aW9uX2NvZGUpKSB7XG4gICAgbGlzdChcbiAgICAgIGNvcnJlY3QgPSBGQUxTRSxcbiAgICAgIHR5cGUgPSBcIndhcm5pbmdcIixcbiAgICAgIG1lc3NhZ2UgPSBodG1sdG9vbHM6OnRhZ3MkZGl2KFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcIkEgcHJvYmxlbSBvY2N1cnJlZCBncmFkaW5nIHRoaXMgZXhlcmNpc2UuXCIpLFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcbiAgICAgICAgICBcIk5vIHNvbHV0aW9uIGNvZGUgd2FzIGZvdW5kLiBOb3RlIHRoYXQgZ3JhZGluZyBleGVyY2lzZXMgdXNpbmcgdGhlIFwiLFxuICAgICAgICAgIGh0bWx0b29sczo6dGFncyRjb2RlKFwiZ3JhZGV0aGlzXCIpLFxuICAgICAgICAgIFwicGFja2FnZSByZXF1aXJlcyBhIG1vZGVsIHNvbHV0aW9uIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBkb2N1bWVudC5cIlxuICAgICAgICApXG4gICAgICApXG4gICAgKVxuICB9IGVsc2Uge1xuICAgIGdyYWRldGhpczo6Z3JhZGV0aGlzX2V4ZXJjaXNlX2NoZWNrZXIoXG4gICAgICBsYWJlbCA9IGxhYmVsLCBzb2x1dGlvbl9jb2RlID0gc29sdXRpb25fY29kZSwgdXNlcl9jb2RlID0gdXNlcl9jb2RlLFxuICAgICAgY2hlY2tfY29kZSA9IGNoZWNrX2NvZGUsIGVudmlyX3Jlc3VsdCA9IGVudmlyX3Jlc3VsdCxcbiAgICAgIGV2YWx1YXRlX3Jlc3VsdCA9IGV2YWx1YXRlX3Jlc3VsdCwgZW52aXJfcHJlcCA9IGVudmlyX3ByZXAsXG4gICAgICBsYXN0X3ZhbHVlID0gbGFzdF92YWx1ZSwgc3RhZ2UgPSBzdGFnZSwgZW5naW5lID0gZW5naW5lKVxuICB9XG59KSJ9
+</script>
+</div>
+</div>
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwiOnRydWUsImluY2x1ZGUiOmZhbHNlLCJsYWJlbCI6InRoZW1lIiwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGdncGxvdDIpXG50aGVtZV9zZXQodGhlbWVfbGlnaHQoKSlcbm9wdGlvbnMoZ2dwbG90Mi5jb250aW51b3VzLmNvbG9yID0gc2NhbGVfY29sb3JfdmlyaWRpc19jLCBcbiAgICAgICAgZ2dwbG90Mi5jb250aW51b3VzLmZpbGwgPSBzY2FsZV9maWxsX3ZpcmlkaXNfYyxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5jb2xvciA9IHNjYWxlX2NvbG9yX3ZpcmlkaXNfZCxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5maWxsID0gc2NhbGVfZmlsbF92aXJpZGlzX2QpIn0=
+</script>
+</div>
+</div>
+<section id="types-of-errors" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="types-of-errors"><span class="header-section-number">1</span> Types of Errors</h2>
+<p><strong>Type I Error Rate (α):</strong> <em>the probability of finding evidence against the null <u>hypothesis when the null hypothesis is true.</u></em></p>
+<ul>
+<li>Also called the “<strong>significance level</strong>”</li>
+</ul>
+<p><strong>Confidence (1-α):</strong> <em>the probability of finding <u>no</u> evidence against the null <u>hypothesis when the null hypothesis is true.</u></em></p>
+<p><strong>Type II Error Rate (β):</strong> <em>the probability of finding <u>no</u> evidence against the null hypothesis <u>when the null hypothesis is false</u>.</em></p>
+<p><strong>Power of the Test (1 – β):</strong> <em>the probability of finding evidence against the null hypothesis <u>when the null hypothesis is false</u>, i.e.&nbsp;supporting a true alternative hypothesis</em></p>
+<p>Therefore,</p>
+<ul>
+<li><p>Every time we <em>find no evidence against</em> a null hypothesis, we are either correct or making a Type II error.</p></li>
+<li><p>Every time we <em>find evidence against</em> a null hypothesis, we are either correct or making a Type I error.</p></li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 23%">
+<col style="width: 24%">
+<col style="width: 0%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Possible Hypothesis Tests outcomes</strong></td>
+<td><strong>Reality</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>Null Claim is TRUE</strong></td>
+<td><strong>Null Claim is FALSE</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td colspan="4">Conclude there <u>is no evidence against</u>t the null | <u>Confidence</u> | <u>Type II Error</u> | | | | Correct decision | Incorrect Decision | | | | | Probability = <span class="math inline">\(1-\alpha\)</span> | Probability =$\beta$ |</td>
+</tr>
+<tr class="even">
+<td>Conclude there <u>is evidence against</u> the null</td>
+<td><p><u>Type I Error</u></p>
+<p>Incorrect Decision</p>
+<p>Probability = <span class="math inline">\(\alpha\)</span></p></td>
+<td><p><u>Power</u></p>
+<p>Correct decision</p>
+<p>Probability = <span class="math inline">\(1-\beta\)</span> |</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>We’ve been evaluating the strength of the evidence against the null hypothesis based on the context of the situation, but we need to scale that strength of evidence based on the level of certainty we need in our results. We define a moderate level of evidence as the <strong><em>level of significance</em></strong> <strong>(α)<em>, which is also the probability of Type I Error</em></strong>.</p>
+<p>Though there is movement in the scientific community away from what is often called “dichotomous decision-making”, we still see the <em>significance level/Type I error rate</em> used in the decision-making process to either reject or fail to reject the null hypothesis.</p>
+<p><strong>Significance Level (</strong><span class="math inline">\(\alpha\)</span>): the probability level of Type I error at which we determine we have sufficient evidence against the null hypothesis as a reasonable assumption</p>
+<p>We can qualify our evidence as very strong, strong, moderate, some, little, very little, and no evidence against the null hypothesis.</p>
+<p><strong>Statistically Meaningful/Discernible Difference:</strong> when evidence is moderate or stronger based on the selected Type I Error Rate/Significance Level</p>
+<ul>
+<li><em>We will use this language instead of “statistically significant”</em></li>
+</ul>
+<section id="how-do-we-control-for-types-of-error" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="how-do-we-control-for-types-of-error"><span class="header-section-number">1.1</span> How do we control for types of error?</h3>
+<p>The two types of error actually play off of each other.</p>
+<p><strong><em>Type I: Conclude there is evidence against the null hypothesis when the null is true.</em></strong></p>
+<ul>
+<li><p>The probability of committing Type I error, α, is under our control as experimenters and is known as the level of significance which the experimenter chooses.</p></li>
+<li><p>When we decide there is evidence against the null hypothesis, we automatically know the probability of a Type I error, which is defined by the significance level</p></li>
+<li><p>If we decrease our significance level, we decrease the probability of committing Type I error</p></li>
+</ul>
+<p><strong><em>Type II: Conclude there is <u>insufficient</u> evidence against the null hypothesis when the null is false</em></strong></p>
+<p>When we decide there is no evidence against a null hypothesis, it is much more difficult to determine the probability of a Type II error.</p>
+<ul>
+<li><p>Type II error depends on several factors which may be unknown to the experimenter.&nbsp; The two factors we do have in our control are sample size and significance level.&nbsp;</p></li>
+<li><p>If we increase the sample size, we decrease the probability of committing Type II error.</p></li>
+<li><p>If we decrease significance level (Type I error), we increase the probability of committing a Type II error.</p></li>
+</ul>
+<p>The researcher has full control over the following four characteristics that impact Type I and Type II Error, but the researcher should provide justification for each choice:</p>
+<ol type="1">
+<li><p>The null and alternative Hypotheses are determined based on the research question</p></li>
+<li><p>The desired significance level should be chosen based on the associated dangers of committing a Type I Error.</p></li>
+</ol>
+<ul>
+<li><p>If Type I Error is especially dangerous, a lower significance level should be chosen.</p></li>
+<li><p>The 0.05 significance level is a common choice, but is not appropriate for all situations.</p></li>
+<li><p>Lower significance level increases the probability of Type II error for a given sample size</p></li>
+</ul>
+<ol start="3" type="1">
+<li>The desired power should be based on the associated dangers of committing a Type II Error.</li>
+</ol>
+<ul>
+<li><p>If Type II Error is especially dangerous, a higher power should be chosen.</p></li>
+<li><p>Higher power requires a higher sample size for a given significance level.</p></li>
+<li><p>A MINIMUM OF 0.80 IS EXPECTED IN MOST CASES FOR POWER</p></li>
+</ul>
+<ol start="4" type="1">
+<li>The chosen <em>effect size</em> determines the difference that is <em>practically significant</em> in the context of the study. Often an estimate of the population variance may be necessary; this may be estimated based on previous studies or prior information. We will talk more about this issue.</li>
+</ol>
+</section>
+</section>
+<section id="ethics-in-decision-making-p-hacking-is-a-reality" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ethics-in-decision-making-p-hacking-is-a-reality"><span class="header-section-number">2</span> Ethics in Decision Making: P-hacking is a Reality</h2>
+<p>It is important to remember that p-values indicate the strength of the evidence against the null model, not the strength or reasonableness of the model in the first place. Good scientific practice is that the null and alternative models/hypotheses are determined prior to collecting data and then we proceed with the data collection and analysis. P-hacking is when researchers change the model (change comparison groups for example) after data collection to get a small p-values.</p>
+<p>Why does this happen?</p>
+<p><em>“Journals generally prefer to publish statistically significant results, so scientists have incentives to select ways of parsing and analyzing their data that produce a p-value under 0.05. That’s p-hacking”</em> ~ Wired 2019</p>
+<p>Read more here: <a href="https://www.wired.com/story/were-all-p-hacking-now/" class="uri">https://www.wired.com/story/were-all-p-hacking-now/</a></p>
+<p>For all these reasons, the scientific community is starting to move away from interpreting results solely on the basis of “statistical significance” and rejecting or failing to reject the null hypothesis. Therefore, we will emphasis using p-values as <strong><em>one</em></strong>piece of evidence to evaluate the strength of evidence against the null hypothesis and we will always consider at least one other piece of evidence, such as practical significance, in our conclusions and inferences about the population.</p>
+</section>
+<section id="estimating-the-effect-size" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="estimating-the-effect-size"><span class="header-section-number">3</span> Estimating the Effect Size</h2>
+<p>The <em>p-value</em> helps us quantify the strength of evidence against the null hypothesis, but it <em>does not</em> tell us if the difference observed is a meaningful difference in the context of the problem/field of study. For that we must consider the</p>
+<p><strong>Practical Significance:</strong> the observed difference between the two means or the mean of the differences (the effect) is meaningful in the context of the problem.</p>
+<p>The answer to the question “how big/small of a difference is meaningful?” completely depends on the context of the problem. Usually, a meaningful effect size is identified based on previous studies or pilot studies.</p>
+<p><strong>Cohen’s d:</strong> the <u>magnitude</u> of the difference (<span class="math inline">\(\Delta\)</span>) between the actual population means relative to standard deviation of the observations</p>
+<p><span class="math display">\[
+d = \frac{\Delta}{s}
+\]</span></p>
+<ul>
+<li><p>Effect Size is good metric for what might be a meaningful difference, rather than just a statistically detectable difference.</p></li>
+<li><p>Effectively it measures how many standard deviations away our two means are in our samples.</p>
+<ul>
+<li><p>A <em>d</em> of 0.5 indicates that the two group means differ by 0.5 standard deviations.</p></li>
+<li><p>A <em>d</em> of 1 indicates that the group means differ by 1 standard deviation.</p></li>
+<li><p>A <em>d</em> of 2 indicates that the group means differ by 2 standard deviations.</p></li>
+</ul></li>
+</ul>
+<section id="guidelines-for-effect-size" class="level4" data-number="3.0.1">
+<h4 data-number="3.0.1" class="anchored" data-anchor-id="guidelines-for-effect-size"><span class="header-section-number">3.0.1</span> <strong><em>Guidelines for Effect Size</em></strong></h4>
+<p>Cohen’s d tends to be classified as small, medium, and large effect sizes, but remember there is no “good” effect size as whether a “small” or “large” effect is desired depends largely on context. These are guidelines, not rules.</p>
+<ul>
+<li><p>A value of 0.2 represents a <strong>small</strong> effect size.</p>
+<ul>
+<li><p>The average of group 1 is roughly 0.2 standard deviations greater than group 2</p></li>
+<li><p>Approximately 58% of individuals in group 2 would be below the average of group 1</p></li>
+</ul></li>
+<li><p>A value of 0.5 represents a <strong>medium</strong> effect size.</p>
+<ul>
+<li><p>The average of group 1 is roughly 0.5 standard deviations greater than group 2</p></li>
+<li><p>Approximately 70% of individuals in group 2 would be below the average of group 1</p></li>
+</ul></li>
+<li><p>A value of 0.8 represents a <strong>large</strong> effect size.</p>
+<ul>
+<li><p>The average of group 1 is roughly 0.8 standard deviations greater than group 2</p></li>
+<li><p>Approximately 80% of individuals in group 2 would be below the average of group 1</p></li>
+</ul></li>
+</ul>
+<p><strong><em>Effect Size for a Two- Sample Independent and Paired t-Tests</em></strong></p>
+<p>The effect size for a two-sample tests is roughly the difference between the two means or the mean difference divided by standard deviation.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 67%">
+<col style="width: 32%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Independent Two Group Effect Size</strong></td>
+<td><strong>Matched Pairs Effect Size</strong></td>
+</tr>
+<tr class="even">
+<td><span class="math display">\[
+d = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2 + s_2^2}{2}}}
+\]</span></td>
+<td><span class="math display">\[
+d = \frac{\bar{x}_D}{s_D}
+\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note that for a “less than” alternative hypothesis the effect size would be negative.</p>
+</section>
+<section id="sample-size-and-effect-size" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="sample-size-and-effect-size"><span class="header-section-number">3.1</span> Sample Size and Effect Size</h3>
+<p>The ability to detect a specific effect size depends on the sample size. For example, in order to detect a statistically discernible difference at a level of <span class="math inline">\(\alpha = 0.05\)</span>&nbsp;here are the <em>approximate</em> sample sizes we would need for each effect size:</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Effect Size <em>d</em></strong></td>
+<td style="text-align: center;"><strong>Sample Size, <em>n</em>, Needed per Group</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.2</td>
+<td style="text-align: center;">200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.6</td>
+<td style="text-align: center;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.8</td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>BIG IDEA:</strong> The ___________________ the magnitude effect size the ______________ the sample size needed in order to detect a statistically meaningful difference.</p>
+</section>
+</section>
+<section id="the-p-value-alone-is-not-enough-evidence" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="the-p-value-alone-is-not-enough-evidence"><span class="header-section-number">4</span> The p-value alone is not enough evidence</h2>
+<p>As we see, there are many considerations for drawing a conclusion based on data and given the relationship between effect size and sample size and the p-value, we should realize that a p-value alone is not sufficient to draw a conclusion.&nbsp; We will outline a few considerations here:</p>
+<section id="the-strength-of-evidence-depends-on-the-field-of-study" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="the-strength-of-evidence-depends-on-the-field-of-study"><span class="header-section-number">4.1</span> The strength of evidence depends on the field of study</h3>
+<p>The purpose of a hypothesis test is to evaluate the strength of evidence provided by the sample against the null hypothesis.&nbsp; The p-value provides one piece of evidence but how small is small enough for a p-value?&nbsp; The standard significance level of 0.05 is a remnant of pre-computer days when exact p-values were not possible to calculate.&nbsp; Instead, we should consider</p>
+<ul>
+<li><p>How plausible is the null hypothesis?</p>
+<ul>
+<li>If the null hypothesis represents an assumption that the people you must convince have believed for years, strong evidence (smaller significance level) will be needed to persuade them.</li>
+</ul></li>
+<li><p>What are the consequences of finding evidence against the null hypothesis?</p>
+<ul>
+<li>If we find evidence against the null in favor of the alternative means making an expensive changeover or perhaps influences a matter of life and death, then stronger evidence may be necessary and will need to adjust our Type I and Type II Error rates accordingly.</li>
+</ul></li>
+</ul>
+<p><strong><em>Example:</em></strong> The certainty of the <a href="https://en.wikipedia.org/wiki/Higgs_boson">Higgs boson</a> particle’s existence was based a criterion that the p-value be less than (approximately) 1 in 3.5 million</p>
+</section>
+<section id="the-strength-of-evidence-depends-on-the-alternative-hypothesis" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="the-strength-of-evidence-depends-on-the-alternative-hypothesis"><span class="header-section-number">4.2</span> The strength of evidence depends on the alternative hypothesis</h3>
+<p>The choice of alternative hypothesis (one-sided vs.&nbsp;two-sided) affects the p-value. If we have a p-value of 0.035 for a one-sided test, what is the p-value for a two-sided test?</p>
+<p>Does that change conclusions?</p>
+</section>
+<section id="the-strength-of-evidence-can-be-impacted-by-sample-size" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="the-strength-of-evidence-can-be-impacted-by-sample-size"><span class="header-section-number">4.3</span> The strength of evidence can be impacted by sample size</h3>
+<p>As we saw previously, the effect size and sample size relationship with our ability detect a statistically meaningful difference.</p>
+<p>We need to be careful with large sample sizes (e.g., in Machine Learning with found data from the internet) because a large enough sample size can make even a small difference appear “statistically significant”, but it may not be “practically significant”.</p>
+<ul>
+<li><p><strong>In Stat Speak:</strong> Because large random samples have small chance variation, very small population effects produce very small p-values if the sample is large enough.</p>
+<ul>
+<li><strong>In Regular Speak:</strong> A small, meaningless difference can look important if we sample enough individuals!</li>
+</ul></li>
+<li><p><strong>In Stat Speak:</strong> Because small random samples have a lot of chance variation, even large population effects can fail to be significant if the sample is small enough.</p>
+<ul>
+<li><strong>In Regular Speak:</strong> A large, meaningful difference can be shown to <u>not</u> be “statistically significant” if we sample too few individuals!</li>
+</ul></li>
+</ul>
+<p>Statistical “significance” does not tell us whether an effect is large enough to be important. That is <strong><em>statistical “significance” is not the same thing as practical significance or importance.</em></strong></p>
+</section>
+</section>
+<section id="multiple-comparisons" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="multiple-comparisons"><span class="header-section-number">5</span> Multiple Comparisons</h2>
+<p>We previously discussed the <strong>two-sample t-test</strong> for comparing two independent groups (sub-populations) by testing for the difference between <span class="math inline">\(\mu_1\)</span> and <span class="math inline">\(\mu_2\)</span>. Researchers are often interested in comparing three or more groups, and we can test for the difference among <span class="math inline">\(\mu_1, \mu_2, \dots, \mu_g\)</span> where <span class="math inline">\(g\)</span> is the number of groups.</p>
+<p>We can test for the difference among <span class="math inline">\(\mu_1, \mu_2, \dots, \mu_g\)</span> by analyzing two kinds of variance in samples. The first kind is referred to as the <strong>within-group variance</strong> (variability of individual data points in each group), and the second kind is referred to as the <strong>between-group variance</strong> (variability of sample means between groups). If observed between-group variance is relatively larger than observed within-group variance, it is statistical evidence for the difference among <span class="math inline">\(\mu_1, \mu_2, \dots, \mu_g\)</span>. Analyzing the two kinds of variance, known as the <strong>analysis of variance</strong> or <strong>ANOVA</strong>, is technical, so it requires close attention.</p>
+<section id="why-anova-and-not-multiple-t-tests" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="why-anova-and-not-multiple-t-tests"><span class="header-section-number">5.1</span> Why ANOVA and not Multiple T-Tests?</h3>
+<p>If we have three groups, how many t-tests would we need to conduct to test all combinations of three groups?</p>
+<p>The problem with multiple testing, or “multiple comparisons”, is that in each test we have a rate of Type I error, meaning that even if the alternative is not true (there is actually no difference), in 5% of tests (for <span class="math inline">\(\alpha = 0.05\)</span>) we would think the null is false and support the alternative that there is a difference. The more hypothesis tests conducted, the higher the chance that at least one of these tests will results in a Type I error.</p>
+<ul>
+<li><p>When multiple hypothesis tests are conducted, the chance that at least one test incorrectly thinks a true null hypothesis is false increases with the number of tests.</p></li>
+<li><p>If the null hypotheses are all true, <span class="math inline">\(\alpha\)</span>&nbsp;of the tests will yield a statistically discernible result just by random chance.</p></li>
+<li><p><strong><em>Publication bias</em></strong> results when we only publish significant results. If the only results published are the result of Type I error, we may think there is an effect that does not actually exist.</p></li>
+</ul>
+<p>Instead, we use ANOVA as an “omnibus” test -a way to test all of the null hypotheses at once, so when we determine there is a difference, there is only a <span class="math inline">\(\alpha\)</span> chance we made a Type I error. We can then follow-up with methods that allow us to make multiple comparisons while controlling for Type I error.</p>
+</section>
+<section id="anova-hypothesis" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="anova-hypothesis"><span class="header-section-number">5.2</span> ANOVA Hypothesis</h3>
+<p>In practice, we sometimes ask a question like “Are Groups <span class="math inline">\(1, 2, \dots, g\)</span> different in terns of <span class="math inline">\(X\)</span>?” (e.g., “Are Americans, Mexicans, and Canadians different in terms of the cups of coffee they drink per day?”) For statisticians, comparing a variable <span class="math inline">\(X\)</span> between <span class="math inline">\(g\)</span> groups is comparing <span class="math inline">\(g\)</span> unknown distributions of <span class="math inline">\(X\)</span>. Comparing distributions is not simple, and it can be simplified by comparing the averages of distributions. It is because evidence for different averages implies evidence for different distributions.</p>
+<p>In this regard, the null hypothesis can be stated as</p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_g\)</span></li>
+<li>The population means of [ response variable + units] of the [population context] with [group levels + explanatory variable ] are equal.</li>
+</ul>
+<p>(i.e., all sub-populations have the same average), and the alternative hypothesis can be stated as</p>
+<ul>
+<li><span class="math inline">\(H_1\)</span>: at least one pair of <span class="math inline">\(\mu_j \ne \mu_k\)</span> for some <span class="math inline">\(j \ne k\)</span></li>
+<li>at least one of the population means of [ response variable + units ] of the [population context] with [ group levels + explanatory variable ] is different from the others</li>
+</ul>
+<p>(i.e., all sub-populations do not have the same average).</p>
+<p>In this formulation of hypotheses, <span class="math inline">\(H_1\)</span> is the negation of <span class="math inline">\(H_0\)</span>, so at least one pairwise difference is sufficient to reject <span class="math inline">\(H_0\)</span> and conclude <span class="math inline">\(H_1\)</span>. For example, when <span class="math inline">\(g = 3\)</span> groups are compared, the null hypothesis is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span>, and the alternative hypothesis is <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, <span class="math inline">\(\mu_2 \ne \mu_3\)</span> and/or <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span>. Unlike the two-sample t-test, it is always a two-sided test pairwise alternative.</p>
+<p><strong>Note:</strong> The alternative hypothesis <span class="math inline">\(H_1\)</span> is an “or-statement,”, not an “and-statement.” In addition, it is incorrect to state <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span>. A simple correct way is to statement <span class="math inline">\(H_1\)</span>: at least one pair of <span class="math inline">\(\mu_j \ne \mu_k\)</span> for some <span class="math inline">\(j \ne k\)</span>.</p>
+</section>
+<section id="constructing-a-new-test-statistic" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="constructing-a-new-test-statistic"><span class="header-section-number">5.3</span> Constructing a New Test Statistic</h3>
+<p>As aforementioned, we analyze two kinds of variance in the ANOVA.</p>
+<section id="within-group-variance" class="level4" data-number="5.3.1">
+<h4 data-number="5.3.1" class="anchored" data-anchor-id="within-group-variance"><span class="header-section-number">5.3.1</span> Within-group Variance</h4>
+<p>Suppose we take a simple random sample of size <span class="math inline">\(n_j\)</span> from each Population <span class="math inline">\(j\)</span>, and let <span class="math inline">\(\bar{X}_j\)</span> and <span class="math inline">\(S_j\)</span> be the sample mean and sample standard deviation for <span class="math inline">\(j = 1, 2, \dots, g\)</span>. Let <span class="math inline">\(m = n_1 + n_2 + \dots + n_g\)</span>, the total sample size. The <strong>within-group sum of square</strong> is defined as</p>
+<p><span id="eq-ssw"><span class="math display">\[
+\texttt{SSW} = (n_1 - 1) \, S_1^2 + (n_2 - 1) \, S_2^2 + \dots + (n_g - 1) \, S_g^2 \, ,
+\tag{1}\]</span></span></p>
+<p>and the <strong>within-group mean square</strong> is defined as</p>
+<p><span class="math display">\[
+\texttt{MSW} = \frac{ \texttt{SSW} }{ \nu_w }
+\]</span></p>
+<p>where <span class="math inline">\(\nu_w = m - g\)</span> is referred to as <strong>within-group</strong> <strong>degrees of freedom</strong>. The <span class="math inline">\(\texttt{SSW}\)</span> measures the total variance of individual data points from their own sample means, and <span class="math inline">\(\texttt{MSW}\)</span> estimates <span class="math inline">\(\sigma^2\)</span> under the equal variance assumption.</p>
+</section>
+<section id="between-group-variance" class="level4" data-number="5.3.2">
+<h4 data-number="5.3.2" class="anchored" data-anchor-id="between-group-variance"><span class="header-section-number">5.3.2</span> Between-group Variance</h4>
+<p>Let <span class="math inline">\(\bar{X}_0\)</span> be the <strong>overall sample mean</strong> which is the simple average of <span class="math inline">\(m\)</span> data points across <span class="math inline">\(g\)</span> groups.</p>
+<p><strong>Note:</strong> When <span class="math inline">\(n_1 = n_2 = \dots = n_g\)</span> (i.e., sample sizes are balanced),</p>
+<p><span class="math display">\[
+\bar{X}_0 = \frac{\bar{X}_1 + \bar{X}_2 + \dots + \bar{X}_g}{g} \, .
+\]</span></p>
+<p>In general (when sample sizes are not balanced),</p>
+<p><span class="math display">\[
+\bar{X}_0 = \frac{n_1}{m} \, \bar{X}_1 + \frac{n_2}{m} \, \bar{X}_2 + \dots + \frac{n_g}{m} \, \bar{X}_g \, .
+\]</span></p>
+<p>The <strong>between-group sum of square</strong> is defined as</p>
+<p><span id="eq-ssb"><span class="math display">\[
+\texttt{SSB} = n_1 (\bar{X}_1 - \bar{X}_0)^2 + n_2 (\bar{X}_2 - \bar{X}_0)^2 + \dots + n_g (\bar{X}_g - \bar{X}_0)^2 \, ,
+\tag{2}\]</span></span></p>
+<p>and the <strong>between-group mean square</strong> is defined as</p>
+<p><span class="math display">\[
+\texttt{MSB} = \frac{ \texttt{SSB} }{ \nu_b }
+\]</span></p>
+<p>where <span class="math inline">\(\nu_b = g - 1\)</span> is <strong>between-group degrees of freedom</strong>. In some sense, the <span class="math inline">\(\texttt{SSB}\)</span> measures the total variance of group sample means <span class="math inline">\(\bar{X}1, \bar{X}2, \dots, \bar{X}_g\)</span> from the overall sample mean <span class="math inline">\(\bar{X}_0\)</span> scaled by the sample sizes <span class="math inline">\(n_1, n_2, \dots, n_g\)</span>.</p>
+</section>
+<section id="null-distribution-of-the-f-statistic" class="level4" data-number="5.3.3">
+<h4 data-number="5.3.3" class="anchored" data-anchor-id="null-distribution-of-the-f-statistic"><span class="header-section-number">5.3.3</span> Null Distribution of the F Statistic</h4>
+<p>When <span class="math inline">\(\texttt{MSB}\)</span> (a measure of between-group variance) is relatively large when compared to <span class="math inline">\(\texttt{MSW}\)</span> (a measure of within-group variance), it is statistical evidence against the null hypothesis <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \dots = \mu_g\)</span> and supports the alternatively hypothesis <span class="math inline">\(H_1\)</span>: at least one pair <span class="math inline">\(\mu_j \ne \mu_k\)</span> for some <span class="math inline">\(j \ne k\)</span>. The following ratio is known as an <strong>F statistic</strong>:</p>
+<p><span class="math display">\[
+F = \frac{ \texttt{MSB} }{ \texttt{MSW} } \, .
+\]</span></p>
+<p>It is a test statistic for testing <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span>, and its null distribution of the <strong>F distribution</strong> with <span class="math inline">\(\nu_b\)</span> and <span class="math inline">\(\nu_w\)</span> degrees of freedom. The letter “F” is named after Ronald Fisher (1890-1962), a British mathematical statistician and biology, who found the test statistic and its null distribution. Statisticians simply write <span class="math inline">\(F \sim \mathcal{F}(\nu_b, \nu_w)\)</span> which means that the null distribution of the F statistic follows the F distribution with <span class="math inline">\(\nu_b\)</span> and <span class="math inline">\(\nu_w\)</span> degrees of freedom. Below graphically shows <span class="math inline">\(F \sim \mathcal{F}(\nu_b, \nu_w)\)</span> when <span class="math inline">\(\nu_b = 2\)</span> and <span class="math inline">\(\nu_w = 18\)</span>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="17-multiple-comparisons_files/figure-html/null-f-1.png" class="img-fluid figure-img" alt="Line chart of Density by F Ratio, titled “F Null Distribution”. Color categories ('Groups') run from 'g = 3', 'g = 4', and 'g = 5'." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Shape:</strong> Skewed Right</p>
+<ul>
+<li>Why?</li>
+</ul></li>
+<li><p><strong>Center:</strong> Approximately 1</p></li>
+<li><p><strong>Spread:</strong> As degrees of freedom increase, i.e.&nbsp;sample size increases (<span class="math inline">\(\nu_w = m - g\)</span>), the spread decreases, just like our other null distributions. <u>Unlike our other null distribution, the variances of the samples have no effect.</u></p></li>
+</ul>
+<p>The p-value associated with the F statistic is <strong>the probability of observing the calculated F statistic, or greater, assuming the null hypothesis is true and given the associated degrees of freedom</strong>.</p>
+<p>The procedure of calculating the F statistic can be summarized in a table which is known as an <strong>ANOVA table</strong>.</p>
+<table class="caption-top table">
+<caption>ANOVA table for calculating the F statistic</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 12%">
+<col style="width: 29%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type of Variance</th>
+<th>Sum of Squares</th>
+<th>Degrees of Freedom</th>
+<th>Mean Square</th>
+<th>F Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Between-group</td>
+<td><span class="math inline">\(\texttt{SSB}\)</span> (<a href="#eq-ssb" class="quarto-xref">Equation&nbsp;2</a>)</td>
+<td><span class="math inline">\(\nu_b = g - 1\)</span></td>
+<td><span class="math inline">\(\texttt{MSB} = \frac{ \texttt{SSB} }{\nu_b}\)</span></td>
+<td><span class="math inline">\(F = \frac{ \texttt{MSB} }{ \texttt{MSW} }\)</span></td>
+</tr>
+<tr class="even">
+<td>Within-group</td>
+<td><span class="math inline">\(\texttt{SSW}\)</span> (<a href="#eq-ssw" class="quarto-xref">Equation&nbsp;1</a>)</td>
+<td><span class="math inline">\(\nu_w = m - g\)</span></td>
+<td><span class="math inline">\(\texttt{MSW} = \frac{\texttt{SSW}}{\nu_w}\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="example-1-comparing-penguin-body-mass-across-species" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="example-1-comparing-penguin-body-mass-across-species"><span class="header-section-number">5.4</span> Example 1: Comparing Penguin Body Mass Across Species</h3>
+<p>The <code>penguins</code> data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. These data were collected from 2007 - 2009 by Dr.&nbsp;Kristen Gorman with the Palmer Station Long Term Ecological Research Program, part of the US Long Term Ecological Research Network. Includes measurements for penguin species, island in Palmer Archipelago, size (flipper length, body mass, bill dimensions), and sex. We are going to focus on body mass.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/penguins.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+     id species island    bill_length_mm bill_depth_mm flipper_length_mm
+  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+1     1 Adelie  Torgersen           39.1          18.7               181
+2     2 Adelie  Torgersen           39.5          17.4               186
+3     3 Adelie  Torgersen           40.3          18                 195
+4     5 Adelie  Torgersen           36.7          19.3               193
+5     6 Adelie  Torgersen           39.3          20.6               190
+6     7 Adelie  Torgersen           38.9          17.8               181
+# ℹ 3 more variables: body_mass_g &lt;dbl&gt;, sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> penguins)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     response   species  min     Q1 median   Q3  max     mean       sd   n
+1 body_mass_g    Adelie 2850 3350.0   3700 4000 4775 3700.662 458.5661 151
+2 body_mass_g Chinstrap 2700 3487.5   3700 3950 4800 3733.088 384.3351  68
+3 body_mass_g    Gentoo 3950 4700.0   5000 5500 6300 5076.016 504.1162 123
+  missing
+1       0
+2       0
+3       0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(species <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="sc">~</span>species, <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">"Body Mass (g) of Penguins in the Palmer Archipelago"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylab =</span> <span class="st">"Species"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="sc">~</span>species) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="17-multiple-comparisons_files/figure-html/boxplots-species-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Species by Body Mass (g) of Penguins in the Palmer Archipelago." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Set up the null and alternative hypotheses.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mass_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mass_aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: body_mass_g
+           Df    Sum Sq  Mean Sq F value    Pr(&gt;F)    
+species     2 146864214 73432107  343.63 &lt; 2.2e-16 ***
+Residuals 339  72443483   213698                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Interpret the p-value and state your strength of evidence from the hypothesis test:</p>
+<p>Interpret the MST, MSE, F-Ratio:</p>
+</section>
+<section id="example-2-comparing-adelie-penguin-body-mass-between-islands" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="example-2-comparing-adelie-penguin-body-mass-between-islands"><span class="header-section-number">5.5</span> Example 2: Comparing Adelie Penguin Body Mass Between Islands</h3>
+<p>Now let’s compare the body mass for just one species (why is this important?) across islands.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>adelie <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(adelie)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+     id species island    bill_length_mm bill_depth_mm flipper_length_mm
+  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+1     1 Adelie  Torgersen           39.1          18.7               181
+2     2 Adelie  Torgersen           39.5          17.4               186
+3     3 Adelie  Torgersen           40.3          18                 195
+4     5 Adelie  Torgersen           36.7          19.3               193
+5     6 Adelie  Torgersen           39.3          20.6               190
+6     7 Adelie  Torgersen           38.9          17.8               181
+# ℹ 3 more variables: body_mass_g &lt;dbl&gt;, sex &lt;chr&gt;, year &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(body_mass_g <span class="sc">~</span> island, <span class="at">data =</span> adelie)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     response    island  min     Q1 median      Q3  max     mean       sd  n
+1 body_mass_g    Biscoe 2850 3387.5   3750 3975.00 4775 3709.659 487.7337 44
+2 body_mass_g     Dream 2900 3387.5   3575 3981.25 4650 3688.393 455.1464 56
+3 body_mass_g Torgersen 2900 3337.5   3700 4000.00 4700 3706.373 445.1079 51
+  missing
+1       0
+2       0
+3       0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(island <span class="sc">~</span> body_mass_g, <span class="at">data =</span> adelie, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> <span class="sc">~</span>island, <span class="at">alpha =</span> <span class="fl">0.25</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">"Body Mass (g) of Adelie Penguins in the Palmer Archipelago"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylab =</span> <span class="st">"Island"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="at">height =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="sc">~</span>island) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="17-multiple-comparisons_files/figure-html/boxplots-islands-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Island by Body Mass (g) of Adelie Penguins in the Palmer Archipelago." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Set up the null and alternative hypotheses.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mass_adelie_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(body_mass_g <span class="sc">~</span> island, <span class="at">data =</span> adelie)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mass_adelie_aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: body_mass_g
+           Df   Sum Sq Mean Sq F value Pr(&gt;F)
+island      2    13655    6827   0.032 0.9685
+Residuals 148 31528779  213032               </code></pre>
+</div>
+</div>
+<p>Interpret the p-value and state your strength of evidence from the hypothesis test:</p>
+<p>Interpret the MST, MSE, F-Ratio:</p>
+<p>Compare the two examples - what do you notice about the results and the two measures of variance for each?</p>
+</section>
+</section>
+<section id="wrap-up" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">6</span> Wrap-up</h2>
+<p>In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.</p>
+<section id="problem-1" class="level4" data-number="6.0.1">
+<h4 data-number="6.0.1" class="anchored" data-anchor-id="problem-1"><span class="header-section-number">6.0.1</span> Problem 1</h4>
+<p>Fill in the blank. Be cautious that some words have hyphen (-) as joint words.</p>
+<ol type="a">
+<li><p>The […] variance refers to the variability of individual data points from their own group sample average.</p></li>
+<li><p>The […] variance refers to the variability among the group sample averages.</p></li>
+<li><p>In the ANOVA test, a large value of F statistic results in a small value of […] which implies strong evidence for the alternative hypothesis under the assumption of the null hypothesis.</p></li>
+<li><p>The ANOVA is referred to as an […] omnibus test, because it assumes all of the nulls true at once.</p></li>
+</ol>
+</section>
+<section id="problem-2" class="level4" data-number="6.0.2">
+<h4 data-number="6.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">6.0.2</span> Problem 2</h4>
+<p>In a small study of comparing three groups, suppose the respective sample sizes are <span class="math inline">\(n_1 = n_2 = n_3 = 3\)</span>, the respective sample means are <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and the respective sample standard deviations are <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span>. Given these statistics, complete the following ANOVA table.</p>
+<table class="caption-top table">
+<caption>ANOVA table for calculating the F statistic</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Type of Variance</th>
+<th style="text-align: center;">Sum of Squares</th>
+<th style="text-align: center;">Degrees of Freedom</th>
+<th style="text-align: center;">Mean Square</th>
+<th style="text-align: center;">F Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Between-group</td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{SSB} = [\texttt{a}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\nu_b = [\texttt{c}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{MSB}  = [\texttt{e}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F = [\texttt{g}]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Within-group</td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{SSW} = [\texttt{b}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\nu_w  = [\texttt{d}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{MSW} = [\texttt{f}]\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problem-3" class="level4" data-number="6.0.3">
+<h4 data-number="6.0.3" class="anchored" data-anchor-id="problem-3"><span class="header-section-number">6.0.3</span> Problem 3</h4>
+<p>Suppose three independent researchers conducted studies of comparing three groups. All three researchers had a sample size of 5 per group (i.e., <span class="math inline">\(n_1 = n_2 = n_3 = 3\)</span>), but they observed different sample means and standard deviations as follows.</p>
+<ul>
+<li><p>Researcher A: <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span></p></li>
+<li><p>Researcher B: <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 3\)</span></p></li>
+<li><p>Researcher C: <span class="math inline">\(\bar{X}_1 = 2\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 6\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span></p></li>
+</ul>
+<ol type="a">
+<li>Multiple-choice: Which researcher has the largest value of <span class="math inline">\(\texttt{SSB}\)</span>?</li>
+</ol>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<ol start="2" type="a">
+<li>Multiple-choice: Which researcher has the largest value of <span class="math inline">\(\texttt{SSW}\)</span>?</li>
+</ol>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<ol start="3" type="a">
+<li>Multiple-choice: Which researcher has the largest value of F statistic?</li>
+</ol>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<ol start="4" type="a">
+<li>Multiple-choice: Which researcher has the largest value of p-value?</li>
+</ol>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<ol start="5" type="a">
+<li>Calculate the p-value for Researcher A. (Hint: Do not waste your work in Problem 2 because the given statistics are identical.)</li>
+</ol>
+</section>
+</section>
+<section id="assignment" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="assignment"><span class="header-section-number">7</span> Assignment</h2>
+<p>You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</p>
+<section id="problem-1-1" class="level4" data-number="7.0.1">
+<h4 data-number="7.0.1" class="anchored" data-anchor-id="problem-1-1"><span class="header-section-number">7.0.1</span> Problem 1</h4>
+<p>Exercise scientists believe that maximum speed (km/h) is an indicator of athletes’ physical strength and speed, and it is an important physical ability for team sports played in a field like soccer. Do players have different maximum speed by position, on average? To address this question, let us use the dataset <span class="math inline">\(\texttt{euro.csv}\)</span>, focus on the most recent competition (Euro 2024), and compare the maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> (remove <span class="math inline">\(\texttt{Goalkeeper}\)</span>) using the ANOVA. The following code cleans the original data for our objective. Study the code.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>euro_no_gk <span class="ot">&lt;-</span> euro <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">!=</span> <span class="st">"Goalkeeper"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(event <span class="sc">==</span> <span class="st">"Euro 2024"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the expected maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame <span class="math inline">\(\texttt{euro2024}\)</span>.</p>
+<ol type="a">
+<li>Multiple-choice: Which of the following represents the null hypothesis <span class="math inline">\(H_0\)</span>?</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) at least one of the true means is different from the others</p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<ol start="2" type="a">
+<li>Multiple-choice: Which of the following represents the alternative hypothesis <span class="math inline">\(H_1\)</span>?</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_1 &gt; \mu_2 &gt; \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) at least one of the true means is different from the others</p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<ol start="3" type="a">
+<li><p>Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.</p></li>
+<li><p>Report the F statistic from the ANOVA test.</p></li>
+<li><p>Report the p-value from the ANOVA test.</p></li>
+<li><p>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s).</p></li>
+</ol>
+</section>
+<section id="problem-2-1" class="level4" data-number="7.0.2">
+<h4 data-number="7.0.2" class="anchored" data-anchor-id="problem-2-1"><span class="header-section-number">7.0.2</span> Problem 2</h4>
+<p>The dataset <span class="math inline">\(\texttt{usedcars2017.csv}\)</span> is a simple random sample of three car models in used-car retailers in 2017. The column <span class="math inline">\(\texttt{CarType}\)</span> is the car model (<span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span>), and the column <span class="math inline">\(\texttt{Price}\)</span> is the sale price (in $1,000). The objective of data analysis is to compare the average used-car price among the three models. Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the population average used-car price of <span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span> in used-car retailers as of 2017.</p>
+<ol type="a">
+<li>Multiple-choice: Which of the following represents the null hypothesis <span class="math inline">\(H_0\)</span>?</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) at least one of the true means is different from the others</p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<ol start="2" type="a">
+<li>Multiple-choice: Which of the following represents the alternative hypothesis <span class="math inline">\(H_1\)</span>?</li>
+</ol>
+<p>(A) <span class="math inline">\(\mu_1 &gt; \mu_2 &gt; \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) at least one of the true means is different from the others</p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<ol start="3" type="a">
+<li><p>Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.</p></li>
+<li><p>Report the F statistic from the ANOVA test.</p></li>
+<li><p>Report the p-value from the ANOVA test.</p></li>
+<li><p>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s).</p></li>
+</ol>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImdnZm9ybXVsYSIsIm1vc2FpYyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6WyJodHRwczovL3Byb2plY3Rtb3NhaWMuci11bml2ZXJzZS5kZXYiXX0sInJlbmRlcl9kZiI6ImRlZmF1bHQifQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjJcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjJcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfMSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItMS1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCIxXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIxXCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../note-outlines";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jcanner\.github\.io\/math-320");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../note-outlines/16-independent-t-tests.html" class="pagination-link" aria-label="Inference for Independent Groups">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Inference for Independent Groups</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025, Judith Canner</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
