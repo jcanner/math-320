@@ -76,15 +76,15 @@ Therefore,
 +--------------------------------------------------------------+----------------------------+-----------------------------+
 |                                                              |                            |                             |
 +==============================================================+============================+=============================+
-| **Possible Hypothesis Tests outcomes**                       | **Reality**                |                             |
+| **Possible Hypothesis Tests outcomes**                       |                            | **Reality**                 |
 +--------------------------------------------------------------+----------------------------+-----------------------------+
-| **Null Claim is TRUE**                                       | **Null Claim is FALSE**    |                             |
+|                                                              | **Null Claim is TRUE**     | **Null Claim is FALSE**     |
 +--------------------------------------------------------------+----------------------------+-----------------------------+
-| Conclude there [is no evidence against]{.underline}t the null | [Confidence]{.underline}   | [Type II Error]{.underline} |
+| Conclude there [is no evidence against]{.underline} the null | [Confidence]{.underline}   | [Type II Error]{.underline} |
 |                                                              |                            |                             |
 |                                                              | Correct decision           | Incorrect Decision          |
 |                                                              |                            |                             |
-|                                                              | Probability = $1-\alpha$   | Probability =\$\\beta\$     |
+|                                                              | Probability = $1-\alpha$   | Probability = $\beta$ \|    |
 +--------------------------------------------------------------+----------------------------+-----------------------------+
 | Conclude there [is evidence against]{.underline} the null    | [Type I Error]{.underline} | [Power]{.underline}         |
 |                                                              |                            |                             |
@@ -92,6 +92,8 @@ Therefore,
 |                                                              |                            |                             |
 |                                                              | Probability = $\alpha$     | Probability = $1-\beta$ \|  |
 +--------------------------------------------------------------+----------------------------+-----------------------------+
+
+
 
 We’ve been evaluating the strength of the evidence against the null hypothesis based on the context of the situation, but we need to scale that strength of evidence based on the level of certainty we need in our results. We define a moderate level of evidence as the ***level of significance*** **(α)*, which is also the probability of Type I Error***.
 
