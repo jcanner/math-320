@@ -87,6 +87,8 @@ website:
         text: "Inference for Independent Groups"  
       - href: note-outlines/17-multiple-comparisons.qmd
         text: "Multiple Comparisons"  
+      - href: note-outlines/18-conditions-post-hoc-anova.qmd
+        text: "Conditions and Post-Hoc Tests"  
         
 format:
   html:

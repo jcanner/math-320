@@ -60,14 +60,17 @@ options(ggplot2.continuous.color = scale_color_viridis_c,
 
 As in the two-sample t-test, the ANOVA requires two conditions be met in order to trust the results of the test. 
 
-### Normality Condition
+Let $\mu_j$ and $\sigma_j$ be the population mean and standard deviation of Population $j$ for $j = 1, 2, \dots, g$. 
 
-- Let $\mu_j$ and $\sigma_j$ be the population average and standard deviation of Population $j$ for $j = 1, 2, \dots, g$. Assume that a simple random sample is taken from each population which follows a normal distribution $N(\mu, \sigma_i)$, and it is referred to as the **normality assumption**. Further assume that $\sigma_1^2 = \sigma_2^2 = \dots = \sigma_g^2$, it is referred to as the **equal variance assumption**, and we simply denote the equal variance by $\sigma^2$. The normality and equal variance condition are graphically shown below for $g = 3$ groups.
+- Assume that a simple random sample is taken from each population which follows a normal distribution $N(\mu_j, \sigma_j)$, and it is referred to as the **normality condition**.
+- Further assume that $\sigma_1^2 = \sigma_2^2 = \dots = \sigma_g^2$, it is referred to as the **equal variance condition**, and we simply denote the equal variance by $\sigma^2$.
+
+The normality and equal variance condition are graphically shown below for $g = 3$ groups.
 
 ```{r, echo = FALSE, fig.height = 4.5, fig.width = 11, out.height = "100%", out.width = "100%", fig.alt = "Three normal distributions"}
 par( mfrow=c(1,2) )
 
-### equal-variance assumption
+### equal-variance condition
 
 mu = 90
 sigma = 15
@@ -88,7 +91,7 @@ abline( h=0, col=8 )
 abline( v=c(90,100,110), lty=c(1,2,4), col=c(1,2,4) )
 legend( "topright", lty=c(1,2,4), col=c(1,2,4), legend=c("Population 1","Population 2","Population 3"), bty="n" )
 
-### unequal-variance assumption
+### unequal-variance condition
 
 mu = 90
 sigma = 7
@@ -112,104 +115,220 @@ legend( "topright", lty=c(1,2,4), col=c(1,2,4), legend=c("Population 1","Populat
 
 
 
+### Normality/Sufficient Sample Size Condition
+
+We do not evaluate each group for normality like we did in the two-sample t-test.  Instead of we evaluate the **normality of the residuals**
+
+To use the F-distribution as a model for the null distribution: Each group meets the minimum sufficient sample size, depending on whether the residuals are normally distributed, and residuals display equal variance.
+
+  1. Check the QQ Plots for Normality of Residuals
+  2. Check the sample size for each group is sufficiently large 
+  
+    - If the residuals are not normally distributed, then the minimum sufficient sample size for each group is $n_i>30$
+    - If the residuals are normally distributed, then the minimum sufficient sample size for each group is $n_i>10$
+
+
+To illustrate the idea of why we can check the normality of residuals let's look at a simple data set.  
+
+
+```{r}
+#| label: read-toy
+toy <- read_csv("data/toy.csv", show_col_types = FALSE)
+head(toy, 12)
+```
+
+
+```{r}
+#| label: summary-stats
+df_stats(response ~ treat, data = toy)
+
+gf_boxplot(response ~ factor(treat), 
+           data = toy,
+           xlab = "Treatment",
+           ylab = "Response") |> 
+  gf_jitter(width = 0, size = 2)
+```
+
+Here is our analysis of variance:
+
+```{r}
+#| label: anova-toy
+aov_toy <- aov(response ~ factor(treat), data = toy)
+anova(aov_toy)
+```
+
+
+
+
+
+A residual is just the difference between a data value and the sample mean of its group.  If the data is from a normal distribution then $x_i - \bar{x} \sim N(0, MSE)$
+
+```{r}
+#| label: residuals
+
+toy |> 
+  group_by(treat) |> 
+  mutate(group_avg = mean(~response)) |> 
+  ungroup() |> 
+  mutate(residual = response - group_avg,
+         standardized_residuals = (residual/sd(~residual))) |> 
+  slice_head(n = 12)
+```
+
+
+The fastest way to plot a QQ plot for the residuals is to pull it from the output of the `aov()` function.  
+```{r}
+#| label: qqplot-toy
+plot(aov_toy, 2)
+```
+
+
+### Equal Variance of Residuals
+
+One of the central assumptions of an ANOVA and other parametric tests is that the within-group variances of the groups are all the same.  If the variances within the groups are different enough from each other, then MSE will be over-estimated and the F-statistic will be deflated, which will lead to a larger p-value than is true and may result in a Type II Error.
+
+#### Graphic Test
+We can test the condition of the homogeneity (equality) of variances, or the condition that population variances are equal using the Residual vs. Fitted Plot.   The graphic test is a residual plot.  In general, the equal variance condition is satisfied if the residuals are similarly spread around zero, indicating equal dispersion of the values in each group about their respective means.
+
+```{r}
+#| label: residual-toy
+plot(aov_toy, 1, add.smooth = FALSE)
+```
+
+
+Describe the Following:
+
+(1) describe spread of residuals around 0
+(2) pattern discussed relative to sample size per group
+(3) evaluation if spread of residuals the same across each group
+
+  - If the spread of one group is more than 2x wider than the other groups, depending on the group sample size, then there is not equal variance of residuals across groups. 
+  - A single outlier is not sufficient evidence of differences among the spread of the residuals.
+
+
 
 ## Case Study: Exam Scores and Seats
 
 College students choose their seats in the classroom, and they tend to choose the same seat or nearby throughout the semester. A professor, who does not designate students' seats, hypothesized that their final exam scores differ by seating rows. The dataset $\texttt{seat.csv}$ is a sample of $m = 21$ students. The column $\texttt{score}$ is the final exam score of each student (numeric variable), and the column $\texttt{seat}$ is the student's seat ($\texttt{Front}$, $\texttt{Middle}$, and $\texttt{Back}$). The variable $\texttt{seat}$ can be treated as an ordinal categorical variable, and we can order the three levels using the $\texttt{factor}$ function. (Otherwise, it is ordered as $\texttt{Back}$, $\texttt{Front}$, and $\texttt{Middle}$ alphabetically.)
 
-```{r, warning = FALSE, message = FALSE, fig.height = 4.5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Boxplot of final exam score by seating row"}
-library(mosaic)
-examscore = read.csv("Data/seat.csv") ### read csv file
-examscore ### print all rows
-examscore$seat = factor(examscore$seat, levels = c("Front", "Middle", "Back"))
-stats = favstats(score ~ seat, data = examscore) ### descriptive statistics
-stats
-boxplot(score ~ seat, data = examscore,
-        horizontal = TRUE,
-        main = "Final Exam Score by Seating Row",
+```{r}
+#| label: read-exam
+exam_score <- read_csv("data/seat.csv", show_col_types = FALSE) ### read csv file
+head(exam_score)
+
+#reorder seat types
+exam_score <- exam_score |> 
+  mutate(seat = factor(seat, levels = c("Front", "Middle", "Back")))
+```
+
+
+### Data Collection
+
+What type of data collection method was used?  
+
+
+
+
+
+How does that impact our ability to generalize to the population of interest?
+
+
+
+
+How does that impact our ability to infer cause-and-effect?
+
+
+
+
+
+
+
+### Summary Statistics
+
+```{r}
+#| label: summary-stats-exams
+
+df_stats(score ~ seat, data = exam_score) ### descriptive statistics
+
+gf_boxplot(score ~ seat, data = exam_score,
+        title = "Final Exam Score by Seating Row",
         xlab = "Final Exam Score",
         ylab = "Seating Row",
-        col = c(2, 3, 4) )
-stripchart(score ~ seat, data = examscore,
-           add = TRUE,
-           method = "stack",
-           pch = 19,
-           offset = 0.2)
+        outlier.shape = NA) |> 
+  gf_jitter(width = 0.2)
 ```
+Evaluate the summary statistics and visualization - do they support idea that seat position impacts the final exam score? 
+
+
+
+
 
 ### Hypotheses
 
-Let $\mu_1$, $\mu_2$, and $\mu_3$ be the unknown expected eaxm score for $\texttt{Front}$, $\texttt{Middle}$, and $\texttt{Back}$, respectively. Our goal is to test for the null hypothesis $H_0$: $\mu_1 = \mu_2 = \mu_3$ (i.e., the expected exam score is the same between the three seating rows) versus the alternative hypothesis is $H_1$: $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu_3$ (i.e., at least one seating row has a different expected exam score) at a significance level of $\alpha = 0.05$.
+Set up the null and alternative hypothesis.
+
+
+
+
 
 ### ANOVA
-
-The sample sizes are $n_1 = 7$, $n_2 = 8$, and $n_3 = 6$ for $\texttt{Front}$, $\texttt{Middle}$, and $\texttt{Back}$, respectively. The sample means are $\bar{X}_1 = 89.29$, $\bar{X}_2 = 81.75$, and $\bar{X}_3 = 77.83$, and the sample standard deviations are $S_1 = 6.626$, $S_2 = 7.686$, and $S_3 = 8.909$. It appears that students in $\texttt{Middle}$ scored slightly higher than in $\texttt{Back}$ by 3.92 points on average, and students in $\texttt{Front}$ scored substantially higher than in $\texttt{Middle}$ by 7.54 points on average. The variance of exam scores by are similar among the three groups (sample standard deviations are similar).
-
-Below is the calculation of F statistic and p-value in a naive way.
+Here is the analysis of variance
 
 ```{r}
-( overall_mean = mean(examscore$score) ) ### overall sample mean
-( group_mean = stats$mean ) ### group sample means
-( group_sd = stats$sd ) ### group sample standard deviations
-( group_size = stats$n ) ### group sample size
-( m = sum(group_size) ) ### total sample size
-( g = length(group_size) ) ### number of groups
-( ssw = sum( (group_size - 1) * group_sd ^ 2 ) ) ### within-group sum of squares
-( dfw = m - g ) ### within-group degrees of freedom 
-( msw = ssw / dfw ) ### within-group mean square
-( ssb = sum( group_size * (group_mean - overall_mean) ^ 2 ) ) ### between-group sum of squares
-( dfb = g - 1 ) ### between-group degrees of freedom
-( msb = ssb / dfb ) ### between-group mean square
-( f = msb / msw ) ### F statistic
-( p = 1 - pf( f, dfb, dfw ) ) ### p-value
-
+#| label: aov-exams
+exam_aov <- aov(score ~ factor(seat), data = exam_score) ### ANOVA calculations
+anova(exam_aov) ### print ANOVA table
 ```
 
-This long calculation can be done using the $\texttt{aov}$ function, and the ANOVA table can be printed using the $\texttt{anova}$ function.
+Interpret the p-value in the context of the scenario.  
+
+
+
+
+
+
+Evaluate the strength of evidence of the p-value
+
+
+
+
+
+
+
+### Equal Variance Condition
+Here is our Residual Plot:
 
 ```{r}
-fit = aov(score ~ seat, data = examscore) ### ANOVA calculations
-anova(fit) ### print ANOVA table
+#| label: residual-exam
+plot(exam_aov, 1, add.smooth = FALSE)
 ```
 
-The calculated test statistic is F = 3.6718, and the p-value if p = 0.043 which is less than $\alpha = 0.05$. At a significance level of $\alpha = 0.05$, the sample of 21 students (7 in $\texttt{Front}$, 8 in $\texttt{Middle}$, and 6 in $\texttt{Back}$) provides significant evidence for the difference in the expected exam score between the three groups (F = 3.6718\$, $\nu_b = 2$, $\nu_w = 18$, and p = 0.043).
+Evaluate if the condition of equal variances across groups is met. 
 
-### Equal Variance Assumption
 
-The population variances $\sigma_1^2$, $\sigma_2^2$, and $\sigma_3^2$ can be estimated by the sample variances $S_1^2$, $S_2^2$, and $S_3^2$, respectively. As a **simple rule of thumb of checking equal variance assumption**, if the largest sample variance is not greater than four times of the smallest sample variance, it is considered as no strong sign of violating equal variance assumption. In this sample, $\frac{(8.9088)^2}{(6.6261)^2} = 1.8$, so the equal variance assumption is good.
 
-As in the two-sample t-test, it can be formally assessed by the Bartlett test.
+
+
+
+
+### Normality Condition
+
+Here is the QQ Plot:  
 
 ```{r}
-bartlett.test(score ~ seat, data = examscore)$p.value
+#| label: qqplot-exam
+plot(exam_aov, 2)
 ```
 
-The Bartlett test results in p = 0.8 (greater than $\alpha = 0.05$), so there is no sign of violating the equal variance assumption.
+Evaluate the QQ Plot to determine if the normality condition is met.
 
-### Normality Assumption
 
-The group sample mean is referred to as the **fitted value** (or **predicted value**) and individual student's score is referred to as the **observed value**. The difference between observed value and fitted value (observed minus fitted) is referred to as the **residual**.
 
-```{r}
-fit = aov(score ~ seat, data = examscore)
-rslt = data.frame( observed = examscore$score,
-                   group = examscore$seat,
-                   fitted = fit$fitted.values,
-                   residual = fit$residuals )
-rslt
-```
 
-The third student who scored 100 is 10.7 points above the fitted value (group sample average), and the sixth student who scored 79 is 10.3 points below the fitted value. The residuals are natural deviations from the group average, and the normality assumption can be checked using the Q-Q plot and Shapiro-Wilk test on the residuals.
 
-```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Q-Q plot of residuals of exam scores"}
-qqnorm(fit$residuals, main = "Q-Q Plot of Residuals")
-qqline(fit$residuals)
-shapiro.test(fit$residuals)$p.value
-```
 
-The Q-Q plot is fairly straight, and the Shapiro-Wilk results in p = 0.636 (greater than $\alpha = 0.05$), so there is no sign of violating the normality assumption.
 
-Since both normality assumption and equal variance assumptions are satisfied, the conclusion of $H_1$ in the ANOVA test is valid.
+Based on your evaluation of the QQ Plot, do we have sufficient sample size to meet the conditions to use the parametric ANOVA test?  
 
 
 
@@ -219,8 +338,9 @@ Since both normality assumption and equal variance assumptions are satisfied, th
 
 
 
+## Post-Hoc Tests
 
-For the purpose of demonstration, suppose we want to compare three averages $\mu_1$, $\mu_2$, and $\mu_3$. The conclusion of ANOVA is either $H_0$: $\mu_1 = \mu_2 = \mu_3$ or $H_1$: $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu_3$. If $H_1$ is concluded at a significance level of $\alpha$, it does not specify which pairwise difference(s) are statistically significant. The Tukey's method (also known as the Tukey's honest significant differences) is a **post-hoc test** (identifying significant pairwise difference(s)) when the conclusion of ANOVA is $H_1$.
+For the purpose of demonstration, suppose we want to compare three averages $\mu_1$, $\mu_2$, and $\mu_3$. The conclusion of ANOVA is either $H_0$: $\mu_1 = \mu_2 = \mu_3$ or $H_1$: $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu_3$. If $H_1$ is concluded at a significance level of $\alpha$, it does not specify which pairwise difference(s) are statistically discernible. The Tukey's method (also known as the Tukey's honestly significant differences) is a **post-hoc test** (identifying significant pairwise difference(s)) when the conclusion of ANOVA is $H_1$.
 
 ## Family-wise Confidence Level
 
@@ -230,11 +350,11 @@ $$
 \texttt{point} \,\, \texttt{estimate} \,\, \pm \,\, c \times \texttt{SE} 
 $$ {#eq-ci}
 
-where $c$ is the critical value which reflects a confidence level $1 - \alpha$ and $\texttt{SE}$ is the standard error which quantifies the uncertainty about point estimation. If a CI for $\mu_j - \mu_k$ does not include zero at a confidence level of $1 - \alpha$, it is equivalent to concluding $\mu_j - \mu_k \ne 0$ (a two-sided test) at a significance level of $\alpha$. It is a natural idea to build three 95% CIs, one for $\mu_1 - \mu_2$, one for $\mu_1 - \mu_3$, and one for $\mu_2 - \mu_3$, and determine which pairwise difference(s) are statistically significant.
+where $c$ is the critical value which reflects a confidence level $1 - \alpha$ and $\texttt{SE}$ is the standard error which quantifies the uncertainty about point estimation. If a CI for $\mu_j - \mu_k$ does not include zero at a confidence level of $1 - \alpha$, it is equivalent to concluding $\mu_j - \mu_k \ne 0$ (a two-sided test) at a significance level of $\alpha$. It is a natural idea to build three 95% CIs, one for $\mu_1 - \mu_2$, one for $\mu_1 - \mu_3$, and one for $\mu_2 - \mu_3$, and determine which pairwise difference(s) are statistically discernible.
 
 Here is a challenge. When there are three independent CIs for $\mu_1 - \mu_2$, $\mu_1 - \mu_3$, and $\mu_2 - \mu_3$, where each CI captures the true value of $\mu_j - \mu_k$ with a probability of 0.95, all three independent CIs capture the true values of $\mu_1 - \mu_2$, $\mu_1 - \mu_3$, and $\mu_2 - \mu_3$ with a probability of $(0.95)^3 = 0.857$. In this case, we say that we have a family-wise confidence level of 0.857. In general, a **family-wise confidence level** is the probability that all CIs capture the true parameter values. If we want a family-wise confidence level of 0.95, the confidence level for each individual CI should be $(0.95)^{1/3} = 0.983$. In general, when we want $k$ independent CIs at a family-wise confidence level of $1 - \alpha$, each confidence interval should have a confidence level of $(1 - \alpha)^{1/k}$. This method is known as the **Sidak's method**.
 
-This method is brilliant, but there are two caveats. The first caveat is that CIs for multiple pairwise differences are not independent. The second caveat, which follows from the first caveat, is that Sidak's method is conservative. In other words, it results in long CIs (imprecise interval estimation).
+This method is brilliant, but there are two caveats. The first caveat is that CIs for multiple pairwise differences are not independent. The second caveat, which follows from the first caveat, is that Sidak's method is conservative. In other words, it results in wide CIs (imprecise interval estimation).
 
 ## Tukey's Honestly Significance Difference (HSD)
 
@@ -246,22 +366,13 @@ $$
 
 where $\texttt{MSW}$ is the within-group mean square (from the ANOVA table) and $n_j$ and $n_k$ are the sample sizes in group $j$ and $k$, respectively. This method is known as the **Tukey's method** or **Tukey's honestly significant difference** **(HSD)**.
 
-**Note:** As the ANOVA test, the Tukey's HSD is valid under the normality and equal variance assumptions.
+**Note:** As the ANOVA test, the Tukey's HSD is valid under the normality and equal variance conditions.
 
 Let us apply the Tukey's HSD to $\texttt{seat.csv}$. Let $\mu_1$, $\mu_2$, and $\mu_3$ be the unknown expected exam score for $\texttt{Front}$, $\texttt{Middle}$, and $\texttt{Back}$, respectively. Below are the descriptive statistics, ANOVA table, and critical value.
 
-```{r, warning = FALSE, message = FALSE}
-library(mosaic)
-examscore = read.csv("Data/seat.csv") ### read csv file
-dim(examscore) ### dimension of data
-table(examscore$seat) ### sample size by seat
-examscore$seat = factor(examscore$seat, levels = c("Front", "Middle", "Back"))
-stats = favstats(score ~ seat, data = examscore) ### descriptive statistics
-stats
-fit = aov(score ~ seat, data = examscore) ### ANOVA
-anova(fit)
-c = qtukey(0.95, nmeans = 3, df = 18) / sqrt(2) ### critical value
-c
+```{r}
+#| label: tukey-exam
+TukeyHSD(exam_aov)
 ```
 
 At a family-wise confidence level of 0.95, Tukey's CIs for $\mu_2 - \mu_1$, $\mu_3 - \mu_1$, and $\mu_3 - \mu_2$ can be calculated as follows:
@@ -274,15 +385,15 @@ At a family-wise confidence level of 0.95, Tukey's CIs for $\mu_2 - \mu_1$, $\mu
 
 The above calculations can be done using the $\texttt{TukeyHSD}$ function in R (after the ANOVA test).
 
-```{r, fig.height = 6, fig.width = 6, out.height = "50%", out.width = "50%", fig.alt = "Tukey's CIs"}
-hsd = TukeyHSD(fit)
-hsd
+```{r}
+#| label: tukey-plot
+hsd <- TukeyHSD(exam_aov)
 plot(hsd)
 ```
 
-Resulting Tukey's 95% family-wise CIs are $(-17.7, +2.7)$ for $\mu_2 - \mu_1$ ($\texttt{Middle} - \texttt{Front}$), $(-22.4, -0.5)$ for $\mu_3 - \mu_1$ ($\texttt{Back} - \texttt{Front}$), and $(-14.6, +6.7)$ for $\mu_3 - \mu_2$ ($\texttt{Back} - \texttt{Middle}$). The CI for $\mu_3 - \mu_2$, which does not including zero, is the only significant different. We conclude that the expected score of students seating in the back row is lower than of students seating in the front row (p = 0.039), and at a family-wise confidence level of 0.95, we estimate that the difference in the expected exam score between back row and front row is between –22.4 and –0.5.
+Resulting Tukey's 95% family-wise CIs are $(-17.7, +2.7)$ for $\mu_2 - \mu_1$ ($\texttt{Middle} - \texttt{Front}$), $(-22.4, -0.5)$ for $\mu_3 - \mu_1$ ($\texttt{Back} - \texttt{Front}$), and $(-14.6, +6.7)$ for $\mu_3 - \mu_2$ ($\texttt{Back} - \texttt{Middle}$). The CI for $\mu_3 - \mu_2$, which does not include zero, is the only discernible difference. We conclude that the expected score of students seating in the back row is lower than of students seating in the front row (p = 0.039), and at a family-wise confidence level of 0.95, we estimate that the difference in the expected exam score between back row and front row is between –22.4 and –0.5.
 
-The below table compares Tukey's 95% family-wise CIs and Sidak's 95% family-wise CIs for $\mu_2 - \mu_1$, $\mu_3 - \mu_1$, and $\mu_3 - \mu_2$. As aforementioned, the Sidak's method is conservative, resulting in longer CIs than the Tukey's method, and none of the pairwise differences is statistically significant (including zero).
+The below table compares Tukey's 95% family-wise CIs and Sidak's 95% family-wise CIs for $\mu_2 - \mu_1$, $\mu_3 - \mu_1$, and $\mu_3 - \mu_2$. As aforementioned, the Sidak's method is conservative, resulting in longer CIs than the Tukey's method, and none of the pairwise differences is statistically discernible (including zero).
 
 | Parameter | Tukey's CIs | Sidak's CIs |
 |:----------------------:|:----------------------:|:----------------------:|
@@ -292,63 +403,58 @@ The below table compares Tukey's 95% family-wise CIs and Sidak's 95% family-wise
 
 : Tukey's 95% family-wise CIs and Sidak's 95% family-wise CIs for the three pairwise differences
 
-```{r, echo = FALSE, results = FALSE}
-msw = as.numeric( unlist( anova(fit) )[6] )
-xbar = stats$mean
-point21 = xbar[2] - xbar[1]
-point31 = xbar[3] - xbar[1]
-point32 = xbar[3] - xbar[2]
-n = stats$n
-g = length(n)
-conf_level = (0.95) ^ (1/g)
-alpha = 1 - conf_level
-c21 = qt( 1 - alpha / 2, n[2] + n[1] - 2 )
-c31 = qt( 1 - alpha / 2, n[3] + n[1] - 2 )
-c32 = qt( 1 - alpha / 2, n[3] + n[2] - 2 )
-se21 = sqrt( msw * ( 1/n[2] + 1/n[1] ) )
-se31 = sqrt( msw * ( 1/n[3] + 1/n[1] ) )
-se32 = sqrt( msw * ( 1/n[3] + 1/n[2] ) )
-round( point21 + c(-1, 1) * c21 * se21, 1 )
-round( point31 + c(-1, 1) * c31 * se31, 1 )
-round( point32 + c(-1, 1) * c32 * se32, 1 )
 
-```
+## Wrap up
 
-## Warm-up
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSeXZBNpmzLotzNFWqm40lEIf2Ir7XKfWIdeNc-1nbe-jjQpSw/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+#### Problem 1 
+Let $g$ be the number of groups in ANOVA (i.e., $\mu_1, \mu_2, \dots, \mu_g$ are to be compared). Calculate the number of pairwise differences when:
 
-**Problem 1.** Let $g$ be the number of groups in ANOVA (i.e., $\mu_1, \mu_2, \dots, \mu_g$ are to be compared). Calculate the number of pairwise differences when:
+a. $g = 4$
 
-a\. $g = 4$
+b. $g = 5$
 
-b\. $g = 5$
+c. $g = 10$
 
-c\. $g = 10$
+#### Problem 2 
+Fill in the blank.
 
-**Problem 2.** Fill in the blank.
+a. When the ANOVA concludes the alternative hypothesis, we use the Tukey's \[h... s... d...\] to find which pairwise difference(s) are discernible.
 
-a\. When the ANOVA concludes the alternative hypothesis, we use the Tukey's \[h... s... d...\] to find which pairwise difference(s) are significant.
+b. When there are multiple CIs, the probability that all CIs capture the true parameter values is called a \[f... c... l...\].
 
-b\. When there are multiple CIs, the probability that all CIs capture the true parameter values is called a \[f... c... l...\].
+c. The normality condition implies that a \[s... r... s...\] is observed from a normal distribution for each group.
 
-**Problem 3.** In the reading, when there are $g = 3$ groups in ANOVA (i.e., $\mu_1$, $\mu_2$, and $\mu_3$ are to be compared), we need to calculate three CIs (one for $\mu_1 - \mu_2$, one for $\mu_1 - \mu_3$, and one for $\mu_2 - \mu_3$). The Sidak's method suggests that each CI for $\mu_j - \mu_k$ should have a confidence level of 0.9830 in order to have a family-wise confidence level of 0.95. According to the Sidak's method for 95% family-wise CIs, calculate the confidence level for each CI when:
+d. The normality condition can be formally assessed by the \[...\] plot.
 
-a\. $g = 4$
+e. The equal variance condition can be formally assessed by the \[...\] plot.
 
-b\. $g = 5$
+f. If both conditions are satisfied, the \[...\] test is trustworthy for testing three or more population averages. (Hint: It is a 5-letter acronym.)
 
-c\. $g = 10$
 
-**Problem 4.** True or false?
 
-a\. One disadvantage of Sidak's method that CIs tend to be long (imprecise).
+#### Problem 3 
+When there are $g = 3$ groups in ANOVA (i.e., $\mu_1$, $\mu_2$, and $\mu_3$ are to be compared), we need to calculate three CIs (one for $\mu_1 - \mu_2$, one for $\mu_1 - \mu_3$, and one for $\mu_2 - \mu_3$). The Sidak's method suggests that each CI for $\mu_j - \mu_k$ should have a confidence level of 0.9830 in order to have a family-wise confidence level of 0.95. According to the Sidak's method for 95% family-wise CIs, calculate the confidence level for each CI when:
 
-b\. One advantage of Tukey's HSD is that it is valid even when the normality assumption or equal variance assumption is violated.
+a. $g = 4$
 
-**Problem 5.** Suppose there are four groups to be compared, and the sample size is five per group. Calculate the critical value of Tukey's 90% family-wise CIs for all pairwise differences.
+b. $g = 5$
 
-**Problem 6.** Multiple-choice: Based on a CI for $\mu_j - \mu_k$ at a confidence level of $1 - \alpha$, when can we conclude $\mu_j - \mu_k \ne 0$ at a significance level of $\alpha$?
+c. $g = 10$
+
+#### Problem 4 
+True or false?
+
+a. One disadvantage of Sidak's method that CIs tend to be wide (imprecise).
+
+b. One advantage of Tukey's HSD is that it is valid even when the normality condition or equal variance condition is violated.
+
+#### Problem 5 
+Suppose there are four groups to be compared, and the sample size is five per group. Calculate the critical value of Tukey's 90% family-wise CIs for all pairwise differences.
+
+#### Problem 6 
+Multiple-choice: Based on a CI for $\mu_j - \mu_k$ at a confidence level of $1 - \alpha$, when can we conclude $\mu_j - \mu_k \ne 0$ at a significance level of $\alpha$?
 
 \(A\) The CI is very precise (i.e., very short CI).
 
@@ -360,7 +466,8 @@ b\. One advantage of Tukey's HSD is that it is valid even when the normality ass
 
 \(E\) The CI does not include zero.
 
-**Problem 7.** Multiple-choice: Suppose we calculate a CI for $\mu_j - \mu_k$. When do we have significant evidence that $\mu_k$ is greater than $\mu_j$?
+#### Problem 7 
+Multiple-choice: Suppose we calculate a CI for $\mu_j - \mu_k$. When do we have discernible evidence that $\mu_k$ is greater than $\mu_j$?
 
 \(A\) The CI is very precise (i.e., very short CI).
 
@@ -372,301 +479,114 @@ b\. One advantage of Tukey's HSD is that it is valid even when the normality ass
 
 \(E\) The CI does not include zero.
 
-## Assignment
-
-***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLScDvSqfDa9k5Bk5iit5m4oJZE83b6tjwNj791Ma_FotcA4SBQ/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
-
-***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
-
-**Problem 1.** (This problem is continued from the previous assignment.) Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following questions. Use the Tukey's HSD to find significant pairwise difference(s) at a family-wise confidence level of 0.95.
-
-\*a. Print the results of Tukey's HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.
-
-*For parts b to f, answer true (T) or false (F) whether the result is statistically significant for the following statement.*
-
-b\. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 < \mu_1$)
-
-c\. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 > \mu_1$)
-
-d\. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 < \mu_1$)
-
-e\. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 > \mu_1$)
-
-f\. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
-
-g\. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 > \mu_2$)
-
-\*h. State the conclusion in the context. Use accurate language, interpret significant CIs, and report p-value.
-
-**Problem 2.** (This problem is continued from the previous assignment.) Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the population average used-car price of $\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$ in used-car retailers as of 2017. Answer the following questions. Use the Tukey's HSD to find significant pairwise difference(s) at a family-wise confidence level of 0.95. Answer true (T) or false (F) whether the result is statistically significant for the following statement.
-
-\*a. Print the results of Tukey's HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.
-
-*For parts b to f, answer true (T) or false (F) whether the result is statistically significant for the following statement.*
-
-b\. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 < \mu_1$)
-
-c\. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 > \mu_1$)
-
-d\. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 < \mu_1$)
-
-e\. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 > \mu_1$)
-
-f\. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
-
-g\. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 > \mu_2$)
-
-\*h. State the conclusion in the context. Use accurate language, interpret significant CIs, and report p-value.
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Warm-up
-
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfhx6pBLm7gAy_fTLL5pCf_yjzyKCsAAU4Npo3fL23NsghTJQ/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
-
-**Problem 1.** Fill in the blank. Be cautious that some words have hyphen (-) as joint words.
-
-a\. The \[...\] variance refers to the variability of individual data points from their own group sample average.
-
-b\. The \[...\] variance refers to the variability among the group sample averages.
-
-c\. The normality assumption implies that a \[s... r... s...\] is observed from a normal distribution for each group.
-
-d\. The normality assumption can be formally assessed by the \[...\] test.
-
-e\. The equal variance assumption can be formally assessed by the \[...\] test.
-
-f\. If both assumptions are satisfied, the \[...\] test is valid for testing three or more population averages. (Hint: It is a 5-letter acronym.)
-
-g\. In the ANOVA test, a large value of F statistic results in a small value of \[...\] which implies strong evidence for the alternative hypothesis under the assumption of the null hypothesis.
-
-**Problem 2.** In a small study of comparing three groups, suppose the respective sample sizes are $n_1 = n_2 = n_3 = 3$, the respective sample means are $\bar{X}_1 = 3$, $\bar{X}_2 = 4$, and $\bar{X}_3 = 5$, and the respective sample standard deviations are $S_1 = S_2 = S_3 = 1$. Given these statistics, complete the following ANOVA table.
-
-| Type of Variance | Sum of Squares | Degrees of Freedom | Mean Square | F Statistic |
-|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| Between-group | $\texttt{SSB} = [\texttt{a}]$ | $\nu_b = [\texttt{c}]$ | $\texttt{MSB}  = [\texttt{e}]$ | $F = [\texttt{g}]$ |
-| Within-group | $\texttt{SSW} = [\texttt{b}]$ | $\nu_w  = [\texttt{d}]$ | $\texttt{MSW} = [\texttt{f}]$ |  |
-
-: ANOVA table for calculating the F statistic
-
-**Problem 3.** Suppose three independent researchers conducted studies of comparing three groups. All three researchers had a sample size of 5 per group (i.e., $n_1 = n_2 = n_3 = 3$), but they observed different sample means and standard deviations as follows.
-
-- Researcher A: $\bar{X}_1 = 3$, $\bar{X}_2 = 4$, and $\bar{X}_3 = 5$, and $S_1 = S_2 = S_3 = 1$
-
-- Researcher B: $\bar{X}_1 = 3$, $\bar{X}_2 = 4$, and $\bar{X}_3 = 5$, and $S_1 = S_2 = S_3 = 3$
-
-- Researcher C: $\bar{X}_1 = 2$, $\bar{X}_2 = 4$, and $\bar{X}_3 = 6$, and $S_1 = S_2 = S_3 = 1$
-
-a\. Multiple-choice: Which researcher has the largest value of $\texttt{SSB}$?
-
-\(A\) Researcher A
-
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
-
-b\. Multiple-choice: Which researcher has the largest value of $\texttt{SSW}$?
-
-\(A\) Researcher A
-
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
-
-c\. Multiple-choice: Which researcher has the largest value of F statistic?
-
-\(A\) Researcher A
-
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
-
-d\. Multiple-choice: Which researcher has the largest value of p-value?
-
-\(A\) Researcher A
-
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
-
-e\. Calculate the p-value for Researcher A. (Hint: Do not waste your work in Problem 2 because the given statistics are identical.)
 
 ## Assignment
 
-***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfBpwS7jSuAv0mNU9NYy6PWhf-JDCrYLf0BxMLwbKe-0iTahA/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).
 
-***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
 
-**Problem 1.** Exercise scientists believe that maximum speed (km/h) is an indicator of athletes' physical strength and speed, and it is an important physical ability for team sports played in a field like soccer. Do players have different maximum speed by position, on average? To address this question, let us use the dataset $\texttt{Euro.csv}$, focus on the most recent competition (Euro 2024), and compare the maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ (remove $\texttt{Goalkeeper}$) using the ANOVA. The following code cleans the original data for our objective. Study the code.
+#### Problem 1 
+(This problem is continued from the previous assignment.) Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following questions. Use the Tukey's HSD to find discernible pairwise difference(s) at a family-wise confidence level of 0.95.
 
-```{r, warning = FALSE, message = FALSE}
-library(mosaic)
-euro = read.csv("Data/Euro.csv") ### read data
-head(euro, 5)
-dim(euro) ### dimension of data
-table(euro$Event) ### count by competition
-table(euro$Position) ### count by position
-euro2024 = subset(euro, Event == "Euro 2024" & Position != "Goalkeeper") ### subset 493 players played in Euro 2024
-dim(euro2024) ### dimention of subsetted data
-table(euro2024$Position) ### count by position
-```
+a. Print the results of Tukey's HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs using R
 
-Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame $\texttt{euro2024}$.
+*For parts b to f, answer true (T) or false (F) whether the result is statistically discernible for the following statement.*
 
-a\. Multiple-choice: Which of the following represents the null hypothesis $H_0$?
+b. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 < \mu_1$)
 
-\(A\) $\mu_1 = \mu_2 = \mu_3$
+c. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 > \mu_1$)
 
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
+d. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 < \mu_1$)
 
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
+e. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 > \mu_1$)
 
-\(D\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu3$
+f. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
 
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+g. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 > \mu_2$)
 
-b\. Multiple-choice: Which of the following represents the alternative hypothesis $H_1$?
+h. State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.
 
-\(A\) $\mu_1 > \mu_2 > \mu_3$
 
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
+i. Create a Residual Plot.
 
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
 
-\(D\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu3$
+j. Multiple-choice: Which of the following is true about the equal variance condition?
 
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+\(A\) There is a sign of violating the equal variance condition.
 
-\*c. Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.
+\(B\) There is no sign of violating the equal variance condition.
 
-d\. Calculate the ratio of the largest sample variance to the smallest sample variance.
+\(C\) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).
 
-e\. Calculate the p-value from the Bartlett test.
+\(D\) None of the above.
 
-f\. Multiple-choice: Which of the following is true about the equal variance assumption?
+k. Create a QQ Plot for the Residuals
 
-\(A\) There is a sign of violating the equal variance assumption at $\alpha = 0.05$.
+l. Multiple-choice: Which of the following is true about the normality condition?
 
-\(B\) There is no sign of violating the equal variance assumption at $\alpha = 0.05$.
+\(A\) There is a sign of violating the normality condition.
 
-\(C\) The sample size is at least 30 per group, so violating the equal variance assumption is tolerable (if violated).
+\(B\) There is no sign of violating the normality condition condition.
 
-\(D\) The Bartlett test is not an appropriate test for checking the equal variance assumption. The Shapiro-Wilk test is.
+\(C\) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
 
-\(E\) None of the above.
+\(D\) (A) and (C)
 
-g\. Calculate the p-value from the Shapiro-Wilk test.
+m. Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
 
-h\. Multiple-choice: Which of the following is true about the normality assumption?
 
-\(A\) There is a sign of violating the normality assumption at $\alpha = 0.05$.
 
-\(B\) There is no sign of violating the normality assumption assumption at $\alpha = 0.05$.
 
-\(C\) The sample size is at least 30 per group, so violating the normality assumption is tolerable (if violated).
 
-\(D\) The Shapiro-Wilk test is not an appropriate test for checking the equal variance assumption. The Bartlett test is.
+#### Problem 2 
+(This problem is continued from the previous assignment.) Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the population average used-car price of $\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$ in used-car retailers as of 2017. Answer the following questions. Use the Tukey's HSD to find discernible pairwise difference(s) at a family-wise confidence level of 0.95. Answer true (T) or false (F) whether the result is statistically discernible for the following statement.
 
-\(E\) (A) and (C)
+a. Print the results of Tukey's HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.
 
-i\. Report the F statistic from the ANOVA test.
+*For parts b to f, answer true (T) or false (F) whether the result is statistically meaningful for the following statement.*
 
-j\. Report the p-value from the ANOVA test.
+b. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 < \mu_1$)
 
-\*k. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
+c. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 > \mu_1$)
 
-l\. Suppose we randomly sample a defender and a midfielder. Calculate the difference (defender – midfielder) of expected maximum speed.
+d. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 < \mu_1$)
 
-m\. Suppose a fast defender player whose maximum speed is $Q_3$ (faster than 75% of defender players) and the fastest forward player in the sample accelerated to their maximum speed, then they sprint 20 meters to chase the ball. When the forward player possess the ball and stop, how much time (in seconds) will he have until the defender player reaches him?
+e. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 > \mu_1$)
 
-**Problem 2.** The dataset $\texttt{usedcars2017.csv}$ is a simple random sample of three car models in used-car retailers in 2017. The column $\texttt{CarType}$ is the car model ($\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$), and the column $\texttt{Price}$ is the sale price (in \$1,000). The objective of data analysis is to compare the average used-car price among the three models. Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the population average used-car price of $\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$ in used-car retailers as of 2017.
+f. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
 
-a\. Multiple-choice: Which of the following represents the null hypothesis $H_0$?
+g. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 > \mu_2$)
 
-\(A\) $\mu_1 = \mu_2 = \mu_3$
+h. State the conclusion in the context. Use accurate language, interpret discernible CIs, and report p-value.
 
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
+h. State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.
 
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
 
-\(D\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu3$
+i. Create a Residual Plot.
 
-\(E\) $\mu_1 < \mu_2 < \mu_3$
 
-b\. Multiple-choice: Which of the following represents the alternative hypothesis $H_1$?
+j. Multiple-choice: Which of the following is true about the equal variance condition?
 
-\(A\) $\mu_1 > \mu_2 > \mu_3$
+\(A\) There is a sign of violating the equal variance condition.
 
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
+\(B\) There is no sign of violating the equal variance condition.
 
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
+\(C\) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).
 
-\(D\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, or $\mu_2 \ne \mu3$
+\(D\) None of the above.
 
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+k. Create a QQ Plot for the Residuals
 
-\*c. Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.
+l. Multiple-choice: Which of the following is true about the normality condition?
 
-d\. Calculate the ratio of the largest sample variance to the smallest sample variance.
+\(A\) There is a sign of violating the normality condition.
 
-e\. Calculate the p-value from the Bartlett test.
+\(B\) There is no sign of violating the normality condition condition.
 
-f\. Multiple-choice: Which of the following is true about the equal variance assumption?
+\(C\) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
 
-\(A\) There is a sign of violating the equal variance assumption at $\alpha = 0.05$.
+\(D\) (A) and (C)
 
-\(B\) There is no sign of violating the equal variance assumption at $\alpha = 0.05$.
 
-\(C\) The sample size is at least 30 per group, so violating the equal variance assumption is tolerable (if violated).
+m. Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
 
-\(D\) The Bartlett test is not an appropriate test for checking the equal variance assumption. The Shapiro-Wilk test is.
-
-\(E\) None of the above.
-
-g\. Calculate the p-value from the Shapiro-Wilk test.
-
-h\. Multiple-choice: Which of the following is true about the normality assumption?
-
-\(A\) There is a sign of violating the normality assumption at $\alpha = 0.05$.
-
-\(B\) There is no sign of violating the normality assumption assumption at $\alpha = 0.05$.
-
-\(C\) The sample size is at least 30 per group, so violating the normality assumption is tolerable (if violated).
-
-\(D\) The Shapiro-Wilk test is not an appropriate test for checking the equal variance assumption. The Bartlett test is.
-
-\(E\) (B) and (C)
-
-i\. Report the F statistic from the ANOVA test.
-
-j\. Report the p-value from the ANOVA test.
-
-\*k. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
-
-l\. Suppose you plan to buy an "average" Accord and your friend plans to buy an "average" Mazda6 (average in terms of the price). How much more would you budget than your friend? Answer in dollars (not 1,000 dollars).
