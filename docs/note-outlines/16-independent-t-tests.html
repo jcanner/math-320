@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,15 +68,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../note-outlines/15-paired-t-tests.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a00848ed57fe9097555b5bd7c001b509.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -123,7 +122,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -323,6 +322,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../note-outlines/17-multiple-comparisons.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multiple Comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/18-conditions-post-hoc-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions and Post-Hoc Tests</span></a>
   </div>
 </li>
       </ul>
@@ -527,10 +532,10 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <h3 data-number="5.1" class="anchored" data-anchor-id="normalitysufficient-sample-size-condition"><span class="header-section-number">5.1</span> Normality/Sufficient Sample Size Condition</h3>
 <p>As in the one-sample t-test, the normality condition can be visually assessed by the <strong>QQ plot</strong> on both samples. If data points of QQ plot substantially deviate from a straight line, it is a sign of violating the normality condition, but this visual assessment is somewhat subjective and vague.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span>response <span class="sc">|</span> explanatory, <span class="at">data =</span> mydata,</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span>response <span class="sc">|</span> explanatory, <span class="at">data =</span> mydata,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Theoretical Z-Scores"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Observed Sample Values"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The violation of the normality condition is not a big concern when <span class="math inline">\(n_1 \ge 30\)</span> and <span class="math inline">\(n_2 \ge 30\)</span>, as the t-test is <strong>robust</strong> to violation of that condition if there is sufficient sample size. In general, the minimum sample size per group, if the normality condition is met, is <span class="math inline">\(n_1 \ge 10\)</span> and <span class="math inline">\(n_2 \ge 10\)</span>.</p>
 </section>
@@ -543,19 +548,19 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <h2 data-number="6" class="anchored" data-anchor-id="calculations-in-r"><span class="header-section-number">6</span> Calculations in R</h2>
 <p>For the hypothesis test, we can calculate the t-test and p-value as follows:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance test</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance test</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span>), <span class="at">var.equal =</span> <span class="cn">TRUE</span> )</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#unequal variance test</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span>), <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span>), <span class="at">var.equal =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For the confidence interval:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance ci</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#equal variance ci</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">var.equal =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#unequal variance ci</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">var.equal =</span> <span class="cn">FALSE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(response <span class="sc">~</span> explanatory, <span class="at">var.equal =</span> <span class="cn">FALSE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="case-study-smoking-and-birth-weight" class="level2" data-number="7">
@@ -565,8 +570,8 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <h3 data-number="7.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">7.1</span> Exploratory Data Analysis</h3>
 <p>Let us explore the data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>birthwt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/birthwt.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birthwt, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>birthwt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/birthwt.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birthwt, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
      id smoke   bwt
@@ -579,7 +584,7 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt) <span class="do">### descriptive stats by group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt) <span class="do">### descriptive stats by group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response smoke  min     Q1 median    Q3   max     mean       sd   n missing
 1      bwt     N 2.25 5.5200  6.820 7.965 10.98 6.722435 1.655806 115       0
@@ -587,11 +592,11 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(smoke <span class="sc">~</span> bwt, <span class="at">data =</span> birthwt, <span class="co">#note switched order for horizontal boxplots</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(smoke <span class="sc">~</span> bwt, <span class="at">data =</span> birthwt, <span class="co">#note switched order for horizontal boxplots</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Birth weight (pounds)"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Smoked during pregnancy?"</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Sample from the Medical Center in 1986"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="at">height =</span> <span class="fl">0.1</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="at">height =</span> <span class="fl">0.1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -602,8 +607,8 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 </div>
 <p>Clinically, a low birth weight is defined as a birth weight below 5.5 pounds. We can estimate that about 25.2% and 40.5% of babies in the non-smoking group and smoking group have a low birth weight, respectively, as follows.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Note: A low birth weight is defined as bwt &lt; 5.5.</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((bwt <span class="sc">&lt;</span> <span class="fl">5.5</span>) <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt ) <span class="do">### proportions by group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Note: A low birth weight is defined as bwt &lt; 5.5.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((bwt <span class="sc">&lt;</span> <span class="fl">5.5</span>) <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt ) <span class="do">### proportions by group</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        N         Y 
 0.2521739 0.4054054 </code></pre>
@@ -619,10 +624,10 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <h3 data-number="7.3" class="anchored" data-anchor-id="assessing-normality-condition"><span class="header-section-number">7.3</span> Assessing Normality condition</h3>
 <p>Let us first assess the normality condition using the QQ plot.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span> bwt <span class="sc">|</span> smoke, <span class="at">data =</span> birthwt,</span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span> bwt <span class="sc">|</span> smoke, <span class="at">data =</span> birthwt,</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Theoretical Z-Scores"</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Observed Birth Weights (lbs)"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -647,8 +652,8 @@ n_1 + n_2 - 2 \,\,\, \mathrm{under \,\, equal \,\, variance \,\, condition} \\
 <h3 data-number="7.5" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">7.5</span> Two-sample T-test</h3>
 <p>Now, let us perform the two-sample t-test for <span class="math inline">\(\mu_N - \mu_Y\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span> using the <span class="math inline">\(\texttt{t.test}\)</span> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -669,15 +674,15 @@ mean in group N mean in group Y
 <li>Reorder the variable values in R.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>birthwt2 <span class="ot">&lt;-</span> birthwt <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">smoke =</span> <span class="fu">factor</span>(smoke, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>birthwt2 <span class="ot">&lt;-</span> birthwt <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">smoke =</span> <span class="fu">factor</span>(smoke, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Y"</span>, <span class="st">"N"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li>Calculate the test statistics and p-value, adjusting the alternative for the level order.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt2,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt2,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -697,7 +702,7 @@ mean in group Y mean in group N
 <h3 data-number="7.6" class="anchored" data-anchor-id="confidence-interval-1"><span class="header-section-number">7.6</span> Confidence Interval</h3>
 <p>Let us estimate <span class="math inline">\(\mu_N - \mu_Y\)</span> using the point estimation and 95% CI.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1597438 1.0880988
 attr(,"conf.level")
@@ -719,28 +724,28 @@ attr(,"conf.level")
 <p>Multiple-choice: Which of the following tests is for comparing the two population means under the normality condition?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_79024" onsubmit="return validate_form_79024()" method="post">
+<form name="form_8739" onsubmit="return validate_form_8739()" method="post">
 <label>
-<input type="radio" name="answer_79024" id="answer_79024_1" value="one-sample t-test">
+<input type="radio" name="answer_8739" id="answer_8739_1" value="one-sample t-test">
 one-sample t-test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_79024" id="answer_79024_2" value="two-sample t-test">
+<input type="radio" name="answer_8739" id="answer_8739_2" value="two-sample t-test">
 two-sample t-test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_79024" id="answer_79024_3" value="matched-pairs t-test">
+<input type="radio" name="answer_8739" id="answer_8739_3" value="matched-pairs t-test">
 matched-pairs t-test
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_79024"></div>
+<div id="result_8739"></div>
 </form>
-<script>function validate_form_79024() {var x, text; var x = document.forms['form_79024']['answer_79024'].value;if (x == 'two-sample t-test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_79024').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_8739() {var x, text; var x = document.forms['form_8739']['answer_8739'].value;if (x == 'two-sample t-test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_8739').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_79024').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_8739').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -750,12 +755,12 @@ matched-pairs t-test
 <h4 data-number="8.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">8.0.2</span> Problem 2</h4>
 <p>Fill in the blanks. In general, a small p-value is statistical evidence against [part a] in favor of [part b], so we conclude [part c] when a p-value is smaller than a fixed [part d]. (Word choice: p-value, significance level, test statistic, null hypothesis, alternative hypothesis, normality condition)</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -776,38 +781,38 @@ matched-pairs t-test
 <p>Multiple-choice: Which of the following statements is the <u>null hypothesis</u> of <u>two-sample t-test</u>?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_84878" onsubmit="return validate_form_84878()" method="post">
+<form name="form_75740" onsubmit="return validate_form_75740()" method="post">
 <label>
-<input type="radio" name="answer_84878" id="answer_84878_1" value="The two populations (groups) have the same average.">
+<input type="radio" name="answer_75740" id="answer_75740_1" value="The two populations (groups) have the same average.">
 The two populations (groups) have the same average.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_84878" id="answer_84878_2" value="The two populations have different averages.">
+<input type="radio" name="answer_75740" id="answer_75740_2" value="The two populations have different averages.">
 The two populations have different averages.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_84878" id="answer_84878_3" value="The two populations follow normal distributions.">
+<input type="radio" name="answer_75740" id="answer_75740_3" value="The two populations follow normal distributions.">
 The two populations follow normal distributions.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_84878" id="answer_84878_4" value="The two populations have the equal variance.">
+<input type="radio" name="answer_75740" id="answer_75740_4" value="The two populations have the equal variance.">
 The two populations have the equal variance.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_84878" id="answer_84878_5" value="The two populations have unequal variances.">
+<input type="radio" name="answer_75740" id="answer_75740_5" value="The two populations have unequal variances.">
 The two populations have unequal variances.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_84878"></div>
+<div id="result_75740"></div>
 </form>
-<script>function validate_form_84878() {var x, text; var x = document.forms['form_84878']['answer_84878'].value;if (x == 'The two populations (groups) have the same average.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_84878').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_75740() {var x, text; var x = document.forms['form_75740']['answer_75740'].value;if (x == 'The two populations (groups) have the same average.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_75740').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -818,38 +823,38 @@ The two populations have unequal variances.
 <p>Multiple-choice: Which of the statements is the <u>alternative hypothesis</u> of <u>two-sample t-test</u>?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_39060" onsubmit="return validate_form_39060()" method="post">
+<form name="form_85622" onsubmit="return validate_form_85622()" method="post">
 <label>
-<input type="radio" name="answer_39060" id="answer_39060_1" value="The two populations (groups) have the same average.">
+<input type="radio" name="answer_85622" id="answer_85622_1" value="The two populations (groups) have the same average.">
 The two populations (groups) have the same average.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_39060" id="answer_39060_2" value="The two populations have different averages.">
+<input type="radio" name="answer_85622" id="answer_85622_2" value="The two populations have different averages.">
 The two populations have different averages.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_39060" id="answer_39060_3" value="The two populations follow normal distributions.">
+<input type="radio" name="answer_85622" id="answer_85622_3" value="The two populations follow normal distributions.">
 The two populations follow normal distributions.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_39060" id="answer_39060_4" value="The two populations have the equal variance.">
+<input type="radio" name="answer_85622" id="answer_85622_4" value="The two populations have the equal variance.">
 The two populations have the equal variance.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_39060" id="answer_39060_5" value="The two populations have unequal variances.">
+<input type="radio" name="answer_85622" id="answer_85622_5" value="The two populations have unequal variances.">
 The two populations have unequal variances.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_39060"></div>
+<div id="result_85622"></div>
 </form>
-<script>function validate_form_39060() {var x, text; var x = document.forms['form_39060']['answer_39060'].value;if (x == 'The two populations have different averages.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_39060').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_85622() {var x, text; var x = document.forms['form_85622']['answer_85622'].value;if (x == 'The two populations have different averages.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_85622').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -860,38 +865,38 @@ The two populations have unequal variances.
 <p>Multiple-choice: Which of the statements is a reasonable guess when data points of a QQ plot follow the 1:1 line?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_27682" onsubmit="return validate_form_27682()" method="post">
+<form name="form_2713" onsubmit="return validate_form_2713()" method="post">
 <label>
-<input type="radio" name="answer_27682" id="answer_27682_1" value="The two populations (groups) have the same average.">
+<input type="radio" name="answer_2713" id="answer_2713_1" value="The two populations (groups) have the same average.">
 The two populations (groups) have the same average.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_27682" id="answer_27682_2" value="The two populations have different averages.">
+<input type="radio" name="answer_2713" id="answer_2713_2" value="The two populations have different averages.">
 The two populations have different averages.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_27682" id="answer_27682_3" value="The two populations follow normal distributions.">
+<input type="radio" name="answer_2713" id="answer_2713_3" value="The two populations follow normal distributions.">
 The two populations follow normal distributions.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_27682" id="answer_27682_4" value="The two populations have the equal variance.">
+<input type="radio" name="answer_2713" id="answer_2713_4" value="The two populations have the equal variance.">
 The two populations have the equal variance.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_27682" id="answer_27682_5" value="The two populations have unequal variances.">
+<input type="radio" name="answer_2713" id="answer_2713_5" value="The two populations have unequal variances.">
 The two populations have unequal variances.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_27682"></div>
+<div id="result_2713"></div>
 </form>
-<script>function validate_form_27682() {var x, text; var x = document.forms['form_27682']['answer_27682'].value;if (x == 'The two populations follow normal distributions.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_27682').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_2713() {var x, text; var x = document.forms['form_2713']['answer_2713'].value;if (x == 'The two populations follow normal distributions.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_2713').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct'; res4 = document.getElementById('result_27682').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct'; res4 = document.getElementById('result_2713').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -908,12 +913,12 @@ The two populations have unequal variances.
 <li>standard error under the condition of equal variance</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -927,12 +932,12 @@ The two populations have unequal variances.
 <li>degrees of freedom under the condition of equal variance</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -946,12 +951,12 @@ The two populations have unequal variances.
 <li>T statistic under the condition of equal variance</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -965,12 +970,12 @@ The two populations have unequal variances.
 <li>p-value for the left-sided test</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -984,12 +989,12 @@ The two populations have unequal variances.
 <li>standard error under the condition of unequal variances</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1003,12 +1008,12 @@ The two populations have unequal variances.
 <li>degrees of freedom under the condition of unequal variances</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1022,12 +1027,12 @@ The two populations have unequal variances.
 <li>T statistic under the condition of unequal variances</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1041,12 +1046,12 @@ The two populations have unequal variances.
 <li>p-value for the two-sided test</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1066,33 +1071,33 @@ The two populations have unequal variances.
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_4434" onsubmit="return validate_form_4434()" method="post">
+<form name="form_74164" onsubmit="return validate_form_74164()" method="post">
 <label>
-<input type="radio" name="answer_4434" id="answer_4434_1" value="μ_C − μ_I = 0">
+<input type="radio" name="answer_74164" id="answer_74164_1" value="μ_C − μ_I = 0">
 μ_C − μ_I = 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_4434" id="answer_4434_2" value="μ_C − μ_I > 0">
+<input type="radio" name="answer_74164" id="answer_74164_2" value="μ_C − μ_I > 0">
 μ_C − μ_I &gt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_4434" id="answer_4434_3" value="μ_C − μ_I < 0">
+<input type="radio" name="answer_74164" id="answer_74164_3" value="μ_C − μ_I < 0">
 μ_C − μ_I &lt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_4434" id="answer_4434_4" value="μ_C − μ_I ≠ 0">
+<input type="radio" name="answer_74164" id="answer_74164_4" value="μ_C − μ_I ≠ 0">
 μ_C − μ_I ≠ 0
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_4434"></div>
+<div id="result_74164"></div>
 </form>
-<script>function validate_form_4434() {var x, text; var x = document.forms['form_4434']['answer_4434'].value;if (x == 'μ_C − μ_I = 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_4434').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_74164() {var x, text; var x = document.forms['form_74164']['answer_74164'].value;if (x == 'μ_C − μ_I = 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_74164').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct'; res4 = document.getElementById('result_27682').innerText == 'Correct'; res5 = document.getElementById('result_4434').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct'; res4 = document.getElementById('result_2713').innerText == 'Correct'; res5 = document.getElementById('result_74164').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1102,33 +1107,33 @@ The two populations have unequal variances.
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_78923" onsubmit="return validate_form_78923()" method="post">
+<form name="form_2620" onsubmit="return validate_form_2620()" method="post">
 <label>
-<input type="radio" name="answer_78923" id="answer_78923_1" value="μ_C − μ_I = 0">
+<input type="radio" name="answer_2620" id="answer_2620_1" value="μ_C − μ_I = 0">
 μ_C − μ_I = 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_78923" id="answer_78923_2" value="μ_C − μ_I > 0">
+<input type="radio" name="answer_2620" id="answer_2620_2" value="μ_C − μ_I > 0">
 μ_C − μ_I &gt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_78923" id="answer_78923_3" value="μ_C − μ_I < 0">
+<input type="radio" name="answer_2620" id="answer_2620_3" value="μ_C − μ_I < 0">
 μ_C − μ_I &lt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_78923" id="answer_78923_4" value="μ_C − μ_I ≠ 0">
+<input type="radio" name="answer_2620" id="answer_2620_4" value="μ_C − μ_I ≠ 0">
 μ_C − μ_I ≠ 0
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_78923"></div>
+<div id="result_2620"></div>
 </form>
-<script>function validate_form_78923() {var x, text; var x = document.forms['form_78923']['answer_78923'].value;if (x == 'μ_C − μ_I > 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_78923').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_2620() {var x, text; var x = document.forms['form_2620']['answer_2620'].value;if (x == 'μ_C − μ_I > 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_2620').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct'; res4 = document.getElementById('result_27682').innerText == 'Correct'; res5 = document.getElementById('result_4434').innerText == 'Correct'; res6 = document.getElementById('result_78923').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct'; res4 = document.getElementById('result_2713').innerText == 'Correct'; res5 = document.getElementById('result_74164').innerText == 'Correct'; res6 = document.getElementById('result_2620').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1137,12 +1142,12 @@ The two populations have unequal variances.
 <li>Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1169,12 +1174,12 @@ The two populations have unequal variances.
 <li>Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1190,7 +1195,7 @@ The two populations have unequal variances.
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">33.6134</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fl">40.01389</span><span class="sc">^</span><span class="dv">2</span>) <span class="co">#greater than 1/4 and less than 4, so equal variance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">33.6134</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fl">40.01389</span><span class="sc">^</span><span class="dv">2</span>) <span class="co">#greater than 1/4 and less than 4, so equal variance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7056727</code></pre>
 </div>
@@ -1203,12 +1208,12 @@ The two populations have unequal variances.
 <li>Use R and <code>t.test()</code> to find the test statistics and p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1236,12 +1241,12 @@ mean in group Control    mean in group Iron
 <li>Report the T statistic.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1255,12 +1260,12 @@ mean in group Control    mean in group Iron
 <li>Calculate the p-value. Interpret the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1274,12 +1279,12 @@ mean in group Control    mean in group Iron
 <li>From the two-sample t-test, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>? Evaluate the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1293,12 +1298,12 @@ mean in group Control    mean in group Iron
 <li>Calculate the lower bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1315,12 +1320,12 @@ attr(,"conf.level")
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1334,12 +1339,12 @@ attr(,"conf.level")
 <li>Calculate the upper bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1353,12 +1358,12 @@ attr(,"conf.level")
 <li>Interpret the confidence interval.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1372,12 +1377,12 @@ attr(,"conf.level")
 <li>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_C - \mu_I\)</span> in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for <span class="math inline">\(\mu_C - \mu_I\)</span>, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1397,33 +1402,33 @@ attr(,"conf.level")
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_53200" onsubmit="return validate_form_53200()" method="post">
+<form name="form_77969" onsubmit="return validate_form_77969()" method="post">
 <label>
-<input type="radio" name="answer_53200" id="answer_53200_1" value="μ_R − μ_W = 0">
+<input type="radio" name="answer_77969" id="answer_77969_1" value="μ_R − μ_W = 0">
 μ_R − μ_W = 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_53200" id="answer_53200_2" value="μ_R − μ_W > 0">
+<input type="radio" name="answer_77969" id="answer_77969_2" value="μ_R − μ_W > 0">
 μ_R − μ_W &gt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_53200" id="answer_53200_3" value="μ_R − μ_W < 0">
+<input type="radio" name="answer_77969" id="answer_77969_3" value="μ_R − μ_W < 0">
 μ_R − μ_W &lt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_53200" id="answer_53200_4" value="μ_R − μ_W ≠ 0">
+<input type="radio" name="answer_77969" id="answer_77969_4" value="μ_R − μ_W ≠ 0">
 μ_R − μ_W ≠ 0
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_53200"></div>
+<div id="result_77969"></div>
 </form>
-<script>function validate_form_53200() {var x, text; var x = document.forms['form_53200']['answer_53200'].value;if (x == 'μ_R − μ_W = 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_53200').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_77969() {var x, text; var x = document.forms['form_77969']['answer_77969'].value;if (x == 'μ_R − μ_W = 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_77969').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct'; res4 = document.getElementById('result_27682').innerText == 'Correct'; res5 = document.getElementById('result_4434').innerText == 'Correct'; res6 = document.getElementById('result_78923').innerText == 'Correct'; res7 = document.getElementById('result_53200').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct'; res4 = document.getElementById('result_2713').innerText == 'Correct'; res5 = document.getElementById('result_74164').innerText == 'Correct'; res6 = document.getElementById('result_2620').innerText == 'Correct'; res7 = document.getElementById('result_77969').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1433,33 +1438,33 @@ attr(,"conf.level")
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_64479" onsubmit="return validate_form_64479()" method="post">
+<form name="form_2841" onsubmit="return validate_form_2841()" method="post">
 <label>
-<input type="radio" name="answer_64479" id="answer_64479_1" value="μ_R − μ_W = 0">
+<input type="radio" name="answer_2841" id="answer_2841_1" value="μ_R − μ_W = 0">
 μ_R − μ_W = 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_64479" id="answer_64479_2" value="μ_R − μ_W > 0">
+<input type="radio" name="answer_2841" id="answer_2841_2" value="μ_R − μ_W > 0">
 μ_R − μ_W &gt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_64479" id="answer_64479_3" value="μ_R − μ_W < 0">
+<input type="radio" name="answer_2841" id="answer_2841_3" value="μ_R − μ_W < 0">
 μ_R − μ_W &lt; 0
 </label>
 <br>
 <label>
-<input type="radio" name="answer_64479" id="answer_64479_4" value="μ_R − μ_W ≠ 0">
+<input type="radio" name="answer_2841" id="answer_2841_4" value="μ_R − μ_W ≠ 0">
 μ_R − μ_W ≠ 0
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_64479"></div>
+<div id="result_2841"></div>
 </form>
-<script>function validate_form_64479() {var x, text; var x = document.forms['form_64479']['answer_64479'].value;if (x == 'μ_R − μ_W ≠ 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_64479').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_2841() {var x, text; var x = document.forms['form_2841']['answer_2841'].value;if (x == 'μ_R − μ_W ≠ 0'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_2841').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_79024').innerText == 'Correct'; res2 = document.getElementById('result_84878').innerText == 'Correct'; res3 = document.getElementById('result_39060').innerText == 'Correct'; res4 = document.getElementById('result_27682').innerText == 'Correct'; res5 = document.getElementById('result_4434').innerText == 'Correct'; res6 = document.getElementById('result_78923').innerText == 'Correct'; res7 = document.getElementById('result_53200').innerText == 'Correct'; res8 = document.getElementById('result_64479').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_8739').innerText == 'Correct'; res2 = document.getElementById('result_75740').innerText == 'Correct'; res3 = document.getElementById('result_85622').innerText == 'Correct'; res4 = document.getElementById('result_2713').innerText == 'Correct'; res5 = document.getElementById('result_74164').innerText == 'Correct'; res6 = document.getElementById('result_2620').innerText == 'Correct'; res7 = document.getElementById('result_77969').innerText == 'Correct'; res8 = document.getElementById('result_2841').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1468,12 +1473,12 @@ attr(,"conf.level")
 <li>Provide descriptive statistics and a boxplot for the variable of interest by the two groups. Describe in words what you notice in the context of the research question.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1503,12 +1508,12 @@ attr(,"conf.level")
 <li>Create a QQ Plot for the scenario and evaluate the conditions of normality, sufficient sample size, and equal variance.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1524,7 +1529,7 @@ attr(,"conf.level")
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">30.43257</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fl">8.44113</span><span class="sc">^</span><span class="dv">2</span>) <span class="co">#greater than 4, so unequal variance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">30.43257</span><span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>(<span class="fl">8.44113</span><span class="sc">^</span><span class="dv">2</span>) <span class="co">#greater than 4, so unequal variance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12.99799</code></pre>
 </div>
@@ -1537,12 +1542,12 @@ attr(,"conf.level")
 <li>Use R and <code>t.test()</code> to find the test statistics and p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1570,12 +1575,12 @@ mean in group Ranch  mean in group Wild
 <li>Report the T statistic.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1589,12 +1594,12 @@ mean in group Ranch  mean in group Wild
 <li>Calculate the p-value. Interpret the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1608,12 +1613,12 @@ mean in group Ranch  mean in group Wild
 <li>From the two-sample t-test, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>? Evaluate the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1627,12 +1632,12 @@ mean in group Ranch  mean in group Wild
 <li>Calculate the lower bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1649,12 +1654,12 @@ attr(,"conf.level")
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1668,12 +1673,12 @@ attr(,"conf.level")
 <li>Calculate the upper bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1687,12 +1692,12 @@ attr(,"conf.level")
 <li>Interpret the confidence interval.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1706,12 +1711,12 @@ attr(,"conf.level")
 <li>State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_R - \mu_W\)</span> in the context, relevant statistics (T, DF, and p), point estimate and 95% CI for <span class="math inline">\(\mu_R - \mu_W\)</span>, and units. When you write about the difference in two means, clearly state which group has higher or lower mean.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1806,14 +1811,13 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

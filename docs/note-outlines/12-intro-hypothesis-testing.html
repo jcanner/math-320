@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,15 +68,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../note-outlines/11-intro-confidence-intervals.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a00848ed57fe9097555b5bd7c001b509.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -123,7 +122,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+      if (mathElements[i].tagName == "SPAN") {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -323,6 +322,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../note-outlines/17-multiple-comparisons.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multiple Comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/18-conditions-post-hoc-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions and Post-Hoc Tests</span></a>
   </div>
 </li>
       </ul>
@@ -589,12 +594,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>A [h…] is an assumption about the population or an unknown parameter.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -608,12 +613,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>A [t… s…] is a statistic which is used for statistical hypothesis testing.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -627,12 +632,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>A [n… h…] is assumed to be true in the procedure of statistical hypothesis testing.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -646,12 +651,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>If data provides evidence strongly against the null hypothesis in favor of the [a… h…], we conclude the [a… h…].</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -665,12 +670,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>[…] refers to conclusion of <span class="math inline">\(H_1\)</span> when <span class="math inline">\(H_0\)</span> is true.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -684,12 +689,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>[…] refers to conclusion of <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_1\)</span> is true.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -703,12 +708,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>A [s… l…] is denoted by <span class="math inline">\(\alpha\)</span>, and it is a small fixed probability of committing the Type I error.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -722,12 +727,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>We can compare a p-value to the [s… l…] to conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -746,17 +751,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_59550" onsubmit="return validate_form_59550()" method="post">
-<select name="answer_59550">
+<form name="form_91573" onsubmit="return validate_form_91573()" method="post">
+<select name="answer_91573">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_59550"></div>
+<div id="result_91573"></div>
 </form>
-<script>function validate_form_59550() {var x, text; var x = document.forms['form_59550']['answer_59550'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_59550').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_91573() {var x, text; var x = document.forms['form_91573']['answer_91573'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_91573').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_59550').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_91573').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -766,17 +771,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_96739" onsubmit="return validate_form_96739()" method="post">
-<select name="answer_96739">
+<form name="form_28379" onsubmit="return validate_form_28379()" method="post">
+<select name="answer_28379">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_96739"></div>
+<div id="result_28379"></div>
 </form>
-<script>function validate_form_96739() {var x, text; var x = document.forms['form_96739']['answer_96739'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_96739').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_28379() {var x, text; var x = document.forms['form_28379']['answer_28379'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_28379').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -786,17 +791,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_7204" onsubmit="return validate_form_7204()" method="post">
-<select name="answer_7204">
+<form name="form_46126" onsubmit="return validate_form_46126()" method="post">
+<select name="answer_46126">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_7204"></div>
+<div id="result_46126"></div>
 </form>
-<script>function validate_form_7204() {var x, text; var x = document.forms['form_7204']['answer_7204'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_7204').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_46126() {var x, text; var x = document.forms['form_46126']['answer_46126'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_46126').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -806,17 +811,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_17495" onsubmit="return validate_form_17495()" method="post">
-<select name="answer_17495">
+<form name="form_71092" onsubmit="return validate_form_71092()" method="post">
+<select name="answer_71092">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_17495"></div>
+<div id="result_71092"></div>
 </form>
-<script>function validate_form_17495() {var x, text; var x = document.forms['form_17495']['answer_17495'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_17495').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_71092() {var x, text; var x = document.forms['form_71092']['answer_71092'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_71092').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -826,17 +831,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_81108" onsubmit="return validate_form_81108()" method="post">
-<select name="answer_81108">
+<form name="form_25664" onsubmit="return validate_form_25664()" method="post">
+<select name="answer_25664">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_81108"></div>
+<div id="result_25664"></div>
 </form>
-<script>function validate_form_81108() {var x, text; var x = document.forms['form_81108']['answer_81108'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_81108').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_25664() {var x, text; var x = document.forms['form_25664']['answer_25664'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_25664').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -846,17 +851,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_89391" onsubmit="return validate_form_89391()" method="post">
-<select name="answer_89391">
+<form name="form_32167" onsubmit="return validate_form_32167()" method="post">
+<select name="answer_32167">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_89391"></div>
+<div id="result_32167"></div>
 </form>
-<script>function validate_form_89391() {var x, text; var x = document.forms['form_89391']['answer_89391'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_89391').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_32167() {var x, text; var x = document.forms['form_32167']['answer_32167'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_32167').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -866,17 +871,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_82002" onsubmit="return validate_form_82002()" method="post">
-<select name="answer_82002">
+<form name="form_97933" onsubmit="return validate_form_97933()" method="post">
+<select name="answer_97933">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_82002"></div>
+<div id="result_97933"></div>
 </form>
-<script>function validate_form_82002() {var x, text; var x = document.forms['form_82002']['answer_82002'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_82002').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_97933() {var x, text; var x = document.forms['form_97933']['answer_97933'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_97933').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -889,19 +894,19 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>right-sided test</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">2.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">2.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.01786442</code></pre>
 </div>
@@ -913,19 +918,19 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>left-sided test</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fl">2.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="fl">2.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9821356</code></pre>
 </div>
@@ -937,19 +942,19 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>two-sided test</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">2.1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">2.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.03572884</code></pre>
 </div>
@@ -968,38 +973,38 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <p>E. <span class="math inline">\(\hat{p} = 0.8\)</span> and <span class="math inline">\(n = 50\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_76260" onsubmit="return validate_form_76260()" method="post">
+<form name="form_13097" onsubmit="return validate_form_13097()" method="post">
 <label>
-<input type="radio" name="answer_76260" id="answer_76260_1" value="A">
+<input type="radio" name="answer_13097" id="answer_13097_1" value="A">
 A
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76260" id="answer_76260_2" value="B">
+<input type="radio" name="answer_13097" id="answer_13097_2" value="B">
 B
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76260" id="answer_76260_3" value="C">
+<input type="radio" name="answer_13097" id="answer_13097_3" value="C">
 C
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76260" id="answer_76260_4" value="D,">
+<input type="radio" name="answer_13097" id="answer_13097_4" value="D,">
 D,
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76260" id="answer_76260_5" value="E">
+<input type="radio" name="answer_13097" id="answer_13097_5" value="E">
 E
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_76260"></div>
+<div id="result_13097"></div>
 </form>
-<script>function validate_form_76260() {var x, text; var x = document.forms['form_76260']['answer_76260'].value;if (x == 'C'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_76260').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_13097() {var x, text; var x = document.forms['form_13097']['answer_13097'].value;if (x == 'C'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_13097').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1010,38 +1015,38 @@ E
 <p>Multiple-choice: Which case results in the smallest p-value in Problem 4?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_87512" onsubmit="return validate_form_87512()" method="post">
+<form name="form_55231" onsubmit="return validate_form_55231()" method="post">
 <label>
-<input type="radio" name="answer_87512" id="answer_87512_1" value="A">
+<input type="radio" name="answer_55231" id="answer_55231_1" value="A">
 A
 </label>
 <br>
 <label>
-<input type="radio" name="answer_87512" id="answer_87512_2" value="B">
+<input type="radio" name="answer_55231" id="answer_55231_2" value="B">
 B
 </label>
 <br>
 <label>
-<input type="radio" name="answer_87512" id="answer_87512_3" value="C">
+<input type="radio" name="answer_55231" id="answer_55231_3" value="C">
 C
 </label>
 <br>
 <label>
-<input type="radio" name="answer_87512" id="answer_87512_4" value="D,">
+<input type="radio" name="answer_55231" id="answer_55231_4" value="D,">
 D,
 </label>
 <br>
 <label>
-<input type="radio" name="answer_87512" id="answer_87512_5" value="E">
+<input type="radio" name="answer_55231" id="answer_55231_5" value="E">
 E
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_87512"></div>
+<div id="result_55231"></div>
 </form>
-<script>function validate_form_87512() {var x, text; var x = document.forms['form_87512']['answer_87512'].value;if (x == 'C'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_87512').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_55231() {var x, text; var x = document.forms['form_55231']['answer_55231'].value;if (x == 'C'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_55231').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1057,38 +1062,38 @@ E
 <p>E. <span class="math inline">\(\hat{p} = 0.25\)</span> and <span class="math inline">\(n = 200\)</span></p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_6873" onsubmit="return validate_form_6873()" method="post">
+<form name="form_12864" onsubmit="return validate_form_12864()" method="post">
 <label>
-<input type="radio" name="answer_6873" id="answer_6873_1" value="A">
+<input type="radio" name="answer_12864" id="answer_12864_1" value="A">
 A
 </label>
 <br>
 <label>
-<input type="radio" name="answer_6873" id="answer_6873_2" value="B">
+<input type="radio" name="answer_12864" id="answer_12864_2" value="B">
 B
 </label>
 <br>
 <label>
-<input type="radio" name="answer_6873" id="answer_6873_3" value="C">
+<input type="radio" name="answer_12864" id="answer_12864_3" value="C">
 C
 </label>
 <br>
 <label>
-<input type="radio" name="answer_6873" id="answer_6873_4" value="D,">
+<input type="radio" name="answer_12864" id="answer_12864_4" value="D,">
 D,
 </label>
 <br>
 <label>
-<input type="radio" name="answer_6873" id="answer_6873_5" value="E">
+<input type="radio" name="answer_12864" id="answer_12864_5" value="E">
 E
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_6873"></div>
+<div id="result_12864"></div>
 </form>
-<script>function validate_form_6873() {var x, text; var x = document.forms['form_6873']['answer_6873'].value;if (x == 'E'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_6873').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_12864() {var x, text; var x = document.forms['form_12864']['answer_12864'].value;if (x == 'E'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_12864').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1099,38 +1104,38 @@ E
 <p>Multiple-choice: If we test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\theta = 0.3\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\theta \ne 0.3\)</span> (two-sided test), which case in Problem 6 results in the smallest p-value?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_93624" onsubmit="return validate_form_93624()" method="post">
+<form name="form_99613" onsubmit="return validate_form_99613()" method="post">
 <label>
-<input type="radio" name="answer_93624" id="answer_93624_1" value="A">
+<input type="radio" name="answer_99613" id="answer_99613_1" value="A">
 A
 </label>
 <br>
 <label>
-<input type="radio" name="answer_93624" id="answer_93624_2" value="B">
+<input type="radio" name="answer_99613" id="answer_99613_2" value="B">
 B
 </label>
 <br>
 <label>
-<input type="radio" name="answer_93624" id="answer_93624_3" value="C">
+<input type="radio" name="answer_99613" id="answer_99613_3" value="C">
 C
 </label>
 <br>
 <label>
-<input type="radio" name="answer_93624" id="answer_93624_4" value="D,">
+<input type="radio" name="answer_99613" id="answer_99613_4" value="D,">
 D,
 </label>
 <br>
 <label>
-<input type="radio" name="answer_93624" id="answer_93624_5" value="E">
+<input type="radio" name="answer_99613" id="answer_99613_5" value="E">
 E
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_93624"></div>
+<div id="result_99613"></div>
 </form>
-<script>function validate_form_93624() {var x, text; var x = document.forms['form_93624']['answer_93624'].value;if (x == 'A'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_93624').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_99613() {var x, text; var x = document.forms['form_99613']['answer_99613'].value;if (x == 'A'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_99613').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1141,19 +1146,19 @@ E
 <p>Multiple-choice: Which of the following can be a negative value?</p>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_82765" onsubmit="return validate_form_82765()" method="post">
-<select name="answer_82765">
+<form name="form_27191" onsubmit="return validate_form_27191()" method="post">
+<select name="answer_27191">
 <option>sample proportion</option>
 <option>p-value</option>
 <option>Z statistic</option>
 <option>standard error</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_82765"></div>
+<div id="result_27191"></div>
 </form>
-<script>function validate_form_82765() {var x, text; var x = document.forms['form_82765']['answer_82765'].value;if (x == 'Z statistic'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_82765').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_27191() {var x, text; var x = document.forms['form_27191']['answer_27191'].value;if (x == 'Z statistic'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_27191').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1170,12 +1175,12 @@ E
 <li>What is the null value in this context? (Numeric answer)</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1190,28 +1195,28 @@ E
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_61397" onsubmit="return validate_form_61397()" method="post">
+<form name="form_6284" onsubmit="return validate_form_6284()" method="post">
 <label>
-<input type="radio" name="answer_61397" id="answer_61397_1" value="right-sided test">
+<input type="radio" name="answer_6284" id="answer_6284_1" value="right-sided test">
 right-sided test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_61397" id="answer_61397_2" value="left-sided test">
+<input type="radio" name="answer_6284" id="answer_6284_2" value="left-sided test">
 left-sided test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_61397" id="answer_61397_3" value="two-sided test">
+<input type="radio" name="answer_6284" id="answer_6284_3" value="two-sided test">
 two-sided test
 </label>
 <br>
 <input type="submit" value="Check Your ">
-<div id="result_61397"></div>
+<div id="result_6284"></div>
 </form>
-<script>function validate_form_61397() {var x, text; var x = document.forms['form_61397']['answer_61397'].value;if (x == 'left-sided test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_61397').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_6284() {var x, text; var x = document.forms['form_6284']['answer_6284'].value;if (x == 'left-sided test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_6284').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1220,12 +1225,12 @@ two-sided test
 <li>Calculate the sample proportion of people who approved.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1239,12 +1244,12 @@ two-sided test
 <li>Calculate the standard error.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1258,12 +1263,12 @@ two-sided test
 <li>Calculate the Z statistic.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1277,12 +1282,12 @@ two-sided test
 <li>Calculate the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1297,28 +1302,28 @@ two-sided test
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_40074" onsubmit="return validate_form_40074()" method="post">
+<form name="form_32222" onsubmit="return validate_form_32222()" method="post">
 <label>
-<input type="radio" name="answer_40074" id="answer_40074_1" value="H₀">
+<input type="radio" name="answer_32222" id="answer_32222_1" value="H₀">
 H₀
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40074" id="answer_40074_2" value="H₁">
+<input type="radio" name="answer_32222" id="answer_32222_2" value="H₁">
 H₁
 </label>
 <br>
 <label>
-<input type="radio" name="answer_40074" id="answer_40074_3" value="Inconclusive">
+<input type="radio" name="answer_32222" id="answer_32222_3" value="Inconclusive">
 Inconclusive
 </label>
 <br>
 <input type="submit" value="Check Your ">
-<div id="result_40074"></div>
+<div id="result_32222"></div>
 </form>
-<script>function validate_form_40074() {var x, text; var x = document.forms['form_40074']['answer_40074'].value;if (x == 'H₁'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_40074').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_32222() {var x, text; var x = document.forms['form_32222']['answer_32222'].value;if (x == 'H₁'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_32222').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1328,43 +1333,43 @@ Inconclusive
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_20914" onsubmit="return validate_form_20914()" method="post">
+<form name="form_87007" onsubmit="return validate_form_87007()" method="post">
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_1" value="concluding θ = 0.5 when θ > 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_1" value="concluding θ = 0.5 when θ > 0.5 is true.">
 concluding θ = 0.5 when θ &gt; 0.5 is true.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_2" value="concluding θ = 0.5 when θ < 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_2" value="concluding θ = 0.5 when θ < 0.5 is true.">
 concluding θ = 0.5 when θ &lt; 0.5 is true.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_3" value="concluding θ = 0.5 when θ ≠ 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_3" value="concluding θ = 0.5 when θ ≠ 0.5 is true.">
 concluding θ = 0.5 when θ ≠ 0.5 is true.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_4" value="concluding θ > 0.5 when θ = 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_4" value="concluding θ > 0.5 when θ = 0.5 is true.">
 concluding θ &gt; 0.5 when θ = 0.5 is true.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_5" value="concluding θ < 0.5 when θ = 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_5" value="concluding θ < 0.5 when θ = 0.5 is true.">
 concluding θ &lt; 0.5 when θ = 0.5 is true.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_20914" id="answer_20914_6" value="concluding θ ≠ 0.5 when θ = 0.5 is true.">
+<input type="radio" name="answer_87007" id="answer_87007_6" value="concluding θ ≠ 0.5 when θ = 0.5 is true.">
 concluding θ ≠ 0.5 when θ = 0.5 is true.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_20914"></div>
+<div id="result_87007"></div>
 </form>
-<script>function validate_form_20914() {var x, text; var x = document.forms['form_20914']['answer_20914'].value;if (x == 'concluding θ < 0.5 when θ = 0.5 is true.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_20914').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_87007() {var x, text; var x = document.forms['form_87007']['answer_87007'].value;if (x == 'concluding θ < 0.5 when θ = 0.5 is true.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_87007').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct'; res15 = document.getElementById('result_20914').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct'; res15 = document.getElementById('result_87007').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1374,43 +1379,43 @@ concluding θ ≠ 0.5 when θ = 0.5 is true.
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_28777" onsubmit="return validate_form_28777()" method="post">
+<form name="form_36913" onsubmit="return validate_form_36913()" method="post">
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_1" value="The approval rating is 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_1" value="The approval rating is 50%.">
 The approval rating is 50%.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_2" value="The approval rating is below 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_2" value="The approval rating is below 50%.">
 The approval rating is below 50%.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_3" value="The sample provides insufficient evidence to conclude that the approval rating is 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_3" value="The sample provides insufficient evidence to conclude that the approval rating is 50%.">
 The sample provides insufficient evidence to conclude that the approval rating is 50%.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_4" value="The sample provides sufficient evidence to conclude that the approval rating is 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_4" value="The sample provides sufficient evidence to conclude that the approval rating is 50%.">
 The sample provides sufficient evidence to conclude that the approval rating is 50%.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_5" value="The sample provides insufficient evidence to conclude that the approval rating is below 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_5" value="The sample provides insufficient evidence to conclude that the approval rating is below 50%.">
 The sample provides insufficient evidence to conclude that the approval rating is below 50%.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_28777" id="answer_28777_6" value="The sample provides sufficient evidence to conclude that the approval rating is below 50%.">
+<input type="radio" name="answer_36913" id="answer_36913_6" value="The sample provides sufficient evidence to conclude that the approval rating is below 50%.">
 The sample provides sufficient evidence to conclude that the approval rating is below 50%.
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_28777"></div>
+<div id="result_36913"></div>
 </form>
-<script>function validate_form_28777() {var x, text; var x = document.forms['form_28777']['answer_28777'].value;if (x == 'The sample provides insufficient evidence to conclude that the approval rating is below 50%.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_28777').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_36913() {var x, text; var x = document.forms['form_36913']['answer_36913'].value;if (x == 'The sample provides insufficient evidence to conclude that the approval rating is below 50%.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_36913').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct'; res15 = document.getElementById('result_20914').innerText == 'Correct'; res16 = document.getElementById('result_28777').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct'; res15 = document.getElementById('result_87007').innerText == 'Correct'; res16 = document.getElementById('result_36913').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1423,12 +1428,12 @@ The sample provides sufficient evidence to conclude that the approval rating is 
 <li>What is the null value in this context? (Numeric answer)</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1443,28 +1448,28 @@ The sample provides sufficient evidence to conclude that the approval rating is 
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_14793" onsubmit="return validate_form_14793()" method="post">
+<form name="form_32049" onsubmit="return validate_form_32049()" method="post">
 <label>
-<input type="radio" name="answer_14793" id="answer_14793_1" value="right-sided test">
+<input type="radio" name="answer_32049" id="answer_32049_1" value="right-sided test">
 right-sided test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_14793" id="answer_14793_2" value="left-sided test">
+<input type="radio" name="answer_32049" id="answer_32049_2" value="left-sided test">
 left-sided test
 </label>
 <br>
 <label>
-<input type="radio" name="answer_14793" id="answer_14793_3" value="two-sided test">
+<input type="radio" name="answer_32049" id="answer_32049_3" value="two-sided test">
 two-sided test
 </label>
 <br>
 <input type="submit" value="Check Your ">
-<div id="result_14793"></div>
+<div id="result_32049"></div>
 </form>
-<script>function validate_form_14793() {var x, text; var x = document.forms['form_14793']['answer_14793'].value;if (x == 'right-sided test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_14793').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_32049() {var x, text; var x = document.forms['form_32049']['answer_32049'].value;if (x == 'right-sided test'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_32049').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct'; res15 = document.getElementById('result_20914').innerText == 'Correct'; res16 = document.getElementById('result_28777').innerText == 'Correct'; res17 = document.getElementById('result_14793').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct'; res15 = document.getElementById('result_87007').innerText == 'Correct'; res16 = document.getElementById('result_36913').innerText == 'Correct'; res17 = document.getElementById('result_32049').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1473,12 +1478,12 @@ two-sided test
 <li>Calculate the sample proportion?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1492,12 +1497,12 @@ two-sided test
 <li>Calculate the standard error.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1511,12 +1516,12 @@ two-sided test
 <li>Calculate the Z statistic.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1530,12 +1535,12 @@ two-sided test
 <li>Calculate the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1550,28 +1555,28 @@ two-sided test
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_37576" onsubmit="return validate_form_37576()" method="post">
+<form name="form_41365" onsubmit="return validate_form_41365()" method="post">
 <label>
-<input type="radio" name="answer_37576" id="answer_37576_1" value="H₀">
+<input type="radio" name="answer_41365" id="answer_41365_1" value="H₀">
 H₀
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37576" id="answer_37576_2" value="H₁">
+<input type="radio" name="answer_41365" id="answer_41365_2" value="H₁">
 H₁
 </label>
 <br>
 <label>
-<input type="radio" name="answer_37576" id="answer_37576_3" value="Inconclusive">
+<input type="radio" name="answer_41365" id="answer_41365_3" value="Inconclusive">
 Inconclusive
 </label>
 <br>
 <input type="submit" value="Check Your ">
-<div id="result_37576"></div>
+<div id="result_41365"></div>
 </form>
-<script>function validate_form_37576() {var x, text; var x = document.forms['form_37576']['answer_37576'].value;if (x == 'H₀'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_37576').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_41365() {var x, text; var x = document.forms['form_41365']['answer_41365'].value;if (x == 'H₀'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_41365').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17, res18;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct'; res15 = document.getElementById('result_20914').innerText == 'Correct'; res16 = document.getElementById('result_28777').innerText == 'Correct'; res17 = document.getElementById('result_14793').innerText == 'Correct'; res18 = document.getElementById('result_37576').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17 + res18;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17, res18;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct'; res15 = document.getElementById('result_87007').innerText == 'Correct'; res16 = document.getElementById('result_36913').innerText == 'Correct'; res17 = document.getElementById('result_32049').innerText == 'Correct'; res18 = document.getElementById('result_41365').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17 + res18;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1581,33 +1586,33 @@ Inconclusive
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_8265" onsubmit="return validate_form_8265()" method="post">
+<form name="form_340" onsubmit="return validate_form_340()" method="post">
 <label>
-<input type="radio" name="answer_8265" id="answer_8265_1" value="Assuming H₀ is true, the data provide evidence for H₀.">
+<input type="radio" name="answer_340" id="answer_340_1" value="Assuming H₀ is true, the data provide evidence for H₀.">
 Assuming H₀ is true, the data provide evidence for H₀.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8265" id="answer_8265_2" value="Assuming H₀ is true, the data provide no evidence against H₀.">
+<input type="radio" name="answer_340" id="answer_340_2" value="Assuming H₀ is true, the data provide no evidence against H₀.">
 Assuming H₀ is true, the data provide no evidence against H₀.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8265" id="answer_8265_3" value="Assuming H₁ is true, the data provide evidence for H₁.">
+<input type="radio" name="answer_340" id="answer_340_3" value="Assuming H₁ is true, the data provide evidence for H₁.">
 Assuming H₁ is true, the data provide evidence for H₁.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_8265" id="answer_8265_4" value="Assuming H₁ is true, the data provide no evidence against H₁.">
+<input type="radio" name="answer_340" id="answer_340_4" value="Assuming H₁ is true, the data provide no evidence against H₁.">
 Assuming H₁ is true, the data provide no evidence against H₁.
 </label>
 <br>
 <input type="submit" value="Check Your ">
-<div id="result_8265"></div>
+<div id="result_340"></div>
 </form>
-<script>function validate_form_8265() {var x, text; var x = document.forms['form_8265']['answer_8265'].value;if (x == 'Assuming H₀ is true, the data provide no evidence against H₀.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_8265').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_340() {var x, text; var x = document.forms['form_340']['answer_340'].value;if (x == 'Assuming H₀ is true, the data provide no evidence against H₀.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_340').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17, res18, res19;res1 = document.getElementById('result_59550').innerText == 'Correct'; res2 = document.getElementById('result_96739').innerText == 'Correct'; res3 = document.getElementById('result_7204').innerText == 'Correct'; res4 = document.getElementById('result_17495').innerText == 'Correct'; res5 = document.getElementById('result_81108').innerText == 'Correct'; res6 = document.getElementById('result_89391').innerText == 'Correct'; res7 = document.getElementById('result_82002').innerText == 'Correct'; res8 = document.getElementById('result_76260').innerText == 'Correct'; res9 = document.getElementById('result_87512').innerText == 'Correct'; res10 = document.getElementById('result_6873').innerText == 'Correct'; res11 = document.getElementById('result_93624').innerText == 'Correct'; res12 = document.getElementById('result_82765').innerText == 'Correct'; res13 = document.getElementById('result_61397').innerText == 'Correct'; res14 = document.getElementById('result_40074').innerText == 'Correct'; res15 = document.getElementById('result_20914').innerText == 'Correct'; res16 = document.getElementById('result_28777').innerText == 'Correct'; res17 = document.getElementById('result_14793').innerText == 'Correct'; res18 = document.getElementById('result_37576').innerText == 'Correct'; res19 = document.getElementById('result_8265').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17 + res18 + res19;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16, res17, res18, res19;res1 = document.getElementById('result_91573').innerText == 'Correct'; res2 = document.getElementById('result_28379').innerText == 'Correct'; res3 = document.getElementById('result_46126').innerText == 'Correct'; res4 = document.getElementById('result_71092').innerText == 'Correct'; res5 = document.getElementById('result_25664').innerText == 'Correct'; res6 = document.getElementById('result_32167').innerText == 'Correct'; res7 = document.getElementById('result_97933').innerText == 'Correct'; res8 = document.getElementById('result_13097').innerText == 'Correct'; res9 = document.getElementById('result_55231').innerText == 'Correct'; res10 = document.getElementById('result_12864').innerText == 'Correct'; res11 = document.getElementById('result_99613').innerText == 'Correct'; res12 = document.getElementById('result_27191').innerText == 'Correct'; res13 = document.getElementById('result_6284').innerText == 'Correct'; res14 = document.getElementById('result_32222').innerText == 'Correct'; res15 = document.getElementById('result_87007').innerText == 'Correct'; res16 = document.getElementById('result_36913').innerText == 'Correct'; res17 = document.getElementById('result_32049').innerText == 'Correct'; res18 = document.getElementById('result_41365').innerText == 'Correct'; res19 = document.getElementById('result_340').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16 + res17 + res18 + res19;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1625,23 +1630,23 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <p>It is a record of suicide attempts in 2009, 2010, and 2021 in a rural population in Shandong, China (Sun et al., 2015).</p>
 <p>Our goal is to answer two questions: (1) Are women more likely to attempt suicide than men? (2) Are there more men who died as a result of suicide attempt than women? Assume that 50% are men and 50% are women in the general population of Shandong, China. You may modify the following R code for answering the following questions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### data for question (1)</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">### data for question (1)</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>shandong <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/ShandongChina.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">### subset the data (those who died) for question (2)</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>shandong_died <span class="ot">&lt;-</span> shandong <span class="sc">|&gt;</span> <span class="fu">filter</span>(Died <span class="sc">==</span> <span class="st">"yes"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>shandong_died <span class="ot">&lt;-</span> shandong <span class="sc">|&gt;</span> <span class="fu">filter</span>(Died <span class="sc">==</span> <span class="st">"yes"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><em>Let us focus on the research question (1) in parts a to e.</em></p>
 <ol type="a">
 <li>Let <span class="math inline">\(\theta\)</span> be the proportion of women among those who attempt suicide in Shandong, China. State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> in terms of <span class="math inline">\(\theta\)</span>. Is it a right-sided test, left-sided test, or two-sided test?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1657,12 +1662,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>Provide a graphic which summarize the relevant data.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1676,12 +1681,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1697,12 +1702,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>At a significance level <span class="math inline">\(\alpha = 0.05\)</span>, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1716,12 +1721,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>State the conclusion in the context.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1736,12 +1741,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>How would you define <span class="math inline">\(\theta\)</span> in the context of research question (2)?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1755,12 +1760,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>State <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_1\)</span> in terms of <span class="math inline">\(\theta\)</span>. Is it a right-sided test, left-sided test, or two-sided test?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1774,12 +1779,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>Provide a graphic which summarize the relevant data.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1793,12 +1798,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>Report the sample proportion of women among those who attempted suicide in the data, and Z statistic, and p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1812,12 +1817,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>At a significance level <span class="math inline">\(\alpha = 0.05\)</span>, do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span>?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1831,12 +1836,12 @@ Assuming H₁ is true, the data provide no evidence against H₁.
 <li>State the conclusion in the context.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Answer
+Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1935,14 +1940,13 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
