@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -306,6 +341,19 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#normality-condition" id="toc-normality-condition" class="nav-link" data-scroll-target="#normality-condition"><span class="header-section-number">1.1</span> Normality Condition</a></li>
   </ul></li>
+  <li><a href="#case-study-exam-scores-and-seats" id="toc-case-study-exam-scores-and-seats" class="nav-link" data-scroll-target="#case-study-exam-scores-and-seats"><span class="header-section-number">2</span> Case Study: Exam Scores and Seats</a>
+  <ul class="collapse">
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">2.1</span> Hypotheses</a></li>
+  <li><a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova"><span class="header-section-number">2.2</span> ANOVA</a></li>
+  <li><a href="#equal-variance-assumption" id="toc-equal-variance-assumption" class="nav-link" data-scroll-target="#equal-variance-assumption"><span class="header-section-number">2.3</span> Equal Variance Assumption</a></li>
+  <li><a href="#normality-assumption" id="toc-normality-assumption" class="nav-link" data-scroll-target="#normality-assumption"><span class="header-section-number">2.4</span> Normality Assumption</a></li>
+  </ul></li>
+  <li><a href="#family-wise-confidence-level" id="toc-family-wise-confidence-level" class="nav-link" data-scroll-target="#family-wise-confidence-level"><span class="header-section-number">3</span> Family-wise Confidence Level</a></li>
+  <li><a href="#tukeys-honestly-significance-difference-hsd" id="toc-tukeys-honestly-significance-difference-hsd" class="nav-link" data-scroll-target="#tukeys-honestly-significance-difference-hsd"><span class="header-section-number">4</span> Tukey’s Honestly Significance Difference (HSD)</a></li>
+  <li><a href="#warm-up" id="toc-warm-up" class="nav-link" data-scroll-target="#warm-up"><span class="header-section-number">5</span> Warm-up</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">6</span> Assignment</a></li>
+  <li><a href="#warm-up-1" id="toc-warm-up-1" class="nav-link" data-scroll-target="#warm-up-1"><span class="header-section-number">7</span> Warm-up</a></li>
+  <li><a href="#assignment-1" id="toc-assignment-1" class="nav-link" data-scroll-target="#assignment-1"><span class="header-section-number">8</span> Assignment</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -368,6 +416,596 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="case-study-exam-scores-and-seats" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="case-study-exam-scores-and-seats"><span class="header-section-number">2</span> Case Study: Exam Scores and Seats</h2>
+<p>College students choose their seats in the classroom, and they tend to choose the same seat or nearby throughout the semester. A professor, who does not designate students’ seats, hypothesized that their final exam scores differ by seating rows. The dataset <span class="math inline">\(\texttt{seat.csv}\)</span> is a sample of <span class="math inline">\(m = 21\)</span> students. The column <span class="math inline">\(\texttt{score}\)</span> is the final exam score of each student (numeric variable), and the column <span class="math inline">\(\texttt{seat}\)</span> is the student’s seat (<span class="math inline">\(\texttt{Front}\)</span>, <span class="math inline">\(\texttt{Middle}\)</span>, and <span class="math inline">\(\texttt{Back}\)</span>). The variable <span class="math inline">\(\texttt{seat}\)</span> can be treated as an ordinal categorical variable, and we can order the three levels using the <span class="math inline">\(\texttt{factor}\)</span> function. (Otherwise, it is ordered as <span class="math inline">\(\texttt{Back}\)</span>, <span class="math inline">\(\texttt{Front}\)</span>, and <span class="math inline">\(\texttt{Middle}\)</span> alphabetically.)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>examscore <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/seat.csv"</span>) <span class="do">### read csv file</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>examscore <span class="do">### print all rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   id score   seat
+1   1    89  Front
+2   2    94  Front
+3   3   100  Front
+4   4    88  Front
+5   5    85  Front
+6   6    79  Front
+7   7    90  Front
+8   8    78 Middle
+9   9    90 Middle
+10 10    80 Middle
+11 11    77 Middle
+12 12    72 Middle
+13 13    94 Middle
+14 14    87 Middle
+15 15    76 Middle
+16 16    76   Back
+17 17    88   Back
+18 18    76   Back
+19 19    63   Back
+20 20    78   Back
+21 21    86   Back</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>examscore<span class="sc">$</span>seat <span class="ot">=</span> <span class="fu">factor</span>(examscore<span class="sc">$</span>seat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Front"</span>, <span class="st">"Middle"</span>, <span class="st">"Back"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">=</span> <span class="fu">favstats</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore) <span class="do">### descriptive statistics</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>stats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    seat min    Q1 median    Q3 max     mean       sd n missing
+1  Front  79 86.50     89 92.00 100 89.28571 6.626067 7       0
+2 Middle  72 76.75     79 87.75  94 81.75000 7.685794 8       0
+3   Back  63 76.00     77 84.00  88 77.83333 8.908797 6       0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">horizontal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Final Exam Score by Seating Row"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"Final Exam Score"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Seating Row"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>) )</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">add =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">"stack"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">offset =</span> <span class="fl">0.2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/unnamed-chunk-4-1.png" style="width:50.0%;height:50.0%" alt="Boxplot of final exam score by seating row" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="hypotheses" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">2.1</span> Hypotheses</h3>
+<p>Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> be the unknown expected eaxm score for <span class="math inline">\(\texttt{Front}\)</span>, <span class="math inline">\(\texttt{Middle}\)</span>, and <span class="math inline">\(\texttt{Back}\)</span>, respectively. Our goal is to test for the null hypothesis <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span> (i.e., the expected exam score is the same between the three seating rows) versus the alternative hypothesis is <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu_3\)</span> (i.e., at least one seating row has a different expected exam score) at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+</section>
+<section id="anova" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="anova"><span class="header-section-number">2.2</span> ANOVA</h3>
+<p>The sample sizes are <span class="math inline">\(n_1 = 7\)</span>, <span class="math inline">\(n_2 = 8\)</span>, and <span class="math inline">\(n_3 = 6\)</span> for <span class="math inline">\(\texttt{Front}\)</span>, <span class="math inline">\(\texttt{Middle}\)</span>, and <span class="math inline">\(\texttt{Back}\)</span>, respectively. The sample means are <span class="math inline">\(\bar{X}_1 = 89.29\)</span>, <span class="math inline">\(\bar{X}_2 = 81.75\)</span>, and <span class="math inline">\(\bar{X}_3 = 77.83\)</span>, and the sample standard deviations are <span class="math inline">\(S_1 = 6.626\)</span>, <span class="math inline">\(S_2 = 7.686\)</span>, and <span class="math inline">\(S_3 = 8.909\)</span>. It appears that students in <span class="math inline">\(\texttt{Middle}\)</span> scored slightly higher than in <span class="math inline">\(\texttt{Back}\)</span> by 3.92 points on average, and students in <span class="math inline">\(\texttt{Front}\)</span> scored substantially higher than in <span class="math inline">\(\texttt{Middle}\)</span> by 7.54 points on average. The variance of exam scores by are similar among the three groups (sample standard deviations are similar).</p>
+<p>Below is the calculation of F statistic and p-value in a naive way.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">overall_mean =</span> <span class="fu">mean</span>(examscore<span class="sc">$</span>score) ) <span class="do">### overall sample mean</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 83.14286</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">group_mean =</span> stats<span class="sc">$</span>mean ) <span class="do">### group sample means</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 89.28571 81.75000 77.83333</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">group_sd =</span> stats<span class="sc">$</span>sd ) <span class="do">### group sample standard deviations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.626067 7.685794 8.908797</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">group_size =</span> stats<span class="sc">$</span>n ) <span class="do">### group sample size</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7 8 6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">m =</span> <span class="fu">sum</span>(group_size) ) <span class="do">### total sample size</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">g =</span> <span class="fu">length</span>(group_size) ) <span class="do">### number of groups</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">ssw =</span> <span class="fu">sum</span>( (group_size <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> group_sd <span class="sc">^</span> <span class="dv">2</span> ) ) <span class="do">### within-group sum of squares</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1073.762</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">dfw =</span> m <span class="sc">-</span> g ) <span class="do">### within-group degrees of freedom </span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 18</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">msw =</span> ssw <span class="sc">/</span> dfw ) <span class="do">### within-group mean square</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 59.65344</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">ssb =</span> <span class="fu">sum</span>( group_size <span class="sc">*</span> (group_mean <span class="sc">-</span> overall_mean) <span class="sc">^</span> <span class="dv">2</span> ) ) <span class="do">### between-group sum of squares</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 448.8095</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">dfb =</span> g <span class="sc">-</span> <span class="dv">1</span> ) <span class="do">### between-group degrees of freedom</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">msb =</span> ssb <span class="sc">/</span> dfb ) <span class="do">### between-group mean square</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 224.4048</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">f =</span> msb <span class="sc">/</span> msw ) <span class="do">### F statistic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.761808</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">p =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>( f, dfb, dfw ) ) <span class="do">### p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04314921</code></pre>
+</div>
+</div>
+<p>This long calculation can be done using the <span class="math inline">\(\texttt{aov}\)</span> function, and the ANOVA table can be printed using the <span class="math inline">\(\texttt{anova}\)</span> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">aov</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore) <span class="do">### ANOVA calculations</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit) <span class="do">### print ANOVA table</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
+seat       2  448.81 224.405  3.7618 0.04315 *
+Residuals 18 1073.76  59.653                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The calculated test statistic is F = 3.6718, and the p-value if p = 0.043 which is less than <span class="math inline">\(\alpha = 0.05\)</span>. At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the sample of 21 students (7 in <span class="math inline">\(\texttt{Front}\)</span>, 8 in <span class="math inline">\(\texttt{Middle}\)</span>, and 6 in <span class="math inline">\(\texttt{Back}\)</span>) provides significant evidence for the difference in the expected exam score between the three groups (F = 3.6718$, <span class="math inline">\(\nu_b = 2\)</span>, <span class="math inline">\(\nu_w = 18\)</span>, and p = 0.043).</p>
+</section>
+<section id="equal-variance-assumption" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="equal-variance-assumption"><span class="header-section-number">2.3</span> Equal Variance Assumption</h3>
+<p>The population variances <span class="math inline">\(\sigma_1^2\)</span>, <span class="math inline">\(\sigma_2^2\)</span>, and <span class="math inline">\(\sigma_3^2\)</span> can be estimated by the sample variances <span class="math inline">\(S_1^2\)</span>, <span class="math inline">\(S_2^2\)</span>, and <span class="math inline">\(S_3^2\)</span>, respectively. As a <strong>simple rule of thumb of checking equal variance assumption</strong>, if the largest sample variance is not greater than four times of the smallest sample variance, it is considered as no strong sign of violating equal variance assumption. In this sample, <span class="math inline">\(\frac{(8.9088)^2}{(6.6261)^2} = 1.8\)</span>, so the equal variance assumption is good.</p>
+<p>As in the two-sample t-test, it can be formally assessed by the Bartlett test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore)<span class="sc">$</span>p.value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7999561</code></pre>
+</div>
+</div>
+<p>The Bartlett test results in p = 0.8 (greater than <span class="math inline">\(\alpha = 0.05\)</span>), so there is no sign of violating the equal variance assumption.</p>
+</section>
+<section id="normality-assumption" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="normality-assumption"><span class="header-section-number">2.4</span> Normality Assumption</h3>
+<p>The group sample mean is referred to as the <strong>fitted value</strong> (or <strong>predicted value</strong>) and individual student’s score is referred to as the <strong>observed value</strong>. The difference between observed value and fitted value (observed minus fitted) is referred to as the <strong>residual</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">aov</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>rslt <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">observed =</span> examscore<span class="sc">$</span>score,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">group =</span> examscore<span class="sc">$</span>seat,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fitted =</span> fit<span class="sc">$</span>fitted.values,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">residual =</span> fit<span class="sc">$</span>residuals )</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>rslt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   observed  group   fitted    residual
+1        89  Front 89.28571  -0.2857143
+2        94  Front 89.28571   4.7142857
+3       100  Front 89.28571  10.7142857
+4        88  Front 89.28571  -1.2857143
+5        85  Front 89.28571  -4.2857143
+6        79  Front 89.28571 -10.2857143
+7        90  Front 89.28571   0.7142857
+8        78 Middle 81.75000  -3.7500000
+9        90 Middle 81.75000   8.2500000
+10       80 Middle 81.75000  -1.7500000
+11       77 Middle 81.75000  -4.7500000
+12       72 Middle 81.75000  -9.7500000
+13       94 Middle 81.75000  12.2500000
+14       87 Middle 81.75000   5.2500000
+15       76 Middle 81.75000  -5.7500000
+16       76   Back 77.83333  -1.8333333
+17       88   Back 77.83333  10.1666667
+18       76   Back 77.83333  -1.8333333
+19       63   Back 77.83333 -14.8333333
+20       78   Back 77.83333   0.1666667
+21       86   Back 77.83333   8.1666667</code></pre>
+</div>
+</div>
+<p>The third student who scored 100 is 10.7 points above the fitted value (group sample average), and the sixth student who scored 79 is 10.3 points below the fitted value. The residuals are natural deviations from the group average, and the normality assumption can be checked using the Q-Q plot and Shapiro-Wilk test on the residuals.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(fit<span class="sc">$</span>residuals, <span class="at">main =</span> <span class="st">"Q-Q Plot of Residuals"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(fit<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/unnamed-chunk-9-1.png" style="width:50.0%;height:50.0%" alt="Q-Q plot of residuals of exam scores" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(fit<span class="sc">$</span>residuals)<span class="sc">$</span>p.value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6358905</code></pre>
+</div>
+</div>
+<p>The Q-Q plot is fairly straight, and the Shapiro-Wilk results in p = 0.636 (greater than <span class="math inline">\(\alpha = 0.05\)</span>), so there is no sign of violating the normality assumption.</p>
+<p>Since both normality assumption and equal variance assumptions are satisfied, the conclusion of <span class="math inline">\(H_1\)</span> in the ANOVA test is valid.</p>
+<p>For the purpose of demonstration, suppose we want to compare three averages <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span>. The conclusion of ANOVA is either <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span> or <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu_3\)</span>. If <span class="math inline">\(H_1\)</span> is concluded at a significance level of <span class="math inline">\(\alpha\)</span>, it does not specify which pairwise difference(s) are statistically significant. The Tukey’s method (also known as the Tukey’s honest significant differences) is a <strong>post-hoc test</strong> (identifying significant pairwise difference(s)) when the conclusion of ANOVA is <span class="math inline">\(H_1\)</span>.</p>
+</section>
+</section>
+<section id="family-wise-confidence-level" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="family-wise-confidence-level"><span class="header-section-number">3</span> Family-wise Confidence Level</h2>
+<p>A general form of a confidence interval (CI) for any unknown parameter is</p>
+<p><span id="eq-ci"><span class="math display">\[
+\texttt{point} \,\, \texttt{estimate} \,\, \pm \,\, c \times \texttt{SE}
+\tag{1}\]</span></span></p>
+<p>where <span class="math inline">\(c\)</span> is the critical value which reflects a confidence level <span class="math inline">\(1 - \alpha\)</span> and <span class="math inline">\(\texttt{SE}\)</span> is the standard error which quantifies the uncertainty about point estimation. If a CI for <span class="math inline">\(\mu_j - \mu_k\)</span> does not include zero at a confidence level of <span class="math inline">\(1 - \alpha\)</span>, it is equivalent to concluding <span class="math inline">\(\mu_j - \mu_k \ne 0\)</span> (a two-sided test) at a significance level of <span class="math inline">\(\alpha\)</span>. It is a natural idea to build three 95% CIs, one for <span class="math inline">\(\mu_1 - \mu_2\)</span>, one for <span class="math inline">\(\mu_1 - \mu_3\)</span>, and one for <span class="math inline">\(\mu_2 - \mu_3\)</span>, and determine which pairwise difference(s) are statistically significant.</p>
+<p>Here is a challenge. When there are three independent CIs for <span class="math inline">\(\mu_1 - \mu_2\)</span>, <span class="math inline">\(\mu_1 - \mu_3\)</span>, and <span class="math inline">\(\mu_2 - \mu_3\)</span>, where each CI captures the true value of <span class="math inline">\(\mu_j - \mu_k\)</span> with a probability of 0.95, all three independent CIs capture the true values of <span class="math inline">\(\mu_1 - \mu_2\)</span>, <span class="math inline">\(\mu_1 - \mu_3\)</span>, and <span class="math inline">\(\mu_2 - \mu_3\)</span> with a probability of <span class="math inline">\((0.95)^3 = 0.857\)</span>. In this case, we say that we have a family-wise confidence level of 0.857. In general, a <strong>family-wise confidence level</strong> is the probability that all CIs capture the true parameter values. If we want a family-wise confidence level of 0.95, the confidence level for each individual CI should be <span class="math inline">\((0.95)^{1/3} = 0.983\)</span>. In general, when we want <span class="math inline">\(k\)</span> independent CIs at a family-wise confidence level of <span class="math inline">\(1 - \alpha\)</span>, each confidence interval should have a confidence level of <span class="math inline">\((1 - \alpha)^{1/k}\)</span>. This method is known as the <strong>Sidak’s method</strong>.</p>
+<p>This method is brilliant, but there are two caveats. The first caveat is that CIs for multiple pairwise differences are not independent. The second caveat, which follows from the first caveat, is that Sidak’s method is conservative. In other words, it results in long CIs (imprecise interval estimation).</p>
+</section>
+<section id="tukeys-honestly-significance-difference-hsd" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="tukeys-honestly-significance-difference-hsd"><span class="header-section-number">4</span> Tukey’s Honestly Significance Difference (HSD)</h2>
+<p>John Tukey (1915-2000), an American mathematician and statistician, suggested a method of accurately calculating the critical value <span class="math inline">\(c\)</span> and the standard error <span class="math inline">\(\texttt{SE}\)</span> in <a href="#eq-ci" class="quarto-xref">Equation&nbsp;1</a>. The formula of <span class="math inline">\(c\)</span> is complicated, but <span class="math inline">\(c\)</span> can be calculated by <span class="math inline">\(\texttt{qtukey}( 1 - \alpha, \, \texttt{nmeans} = g, \, \texttt{df} = \nu_w ) \, / \, \texttt{sqrt}(2)\)</span> where <span class="math inline">\(1 - \alpha\)</span> is a fixed family-wise confidence level, <span class="math inline">\(g\)</span> is the number of groups, and <span class="math inline">\(\nu_w = m - g\)</span> is the within-group degrees of freedom (<span class="math inline">\(m\)</span> is the total sample size). The standard error is estimated as</p>
+<p><span class="math display">\[
+\texttt{SE} = \sqrt{ \texttt{MSW} \left( \frac{1}{n_j} + \frac{1}{n_k} \right) }
+\]</span></p>
+<p>where <span class="math inline">\(\texttt{MSW}\)</span> is the within-group mean square (from the ANOVA table) and <span class="math inline">\(n_j\)</span> and <span class="math inline">\(n_k\)</span> are the sample sizes in group <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span>, respectively. This method is known as the <strong>Tukey’s method</strong> or <strong>Tukey’s honestly significant difference</strong> <strong>(HSD)</strong>.</p>
+<p><strong>Note:</strong> As the ANOVA test, the Tukey’s HSD is valid under the normality and equal variance assumptions.</p>
+<p>Let us apply the Tukey’s HSD to <span class="math inline">\(\texttt{seat.csv}\)</span>. Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> be the unknown expected exam score for <span class="math inline">\(\texttt{Front}\)</span>, <span class="math inline">\(\texttt{Middle}\)</span>, and <span class="math inline">\(\texttt{Back}\)</span>, respectively. Below are the descriptive statistics, ANOVA table, and critical value.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>examscore <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/seat.csv"</span>) <span class="do">### read csv file</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(examscore) <span class="do">### dimension of data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21  3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(examscore<span class="sc">$</span>seat) <span class="do">### sample size by seat</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Back  Front Middle 
+     6      7      8 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>examscore<span class="sc">$</span>seat <span class="ot">=</span> <span class="fu">factor</span>(examscore<span class="sc">$</span>seat, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Front"</span>, <span class="st">"Middle"</span>, <span class="st">"Back"</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">=</span> <span class="fu">favstats</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore) <span class="do">### descriptive statistics</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>stats</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    seat min    Q1 median    Q3 max     mean       sd n missing
+1  Front  79 86.50     89 92.00 100 89.28571 6.626067 7       0
+2 Middle  72 76.75     79 87.75  94 81.75000 7.685794 8       0
+3   Back  63 76.00     77 84.00  88 77.83333 8.908797 6       0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">aov</span>(score <span class="sc">~</span> seat, <span class="at">data =</span> examscore) <span class="do">### ANOVA</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: score
+          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
+seat       2  448.81 224.405  3.7618 0.04315 *
+Residuals 18 1073.76  59.653                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">qtukey</span>(<span class="fl">0.95</span>, <span class="at">nmeans =</span> <span class="dv">3</span>, <span class="at">df =</span> <span class="dv">18</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">2</span>) <span class="do">### critical value</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.552163</code></pre>
+</div>
+</div>
+<p>At a family-wise confidence level of 0.95, Tukey’s CIs for <span class="math inline">\(\mu_2 - \mu_1\)</span>, <span class="math inline">\(\mu_3 - \mu_1\)</span>, and <span class="math inline">\(\mu_3 - \mu_2\)</span> can be calculated as follows:</p>
+<ul>
+<li><p>CI for <span class="math inline">\(\mu_2 - \mu_1\)</span>: <span class="math inline">\((81.750 - 89.286) \, \pm \, 2.552 \sqrt{59.653 \left( \frac{1}{8} + \frac{1}{7} \right) }\)</span></p></li>
+<li><p>CI for <span class="math inline">\(\mu_3 - \mu_1\)</span>: <span class="math inline">\((77.833 - 89.286) \, \pm \, 2.552 \sqrt{59.653 \left( \frac{1}{6} + \frac{1}{7} \right) }\)</span></p></li>
+<li><p>CI for <span class="math inline">\(\mu_3 - \mu_2\)</span>: <span class="math inline">\((77.833 - 81.759) \, \pm \, 2.552 \sqrt{59.653 \left( \frac{1}{6} + \frac{1}{8} \right) }\)</span></p></li>
+</ul>
+<p>The above calculations can be done using the <span class="math inline">\(\texttt{TukeyHSD}\)</span> function in R (after the ANOVA test).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>hsd <span class="ot">=</span> <span class="fu">TukeyHSD</span>(fit)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>hsd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = score ~ seat, data = examscore)
+
+$seat
+                   diff       lwr        upr     p adj
+Middle-Front  -7.535714 -17.73754  2.6661089 0.1716673
+Back-Front   -11.452381 -22.41901 -0.4857505 0.0398778
+Back-Middle   -3.916667 -14.56225  6.7289194 0.6234241</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hsd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/unnamed-chunk-11-1.png" style="width:50.0%;height:50.0%" alt="Tukey's CIs" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Resulting Tukey’s 95% family-wise CIs are <span class="math inline">\((-17.7, +2.7)\)</span> for <span class="math inline">\(\mu_2 - \mu_1\)</span> (<span class="math inline">\(\texttt{Middle} - \texttt{Front}\)</span>), <span class="math inline">\((-22.4, -0.5)\)</span> for <span class="math inline">\(\mu_3 - \mu_1\)</span> (<span class="math inline">\(\texttt{Back} - \texttt{Front}\)</span>), and <span class="math inline">\((-14.6, +6.7)\)</span> for <span class="math inline">\(\mu_3 - \mu_2\)</span> (<span class="math inline">\(\texttt{Back} - \texttt{Middle}\)</span>). The CI for <span class="math inline">\(\mu_3 - \mu_2\)</span>, which does not including zero, is the only significant different. We conclude that the expected score of students seating in the back row is lower than of students seating in the front row (p = 0.039), and at a family-wise confidence level of 0.95, we estimate that the difference in the expected exam score between back row and front row is between –22.4 and –0.5.</p>
+<p>The below table compares Tukey’s 95% family-wise CIs and Sidak’s 95% family-wise CIs for <span class="math inline">\(\mu_2 - \mu_1\)</span>, <span class="math inline">\(\mu_3 - \mu_1\)</span>, and <span class="math inline">\(\mu_3 - \mu_2\)</span>. As aforementioned, the Sidak’s method is conservative, resulting in longer CIs than the Tukey’s method, and none of the pairwise differences is statistically significant (including zero).</p>
+<table class="caption-top table">
+<caption>Tukey’s 95% family-wise CIs and Sidak’s 95% family-wise CIs for the three pairwise differences</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Parameter</th>
+<th style="text-align: center;">Tukey’s CIs</th>
+<th style="text-align: center;">Sidak’s CIs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\mu_2 - \mu_1\)</span> (<span class="math inline">\(\texttt{Middle} - \texttt{Front}\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\((-17.7, +2.7)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((-18.5, +3.4)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\mu_3 - \mu_1\)</span> (<span class="math inline">\(\texttt{Back} - \texttt{Front}\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\((-22.4, -0.5)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((-23.5, +0.6)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\mu_3 - \mu_2\)</span> (<span class="math inline">\(\texttt{Back} - \texttt{Middle}\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\((-14.6, +6.7)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\((-15.5, +7.6)\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="warm-up" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="warm-up"><span class="header-section-number">5</span> Warm-up</h2>
+<p><em>You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeXZBNpmzLotzNFWqm40lEIf2Ir7XKfWIdeNc-1nbe-jjQpSw/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><strong>Problem 1.</strong> Let <span class="math inline">\(g\)</span> be the number of groups in ANOVA (i.e., <span class="math inline">\(\mu_1, \mu_2, \dots, \mu_g\)</span> are to be compared). Calculate the number of pairwise differences when:</p>
+<p>a. <span class="math inline">\(g = 4\)</span></p>
+<p>b. <span class="math inline">\(g = 5\)</span></p>
+<p>c. <span class="math inline">\(g = 10\)</span></p>
+<p><strong>Problem 2.</strong> Fill in the blank.</p>
+<p>a. When the ANOVA concludes the alternative hypothesis, we use the Tukey’s [h… s… d…] to find which pairwise difference(s) are significant.</p>
+<p>b. When there are multiple CIs, the probability that all CIs capture the true parameter values is called a [f… c… l…].</p>
+<p><strong>Problem 3.</strong> In the reading, when there are <span class="math inline">\(g = 3\)</span> groups in ANOVA (i.e., <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> are to be compared), we need to calculate three CIs (one for <span class="math inline">\(\mu_1 - \mu_2\)</span>, one for <span class="math inline">\(\mu_1 - \mu_3\)</span>, and one for <span class="math inline">\(\mu_2 - \mu_3\)</span>). The Sidak’s method suggests that each CI for <span class="math inline">\(\mu_j - \mu_k\)</span> should have a confidence level of 0.9830 in order to have a family-wise confidence level of 0.95. According to the Sidak’s method for 95% family-wise CIs, calculate the confidence level for each CI when:</p>
+<p>a. <span class="math inline">\(g = 4\)</span></p>
+<p>b. <span class="math inline">\(g = 5\)</span></p>
+<p>c. <span class="math inline">\(g = 10\)</span></p>
+<p><strong>Problem 4.</strong> True or false?</p>
+<p>a. One disadvantage of Sidak’s method that CIs tend to be long (imprecise).</p>
+<p>b. One advantage of Tukey’s HSD is that it is valid even when the normality assumption or equal variance assumption is violated.</p>
+<p><strong>Problem 5.</strong> Suppose there are four groups to be compared, and the sample size is five per group. Calculate the critical value of Tukey’s 90% family-wise CIs for all pairwise differences.</p>
+<p><strong>Problem 6.</strong> Multiple-choice: Based on a CI for <span class="math inline">\(\mu_j - \mu_k\)</span> at a confidence level of <span class="math inline">\(1 - \alpha\)</span>, when can we conclude <span class="math inline">\(\mu_j - \mu_k \ne 0\)</span> at a significance level of <span class="math inline">\(\alpha\)</span>?</p>
+<p>(A) The CI is very precise (i.e., very short CI).</p>
+<p>(B) The CI is very imprecise (i.e., very long CI).</p>
+<p>(C) The CI includes the true parameter value.</p>
+<p>(D) The CI includes zero.</p>
+<p>(E) The CI does not include zero.</p>
+<p><strong>Problem 7.</strong> Multiple-choice: Suppose we calculate a CI for <span class="math inline">\(\mu_j - \mu_k\)</span>. When do we have significant evidence that <span class="math inline">\(\mu_k\)</span> is greater than <span class="math inline">\(\mu_j\)</span>?</p>
+<p>(A) The CI is very precise (i.e., very short CI).</p>
+<p>(B) The CI is entirely negative.</p>
+<p>(C) The CI is entirely positive.</p>
+<p>(D) The CI includes zero.</p>
+<p>(E) The CI does not include zero.</p>
+</section>
+<section id="assignment" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="assignment"><span class="header-section-number">6</span> Assignment</h2>
+<p><em><strong>Instruction 1:</strong> You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLScDvSqfDa9k5Bk5iit5m4oJZE83b6tjwNj791Ma_FotcA4SBQ/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><em><strong>Instruction 2:</strong> You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</em></p>
+<p><strong>Problem 1.</strong> (This problem is continued from the previous assignment.) Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the expected maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> among European players in 2024 (population of interest). Answer the following questions. Use the Tukey’s HSD to find significant pairwise difference(s) at a family-wise confidence level of 0.95.</p>
+<p>*a. Print the results of Tukey’s HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.</p>
+<p><em>For parts b to f, answer true (T) or false (F) whether the result is statistically significant for the following statement.</em></p>
+<p>b. <span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</p>
+<p>c. <span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</p>
+<p>d. <span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</p>
+<p>e. <span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</p>
+<p>f. <span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</p>
+<p>g. <span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</p>
+<p>*h. State the conclusion in the context. Use accurate language, interpret significant CIs, and report p-value.</p>
+<p><strong>Problem 2.</strong> (This problem is continued from the previous assignment.) Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the population average used-car price of <span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span> in used-car retailers as of 2017. Answer the following questions. Use the Tukey’s HSD to find significant pairwise difference(s) at a family-wise confidence level of 0.95. Answer true (T) or false (F) whether the result is statistically significant for the following statement.</p>
+<p>*a. Print the results of Tukey’s HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.</p>
+<p><em>For parts b to f, answer true (T) or false (F) whether the result is statistically significant for the following statement.</em></p>
+<p>b. <span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</p>
+<p>c. <span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</p>
+<p>d. <span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</p>
+<p>e. <span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</p>
+<p>f. <span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</p>
+<p>g. <span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</p>
+<p>*h. State the conclusion in the context. Use accurate language, interpret significant CIs, and report p-value.</p>
+</section>
+<section id="warm-up-1" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="warm-up-1"><span class="header-section-number">7</span> Warm-up</h2>
+<p><em>You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfhx6pBLm7gAy_fTLL5pCf_yjzyKCsAAU4Npo3fL23NsghTJQ/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><strong>Problem 1.</strong> Fill in the blank. Be cautious that some words have hyphen (-) as joint words.</p>
+<p>a. The […] variance refers to the variability of individual data points from their own group sample average.</p>
+<p>b. The […] variance refers to the variability among the group sample averages.</p>
+<p>c. The normality assumption implies that a [s… r… s…] is observed from a normal distribution for each group.</p>
+<p>d. The normality assumption can be formally assessed by the […] test.</p>
+<p>e. The equal variance assumption can be formally assessed by the […] test.</p>
+<p>f. If both assumptions are satisfied, the […] test is valid for testing three or more population averages. (Hint: It is a 5-letter acronym.)</p>
+<p>g. In the ANOVA test, a large value of F statistic results in a small value of […] which implies strong evidence for the alternative hypothesis under the assumption of the null hypothesis.</p>
+<p><strong>Problem 2.</strong> In a small study of comparing three groups, suppose the respective sample sizes are <span class="math inline">\(n_1 = n_2 = n_3 = 3\)</span>, the respective sample means are <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and the respective sample standard deviations are <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span>. Given these statistics, complete the following ANOVA table.</p>
+<table class="caption-top table">
+<caption>ANOVA table for calculating the F statistic</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Type of Variance</th>
+<th style="text-align: center;">Sum of Squares</th>
+<th style="text-align: center;">Degrees of Freedom</th>
+<th style="text-align: center;">Mean Square</th>
+<th style="text-align: center;">F Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Between-group</td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{SSB} = [\texttt{a}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\nu_b = [\texttt{c}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{MSB}  = [\texttt{e}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F = [\texttt{g}]\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Within-group</td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{SSW} = [\texttt{b}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\nu_w  = [\texttt{d}]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\texttt{MSW} = [\texttt{f}]\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem 3.</strong> Suppose three independent researchers conducted studies of comparing three groups. All three researchers had a sample size of 5 per group (i.e., <span class="math inline">\(n_1 = n_2 = n_3 = 3\)</span>), but they observed different sample means and standard deviations as follows.</p>
+<ul>
+<li><p>Researcher A: <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span></p></li>
+<li><p>Researcher B: <span class="math inline">\(\bar{X}_1 = 3\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 5\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 3\)</span></p></li>
+<li><p>Researcher C: <span class="math inline">\(\bar{X}_1 = 2\)</span>, <span class="math inline">\(\bar{X}_2 = 4\)</span>, and <span class="math inline">\(\bar{X}_3 = 6\)</span>, and <span class="math inline">\(S_1 = S_2 = S_3 = 1\)</span></p></li>
+</ul>
+<p>a. Multiple-choice: Which researcher has the largest value of <span class="math inline">\(\texttt{SSB}\)</span>?</p>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<p>b. Multiple-choice: Which researcher has the largest value of <span class="math inline">\(\texttt{SSW}\)</span>?</p>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<p>c. Multiple-choice: Which researcher has the largest value of F statistic?</p>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<p>d. Multiple-choice: Which researcher has the largest value of p-value?</p>
+<p>(A) Researcher A</p>
+<p>(B) Researcher B</p>
+<p>(C) Researcher C</p>
+<p>(D) All researchers had the same result.</p>
+<p>(E) Unable to tell; need full data or ANOVA table.</p>
+<p>e. Calculate the p-value for Researcher A. (Hint: Do not waste your work in Problem 2 because the given statistics are identical.)</p>
+</section>
+<section id="assignment-1" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="assignment-1"><span class="header-section-number">8</span> Assignment</h2>
+<p><em><strong>Instruction 1:</strong> You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBpwS7jSuAv0mNU9NYy6PWhf-JDCrYLf0BxMLwbKe-0iTahA/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><em><strong>Instruction 2:</strong> You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</em></p>
+<p><strong>Problem 1.</strong> Exercise scientists believe that maximum speed (km/h) is an indicator of athletes’ physical strength and speed, and it is an important physical ability for team sports played in a field like soccer. Do players have different maximum speed by position, on average? To address this question, let us use the dataset <span class="math inline">\(\texttt{Euro.csv}\)</span>, focus on the most recent competition (Euro 2024), and compare the maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> (remove <span class="math inline">\(\texttt{Goalkeeper}\)</span>) using the ANOVA. The following code cleans the original data for our objective. Study the code.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>euro <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/Euro.csv"</span>) <span class="do">### read data</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(euro, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Event       Player Country   Position Minutes_Played Goals Assists
+1 Euro 2024        Mitaj Albania   Defender            270     0       0
+2 Euro 2024     Djimsiti Albania   Defender            270     0       0
+3 Euro 2024      Asllani Albania Midfielder            270     0       0
+4 Euro 2024 Arlind Ajeti Albania   Defender            270     0       0
+5 Euro 2024    Strakosha Albania Goalkeeper            270     0       0
+  Top_Speed Distance Shots Shots_On_Target Shots_Off_Target Shots_Blocked
+1      32.1     30.8     1               0                1             0
+2      30.0     29.8     2               0                2             0
+3      29.6     36.1     8               3                2             3
+4      29.4     28.0     0               0                0             0
+5      24.2     15.7     0               0                0             0</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(euro) <span class="do">### dimension of data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1413   13</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(euro<span class="sc">$</span>Event) <span class="do">### count by competition</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Euro 2016 Euro 2020 Euro 2024 
+      429       491       493 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(euro<span class="sc">$</span>Position) <span class="do">### count by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Defender    Forward Goalkeeper Midfielder 
+       463        331         80        539 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>euro2024 <span class="ot">=</span> <span class="fu">subset</span>(euro, Event <span class="sc">==</span> <span class="st">"Euro 2024"</span> <span class="sc">&amp;</span> Position <span class="sc">!=</span> <span class="st">"Goalkeeper"</span>) <span class="do">### subset 493 players played in Euro 2024</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(euro2024) <span class="do">### dimention of subsetted data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 464  13</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(euro2024<span class="sc">$</span>Position) <span class="do">### count by position</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Defender    Forward Midfielder 
+       151        131        182 </code></pre>
+</div>
+</div>
+<p>Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the expected maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame <span class="math inline">\(\texttt{euro2024}\)</span>.</p>
+<p>a. Multiple-choice: Which of the following represents the null hypothesis <span class="math inline">\(H_0\)</span>?</p>
+<p>(A) <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<p>b. Multiple-choice: Which of the following represents the alternative hypothesis <span class="math inline">\(H_1\)</span>?</p>
+<p>(A) <span class="math inline">\(\mu_1 &gt; \mu_2 &gt; \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<p>*c.&nbsp;Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.</p>
+<p>d. Calculate the ratio of the largest sample variance to the smallest sample variance.</p>
+<p>e. Calculate the p-value from the Bartlett test.</p>
+<p>f. Multiple-choice: Which of the following is true about the equal variance assumption?</p>
+<p>(A) There is a sign of violating the equal variance assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(B) There is no sign of violating the equal variance assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(C) The sample size is at least 30 per group, so violating the equal variance assumption is tolerable (if violated).</p>
+<p>(D) The Bartlett test is not an appropriate test for checking the equal variance assumption. The Shapiro-Wilk test is.</p>
+<p>(E) None of the above.</p>
+<p>g. Calculate the p-value from the Shapiro-Wilk test.</p>
+<p>h. Multiple-choice: Which of the following is true about the normality assumption?</p>
+<p>(A) There is a sign of violating the normality assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(B) There is no sign of violating the normality assumption assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(C) The sample size is at least 30 per group, so violating the normality assumption is tolerable (if violated).</p>
+<p>(D) The Shapiro-Wilk test is not an appropriate test for checking the equal variance assumption. The Bartlett test is.</p>
+<p>(E) (A) and (C)</p>
+<p>i. Report the F statistic from the ANOVA test.</p>
+<p>j. Report the p-value from the ANOVA test.</p>
+<p>*k. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).</p>
+<p>l. Suppose we randomly sample a defender and a midfielder. Calculate the difference (defender – midfielder) of expected maximum speed.</p>
+<p>m. Suppose a fast defender player whose maximum speed is <span class="math inline">\(Q_3\)</span> (faster than 75% of defender players) and the fastest forward player in the sample accelerated to their maximum speed, then they sprint 20 meters to chase the ball. When the forward player possess the ball and stop, how much time (in seconds) will he have until the defender player reaches him?</p>
+<p><strong>Problem 2.</strong> The dataset <span class="math inline">\(\texttt{usedcars2017.csv}\)</span> is a simple random sample of three car models in used-car retailers in 2017. The column <span class="math inline">\(\texttt{CarType}\)</span> is the car model (<span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span>), and the column <span class="math inline">\(\texttt{Price}\)</span> is the sale price (in $1,000). The objective of data analysis is to compare the average used-car price among the three models. Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the population average used-car price of <span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span> in used-car retailers as of 2017.</p>
+<p>a. Multiple-choice: Which of the following represents the null hypothesis <span class="math inline">\(H_0\)</span>?</p>
+<p>(A) <span class="math inline">\(\mu_1 = \mu_2 = \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<p>b. Multiple-choice: Which of the following represents the alternative hypothesis <span class="math inline">\(H_1\)</span>?</p>
+<p>(A) <span class="math inline">\(\mu_1 &gt; \mu_2 &gt; \mu_3\)</span></p>
+<p>(B) <span class="math inline">\(\mu_1 \ne \mu_2 \ne \mu_3\)</span></p>
+<p>(C) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, and <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(D) <span class="math inline">\(\mu_1 \ne \mu_2\)</span>, <span class="math inline">\(\mu_1 \ne \mu_3\)</span>, or <span class="math inline">\(\mu_2 \ne \mu3\)</span></p>
+<p>(E) <span class="math inline">\(\mu_1 &lt; \mu_2 &lt; \mu_3\)</span></p>
+<p>*c.&nbsp;Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.</p>
+<p>d. Calculate the ratio of the largest sample variance to the smallest sample variance.</p>
+<p>e. Calculate the p-value from the Bartlett test.</p>
+<p>f. Multiple-choice: Which of the following is true about the equal variance assumption?</p>
+<p>(A) There is a sign of violating the equal variance assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(B) There is no sign of violating the equal variance assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(C) The sample size is at least 30 per group, so violating the equal variance assumption is tolerable (if violated).</p>
+<p>(D) The Bartlett test is not an appropriate test for checking the equal variance assumption. The Shapiro-Wilk test is.</p>
+<p>(E) None of the above.</p>
+<p>g. Calculate the p-value from the Shapiro-Wilk test.</p>
+<p>h. Multiple-choice: Which of the following is true about the normality assumption?</p>
+<p>(A) There is a sign of violating the normality assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(B) There is no sign of violating the normality assumption assumption at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>(C) The sample size is at least 30 per group, so violating the normality assumption is tolerable (if violated).</p>
+<p>(D) The Shapiro-Wilk test is not an appropriate test for checking the equal variance assumption. The Bartlett test is.</p>
+<p>(E) (B) and (C)</p>
+<p>i. Report the F statistic from the ANOVA test.</p>
+<p>j. Report the p-value from the ANOVA test.</p>
+<p>*k. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).</p>
+<p>l. Suppose you plan to buy an “average” Accord and your friend plans to buy an “average” Mazda6 (average in terms of the price). How much more would you budget than your friend? Answer in dollars (not 1,000 dollars).</p>
 
 
 <script type="webr-data">
@@ -387,7 +1025,6 @@ eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0
 <script type="vfs-file">
 W10=
 </script>
-</section>
 </section>
 
 </main> <!-- /main -->

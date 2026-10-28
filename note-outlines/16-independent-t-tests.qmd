@@ -483,7 +483,7 @@ Multiple-choice: Which of the statements is a reasonable guess when data points 
 ```{r}
 #| label: wrap-5
 #| echo: false
-checkdown::check_question(answer = "The two populations have different averages.",
+checkdown::check_question(answer = "The two populations follow normal distributions.",
                           options = c("The two populations (groups) have the same average.",
                                       "The two populations have different averages.",
                                       "The two populations follow normal distributions.",
