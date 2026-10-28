@@ -123,9 +123,8 @@ To use the F-distribution as a model for the null distribution: Each group meets
 
   1. Check the QQ Plots for Normality of Residuals
   2. Check the sample size for each group is sufficiently large 
-  
-    - If the residuals are not normally distributed, then the minimum sufficient sample size for each group is $n_i>30$
-    - If the residuals are normally distributed, then the minimum sufficient sample size for each group is $n_i>10$
+      a. If the residuals are not normally distributed, then the minimum sufficient sample size for each group is $n_i>30$  
+      b. If the residuals are normally distributed, then the minimum sufficient sample size for each group is $n_i>10$
 
 
 To illustrate the idea of why we can check the normality of residuals let's look at a simple data set.  

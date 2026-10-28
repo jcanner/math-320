@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="../note-outlines/9-summarizing-data.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a00848ed57fe9097555b5bd7c001b509.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -87,7 +88,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -440,12 +441,12 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJsYWJlbCI6
 <li>Households are randomly selected and test kits are sent to home. All individuals in each selected household must test themselves and send results to the health department. It is the law.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -459,12 +460,12 @@ Answer
 <li>Individuals are randomly selected using random number generators so that every person has the same chance to be selected. If a person is selected, the person must go to the health department and be tested. It is the law.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -478,12 +479,12 @@ Answer
 <li>The health department recruits people to be tested. If a person is tested, the person will receive a $15 gift card.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -497,12 +498,12 @@ Answer
 <li>All county officers will be asked to be tested because they are easily approachable. If officers resist to be tested, they will be fired.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -516,12 +517,12 @@ Answer
 <li>Classrooms in local schools are randomly selected, and students in the selected classrooms will be tested. There is no excuse for students if they are selected.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -595,12 +596,12 @@ Table&nbsp;1: Population by age group in Monterey County 2023
 <li>0-9</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -614,12 +615,12 @@ Answer
 <li>10-19</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -633,12 +634,12 @@ Answer
 <li>20-39</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -652,12 +653,12 @@ Answer
 <li>40-59</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -671,12 +672,12 @@ Answer
 <li>60+</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -692,17 +693,17 @@ Answer
 <p>When two researchers do simple random sampling of the same size from the same population, they will obtain the same sample. True or false?</p>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_14065" onsubmit="return validate_form_14065()" method="post">
-<select name="answer_14065">
+<form name="form_83687" onsubmit="return validate_form_83687()" method="post">
+<select name="answer_83687">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_14065"></div>
+<div id="result_83687"></div>
 </form>
-<script>function validate_form_14065() {var x, text; var x = document.forms['form_14065']['answer_14065'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_14065').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_83687() {var x, text; var x = document.forms['form_83687']['answer_83687'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_83687').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_14065').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_83687').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -713,17 +714,17 @@ Answer
 <p>Suppose your goal is to estimate the average age of CSUMB students (parameter). You obtain a simple random sample of size 100 students and estimate the parameter by the sample mean. You obtain another simple random sample of size 100 students and estimate the parameter by the sample mean. Because simple random sampling is the most ideal sampling method, the two sample means will be the same as the parameter. True or false?</p>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_99832" onsubmit="return validate_form_99832()" method="post">
-<select name="answer_99832">
+<form name="form_52726" onsubmit="return validate_form_52726()" method="post">
+<select name="answer_52726">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_99832"></div>
+<div id="result_52726"></div>
 </form>
-<script>function validate_form_99832() {var x, text; var x = document.forms['form_99832']['answer_99832'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_99832').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_52726() {var x, text; var x = document.forms['form_52726']['answer_52726'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_52726').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -742,28 +743,28 @@ Answer
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_47285" onsubmit="return validate_form_47285()" method="post">
+<form name="form_16153" onsubmit="return validate_form_16153()" method="post">
 <label>
-<input type="radio" name="answer_47285" id="answer_47285_1" value="accurately estimated">
+<input type="radio" name="answer_16153" id="answer_16153_1" value="accurately estimated">
 accurately estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_47285" id="answer_47285_2" value="under-estimated">
+<input type="radio" name="answer_16153" id="answer_16153_2" value="under-estimated">
 under-estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_47285" id="answer_47285_3" value="over-estimated">
+<input type="radio" name="answer_16153" id="answer_16153_3" value="over-estimated">
 over-estimated
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_47285"></div>
+<div id="result_16153"></div>
 </form>
-<script>function validate_form_47285() {var x, text; var x = document.forms['form_47285']['answer_47285'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_47285').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_16153() {var x, text; var x = document.forms['form_16153']['answer_16153'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_16153').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct'; res3 = document.getElementById('result_47285').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct'; res3 = document.getElementById('result_16153').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -773,28 +774,28 @@ over-estimated
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_54259" onsubmit="return validate_form_54259()" method="post">
+<form name="form_67934" onsubmit="return validate_form_67934()" method="post">
 <label>
-<input type="radio" name="answer_54259" id="answer_54259_1" value="accurately estimated">
+<input type="radio" name="answer_67934" id="answer_67934_1" value="accurately estimated">
 accurately estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_54259" id="answer_54259_2" value="under-estimated">
+<input type="radio" name="answer_67934" id="answer_67934_2" value="under-estimated">
 under-estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_54259" id="answer_54259_3" value="over-estimated">
+<input type="radio" name="answer_67934" id="answer_67934_3" value="over-estimated">
 over-estimated
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_54259"></div>
+<div id="result_67934"></div>
 </form>
-<script>function validate_form_54259() {var x, text; var x = document.forms['form_54259']['answer_54259'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_54259').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_67934() {var x, text; var x = document.forms['form_67934']['answer_67934'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_67934').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct'; res3 = document.getElementById('result_47285').innerText == 'Correct'; res4 = document.getElementById('result_54259').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct'; res3 = document.getElementById('result_16153').innerText == 'Correct'; res4 = document.getElementById('result_67934').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -804,28 +805,28 @@ over-estimated
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_62631" onsubmit="return validate_form_62631()" method="post">
+<form name="form_61477" onsubmit="return validate_form_61477()" method="post">
 <label>
-<input type="radio" name="answer_62631" id="answer_62631_1" value="accurately estimated">
+<input type="radio" name="answer_61477" id="answer_61477_1" value="accurately estimated">
 accurately estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_62631" id="answer_62631_2" value="under-estimated">
+<input type="radio" name="answer_61477" id="answer_61477_2" value="under-estimated">
 under-estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_62631" id="answer_62631_3" value="over-estimated">
+<input type="radio" name="answer_61477" id="answer_61477_3" value="over-estimated">
 over-estimated
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_62631"></div>
+<div id="result_61477"></div>
 </form>
-<script>function validate_form_62631() {var x, text; var x = document.forms['form_62631']['answer_62631'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_62631').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_61477() {var x, text; var x = document.forms['form_61477']['answer_61477'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_61477').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct'; res3 = document.getElementById('result_47285').innerText == 'Correct'; res4 = document.getElementById('result_54259').innerText == 'Correct'; res5 = document.getElementById('result_62631').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct'; res3 = document.getElementById('result_16153').innerText == 'Correct'; res4 = document.getElementById('result_67934').innerText == 'Correct'; res5 = document.getElementById('result_61477').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -835,28 +836,28 @@ over-estimated
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_90370" onsubmit="return validate_form_90370()" method="post">
+<form name="form_40834" onsubmit="return validate_form_40834()" method="post">
 <label>
-<input type="radio" name="answer_90370" id="answer_90370_1" value="accurately estimated">
+<input type="radio" name="answer_40834" id="answer_40834_1" value="accurately estimated">
 accurately estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90370" id="answer_90370_2" value="under-estimated">
+<input type="radio" name="answer_40834" id="answer_40834_2" value="under-estimated">
 under-estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_90370" id="answer_90370_3" value="over-estimated">
+<input type="radio" name="answer_40834" id="answer_40834_3" value="over-estimated">
 over-estimated
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_90370"></div>
+<div id="result_40834"></div>
 </form>
-<script>function validate_form_90370() {var x, text; var x = document.forms['form_90370']['answer_90370'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_90370').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_40834() {var x, text; var x = document.forms['form_40834']['answer_40834'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_40834').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct'; res3 = document.getElementById('result_47285').innerText == 'Correct'; res4 = document.getElementById('result_54259').innerText == 'Correct'; res5 = document.getElementById('result_62631').innerText == 'Correct'; res6 = document.getElementById('result_90370').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct'; res3 = document.getElementById('result_16153').innerText == 'Correct'; res4 = document.getElementById('result_67934').innerText == 'Correct'; res5 = document.getElementById('result_61477').innerText == 'Correct'; res6 = document.getElementById('result_40834').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -866,28 +867,28 @@ over-estimated
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_76250" onsubmit="return validate_form_76250()" method="post">
+<form name="form_10250" onsubmit="return validate_form_10250()" method="post">
 <label>
-<input type="radio" name="answer_76250" id="answer_76250_1" value="accurately estimated">
+<input type="radio" name="answer_10250" id="answer_10250_1" value="accurately estimated">
 accurately estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76250" id="answer_76250_2" value="under-estimated">
+<input type="radio" name="answer_10250" id="answer_10250_2" value="under-estimated">
 under-estimated
 </label>
 <br>
 <label>
-<input type="radio" name="answer_76250" id="answer_76250_3" value="over-estimated">
+<input type="radio" name="answer_10250" id="answer_10250_3" value="over-estimated">
 over-estimated
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_76250"></div>
+<div id="result_10250"></div>
 </form>
-<script>function validate_form_76250() {var x, text; var x = document.forms['form_76250']['answer_76250'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_76250').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_10250() {var x, text; var x = document.forms['form_10250']['answer_10250'].value;if (x == 'over-estimated'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_10250').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_14065').innerText == 'Correct'; res2 = document.getElementById('result_99832').innerText == 'Correct'; res3 = document.getElementById('result_47285').innerText == 'Correct'; res4 = document.getElementById('result_54259').innerText == 'Correct'; res5 = document.getElementById('result_62631').innerText == 'Correct'; res6 = document.getElementById('result_90370').innerText == 'Correct'; res7 = document.getElementById('result_76250').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_83687').innerText == 'Correct'; res2 = document.getElementById('result_52726').innerText == 'Correct'; res3 = document.getElementById('result_16153').innerText == 'Correct'; res4 = document.getElementById('result_67934').innerText == 'Correct'; res5 = document.getElementById('result_61477').innerText == 'Correct'; res6 = document.getElementById('result_40834').innerText == 'Correct'; res7 = document.getElementById('result_10250').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -981,13 +982,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

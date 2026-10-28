@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,14 +68,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../note-outlines/14-practice-one-parameter-tests.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a00848ed57fe9097555b5bd7c001b509.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -122,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -518,8 +519,8 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <p>Dyslexia is a learning disorder which affects reading, spelling, and writing. Dyslexia is not related to intelligence or vision, but many people with dyslexia have difficulties in decoding letters and words. Most people with dyslexia can overcome the learning difficulties after receiving a specialized education program. Woodcock Johnson Tests are a set of standardized tests in diverse areas, and they are used as an assessment tool in the specialized education program. The standardized tests are designed in a way that the scores follow a normal distribution with a mean of 100. In addition to reading, writing, and spelling, researchers have hypothesized that dyslexia can affect math calculation ability because it requires decoding math symbols. The dataset <span class="math inline">\(\texttt{mathcalculation.csv}\)</span> is a sample of 59 students with dyslexia who received the specialized education program. The column <code>pre</code> is the math calculation test score at the time of entering the program, and the column <code>post</code> is the test score after completing one year of the program. We want to determine if the students with dyslexia improve math calculation score, on average, after completion one year of the program. A significance level is fixed at <span class="math inline">\(\alpha = 0.05\)</span>.</p>
 <p>Download the data here: <a href="data/mathcalculation.csv"><code>mathcalculation.csv</code></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/mathcalculation.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mathscore, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/mathcalculation.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mathscore, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
      id   pre  post
@@ -533,8 +534,8 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 </div>
 <p>In the population of students with dyslexia, we are now interested in the average change in the math calculation score after one year of the program. Here, the “change” means the post-score minus pre-score, and we can measure the individual student’s change in the data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> post <span class="sc">-</span> pre)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff =</span> post <span class="sc">-</span> pre)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 59 × 4
       id   pre  post  diff
@@ -556,16 +557,16 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <h3 data-number="4.1" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">4.1</span> Summary Statistics</h3>
 <p>We can calculate the following statistics:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       response min   Q1 median  Q3 max     mean      sd  n missing
 1 I(post - pre) -18 -4.5      2 5.5  24 1.271186 8.54568 59       0</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_boxplot</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">xlab =</span> <span class="st">"Difference in Post Score and Pre Score"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -583,7 +584,7 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <p>Set up the hypothesis test symbolically and verbally:</p>
 <p>Here is the R code output for a paired test:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -601,7 +602,7 @@ mean of x
 <p>Interpret and evaluate the p-value in the context of the scenario.</p>
 <p>Here is a 95% Confidence Interval:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.9558298  3.4982026
 attr(,"conf.level")
@@ -693,10 +694,10 @@ attr(,"conf.level")
 <h4 data-number="5.3.3" class="anchored" data-anchor-id="assessing-normality-for-matched-pairs-samples"><span class="header-section-number">5.3.3</span> Assessing Normality for Matched-Pairs Samples</h4>
 <p>When we are comparing Matched-Pairs data, we want to test the normality of the differences.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_qq</span>(<span class="sc">~</span>(post <span class="sc">-</span> pre), <span class="at">data =</span> mathscore,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Theoretical Z-Score"</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Observerd Differences in Post - Pre Scores"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_qqline</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -719,12 +720,12 @@ attr(,"conf.level")
 <li>The [n… a…] implies that a simple random sample is from a normal distribution.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -738,12 +739,12 @@ Answer
 <li>The [Q… p…] is a graphical assessment of the normality condition.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -757,12 +758,12 @@ Answer
 <li>The [p… t…] is the same as the one-sample t-test, expected all calculations and inferences are made about the differences between two values.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -777,12 +778,12 @@ Answer
 <h4 data-number="6.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">6.0.2</span> Problem 2</h4>
 <p>In a study where the T statistic is 4.4908, and the p-value (for the right-sided test) is 0.00025. If the researchers were interested in the two-sided test, that is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_D = 0\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu_D \ne 0\)</span>, what would be the p-value given the same sample?</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -798,43 +799,43 @@ Answer
 <p>Multiple-choice: Which of the following is a sign of violating the normality condition?</p>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_46216" onsubmit="return validate_form_46216()" method="post">
+<form name="form_98451" onsubmit="return validate_form_98451()" method="post">
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_1" value="The Q-Q plot is fairly straight.">
+<input type="radio" name="answer_98451" id="answer_98451_1" value="The Q-Q plot is fairly straight.">
 The Q-Q plot is fairly straight.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_2" value="The Q-Q plot severely deviates from the straight line.">
+<input type="radio" name="answer_98451" id="answer_98451_2" value="The Q-Q plot severely deviates from the straight line.">
 The Q-Q plot severely deviates from the straight line.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_3" value="The t-test results in a p-value of 0.001.">
+<input type="radio" name="answer_98451" id="answer_98451_3" value="The t-test results in a p-value of 0.001.">
 The t-test results in a p-value of 0.001.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_4" value="The t-test results in a p-value of 0.999.">
+<input type="radio" name="answer_98451" id="answer_98451_4" value="The t-test results in a p-value of 0.999.">
 The t-test results in a p-value of 0.999.
 </label>
 <br>
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_5" value="(B) and (C)">
+<input type="radio" name="answer_98451" id="answer_98451_5" value="(B) and (C)">
 (B) and (C)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_46216" id="answer_46216_6" value="(B) and (D)">
+<input type="radio" name="answer_98451" id="answer_98451_6" value="(B) and (D)">
 (B) and (D)
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_46216"></div>
+<div id="result_98451"></div>
 </form>
-<script>function validate_form_46216() {var x, text; var x = document.forms['form_46216']['answer_46216'].value;if (x == 'The Q-Q plot severely deviates from the straight line.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_46216').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_98451() {var x, text; var x = document.forms['form_98451']['answer_98451'].value;if (x == 'The Q-Q plot severely deviates from the straight line.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_98451').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_46216').innerText == 'Correct';text = res1;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_98451').innerText == 'Correct';text = res1;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -845,17 +846,17 @@ The t-test results in a p-value of 0.999.
 <p>True or false: If a sample size is very large (substantially larger than 30) and the QQ Plots indicates violation of the normality assumption, the one-sample t-test and CI are <u>not</u> valid.</p>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_41141" onsubmit="return validate_form_41141()" method="post">
-<select name="answer_41141">
+<form name="form_13489" onsubmit="return validate_form_13489()" method="post">
+<select name="answer_13489">
 <option>True</option>
 <option>False</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_41141"></div>
+<div id="result_13489"></div>
 </form>
-<script>function validate_form_41141() {var x, text; var x = document.forms['form_41141']['answer_41141'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_41141').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_13489() {var x, text; var x = document.forms['form_13489']['answer_13489'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_13489').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_46216').innerText == 'Correct'; res2 = document.getElementById('result_41141').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_98451').innerText == 'Correct'; res2 = document.getElementById('result_13489').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -869,16 +870,16 @@ The t-test results in a p-value of 0.999.
 <p>A massive outbreak of food-borne illness was attributed to <em>Salmonella enteritidis</em> which can cause fever, abdominal cramps, and diarrhea beginning 12 to 72 hours after consuming a contaminated food or beverage. The illness usually lasts 4 to 7 days, and most people recover without antibiotic treatment. However, the person may be ill enough to require hospitalization. After the outbreak of food-borne illness, investigators identified an ice cream company, and five production runs of the ice cream company were randomly sampled. Let <span class="math inline">\(\mu\)</span> be the population average level of S. enteritidis among all production runs of the ice cream company. A level of <em>S. enteritidis</em> greater than 0.3 MPN/g (most probable number per gram) is considered to be dangerous in public health. The investigators’ goal is to test if the population average level of <em>S. enteritidis</em> is above the dangerous level.</p>
 <p>The researchers collected the following data: (0.593, 0.142, 0.329, 0.231, 0.292). Create the Q-Q plot in R (to be shown in the html file) and interpret it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you can read in the data like so, then you do not need to specify the data = in the gf_qq() function</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mpn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.593</span>, <span class="fl">0.142</span>, <span class="fl">0.329</span>, <span class="fl">0.231</span>, <span class="fl">0.292</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># you can read in the data like so, then you do not need to specify the data = in the gf_qq() function</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mpn <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.593</span>, <span class="fl">0.142</span>, <span class="fl">0.329</span>, <span class="fl">0.231</span>, <span class="fl">0.292</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -914,12 +915,12 @@ Answer
 <li>What is the null value (in seconds) in the null hypothesis <span class="math inline">\(H_0\)</span>?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -934,38 +935,38 @@ Answer
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<form name="form_13033" onsubmit="return validate_form_13033()" method="post">
+<form name="form_11241" onsubmit="return validate_form_11241()" method="post">
 <label>
-<input type="radio" name="answer_13033" id="answer_13033_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
+<input type="radio" name="answer_11241" id="answer_11241_1" value="same as the null hypothesis (i.e., the parameter is equal to the null value)">
 same as the null hypothesis (i.e., the parameter is equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_13033" id="answer_13033_2" value="right-sided test (i.e., the parameter is greater than the null value)">
+<input type="radio" name="answer_11241" id="answer_11241_2" value="right-sided test (i.e., the parameter is greater than the null value)">
 right-sided test (i.e., the parameter is greater than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_13033" id="answer_13033_3" value="left-sided test (i.e., the parameter is less than the null value)">
+<input type="radio" name="answer_11241" id="answer_11241_3" value="left-sided test (i.e., the parameter is less than the null value)">
 left-sided test (i.e., the parameter is less than the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_13033" id="answer_13033_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
+<input type="radio" name="answer_11241" id="answer_11241_4" value="two-sided test (i.e., the parameter is not equal to the null value)">
 two-sided test (i.e., the parameter is not equal to the null value)
 </label>
 <br>
 <label>
-<input type="radio" name="answer_13033" id="answer_13033_5" value="to be determined after observing data">
+<input type="radio" name="answer_11241" id="answer_11241_5" value="to be determined after observing data">
 to be determined after observing data
 </label>
 <br>
 <input type="submit" value="Check Your Answer">
-<div id="result_13033"></div>
+<div id="result_11241"></div>
 </form>
-<script>function validate_form_13033() {var x, text; var x = document.forms['form_13033']['answer_13033'].value;if (x == 'left-sided test (i.e., the parameter is less than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_13033').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_11241() {var x, text; var x = document.forms['form_11241']['answer_11241'].value;if (x == 'left-sided test (i.e., the parameter is less than the null value)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_11241').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_46216').innerText == 'Correct'; res2 = document.getElementById('result_41141').innerText == 'Correct'; res3 = document.getElementById('result_13033').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_98451').innerText == 'Correct'; res2 = document.getElementById('result_13489').innerText == 'Correct'; res3 = document.getElementById('result_11241').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -974,12 +975,12 @@ to be determined after observing data
 <li>Provide descriptive statistics and boxplot for the variable of interest. Describe in words.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1012,12 +1013,12 @@ Answer
 <li>Calculate the T statistic.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1042,12 +1043,12 @@ mean of x
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1061,12 +1062,12 @@ Answer
 <li>Calculate the p-value.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1080,12 +1081,12 @@ Answer
 <li>Do you conclude <span class="math inline">\(H_0\)</span> or <span class="math inline">\(H_1\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>?</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1099,12 +1100,12 @@ Answer
 <li>Calculate the lower bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1121,12 +1122,12 @@ attr(,"conf.level")
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1140,12 +1141,12 @@ Answer
 <li>Calculate the upper bound of 95% CI.</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1159,12 +1160,12 @@ Answer
 <li>Create a QQ-Plot for the data</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1187,17 +1188,17 @@ Answer
 </ol>
 <div class="cell">
 <div class="cell-output-display no-overflow-x">
-<form name="form_61539" onsubmit="return validate_form_61539()" method="post">
-<select name="answer_61539">
+<form name="form_45012" onsubmit="return validate_form_45012()" method="post">
+<select name="answer_45012">
 <option>True. Deviations in the tails are extreme given the sample size</option>
 <option>False. Deviations in the tails are expected given the sample size</option>
 </select>
 <input type="submit" value="Check Your Answer">
-<div id="result_61539"></div>
+<div id="result_45012"></div>
 </form>
-<script>function validate_form_61539() {var x, text; var x = document.forms['form_61539']['answer_61539'].value;if (x == 'False. Deviations in the tails are expected given the sample size'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_61539').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+<script>function validate_form_45012() {var x, text; var x = document.forms['form_45012']['answer_45012'].value;if (x == 'False. Deviations in the tails are expected given the sample size'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_45012').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
          element = document.getElementById('checkdown_final_score');
-         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_46216').innerText == 'Correct'; res2 = document.getElementById('result_41141').innerText == 'Correct'; res3 = document.getElementById('result_13033').innerText == 'Correct'; res4 = document.getElementById('result_61539').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_98451').innerText == 'Correct'; res2 = document.getElementById('result_13489').innerText == 'Correct'; res3 = document.getElementById('result_11241').innerText == 'Correct'; res4 = document.getElementById('result_45012').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
          return false;
          }}</script>
 </div>
@@ -1294,13 +1295,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
