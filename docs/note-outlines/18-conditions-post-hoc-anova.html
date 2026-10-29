@@ -833,71 +833,693 @@ Back-Middle   -3.916667 -14.56225  6.7289194 0.6234241</code></pre>
 <section id="problem-1-1" class="level4" data-number="7.0.1">
 <h4 data-number="7.0.1" class="anchored" data-anchor-id="problem-1-1"><span class="header-section-number">7.0.1</span> Problem 1</h4>
 <p>(This problem is continued from the previous assignment.) Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the expected maximum speed of <span class="math inline">\(\texttt{Defender}\)</span>, <span class="math inline">\(\texttt{Foward}\)</span>, and <span class="math inline">\(\texttt{Midfielder}\)</span> among European players in 2024 (population of interest). Answer the following questions. Use the Tukey’s HSD to find discernible pairwise difference(s) at a family-wise confidence level of 0.95.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: top_speed
+           Df Sum Sq Mean Sq F value   Pr(&gt;F)   
+position    2   56.0 28.0016  5.9576 0.002789 **
+Residuals 461 2166.8  4.7002                    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
 <ol type="a">
 <li>Print the results of Tukey’s HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs using R</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = top_speed ~ position, data = euro_no_gk_2024)
+
+$position
+                          diff        lwr          upr     p adj
+Forward-Defender    -0.2066983 -0.8153458  0.401949136 0.7041251
+Midfielder-Defender -0.7882687 -1.3493985 -0.227138868 0.0029558
+Midfielder-Forward  -0.5815703 -1.1656421  0.002501443 0.0512755</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p><em>For parts b to f, answer true (T) or false (F) whether the result is statistically discernible for the following statement.</em></p>
 <ol start="2" type="a">
-<li><p><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</p></li>
-<li><p>State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.</p></li>
-<li><p>Create a Residual Plot.</p></li>
-<li><p>Multiple-choice: Which of the following is true about the equal variance condition?</p></li>
+<li><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</li>
 </ol>
-<p>(A) There is a sign of violating the equal variance condition.</p>
-<p>(B) There is no sign of violating the equal variance condition.</p>
-<p>(C) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).</p>
-<p>(D) None of the above.</p>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_38921" onsubmit="return validate_form_38921()" method="post">
+<select name="answer_38921">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_38921"></div>
+</form>
+<script>function validate_form_38921() {var x, text; var x = document.forms['form_38921']['answer_38921'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_38921').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1;res1 = document.getElementById('result_38921').innerText == 'Correct';text = res1;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="3" type="a">
+<li><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_71694" onsubmit="return validate_form_71694()" method="post">
+<select name="answer_71694">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_71694"></div>
+</form>
+<script>function validate_form_71694() {var x, text; var x = document.forms['form_71694']['answer_71694'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_71694').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct';text = res1 + res2;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="4" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_5014" onsubmit="return validate_form_5014()" method="post">
+<select name="answer_5014">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_5014"></div>
+</form>
+<script>function validate_form_5014() {var x, text; var x = document.forms['form_5014']['answer_5014'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_5014').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct';text = res1 + res2 + res3;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="5" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_7290" onsubmit="return validate_form_7290()" method="post">
+<select name="answer_7290">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_7290"></div>
+</form>
+<script>function validate_form_7290() {var x, text; var x = document.forms['form_7290']['answer_7290'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_7290').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct';text = res1 + res2 + res3 + res4;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="6" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</li>
+</ol>
+<p>Note - this is an edge case of moderate evidence, but the CI does contain 0.</p>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_35296" onsubmit="return validate_form_35296()" method="post">
+<select name="answer_35296">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_35296"></div>
+</form>
+<script>function validate_form_35296() {var x, text; var x = document.forms['form_35296']['answer_35296'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_35296').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="7" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_51683" onsubmit="return validate_form_51683()" method="post">
+<select name="answer_51683">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_51683"></div>
+</form>
+<script>function validate_form_51683() {var x, text; var x = document.forms['form_51683']['answer_51683'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_51683').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="8" type="a">
+<li>State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Very strong evidence of a difference between defenders and midfielders</li>
+<li>Moderate evidence of a difference between forwards and midfielders</li>
+<li>No evidence of a difference between defenders and forwards</li>
+<li>Midfielders seem slower (lower top speed)</li>
+<li>Note - this is not a complete answer - write out a complete answers with details and values</li>
+</ul>
+</div>
+</div>
+</div>
+<ol type="i">
+<li>Create a Residual Plot.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/asn-1-i-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Seating Row by Final Exam Score, titled “Final Exam Score by Seating Row”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="10" type="a">
+<li>Multiple-choice: Which of the following is true about the equal variance condition?</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_90952" onsubmit="return validate_form_90952()" method="post">
+<label>
+<input type="radio" name="answer_90952" id="answer_90952_1" value="There is a sign of violating the equal variance condition.">
+There is a sign of violating the equal variance condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_90952" id="answer_90952_2" value="There is no sign of violating the equal variance condition.">
+There is no sign of violating the equal variance condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_90952" id="answer_90952_3" value="The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)">
+The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)
+</label>
+<br>
+<label>
+<input type="radio" name="answer_90952" id="answer_90952_4" value="None of the above.">
+None of the above.
+</label>
+<br>
+<input type="submit" value="Check Your Answer">
+<div id="result_90952"></div>
+</form>
+<script>function validate_form_90952() {var x, text; var x = document.forms['form_90952']['answer_90952'].value;if (x == 'There is no sign of violating the equal variance condition.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_90952').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
 <ol start="11" type="a">
-<li><p>Create a QQ Plot for the Residuals</p></li>
-<li><p>Multiple-choice: Which of the following is true about the normality condition?</p></li>
+<li>Create a QQ Plot for the Residuals</li>
 </ol>
-<p>(A) There is a sign of violating the normality condition.</p>
-<p>(B) There is no sign of violating the normality condition condition.</p>
-<p>(C) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).</p>
-<p>(D) (A) and (C)</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/asn-1-k-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Seating Row by Final Exam Score, titled “Final Exam Score by Seating Row”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="12" type="a">
+<li>Multiple-choice: Which of the following is true about the normality condition?</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_19152" onsubmit="return validate_form_19152()" method="post">
+<label>
+<input type="radio" name="answer_19152" id="answer_19152_1" value="There is a sign of violating the normality condition.">
+There is a sign of violating the normality condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_19152" id="answer_19152_2" value="There is no sign of violating the normality condition.">
+There is no sign of violating the normality condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_19152" id="answer_19152_3" value="The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).">
+The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
+</label>
+<br>
+<label>
+<input type="radio" name="answer_19152" id="answer_19152_4" value="(A) and (C)">
+(A) and (C)
+</label>
+<br>
+<label>
+<input type="radio" name="answer_19152" id="answer_19152_5" value="None of the above.">
+None of the above.
+</label>
+<br>
+<input type="submit" value="Check Your Answer">
+<div id="result_19152"></div>
+</form>
+<script>function validate_form_19152() {var x, text; var x = document.forms['form_19152']['answer_19152'].value;if (x == '(A) and (C)'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_19152').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
 <ol start="13" type="a">
 <li>Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Very strong evidence against the null, in favor of the alternative</li>
+<li>Actual differences in means are small relative to their standard deviation</li>
+<li>Statistical differences may be driven in part by sample sizes</li>
+<li>Very strong evidence of a difference between defenders and midfielders</li>
+<li>Moderate evidence of a difference between forwards and midfielders</li>
+<li>No evidence of a difference between defenders and forwards</li>
+<li>Midfielders seem slower (lower top speed)</li>
+<li>Conditions are satisfied so we can trust test results</li>
+<li>Data is a convenience sample so we cannot generalize to all European Football players</li>
+<li>Note - this is not a complete answer - write out a complete answers with details and values</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section id="problem-2-1" class="level4" data-number="7.0.2">
 <h4 data-number="7.0.2" class="anchored" data-anchor-id="problem-2-1"><span class="header-section-number">7.0.2</span> Problem 2</h4>
 <p>(This problem is continued from the previous assignment.) Let <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> (parameters of interest) denote the population average used-car price of <span class="math inline">\(\texttt{Accord}\)</span>, <span class="math inline">\(\texttt{Maxima}\)</span>, and <span class="math inline">\(\texttt{Mazda6}\)</span> in used-car retailers as of 2017. Answer the following questions. Use the Tukey’s HSD to find discernible pairwise difference(s) at a family-wise confidence level of 0.95. Answer true (T) or false (F) whether the result is statistically discernible for the following statement.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: Price
+          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
+CarType    2  247.81  123.91  4.3232 0.01622 *
+Residuals 87 2493.45   28.66                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
 <ol type="a">
 <li>Print the results of Tukey’s HSD (point estimates, 95% family-wise CIs and p-values) and the graphic of CIs.</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = Price ~ CarType, data = used_cars)
+
+$CarType
+                   diff       lwr        upr     p adj
+Maxima-Accord  1.186667 -2.109347  4.4826799 0.6677688
+Mazda6-Accord -2.773333 -6.069347  0.5226799 0.1167200
+Mazda6-Maxima -3.960000 -7.256013 -0.6639868 0.0143314</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p><em>For parts b to f, answer true (T) or false (F) whether the result is statistically meaningful for the following statement.</em></p>
 <ol start="2" type="a">
-<li><p><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</p></li>
-<li><p><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</p></li>
-<li><p>State the conclusion in the context. Use accurate language, interpret discernible CIs, and report p-value.</p></li>
-<li><p>State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.</p></li>
-<li><p>Create a Residual Plot.</p></li>
-<li><p>Multiple-choice: Which of the following is true about the equal variance condition?</p></li>
+<li><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &lt; \mu_1\)</span>)</li>
 </ol>
-<p>(A) There is a sign of violating the equal variance condition.</p>
-<p>(B) There is no sign of violating the equal variance condition.</p>
-<p>(C) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).</p>
-<p>(D) None of the above.</p>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_11467" onsubmit="return validate_form_11467()" method="post">
+<select name="answer_11467">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_11467"></div>
+</form>
+<script>function validate_form_11467() {var x, text; var x = document.forms['form_11467']['answer_11467'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_11467').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="3" type="a">
+<li><span class="math inline">\(\mu_2 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_2 &gt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_34096" onsubmit="return validate_form_34096()" method="post">
+<select name="answer_34096">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_34096"></div>
+</form>
+<script>function validate_form_34096() {var x, text; var x = document.forms['form_34096']['answer_34096'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_34096').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="4" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_27073" onsubmit="return validate_form_27073()" method="post">
+<select name="answer_27073">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_27073"></div>
+</form>
+<script>function validate_form_27073() {var x, text; var x = document.forms['form_27073']['answer_27073'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_27073').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="5" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_1 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_1\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_80218" onsubmit="return validate_form_80218()" method="post">
+<select name="answer_80218">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_80218"></div>
+</form>
+<script>function validate_form_80218() {var x, text; var x = document.forms['form_80218']['answer_80218'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_80218').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct'; res12 = document.getElementById('result_80218').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="6" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &lt; \mu_2\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_37484" onsubmit="return validate_form_37484()" method="post">
+<select name="answer_37484">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_37484"></div>
+</form>
+<script>function validate_form_37484() {var x, text; var x = document.forms['form_37484']['answer_37484'].value;if (x == 'True'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_37484').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct'; res12 = document.getElementById('result_80218').innerText == 'Correct'; res13 = document.getElementById('result_37484').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="7" type="a">
+<li><span class="math inline">\(\mu_3 - \mu_2 \ne 0\)</span> (especially <span class="math inline">\(\mu_3 &gt; \mu_2\)</span>)</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display no-overflow-x">
+<form name="form_53521" onsubmit="return validate_form_53521()" method="post">
+<select name="answer_53521">
+<option>True</option>
+<option>False</option>
+</select>
+<input type="submit" value="Check Your Answer">
+<div id="result_53521"></div>
+</form>
+<script>function validate_form_53521() {var x, text; var x = document.forms['form_53521']['answer_53521'].value;if (x == 'False'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_53521').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct'; res12 = document.getElementById('result_80218').innerText == 'Correct'; res13 = document.getElementById('result_37484').innerText == 'Correct'; res14 = document.getElementById('result_53521').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<ol start="8" type="a">
+<li>State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Only strong evidence that there is a difference between Maxima and Mazda6</li>
+<li>Mazda6 costs less</li>
+<li>Note - this is not a complete answer - write out a complete answers with details and values</li>
+</ul>
+</div>
+</div>
+</div>
+<ol type="i">
+<li>Create a Residual Plot.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/asn-2-i-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Seating Row by Final Exam Score, titled “Final Exam Score by Seating Row”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="10" type="a">
+<li>Multiple-choice: Which of the following is true about the equal variance condition?</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_69775" onsubmit="return validate_form_69775()" method="post">
+<label>
+<input type="radio" name="answer_69775" id="answer_69775_1" value="There is a sign of violating the equal variance condition.">
+There is a sign of violating the equal variance condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_69775" id="answer_69775_2" value="There is no sign of violating the equal variance condition.">
+There is no sign of violating the equal variance condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_69775" id="answer_69775_3" value="The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)">
+The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)
+</label>
+<br>
+<label>
+<input type="radio" name="answer_69775" id="answer_69775_4" value="None of the above.">
+None of the above.
+</label>
+<br>
+<input type="submit" value="Check Your Answer">
+<div id="result_69775"></div>
+</form>
+<script>function validate_form_69775() {var x, text; var x = document.forms['form_69775']['answer_69775'].value;if (x == 'There is no sign of violating the equal variance condition.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_69775').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct'; res12 = document.getElementById('result_80218').innerText == 'Correct'; res13 = document.getElementById('result_37484').innerText == 'Correct'; res14 = document.getElementById('result_53521').innerText == 'Correct'; res15 = document.getElementById('result_69775').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
 <ol start="11" type="a">
-<li><p>Create a QQ Plot for the Residuals</p></li>
-<li><p>Multiple-choice: Which of the following is true about the normality condition?</p></li>
+<li>Create a QQ Plot for the Residuals</li>
 </ol>
-<p>(A) There is a sign of violating the normality condition.</p>
-<p>(B) There is no sign of violating the normality condition condition.</p>
-<p>(C) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).</p>
-<p>(D) (A) and (C)</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="18-conditions-post-hoc-anova_files/figure-html/asn-2-k-1.png" class="img-fluid figure-img" alt="Combined chart with box plot and scatter plot of Seating Row by Final Exam Score, titled “Final Exam Score by Seating Row”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="12" type="a">
+<li>Multiple-choice: Which of the following is true about the normality condition?</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<form name="form_39366" onsubmit="return validate_form_39366()" method="post">
+<label>
+<input type="radio" name="answer_39366" id="answer_39366_1" value="There is a sign of violating the normality condition.">
+There is a sign of violating the normality condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_39366" id="answer_39366_2" value="There is no sign of violating the normality condition.">
+There is no sign of violating the normality condition.
+</label>
+<br>
+<label>
+<input type="radio" name="answer_39366" id="answer_39366_3" value="The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).">
+The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
+</label>
+<br>
+<label>
+<input type="radio" name="answer_39366" id="answer_39366_4" value="(A) and (C)">
+(A) and (C)
+</label>
+<br>
+<label>
+<input type="radio" name="answer_39366" id="answer_39366_5" value="None of the above.">
+None of the above.
+</label>
+<br>
+<input type="submit" value="Check Your Answer">
+<div id="result_39366"></div>
+</form>
+<script>function validate_form_39366() {var x, text; var x = document.forms['form_39366']['answer_39366'].value;if (x == 'There is no sign of violating the normality condition.'){text = 'Correct';} else {text = 'I have a different answer';} document.getElementById('result_39366').innerHTML = text; evaluate_final_score(); return false;}function evaluate_final_score(){
+         element = document.getElementById('checkdown_final_score');
+         if(element === null){return false;} else {var element, text, res1, res2, res3, res4, res5, res6, res7, res8, res9, res10, res11, res12, res13, res14, res15, res16;res1 = document.getElementById('result_38921').innerText == 'Correct'; res2 = document.getElementById('result_71694').innerText == 'Correct'; res3 = document.getElementById('result_5014').innerText == 'Correct'; res4 = document.getElementById('result_7290').innerText == 'Correct'; res5 = document.getElementById('result_35296').innerText == 'Correct'; res6 = document.getElementById('result_51683').innerText == 'Correct'; res7 = document.getElementById('result_90952').innerText == 'Correct'; res8 = document.getElementById('result_19152').innerText == 'Correct'; res9 = document.getElementById('result_11467').innerText == 'Correct'; res10 = document.getElementById('result_34096').innerText == 'Correct'; res11 = document.getElementById('result_27073').innerText == 'Correct'; res12 = document.getElementById('result_80218').innerText == 'Correct'; res13 = document.getElementById('result_37484').innerText == 'Correct'; res14 = document.getElementById('result_53521').innerText == 'Correct'; res15 = document.getElementById('result_69775').innerText == 'Correct'; res16 = document.getElementById('result_39366').innerText == 'Correct';text = res1 + res2 + res3 + res4 + res5 + res6 + res7 + res8 + res9 + res10 + res11 + res12 + res13 + res14 + res15 + res16;element.innerHTML = text;
+         return false;
+         }}</script>
+</div>
+</div>
+<p>Note - A&amp;C would be acceptable if justified well.</p>
 <ol start="13" type="a">
 <li>Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span>, and <span class="math inline">\(\mu_3\)</span> in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Strong evidence against the null, in favor of the alternative</li>
+<li>Only strong evidence that there is a difference between Maxima and Mazda6</li>
+<li>Mazda6 has the smallest mean and may be different from others, but only evidence less than Maxima.</li>
+<li>Conditions are satisfied so we can trust test results</li>
+<li>Data is simple random sample of three car models in used-car retailers in 2017 so we can generalize to all used car of these model types in 2017</li>
+<li>Note - this is not a complete answer - write out a complete answers with details and values</li>
+</ul>
+</div>
+</div>
+</div>
 
 
 <script type="webr-data">

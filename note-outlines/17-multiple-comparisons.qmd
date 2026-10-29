@@ -709,7 +709,7 @@ euro_no_gk_2024 <- euro |>
 
 
 ```{r}
-#| label: code-help
+#| label: read-data
 #| echo: false
 euro <- read_csv("data/euro-cup.csv", show_col_types = FALSE)
 euro_no_gk_2024 <- euro |> 

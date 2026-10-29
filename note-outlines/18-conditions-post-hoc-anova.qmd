@@ -564,6 +564,8 @@ checkdown::check_question(answer = "False",
 
 f. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
 
+Note - this is an edge case of moderate evidence, but the CI does contain 0.
+
 ```{r}
 #| label: asn-1-f
 #| echo: false
@@ -590,7 +592,11 @@ h. State the conclusion in the context based on the Tukey test. Use accurate lan
 
 :::{.callout-tip collapse="true"}
 #### Answer
-discrete
+- Very strong evidence of a difference between defenders and midfielders
+- Moderate evidence of a difference between forwards and midfielders
+- No evidence of a difference between defenders and forwards
+- Midfielders seem slower (lower top speed)
+- Note - this is not a complete answer - write out a complete answers with details and values
 :::
 
 
@@ -609,29 +615,63 @@ plot(euro_aov, 1, add.smooth = FALSE)
 
 j. Multiple-choice: Which of the following is true about the equal variance condition?
 
-\(A\) There is a sign of violating the equal variance condition.
+```{r}
+#| label: asn-1-j
+#| echo: false
+checkdown::check_question(answer = "There is no sign of violating the equal variance condition.",
+                          options = c("There is a sign of violating the equal variance condition.",
+                                      "There is no sign of violating the equal variance condition.",
+                                      "The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)",
+                                      "None of the above."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) There is no sign of violating the equal variance condition.
 
-\(C\) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).
-
-\(D\) None of the above.
 
 k. Create a QQ Plot for the Residuals
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-1-k
+#| echo: false
+plot(euro_aov, 2)
+```
+
+:::
+
 l. Multiple-choice: Which of the following is true about the normality condition?
 
-\(A\) There is a sign of violating the normality condition.
+```{r}
+#| label: asn-1-l
+#| echo: false
+checkdown::check_question(answer = "(A) and (C)",
+                          options = c("There is a sign of violating the normality condition.",
+                                      "There is no sign of violating the normality condition.",
+                                      "The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).",
+                                      "(A) and (C)",
+                                      "None of the above."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) There is no sign of violating the normality condition condition.
-
-\(C\) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
-
-\(D\) (A) and (C)
 
 m. Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
 
-
+:::{.callout-tip collapse="true"}
+#### Answer
+- Very strong evidence against the null, in favor of the alternative
+- Actual differences in means are small relative to their standard deviation
+- Statistical differences may be driven in part by sample sizes
+- Very strong evidence of a difference between defenders and midfielders
+- Moderate evidence of a difference between forwards and midfielders
+- No evidence of a difference between defenders and forwards
+- Midfielders seem slower (lower top speed)
+- Conditions are satisfied so we can trust test results
+- Data is a convenience sample so we cannot generalize to all European Football players
+- Note - this is not a complete answer - write out a complete answers with details and values
+:::
 
 
 
@@ -663,7 +703,7 @@ TukeyHSD(cars_aov)
 b. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 < \mu_1$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-b
 #| echo: false
 checkdown::check_question(answer = "False",
                           options = c("True",
@@ -675,7 +715,7 @@ checkdown::check_question(answer = "False",
 c. $\mu_2 - \mu_1 \ne 0$ (especially $\mu_2 > \mu_1$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-c
 #| echo: false
 checkdown::check_question(answer = "False",
                           options = c("True",
@@ -687,7 +727,7 @@ checkdown::check_question(answer = "False",
 d. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 < \mu_1$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-d
 #| echo: false
 checkdown::check_question(answer = "False",
                           options = c("True",
@@ -699,7 +739,7 @@ checkdown::check_question(answer = "False",
 e. $\mu_3 - \mu_1 \ne 0$ (especially $\mu_3 > \mu_1$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-e
 #| echo: false
 checkdown::check_question(answer = "False",
                           options = c("True",
@@ -711,9 +751,9 @@ checkdown::check_question(answer = "False",
 f. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 < \mu_2$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-f
 #| echo: false
-checkdown::check_question(answer = "False",
+checkdown::check_question(answer = "True",
                           options = c("True",
                                       "False"),
                           type = "select",
@@ -723,7 +763,7 @@ checkdown::check_question(answer = "False",
 g. $\mu_3 - \mu_2 \ne 0$ (especially $\mu_3 > \mu_2$)
 
 ```{r}
-#| label: asn-1-b
+#| label: asn-2-g
 #| echo: false
 checkdown::check_question(answer = "False",
                           options = c("True",
@@ -735,6 +775,13 @@ checkdown::check_question(answer = "False",
 
 h. State the conclusion in the context based on the Tukey test. Use accurate language, interpret discernible CIs, and report p-value.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+- Only strong evidence that there is a difference between Maxima and Mazda6
+- Mazda6 costs less
+- Note - this is not a complete answer - write out a complete answers with details and values
+:::
+
 
 i. Create a Residual Plot.
 
@@ -743,38 +790,61 @@ i. Create a Residual Plot.
 ```{r}
 #| label: asn-2-i
 #| echo: false
-plot(euro_aov, 1, add.smooth = FALSE)
+plot(cars_aov, 1, add.smooth = FALSE)
 ```
 :::
 
 j. Multiple-choice: Which of the following is true about the equal variance condition?
 
-\(A\) There is a sign of violating the equal variance condition.
-
-\(B\) There is no sign of violating the equal variance condition.
-
-\(C\) The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated).
-
-\(D\) None of the above.
+```{r}
+#| label: asn-2-j
+#| echo: false
+checkdown::check_question(answer = "There is no sign of violating the equal variance condition.",
+                          options = c("There is a sign of violating the equal variance condition.",
+                                      "There is no sign of violating the equal variance condition.",
+                                      "The sample size is at least 30 per group, so violating the equal variance condition is tolerable (if violated)",
+                                      "None of the above."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 k. Create a QQ Plot for the Residuals
 
 ```{r}
-#| label: asn-1-i
+#| label: asn-2-k
 #| echo: false
-plot(euro_aov, 1, add.smooth = FALSE)
+plot(cars_aov, 2)
 ```
 
 l. Multiple-choice: Which of the following is true about the normality condition?
 
-\(A\) There is a sign of violating the normality condition.
 
-\(B\) There is no sign of violating the normality condition condition.
+```{r}
+#| label: asn-2-l
+#| echo: false
+checkdown::check_question(answer = "There is no sign of violating the normality condition.",
+                          options = c("There is a sign of violating the normality condition.",
+                                      "There is no sign of violating the normality condition.",
+                                      "The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).",
+                                      "(A) and (C)",
+                                      "None of the above."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(C\) The sample size is at least 30 per group, so violating the normality condition is tolerable (if violated).
+Note - A&C would be acceptable if justified well.  
 
-\(D\) (A) and (C)
 
 
 m. Update your previous conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). Lastly, discuss potential limitation(s) of your data analysis (how the statistical analysis could be better).
+
+:::{.callout-tip collapse="true"}
+#### Answer
+- Strong evidence against the null, in favor of the alternative 
+- Only strong evidence that there is a difference between Maxima and Mazda6
+- Mazda6 has the smallest mean and may be different from others, but only evidence less than Maxima.
+- Conditions are satisfied so we can trust test results
+- Data is simple random sample of three car models in used-car retailers in 2017 so we can generalize to all used car of these model types in 2017 
+- Note - this is not a complete answer - write out a complete answers with details and values
+:::
 
