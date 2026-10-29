@@ -426,11 +426,12 @@ checkdown::check_question(answer = "about 9,500 researchers' CIs will capture th
                           options = c("they will observe the same 95% CI because they take samples from the same population",
                                       "all researchers' 95% CIs will capture the population mean",
                                       "about 9,500 researchers' CIs will capture the population mean",
-                                      "all researchers know whether their CIs captured the population mean or not.",
-                                      "about 9,500 know whether their CIs captured the population mean or not."),
+                                      "all researchers know whether their CIs captured the population mean or not",
+                                      "about 9,500 know whether their CIs captured the population mean or not"),
                           button_label = "Check Your Answer", 
                           type = "radio")
 ```
+
 
 #### Problem 6  
 In baseball, loosely speaking, a batting average is defined as the probability of making a successful hit when a batter is at bat. Let $\theta$ be the true batting average of a baseball player. Suppose the baseball player made 44 successful hits out of 222 times at bat.

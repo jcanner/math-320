@@ -562,12 +562,32 @@ Fill in the blank. Be cautious that some words have hyphen (-) as joint words.
 
 a. The \[...\] variance refers to the variability of individual data points from their own group sample average.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+within-group - Mean Square Within (Mean Square Error)
+:::
 
 b. The \[...\] variance refers to the variability among the group sample averages.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+between-group - Mean Square Between (Mean Square Between)
+:::
+
 c. In the ANOVA test, a large value of F statistic results in a small value of \[...\] which implies strong evidence for the alternative hypothesis under the assumption of the null hypothesis.
 
-d. The ANOVA is referred to as an \[...\] omnibus test, because it assumes all of the nulls true at once.  
+:::{.callout-tip collapse="true"}
+#### Answer
+p-value
+:::
+
+d. The ANOVA is referred to as an \[...\] test, because it assumes all of the nulls true at once.  
+
+:::{.callout-tip collapse="true"}
+#### Answer
+omnibus 
+:::
+
 
 #### Problem 2
 In a small study of comparing three groups, suppose the respective sample sizes are $n_1 = n_2 = n_3 = 3$, the respective sample means are $\bar{X}_1 = 3$, $\bar{X}_2 = 4$, and $\bar{X}_3 = 5$, and the respective sample standard deviations are $S_1 = S_2 = S_3 = 1$. Given these statistics, complete the following ANOVA table.
@@ -578,6 +598,15 @@ In a small study of comparing three groups, suppose the respective sample sizes 
 | Within-group | $\texttt{SSW} = [\texttt{b}]$ | $\nu_w  = [\texttt{d}]$ | $\texttt{MSW} = [\texttt{f}]$ |  |
 
 : ANOVA table for calculating the F statistic
+
+:::{.callout-tip collapse="true"}
+#### Answer
+| Type of Variance | Sum of Squares | Degrees of Freedom | Mean Square | F Statistic |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| Between-group | $\texttt{SSB} = 6$ | $\nu_b = 2$ | $\texttt{MSB}  = 3$ | $F = 3$ |
+| Within-group | $\texttt{SSW} = 6$ | $\nu_w  = 6$ | $\texttt{MSW} = 1$ |  |
+
+:::
 
 #### Problem 3
 Suppose three independent researchers conducted studies of comparing three groups. All three researchers had a sample size of 5 per group (i.e., $n_1 = n_2 = n_3 = 3$), but they observed different sample means and standard deviations as follows.
@@ -590,54 +619,73 @@ Suppose three independent researchers conducted studies of comparing three group
 
 a. Multiple-choice: Which researcher has the largest value of $\texttt{SSB}$?
 
-\(A\) Researcher A
+```{r}
+#| label: wrap-3-a
+#| echo: false
+checkdown::check_question(answer = "Researcher C",
+                          options = c("Researcher A",
+                                      "Researcher B",
+                                      "Researcher C",
+                                      "All researchers had the same result.",
+                                      "Unable to tell; need full data or ANOVA table."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) Researcher B
 
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
 
 b. Multiple-choice: Which researcher has the largest value of $\texttt{SSW}$?
 
-\(A\) Researcher A
-
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
+```{r}
+#| label: wrap-3-b
+#| echo: false
+checkdown::check_question(answer = "Researcher B",
+                          options = c("Researcher A",
+                                      "Researcher B",
+                                      "Researcher C",
+                                      "All researchers had the same result.",
+                                      "Unable to tell; need full data or ANOVA table."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Multiple-choice: Which researcher has the largest value of F statistic?
 
-\(A\) Researcher A
+```{r}
+#| label: wrap-3-c
+#| echo: false
+checkdown::check_question(answer = "Researcher C",
+                          options = c("Researcher A",
+                                      "Researcher B",
+                                      "Researcher C",
+                                      "All researchers had the same result.",
+                                      "Unable to tell; need full data or ANOVA table."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) Researcher B
-
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
 
 d. Multiple-choice: Which researcher has the largest value of p-value?
 
-\(A\) Researcher A
+```{r}
+#| label: wrap-3-d
+#| echo: false
+checkdown::check_question(answer = "Researcher B",
+                          options = c("Researcher A",
+                                      "Researcher B",
+                                      "Researcher C",
+                                      "All researchers had the same result.",
+                                      "Unable to tell; need full data or ANOVA table."),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) Researcher B
+e. Calculate the p-value for Researcher A. (Hint: Do not waste your work in Problem 2 because the given statistics are identical.) Use `1 - pf(F, df1 = [between] , df2 = [within])`
 
-\(C\) Researcher C
-
-\(D\) All researchers had the same result.
-
-\(E\) Unable to tell; need full data or ANOVA table.
-
-e. Calculate the p-value for Researcher A. (Hint: Do not waste your work in Problem 2 because the given statistics are identical.)
-
+:::{.callout-tip collapse="true"}
+#### Answer
+0.125
+:::
 
 ## Assignment
 
@@ -659,39 +707,101 @@ euro_no_gk_2024 <- euro |>
   filter(event == "Euro 2024")
 ```
 
+
+```{r}
+#| label: code-help
+#| echo: false
+euro <- read_csv("data/euro-cup.csv", show_col_types = FALSE)
+euro_no_gk_2024 <- euro |> 
+  filter(position != "Goalkeeper") |> 
+  filter(event == "Euro 2024")
+```
+
 Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame $\texttt{euro_no_gk_2024}$.
 
 a. Multiple-choice: Which of the following represents the null hypothesis $H_0$?
 
-\(A\) $\mu_1 = \mu_2 = \mu_3$
+```{r}
+#| label: asn-1-a
+#| echo: false
+checkdown::check_question(answer = "μ₁ = μ₂ = μ₃",
+                          options = c("μ₁ = μ₂ = μ₃",
+                                      "μ₁ ≠ μ₂ ≠ μ₃",
+                                      "μ₁ ≠ μ₂, μ₁ ≠ μ₃, and μ₂ ≠ μ₃",
+                                      "at least one of the true means is different from another",
+                                      "μ₁ < μ₂ < μ₃"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
 
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
-
-\(D\) at least one of the true means is different from the others
-
-\(E\) $\mu_1 < \mu_2 < \mu_3$
 
 b. Multiple-choice: Which of the following represents the alternative hypothesis $H_1$?
 
-\(A\) $\mu_1 > \mu_2 > \mu_3$
-
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
-
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
-
-\(D\) at least one of the true means is different from the others
-
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+```{r}
+#| label: asn-1-b
+#| echo: false
+checkdown::check_question(answer = "at least one of the true means is different from another",
+                          options = c("μ₁ = μ₂ = μ₃",
+                                      "μ₁ ≠ μ₂ ≠ μ₃",
+                                      "μ₁ ≠ μ₂, μ₁ ≠ μ₃, and μ₂ ≠ μ₃",
+                                      "at least one of the true means is different from another",
+                                      "μ₁ < μ₂ < μ₃"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-1-c
+#| echo: false
+df_stats(top_speed ~ position, data = euro_no_gk_2024)
+
+gf_boxplot(top_speed ~ position, data = euro_no_gk_2024,
+           xlab = "Position of Euro 2024 Players",
+           ylab = "Top Speed km/hr")
+```
+:::
+
 d. Report the F statistic from the ANOVA test.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-1-d
+#| echo: false
+
+euro_aov <- aov(top_speed ~ position, data = euro_no_gk_2024)
+anova(euro_aov)
+```
+:::
+
+:::{.callout-tip collapse="true"}
+#### Answer
+5.9576
+:::
+
 
 e. Report the p-value from the ANOVA test.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+0.002789
+:::
+
 f. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, and relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). 
+
+:::{.callout-tip collapse="true"}
+#### Answer
+- Very strong evidence against the null, in favor of the alternative
+- Actual differences in means are small relative to their standard deviation
+- Statistical differences may be driven in part by sample sizes
+- Note - this is not a complete answer - write out a complete answers with details and values
+:::
+
 
 #### Problem 2
 The dataset $\texttt{usedcars2017.csv}$ is a simple random sample of three car models in used-car retailers in 2017. The column $\texttt{CarType}$ is the car model ($\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$), and the column $\texttt{Price}$ is the sale price (in \$1,000). The objective of data analysis is to compare the average used-car price among the three models. Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the population average used-car price of $\texttt{Accord}$, $\texttt{Maxima}$, and $\texttt{Mazda6}$ in used-car retailers as of 2017.
@@ -701,38 +811,89 @@ Download the data here: [usedcars2017.csv](data/usedcars2017.csv)
 
 a. Multiple-choice: Which of the following represents the null hypothesis $H_0$?
 
-\(A\) $\mu_1 = \mu_2 = \mu_3$
-
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
-
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
-
-\(D\) at least one of the true means is different from the others
-
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+```{r}
+#| label: asn-2-a
+#| echo: false
+checkdown::check_question(answer = "μ₁ = μ₂ = μ₃",
+                          options = c("μ₁ = μ₂ = μ₃",
+                                      "μ₁ ≠ μ₂ ≠ μ₃",
+                                      "μ₁ ≠ μ₂, μ₁ ≠ μ₃, and μ₂ ≠ μ₃",
+                                      "at least one of the true means is different from another",
+                                      "μ₁ < μ₂ < μ₃"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 b. Multiple-choice: Which of the following represents the alternative hypothesis $H_1$?
 
-\(A\) $\mu_1 > \mu_2 > \mu_3$
-
-\(B\) $\mu_1 \ne \mu_2 \ne \mu_3$
-
-\(C\) $\mu_1 \ne \mu_2$, $\mu_1 \ne \mu_3$, and $\mu_2 \ne \mu3$
-
-\(D\) at least one of the true means is different from the others
-
-\(E\) $\mu_1 < \mu_2 < \mu_3$
+```{r}
+#| label: asn-2-b
+#| echo: false
+checkdown::check_question(answer = "at least one of the true means is different from another",
+                          options = c("μ₁ = μ₂ = μ₃",
+                                      "μ₁ ≠ μ₂ ≠ μ₃",
+                                      "μ₁ ≠ μ₂, μ₁ ≠ μ₃, and μ₂ ≠ μ₃",
+                                      "at least one of the true means is different from another",
+                                      "μ₁ < μ₂ < μ₃"),
+                          button_label = "Check Your Answer", 
+                          type = "radio")
+```
 
 c. Provide descriptive statistics and boxplot for the variable of interest by the groups. Describe in words.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-c
+#| echo: false
+
+used_cars <- read_csv("data/usedcars2017.csv", show_col_types = FALSE)
+
+df_stats(Price ~ CarType, data = used_cars)
+
+gf_boxplot(Price ~ CarType, data = used_cars,
+           xlab = "Car Type 2017",
+           ylab = "Price ($1000s)")
+```
+:::
+
 d. Report the F statistic from the ANOVA test.
 
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-d
+#| echo: false
+cars_aov <- aov(Price ~ CarType, data = used_cars)
+anova(cars_aov)
+```
+:::
+
+:::{.callout-tip collapse="true"}
+#### Answer
+4.3232
+:::
+
 e. Report the p-value from the ANOVA test.
+
+:::{.callout-tip collapse="true"}
+#### Answer
+```{r}
+#| label: asn-2-e
+#| echo: false
+0.01622
+```
+:::
 
 f. State the conclusion in the context. You must include the following: significance level, sample size, conclusion about $\mu_1$, $\mu_2$, and $\mu_3$ in the context, relevant statistics (T, DFs, and p). Also, refer to descriptive statistics and/or boxplot to argue that which group(s) appear to have greater average(s) than other group(s). 
 
 
-
+:::{.callout-tip collapse="true"}
+#### Answer
+- Strong evidence against the null, in favor of the alternative 
+- Mazda6 has the smallest mean and may be different from the others
+- Note - this is not a complete answer - write out a complete answers with details and values
+:::
 
 
 
