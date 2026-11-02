@@ -810,11 +810,16 @@ checkdown::check_question(answer = "There is no sign of violating the equal vari
 
 k. Create a QQ Plot for the Residuals
 
+
+
+:::{.callout-tip collapse="true"}
+#### Answer
 ```{r}
 #| label: asn-2-k
 #| echo: false
 plot(cars_aov, 2)
 ```
+:::
 
 l. Multiple-choice: Which of the following is true about the normality condition?
 

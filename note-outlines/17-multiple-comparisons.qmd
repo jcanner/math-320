@@ -717,7 +717,7 @@ euro_no_gk_2024 <- euro |>
   filter(event == "Euro 2024")
 ```
 
-Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame $\texttt{euro_no_gk_2024}$.
+Let $\mu_1$, $\mu_2$, and $\mu_3$ (parameters of interest) denote the expected maximum speed of $\texttt{Defender}$, $\texttt{Foward}$, and $\texttt{Midfielder}$ among European players in 2024 (population of interest). Answer the following question based on the cleaned data frame `euro_no_gk_2024`.
 
 a. Multiple-choice: Which of the following represents the null hypothesis $H_0$?
 
