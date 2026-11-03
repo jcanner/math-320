@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Correlation – MATH 320: Applied Probability and Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-142d9687c3f711bd3ef1b6bce998d27f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      MATH 320: Applied Probability and Statistics
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-center sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">MATH 320: Applied Probability and Statistics</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/jcanner/math-320" title="GitHub Organization" class="quarto-navigation-tool px-1" aria-label="GitHub Organization"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Getting Started with R</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/rstudio-orientation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RStudio Orientation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/intro-to-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../prep-materials/install-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Install R and RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Note Outlines</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/1-intro-r-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to R and Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/2-intro-probability-i.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability I</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/3-intro-probability-ii.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Probability II</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/4-bayes-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayes Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/5-discrete-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Discrete Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/6-continuous-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous Random Variables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/7-central-limit-theorem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Central Limit Theorem</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/8-intro-to-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/9-summarizing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summarizing and Visualizing Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/10-sampling-methods.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sampling Methods</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/11-intro-confidence-intervals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Confidence Intervals</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/12-intro-hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Hypothesis Testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/13-one-sample-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">One Sample t-Tests</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/14-practice-one-parameter-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practice with One Parameter Inference</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/15-paired-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Paired Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/16-independent-t-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inference for Independent Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/17-multiple-comparisons.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multiple Comparisons</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/18-conditions-post-hoc-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Conditions and Post-Hoc Tests</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#case-study-1-height-and-weight-of-nba-players" id="toc-case-study-1-height-and-weight-of-nba-players" class="nav-link active" data-scroll-target="#case-study-1-height-and-weight-of-nba-players"><span class="header-section-number">1</span> Case Study 1: Height and Weight of NBA Players</a></li>
+  <li><a href="#sample-covariance" id="toc-sample-covariance" class="nav-link" data-scroll-target="#sample-covariance"><span class="header-section-number">2</span> Sample Covariance</a></li>
+  <li><a href="#sample-correlation" id="toc-sample-correlation" class="nav-link" data-scroll-target="#sample-correlation"><span class="header-section-number">3</span> Sample Correlation</a></li>
+  <li><a href="#case-study-2-units-and-study-hours" id="toc-case-study-2-units-and-study-hours" class="nav-link" data-scroll-target="#case-study-2-units-and-study-hours"><span class="header-section-number">4</span> Case Study 2: Units and Study Hours</a></li>
+  <li><a href="#properties-of-sample-correlation" id="toc-properties-of-sample-correlation" class="nav-link" data-scroll-target="#properties-of-sample-correlation"><span class="header-section-number">5</span> Properties of Sample Correlation</a></li>
+  <li><a href="#correlation-test" id="toc-correlation-test" class="nav-link" data-scroll-target="#correlation-test"><span class="header-section-number">6</span> Correlation Test</a>
+  <ul class="collapse">
+  <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">6.1</span> Hypotheses</a></li>
+  <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic"><span class="header-section-number">6.2</span> Test Statistic</a></li>
+  <li><a href="#p-value" id="toc-p-value" class="nav-link" data-scroll-target="#p-value"><span class="header-section-number">6.3</span> P-value</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">6.4</span> Example</a></li>
+  <li><a href="#using-textttcor.test-function-in-r" id="toc-using-textttcor.test-function-in-r" class="nav-link" data-scroll-target="#using-textttcor.test-function-in-r"><span class="header-section-number">6.5</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</a></li>
+  </ul></li>
+  <li><a href="#case-study-3-vietnam-war-draft" id="toc-case-study-3-vietnam-war-draft" class="nav-link" data-scroll-target="#case-study-3-vietnam-war-draft"><span class="header-section-number">7</span> Case Study 3: Vietnam War Draft</a></li>
+  <li><a href="#sec-cig" id="toc-sec-cig" class="nav-link" data-scroll-target="#sec-cig"><span class="header-section-number">8</span> Case Study 4: Cigarette Consumption and Price in the United States</a></li>
+  <li><a href="#correlation-vs.-causation" id="toc-correlation-vs.-causation" class="nav-link" data-scroll-target="#correlation-vs.-causation"><span class="header-section-number">9</span> Correlation vs.&nbsp;Causation</a></li>
+  <li><a href="#case-study-5-speed-limit-and-car-accident-rate" id="toc-case-study-5-speed-limit-and-car-accident-rate" class="nav-link" data-scroll-target="#case-study-5-speed-limit-and-car-accident-rate"><span class="header-section-number">10</span> Case Study 5: Speed Limit and Car Accident Rate</a></li>
+  <li><a href="#warm-up" id="toc-warm-up" class="nav-link" data-scroll-target="#warm-up"><span class="header-section-number">11</span> Warm-up</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">12</span> Assignment</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Correlation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlZGl0IjpmYWxzZSwiZXZhbCI6dHJ1ZSwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJ3ZWJyOjppbnN0YWxsKFwiZ3JhZGV0aGlzXCIsIHF1aWV0ID0gVFJVRSlcbmxpYnJhcnkoZ3JhZGV0aGlzKVxub3B0aW9ucyh3ZWJyLmV4ZXJjaXNlLmNoZWNrZXIgPSBmdW5jdGlvbihcbiAgbGFiZWwsIHVzZXJfY29kZSwgc29sdXRpb25fY29kZSwgY2hlY2tfY29kZSwgZW52aXJfcmVzdWx0LCBldmFsdWF0ZV9yZXN1bHQsXG4gIGVudmlyX3ByZXAsIGxhc3RfdmFsdWUsIGVuZ2luZSwgc3RhZ2UsIC4uLlxuKSB7XG4gIGlmIChpcy5udWxsKGNoZWNrX2NvZGUpKSB7XG4gICAgIyBObyBncmFkaW5nIGNvZGUsIHNvIGp1c3Qgc2tpcCBncmFkaW5nXG4gICAgaW52aXNpYmxlKE5VTEwpXG4gIH0gZWxzZSBpZiAoaXMubnVsbChsYWJlbCkpIHtcbiAgICBsaXN0KFxuICAgICAgY29ycmVjdCA9IEZBTFNFLFxuICAgICAgdHlwZSA9IFwid2FybmluZ1wiLFxuICAgICAgbWVzc2FnZSA9IFwiQWxsIGV4ZXJjaXNlcyBtdXN0IGhhdmUgYSBsYWJlbC5cIlxuICAgIClcbiAgfSBlbHNlIGlmIChpcy5udWxsKHNvbHV0aW9uX2NvZGUpKSB7XG4gICAgbGlzdChcbiAgICAgIGNvcnJlY3QgPSBGQUxTRSxcbiAgICAgIHR5cGUgPSBcIndhcm5pbmdcIixcbiAgICAgIG1lc3NhZ2UgPSBodG1sdG9vbHM6OnRhZ3MkZGl2KFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcIkEgcHJvYmxlbSBvY2N1cnJlZCBncmFkaW5nIHRoaXMgZXhlcmNpc2UuXCIpLFxuICAgICAgICBodG1sdG9vbHM6OnRhZ3MkcChcbiAgICAgICAgICBcIk5vIHNvbHV0aW9uIGNvZGUgd2FzIGZvdW5kLiBOb3RlIHRoYXQgZ3JhZGluZyBleGVyY2lzZXMgdXNpbmcgdGhlIFwiLFxuICAgICAgICAgIGh0bWx0b29sczo6dGFncyRjb2RlKFwiZ3JhZGV0aGlzXCIpLFxuICAgICAgICAgIFwicGFja2FnZSByZXF1aXJlcyBhIG1vZGVsIHNvbHV0aW9uIHRvIGJlIGluY2x1ZGVkIGluIHRoZSBkb2N1bWVudC5cIlxuICAgICAgICApXG4gICAgICApXG4gICAgKVxuICB9IGVsc2Uge1xuICAgIGdyYWRldGhpczo6Z3JhZGV0aGlzX2V4ZXJjaXNlX2NoZWNrZXIoXG4gICAgICBsYWJlbCA9IGxhYmVsLCBzb2x1dGlvbl9jb2RlID0gc29sdXRpb25fY29kZSwgdXNlcl9jb2RlID0gdXNlcl9jb2RlLFxuICAgICAgY2hlY2tfY29kZSA9IGNoZWNrX2NvZGUsIGVudmlyX3Jlc3VsdCA9IGVudmlyX3Jlc3VsdCxcbiAgICAgIGV2YWx1YXRlX3Jlc3VsdCA9IGV2YWx1YXRlX3Jlc3VsdCwgZW52aXJfcHJlcCA9IGVudmlyX3ByZXAsXG4gICAgICBsYXN0X3ZhbHVlID0gbGFzdF92YWx1ZSwgc3RhZ2UgPSBzdGFnZSwgZW5naW5lID0gZW5naW5lKVxuICB9XG59KSJ9
+</script>
+</div>
+</div>
+<div class="cell" data-edit="false">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwiOnRydWUsImluY2x1ZGUiOmZhbHNlLCJsYWJlbCI6InRoZW1lIiwib3V0cHV0IjpmYWxzZSwid2FybmluZyI6dHJ1ZX0sImNvZGUiOiJsaWJyYXJ5KGdncGxvdDIpXG50aGVtZV9zZXQodGhlbWVfbGlnaHQoKSlcbm9wdGlvbnMoZ2dwbG90Mi5jb250aW51b3VzLmNvbG9yID0gc2NhbGVfY29sb3JfdmlyaWRpc19jLCBcbiAgICAgICAgZ2dwbG90Mi5jb250aW51b3VzLmZpbGwgPSBzY2FsZV9maWxsX3ZpcmlkaXNfYyxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5jb2xvciA9IHNjYWxlX2NvbG9yX3ZpcmlkaXNfZCxcbiAgICAgICAgZ2dwbG90Mi5kaXNjcmV0ZS5maWxsID0gc2NhbGVfZmlsbF92aXJpZGlzX2QpIn0=
+</script>
+</div>
+</div>
+<p>A statistical research question can be formulated as “Is <span class="math inline">\(Y\)</span> explained by <span class="math inline">\(X\)</span>?” or “Does <span class="math inline">\(Y\)</span> depend on <span class="math inline">\(X\)</span>?” In this kind of question, <span class="math inline">\(Y\)</span> is referred to as the <strong>response variable</strong>, and <span class="math inline">\(X\)</span> is referred to as the <strong>explanatory variable</strong>. The two-sample t-test addresses this kind of question when <span class="math inline">\(Y\)</span> is numeric (following a normal distribution) and <span class="math inline">\(X\)</span> is categorical with two levels. The ANOVA is when <span class="math inline">\(Y\)</span> is numeric and <span class="math inline">\(X\)</span> is categorical with three or more levels. In this chapter, both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are numeric, and we assume that the expectation of <span class="math inline">\(Y\)</span> changes with respect to <span class="math inline">\(X\)</span>.</p>
+<section id="case-study-1-height-and-weight-of-nba-players" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="case-study-1-height-and-weight-of-nba-players"><span class="header-section-number">1</span> Case Study 1: Height and Weight of NBA Players</h2>
+<p>The research question is whether the expected weight increases with respect to height or not among basketball players. The dataset <span class="math inline">\(\texttt{chicago-bulls-1996-97.csv}\)</span> is the roster of <span class="math inline">\(n = 15\)</span> players of Chicago Bulls in the season of 1996-97.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bulls <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/chicago-bulls-1996-97.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bulls <span class="do">### print all data (15 rows)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 7
+      No Player          Position    Ht    Wt `Birth Date`   Exp
+   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+ 1     1 Randy Brown     PG          74   190 5/22/1968        5
+ 2    30 Jud Buechler    SF          78   220 6/19/1968        6
+ 3    35 Jason Caffey    PF          80   255 6/12/1973        1
+ 4    18 Bison Dele      C           81   235 4/6/1969         5
+ 5     9 Ron Harper      PG          78   185 1/20/1964       10
+ 6    23 Michael Jordan  SG          78   198 2/17/1963       11
+ 7    25 Steve Kerr      PG          75   175 9/27/1965        8
+ 8     7 Toni Kukoc      SF          82   192 9/18/1968        3
+ 9    13 Luc Longley     C           86   265 1/19/1969        5
+10     0 Robert Parish   C           85   230 8/30/1953       20
+11    33 Scottie Pippen  SF          80   210 9/25/1965        9
+12    91 Dennis Rodman   PF          79   210 5/13/1961       10
+13     8 Dickey Simpkins PF          81   248 4/6/1972         2
+14     6 Matt Steigenga  SF          79   225 3/27/1970        0
+15    34 Bill Wennington C           84   245 4/26/1963        9</code></pre>
+</div>
+</div>
+<p>The column <span class="math inline">\(\texttt{Wt}\)</span> is the body weight in pounds, and the column <span class="math inline">\(\texttt{Ht}\)</span> is the height in inches. As our objective is to explain the weight (<span class="math inline">\(\texttt{Wt}\)</span>) by the height (<span class="math inline">\(\texttt{Ht}\)</span>), the weight is the response variable, and the height is the explanatory variable in our analysis. The two numeric variables can be visualized using the <strong>scatterplot</strong>. Can we see any linear pattern in the random data points?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( Wt <span class="sc">~</span> Ht, <span class="at">data =</span> bulls,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Chicago Bulls Players in 1996-97"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Height (inches)"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Weight (pounds)"</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/bulls-scatterplot-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Chicago Bulls Players in 1996-97”." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sample-covariance" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sample-covariance"><span class="header-section-number">2</span> Sample Covariance</h2>
+<p>In this section, we quantify the direction and strength of linear relationship between two numeric variables. Let <span class="math inline">\((X_i, Y_i)\)</span> be the paired variables of the <span class="math inline">\(i^{\mathrm{th}}\)</span> subject in a sample for <span class="math inline">\(i = 1, 2, \dots, n\)</span>. The <strong>sample covariance</strong> is a statistic which is defined as follows:</p>
+<p><span id="eq-cov"><span class="math display">\[
+S_{XY} = \frac{1}{n - 1} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})
+\tag{1}\]</span></span></p>
+<p>where <span class="math inline">\(\bar{X} = \frac{1}{n} \sum_{i=1}^n X_i\)</span> and <span class="math inline">\(\bar{Y} = \frac{1}{n} \sum_{i=1}^n Y_i\)</span> are the sample means. The sample covariance measures the average deviation of each variable from the mean. If <span class="math inline">\(Y_i\)</span> is expected to be above <span class="math inline">\(\bar{Y}\)</span> when <span class="math inline">\(X_i\)</span> is above <span class="math inline">\(\bar{X}\)</span>, the sample covariance is positive. If <span class="math inline">\(Y_i\)</span> is expected to be above <span class="math inline">\(\bar{Y}\)</span> when <span class="math inline">\(X_i\)</span> is below <span class="math inline">\(\bar{X}\)</span>, the sample covariance is negative. Below is the calculation of sample covariance of <span class="math inline">\(\texttt{Ht}\)</span> and <span class="math inline">\(\texttt{Wt}\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bulls_cov <span class="ot">&lt;-</span> bulls <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Player, Position, Ht, Wt) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_ht =</span> <span class="fu">mean</span>(<span class="sc">~</span>Ht),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">mean_wt =</span> <span class="fu">mean</span>(<span class="sc">~</span>Wt),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">dev_ht =</span> Ht <span class="sc">-</span> mean_ht,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">dev_wt =</span> Wt <span class="sc">-</span> mean_wt,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">dev_ht_wt =</span> dev_ht<span class="sc">*</span>dev_wt)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>bulls_cov</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 9
+   Player          Position    Ht    Wt mean_ht mean_wt dev_ht dev_wt dev_ht_wt
+   &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+ 1 Randy Brown     PG          74   190      80    219.     -6 -28.9     173.  
+ 2 Jud Buechler    SF          78   220      80    219.     -2   1.13     -2.27
+ 3 Jason Caffey    PF          80   255      80    219.      0  36.1       0   
+ 4 Bison Dele      C           81   235      80    219.      1  16.1      16.1 
+ 5 Ron Harper      PG          78   185      80    219.     -2 -33.9      67.7 
+ 6 Michael Jordan  SG          78   198      80    219.     -2 -20.9      41.7 
+ 7 Steve Kerr      PG          75   175      80    219.     -5 -43.9     219.  
+ 8 Toni Kukoc      SF          82   192      80    219.      2 -26.9     -53.7 
+ 9 Luc Longley     C           86   265      80    219.      6  46.1     277.  
+10 Robert Parish   C           85   230      80    219.      5  11.1      55.7 
+11 Scottie Pippen  SF          80   210      80    219.      0  -8.87      0   
+12 Dennis Rodman   PF          79   210      80    219.     -1  -8.87      8.87
+13 Dickey Simpkins PF          81   248      80    219.      1  29.1      29.1 
+14 Matt Steigenga  SF          79   225      80    219.     -1   6.13     -6.13
+15 Bill Wennington C           84   245      80    219.      4  26.1     105.  </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bulls_cov <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">covariance =</span> <span class="fu">sum</span>(dev_ht_wt<span class="sc">/</span>(<span class="fu">n</span>()<span class="sc">-</span><span class="dv">1</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  covariance
+       &lt;dbl&gt;
+1       66.5</code></pre>
+</div>
+</div>
+<p>The calculated sample covariance of <span class="math inline">\(\texttt{Ht}\)</span> and <span class="math inline">\(\texttt{Wt}\)</span> is <span class="math inline">\(+66.5\)</span>. Its unit is inches <span class="math inline">\(\times\)</span> pound, and it is not easy to be interpreted in the context. At least, its sign (<span class="math inline">\(+\)</span>) indicates that the player’s weight is expected to be above the average weight (219 pounds) when the player’s height is above average (80 inches). The sample covariance can be simply calculated by the <span class="math inline">\(\texttt{cov}\)</span> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>( Wt <span class="sc">~</span> Ht, <span class="at">data =</span> bulls ) <span class="do">### sample covariance of height and weight</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 66.5</code></pre>
+</div>
+</div>
+</section>
+<section id="sample-correlation" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sample-correlation"><span class="header-section-number">3</span> Sample Correlation</h2>
+<p>The <strong>sample correlation</strong> is defined as</p>
+<p><span class="math display">\[
+R_{XY} = \frac{S_{XY}}{S_{X} \, S_Y}
+\]</span></p>
+<p>where <span class="math inline">\(S_{XY}\)</span> is the sample covariance defined in <a href="#eq-cov" class="quarto-xref">Equation&nbsp;1</a> and</p>
+<p><span class="math display">\[
+\begin{aligned}
+S_X &amp; = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 } \, , \\
+S_Y &amp; = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (Y_i - \bar{Y})^2 }
+\end{aligned}
+\]</span></p>
+<p>are the sample standard deviations of each variable. Continuing from the calculation of sample covariance of <span class="math inline">\(\texttt{Ht}\)</span> and <span class="math inline">\(\texttt{Wt}\)</span>, below is the calculation of sample correlation of <span class="math inline">\(\texttt{Ht}\)</span> and <span class="math inline">\(\texttt{Wt}\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bulls_cov <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">covariance =</span> <span class="fu">sum</span>(dev_ht_wt<span class="sc">/</span>(<span class="fu">n</span>()<span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">correlation =</span> covariance<span class="sc">/</span>(<span class="fu">sd</span>(<span class="sc">~</span>Ht)<span class="sc">*</span><span class="fu">sd</span>(<span class="sc">~</span>Wt)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  covariance correlation
+       &lt;dbl&gt;       &lt;dbl&gt;
+1       66.5       0.719</code></pre>
+</div>
+</div>
+<p>Alternatively, the sample correlation can be calculated by the <span class="math inline">\(\texttt{cor}\)</span> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>( Wt <span class="sc">~</span> Ht, <span class="at">data =</span> bulls ) <span class="do">### sample correlation of height and weight</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.719134</code></pre>
+</div>
+</div>
+<p>The sample correlation 0.719 is a unitless statistic, so it does not have a clear interpretation. Instead, we verbally describe the sample correlation as in Table <strong>?@tbl-cor</strong>. (The verbal description varies by research areas, textbooks, literature, etc.) According to <strong>?@tbl-cor</strong>, the height and weight of Chicago Bulls players have a very strong positive correlation.</p>
+<table class="caption-top table">
+<caption>Verbal description of sample correlation</caption>
+<thead>
+<tr class="header">
+<th>Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\((+0.7, +1)\)</span></td>
+<td>Strong positive correlation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((+0.3, +0.7)\)</span></td>
+<td>Moderate positive correlation</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\((+0.1, +0.3)\)</span></td>
+<td>Weak positive correlation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((-0.1, +0.1)\)</span></td>
+<td>Negligible correlation</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\((-0.3, -0.1)\)</span></td>
+<td>Weak negative correlation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((-0.7, -0.3)\)</span></td>
+<td>Moderate negative correlation</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\((-1, -0.7)\)</span></td>
+<td>Strong negative correlation</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="case-study-2-units-and-study-hours" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="case-study-2-units-and-study-hours"><span class="header-section-number">4</span> Case Study 2: Units and Study Hours</h2>
+<p>The dataset <span class="math inline">\(\texttt{studyhours.csv}\)</span> is a sample of $n = 110$ college students in an introductory statistics course. The column <span class="math inline">\(\texttt{units}\)</span> is the number of units taking in the semester, <span class="math inline">\(\texttt{hours}\)</span> is the study hours per week outside of classroom, and both <span class="math inline">\(\texttt{units}\)</span> and <span class="math inline">\(\texttt{hour}\)</span> are numeric variables. Can study hours be explained by units?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>studyhours <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/studyhours.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Students in Introductory Statistics Course"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Semester units"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Study hours per week"</span> )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ), <span class="at">col =</span> <span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-6-1.png" style="width:50.0%;height:50.0%" alt="Scatterplot of units and study hours" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) <span class="do">### sample correlation of units and study hours</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1958239</code></pre>
+</div>
+</div>
+<p>The sample correlation of 0.196 indicates that the units and study hours of college students have a weak positive correlation. The expected study hours per week (linearly) increases with respect to units, but the (linear) relationship is weak.</p>
+</section>
+<section id="properties-of-sample-correlation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="properties-of-sample-correlation"><span class="header-section-number">5</span> Properties of Sample Correlation</h2>
+<p>The sample correlation is a universal statistic for quantifying the direction and strength of the linear relationship between two numeric variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. It has the following properties:</p>
+<ol type="1">
+<li>The sample correlation is a unitless statistic.</li>
+<li>The sample correlation is between –1 and +1. (They imply a perfect negative and positive linear relationship, respectively.)</li>
+<li>The sample correlation of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is the same as the sample correlation of <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span>.</li>
+<li>A sample correlation of zero implies that no linear relationship is observed between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li>It measures a linear relationship only, and does not measure a non-linear relationship.</li>
+</ol>
+<p>Below are scatterplots of hypothetical samples and their sample correlations.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-7-1.png" style="width:100.0%;height:100.0%" alt="Scatterplot of hypothetical samples and their sample correlations" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-test" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="correlation-test"><span class="header-section-number">6</span> Correlation Test</h2>
+<p>If two numeric variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have no linear relationship, the sample correlation <span class="math inline">\(R_{XY}\)</span> will be close to zero. Given a sample correlation calculated from a sample of size <span class="math inline">\(n\)</span>, we can test whether the true correlation is zero or not. Let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<section id="hypotheses" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="hypotheses"><span class="header-section-number">6.1</span> Hypotheses</h3>
+<p>The null hypothesis is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span>, and the alternative hypothesis is one of the following three kinds.</p>
+<ul>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span> (right-sided test)</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &lt; 0\)</span> (left-sided test)</p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} \ne 0\)</span> (two-sided test)</p></li>
+</ul>
+</section>
+<section id="test-statistic" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="test-statistic"><span class="header-section-number">6.2</span> Test Statistic</h3>
+<p>The test statistic is given by</p>
+<p><span class="math display">\[
+T = \frac{R_{XY} - 0}{ \texttt{SE} }
+\]</span></p>
+<p>which is called a <strong>T statistic</strong> (for testing correlation). The denominator <span class="math inline">\(\texttt{SE}\)</span> is the <strong>standard erro</strong>r which quantifies the uncertainty of sample correlation <span class="math inline">\(R_{XY}\)</span>, and it is given by</p>
+<p><span class="math display">\[
+\texttt{SE} = \sqrt{ \frac{1 - (R_{XY})^2}{ n - 2 } } \, .
+\]</span></p>
+<p>Assuming <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> is true, the null distribution of <span class="math inline">\(T\)</span> is the T distribution with <span class="math inline">\(\nu\)</span> degrees of freedom, <span class="math inline">\(T \sim \mathcal{T}(\nu)\)</span> where <span class="math inline">\(\nu = n - 2\)</span>.</p>
+</section>
+<section id="p-value" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="p-value"><span class="header-section-number">6.3</span> P-value</h3>
+<p>Given <span class="math inline">\(T = \texttt{t}\)</span>, the calculation of p-value depends on the direction of <span class="math inline">\(H_1\)</span> as follows:</p>
+<ul>
+<li><u>Right-sided test</u>: p = <span class="math inline">\(1 - \texttt{pt}(\texttt{t}, \nu)\)</span></li>
+<li><u>Left-sided test</u>: p = <span class="math inline">\(\texttt{pt}(\texttt{t}, \nu)\)</span></li>
+<li><u>Two-sided test</u>: p = <span class="math inline">\(2 * \texttt{pt}(\texttt{t}, \nu)\)</span> if <span class="math inline">\(\texttt{t} &lt; 0\)</span> or p = <span class="math inline">\(2 * (1 - \texttt{pt}(\texttt{t}, \nu))\)</span> if <span class="math inline">\(\texttt{t} &gt; 0\)</span></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-8-1.png" style="width:100.0%;height:100.0%" alt="P-value calculation" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If p-value is less than a fixed significance level of <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>. The universal definition of p-value is the probability of observing the currently observed test statistic or stronger evidence for <span class="math inline">\(H_1\)</span> under the assumption of <span class="math inline">\(H_0\)</span>. To this end, if p-value is small, it is evidence against <span class="math inline">\(H_0\)</span> and supports <span class="math inline">\(H_1\)</span>.</p>
+</section>
+<section id="example" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="example"><span class="header-section-number">6.4</span> Example</h3>
+<p>For the purpose of demonstration, let <span class="math inline">\(X\)</span> be the semester units and <span class="math inline">\(Y\)</span> be the study hours per week in the population of college students. The parameter of interest is <span class="math inline">\(\rho_{XY}\)</span>, the population correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we calculated a sample correlation of <span class="math inline">\(R_{XY} = 0.196\)</span> in a sample of size <span class="math inline">\(n = 110\)</span>. We can perform the right-sided correlation test, <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, as follows.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">r =</span> <span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) ) <span class="do">### sample correlation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1958239</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">n =</span> <span class="fu">dim</span>(studyhours)[<span class="dv">1</span>] ) <span class="do">### sample size (number of rows in the data)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 110</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">se =</span> <span class="fu">sqrt</span>( (<span class="dv">1</span> <span class="sc">-</span> r<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### standard error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09436204</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">t =</span> ( r <span class="sc">-</span> <span class="dv">0</span> ) <span class="sc">/</span> se ) <span class="do">### T statistic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.07524</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">p =</span> ( <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02016997</code></pre>
+</div>
+</div>
+<p>Even though we observed a weak positive correlation (<strong>?@tbl-cor</strong>), at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the sample (110 college students) is statistically significant evidence that the semester units and study hours have a positive linear relationship (T = 2.075, DF = 108, and p = 0.020).</p>
+</section>
+<section id="using-textttcor.test-function-in-r" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="using-textttcor.test-function-in-r"><span class="header-section-number">6.5</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</h3>
+<p>The <span class="math inline">\(\texttt{cor.test}\)</span> function is useful for the correlation test.</p>
+<ul>
+<li><p>The first argument is <span class="math inline">\(\texttt{y} \sim \texttt{x}\)</span> where <span class="math inline">\(\texttt{x}\)</span> and <span class="math inline">\(\texttt{y}\)</span> are numeric variables.</p></li>
+<li><p><span class="math inline">\(\texttt{data}\)</span> is the data frame name.</p></li>
+<li><p><span class="math inline">\(\texttt{alternative}\)</span> is the direction of alternative hypothesis. Specify <span class="math inline">\(\texttt{"greater"}\)</span> for a right-sided test, <span class="math inline">\(\texttt{"less"}\)</span> for a left-sided test, or <span class="math inline">\(\texttt{"two.sided"}\)</span> for a two-sided test.</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours, <span class="at">alternative =</span> <span class="st">"greater"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  hours and units
+t = 2.0752, df = 108, p-value = 0.02017
+alternative hypothesis: true correlation is greater than 0
+95 percent confidence interval:
+ 0.03935182 1.00000000
+sample estimates:
+      cor 
+0.1958239 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="case-study-3-vietnam-war-draft" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="case-study-3-vietnam-war-draft"><span class="header-section-number">7</span> Case Study 3: Vietnam War Draft</h2>
+<p>During the Vietnam War (1955-1975), the U.S. Selective Service drafted about 2.2 million men between 1964 and 1973. The U.S. Selective Service randomly matched birth dates and lottery numbers, and men who had a lottery number of 195 or below should be on reserve. The question of interest is whether the lottery was truly random or not. Let us take a look at the dataset <span class="math inline">\(\texttt{draft1969.csv}\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>draft <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/draft1969.csv"</span>) <span class="do">### read data</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(draft, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  BirthMonth BirthDay DateNumeric Lottery
+1          1        1           1     305
+2          1        2           2     159
+3          1        3           3     251
+4          1        4           4     215
+5          1        5           5     101</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(draft, <span class="dv">5</span>) <span class="do">### last 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    BirthMonth BirthDay DateNumeric Lottery
+362         12       27         362      78
+363         12       28         363     123
+364         12       29         364      16
+365         12       30         365       3
+366         12       31         366     100</code></pre>
+</div>
+</div>
+<p>The column <span class="math inline">\(\texttt{DateNumeric}\)</span> is the numeric birth date (e.g., 1 to 366 for January 1 to December 31), and the column <span class="math inline">\(\texttt{Lottery}\)</span> is the randomly matched lottery number (1 to 366). For example, healthy men who were born on January 1 were not drafted (<span class="math inline">\(\texttt{Lottery} = 305\)</span>) and healthy men who were born on December 31 were drafted (<span class="math inline">\(\texttt{Lottery} = 100\)</span>). To investigate whether the lottery was fair (purely random) or not, the correlation test can be applied with <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> (zero correlation between the two numeric variables) and <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} \ne 0\)</span> (non-zero correlation) where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the numeric birth date and lottery number, respectively. The below scatterplot presents the data visually.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft, <span class="at">cex =</span> <span class="fl">0.5</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Numeric birth date"</span>,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Lottery number"</span>,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Vietnam War Draft (Dec. 1, 1969)"</span> )</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">h =</span> <span class="dv">195</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span> ) <span class="do">### horizontal dotted line at 195</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  ) <span class="do">### fit a line to data points</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-12-1.png" style="width:50.0%;height:50.0%" alt="Vietnam War Draft in 1969" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Let us conduct the correlation test (two-sided) using the <span class="math inline">\(\texttt{cor.test}\)</span> function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft, <span class="at">alternative =</span> <span class="st">"two.sided"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  Lottery and DateNumeric
+t = -4.4198, df = 364, p-value = 1.305e-05
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.3207751 -0.1260932
+sample estimates:
+       cor 
+-0.2256861 </code></pre>
+</div>
+</div>
+<p>The sample correlation –0.226 indicates a weak negative correlation, and it is evidence that the chance of being drafted is higher for men of later birth dates. At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the result is statistically significant that the draft was not pair, particularly against men of later birth dates (T = –4.420, DF = 364, and p &lt; 0.0001). If the null hypothesis was true (zero correlation between numeric birth date and lottery number), the probability of observing this result or stronger evidence for the alternative hypothesis (non-zero correlation) is 0.000013, so it is hard to believe the null hypothesis, and we conclude the alternative hypothesis.</p>
+</section>
+<section id="sec-cig" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="sec-cig"><span class="header-section-number">8</span> Case Study 4: Cigarette Consumption and Price in the United States</h2>
+<p>The dataset <span class="math inline">\(\texttt{cigarettes.csv}\)</span> is state-level data (46 states) aggregated in 1992. It includes the following columns.</p>
+<ul>
+<li><p><span class="math inline">\(\texttt{packs}\)</span>: annual average number of cigarette packs consumed per person older than 16</p></li>
+<li><p><span class="math inline">\(\texttt{price}\)</span>: average price of one pack of cigarettes</p></li>
+</ul>
+<p><strong>Note:</strong> Each row is not a person. It is the estimated average per person in each state.</p>
+<p>The objective of data analysis is to test whether the expected cigarette consumption is lower when the price is higher or not. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be the explanatory variable (<span class="math inline">\(\texttt{price}\)</span>) and response variable (<span class="math inline">\(\texttt{packs}\)</span>), and let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation (parameter to be tested). Given the objective, the null hypothesis is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span>, and the alternative hypothesis is <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &lt; 0\)</span> (left-sided test). Below are the scatterplot and correlation test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cig <span class="ot">=</span> <span class="fu">read.csv</span>( <span class="st">"Data/cigarettes.csv"</span> )</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  state packs price
+1    AL 142.9  1.60
+2    AZ 106.0  1.47
+3    AR 165.2  1.71
+4    CA  90.4  2.31
+5    CT 106.7  2.10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   state packs price
+42    VA 138.5  1.31
+43    WA 105.8  2.24
+44    WV 124.5  1.32
+45    WI 125.2  1.70
+46    WY 148.5  1.26</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Average price (dollars per pack)"</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Aerage consumption (packs per person)"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Cigarette Price and Consumption by State"</span> )</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(packs <span class="sc">~</span> price, <span class="at">data =</span> cig), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-14-1.png" style="width:50.0%;height:50.0%" alt="Vietnam War Draft in 1969" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig, <span class="at">alternative =</span> <span class="st">"less"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  packs and price
+t = -4.1797, df = 44, p-value = 6.824e-05
+alternative hypothesis: true correlation is less than 0
+95 percent confidence interval:
+ -1.0000000 -0.3307208
+sample estimates:
+       cor 
+-0.5331066 </code></pre>
+</div>
+</div>
+<p>The sample correlation –0.533 indicates a moderate negative correlation between cigarette price and consumption. At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the result of correlation test is statistically significant that the expected cigarette consumption is lower when the price is higher (T = –4.1797, DF = 44, and p &lt; 0.0001).</p>
+</section>
+<section id="correlation-vs.-causation" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="correlation-vs.-causation"><span class="header-section-number">9</span> Correlation vs.&nbsp;Causation</h2>
+<p>Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a <strong>causal relationship</strong> when the change (manipulation) of <span class="math inline">\(X\)</span> results in the change of <span class="math inline">\(Y\)</span>. The sample correlation quantifies the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and it does not verify whether the relationship is causal or not. In other words, <u>correlation does not imply causation</u>.</p>
+<p>When researchers manipulate <span class="math inline">\(X\)</span> and measure <span class="math inline">\(Y\)</span>, it is called an <strong>experimental study</strong>. Otherwise, (i.e., researchers observe <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> without controlling <span class="math inline">\(X\)</span>), it is called an <strong>observational study</strong>. An experimental study can verify a causal relationship if experimenters can manipulate <span class="math inline">\(X\)</span> and do it carefully. An observational study cannot verify a causal relationship, and sometimes it results in a significant correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when they are not causally related.</p>
+<p>Does long hair cause long lifetime of human? Here is a hypothetical experiment. Suppose an experimenter samples people from the population and randomly assigns Group 1 or 2. Group 1 is forced to keep their hair short, Group 2 is forced to keep their hair long, and the experimenter records their lifetime. Disregarding the fact that this hypothetical experiment is unrealistic (taking about 100 years) and unethical (forcing human subjects), the experimenter probably will not obtain evidence for the causal relationship between hair length and lifetime.</p>
+<p>In an observational study, however, we may observe a positive correlation between hair length and lifetime. It is because women have longer hair than men on average, and the expected lifetime of women is longer than of men. The correlation between the explanatory variable (hair length) and the response variable (lifetime) exists through the third variable (sex). When a third variable is related to both explanatory variable and response variable, the third variable is called a <strong>confounding variable</strong> or <strong>confounder</strong>. In an observational study, we may observe a correlation between the explanatory variable and the response variable because of a confounding variable. Therefore, it is dangerous to claim a causal relationship based on the correlation observed in an observational study.</p>
+<p>In this regard, we shall carefully state the conclusion of Case Study 4 (<a href="#sec-cig" class="quarto-xref">Section&nbsp;8</a>). We observed a statistically significant correlation between cigarette price and consumption, but it is <u>not</u> evidence for the causation that lower cigarette price will reduce cigarette consumption (even if it is true). In order to obtain evidence for the causal relationship, we shall manipulate the cigarette price of each state and see if it affects the cigarette consumption. Can any researcher manipulate the cigarette price of each state in the United States? As such, conducting an experiment is challenging or sometimes nearly impossible in practice.</p>
+<p>The following case study is another observational study, and demonstrates the caveat of an observational study.</p>
+</section>
+<section id="case-study-5-speed-limit-and-car-accident-rate" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="case-study-5-speed-limit-and-car-accident-rate"><span class="header-section-number">10</span> Case Study 5: Speed Limit and Car Accident Rate</h2>
+<p>The top three causes of car accidents are known to be distracted driving, speeding, and driving under influence. This analysis focuses on speeding, specifically the relationship between speed limit and accident rate on highways in Minnesota. The dataset <span class="math inline">\(\texttt{highway.csv}\)</span> is a sample of 39 highway sections in Minnesota, and the data were collected in 1973. The column <span class="math inline">\(\texttt{rate}\)</span> is the accident rate per million vehicle miles in each highway section (response variable), and the column <span class="math inline">\(\texttt{slim}\)</span> is the speed limit of the highway section (explanatory variable). The objective is to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> (no correlation between speed limit and accident rate) versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span> (more accidents in high speed limit section) at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>highway <span class="ot">=</span> <span class="fu">read.csv</span>( <span class="st">"Data/highway.csv"</span> )</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( highway, <span class="dv">5</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  rate   len adt trks      sigs1 slim shld lane acpt  itg lwid htype
+1 4.58  4.99  69    8 0.20040080   55   10    8  4.6 1.20   12   FAI
+2 2.86 16.11  73    8 0.06207325   60   10    4  4.4 1.43   12   FAI
+3 3.02  9.75  49   10 0.10256410   60   10    4  4.7 1.54   12   FAI
+4 2.29 10.65  61   13 0.09389671   65   10    6  3.8 0.94   12   FAI
+5 1.61 20.01  28   12 0.04997501   70   10    4  2.2 0.65   12   FAI</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Minnesota Highways in 1973"</span>,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Speed limit (mph)"</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Accident rate (per million vehicle miles)"</span> )</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(rate <span class="sc">~</span> slim, <span class="at">data =</span> highway), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-15-1.png" style="width:50.0%;height:50.0%" alt="Highways in Minnesota in 1973" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway, <span class="at">alternative =</span> <span class="st">"greater"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  rate and slim
+t = -5.6565, df = 37, p-value = 1
+alternative hypothesis: true correlation is greater than 0
+95 percent confidence interval:
+ -0.8023193  1.0000000
+sample estimates:
+       cor 
+-0.6809836 </code></pre>
+</div>
+</div>
+<p>The data do not support the positive correlation between speed limit and accident rate (T = –5.657, DF = 37, and p = 1.0000). Instead, the scatterplot and sample correlation of -0.68 suggest a moderate negative correlation.</p>
+<p>Does the data suggest that low speed limit causes more accidents? No.&nbsp;The researchers did not manipulate the speed limit of highway sections, so it is an observational study. Then why is low speed limit is associated with high accident rate? Let us analyze pairwise correlations among other variables in the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>data_num <span class="ot">=</span> highway[ , <span class="fu">c</span>(<span class="st">"rate"</span>, <span class="st">"slim"</span>, <span class="st">"shld"</span>, <span class="st">"sigs1"</span>, <span class="st">"acpt"</span>) ] <span class="do">### extract the five columns</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>( <span class="fu">cor</span>(data_num), <span class="dv">3</span> ) <span class="do">### pairwise correlation between the five numeric variables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        rate   slim   shld  sigs1   acpt
+rate   1.000 -0.681 -0.387  0.603  0.752
+slim  -0.681  1.000  0.689 -0.424 -0.682
+shld  -0.387  0.689  1.000 -0.124 -0.425
+sigs1  0.603 -0.424 -0.124  1.000  0.513
+acpt   0.752 -0.682 -0.425  0.513  1.000</code></pre>
+</div>
+</div>
+<p>Potential confounding variables (moderately to strongly correlated with <span class="math inline">\(\texttt{rate}\)</span> and <span class="math inline">\(\texttt{slim}\)</span>) are:</p>
+<ul>
+<li><p><span class="math inline">\(\texttt{shld}\)</span>: the width of highway shoulder in feet (negatively correlated with <span class="math inline">\(\texttt{rate}\)</span> and positively correlated with <span class="math inline">\(\texttt{slim}\)</span>)</p></li>
+<li><p><span class="math inline">\(\texttt{sigs1}\)</span>: the adjusted number of signals per mile (positively correlated with <span class="math inline">\(\texttt{rate}\)</span> and negatively correlated with <span class="math inline">\(\texttt{slim}\)</span>)</p></li>
+<li><p><span class="math inline">\(\texttt{acpt}\)</span>: the number of access points (traffic merging points) per mile (positively correlated with <span class="math inline">\(\texttt{rate}\)</span> and negatively correlated with <span class="math inline">\(\texttt{slim}\)</span>)</p></li>
+</ul>
+<p>Perhaps, the above potential confounding variables (risk factors) have causal relationships with accidents (<span class="math inline">\(\texttt{rate}\)</span>) while the speed limit (<span class="math inline">\(\texttt{slim}\)</span>) was lowered due to the risk factors. The take-home message is that it is very difficult to verify the causal relationship with an observational study, and the sample correlation may results in the opposite direction of the expected direction.</p>
+</section>
+<section id="warm-up" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="warm-up"><span class="header-section-number">11</span> Warm-up</h2>
+<p><em>You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdH856VtAPHEUHg5c0tEqTsHqEvzl-fAquN-5MgVYTxqFTwzw/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><strong>Problem 1.</strong> Fill in the blank: The sample correlation measures the direction and strength of the [a] between two numeric variables, and it is bounded between [b] and [c].</p>
+<p>Word bank: –1, 0, 1, 100, causal relationship, confounder, correlation, linear relationship, non-linear relationship, quadratic, strength</p>
+<p><strong>Problem 2.</strong> Below are statements about the sample correlation between two numeric variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. True or false?</p>
+<p>a. Its unit is the product of the unit of <span class="math inline">\(X\)</span> and the unit of <span class="math inline">\(Y\)</span>.</p>
+<p>b. It quantifies only the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study, and it quantifies the non-linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an experimental study.</p>
+<p>c. It verifies the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>d. It can be calculated when the sample covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and the sample standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are given.</p>
+<p>e. When the sample correlation is small (e.g., 0.1) and the sample size is large (e.g., 10,000), it can result in a statistically significant evidence for the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>Problem 3.</strong> Fill in the blank: Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a(n) [a] relationship when the change of <span class="math inline">\(X\)</span> leads to the change of <span class="math inline">\(Y\)</span>. If researchers manipulate <span class="math inline">\(X\)</span> to study this relationship, it is referred to as a(n) [b]. Otherwise, it is referred as a(n) [c]. A third variable which is related to both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study is called a(n) [d], and it may create an unexpected relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when <span class="math inline">\(X\)</span> does not cause <span class="math inline">\(Y\)</span>. Therefore, [e] does not imply [f].</p>
+<p>Word bank: causal, causation, confounding variable, correlation, covariance, experimental study, explanatory variable, linear relationship, non-linear relationship, observational study, response variable</p>
+<p><strong>Problem 4.</strong> The dataset <span class="math inline">\(\texttt{icecream.csv}\)</span> is a sample of 30 randomly selected regions at random months between 1951 and 1953 in the United States. Each data point represents a region, and each column represents the average measure in the region. The column named <span class="math inline">\(\texttt{cons}\)</span> is the average consumption of ice cream per person (in pints), <span class="math inline">\(\texttt{income}\)</span> is the average weekly income per family (in dollars); <span class="math inline">\(\texttt{price}\)</span> is the average price of ice cream (dollars per pint); and <span class="math inline">\(\texttt{temp}\)</span> is the average temperature in the region (in Fahrenheit). Answer the following questions.</p>
+<p>a. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{income}\)</span>.</p>
+<p>b. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{price}\)</span>.</p>
+<p>c. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p>
+<p>d. Calculate the correlation between <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p>
+<p>e. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p>
+<p>For the following parts, let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation between <span class="math inline">\(X = \texttt{temp}\)</span> (explanatory variable) and <span class="math inline">\(Y = \texttt{cons}\)</span> (response variable), and the objective is to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>f. Report the p-value for the correlation test.</p>
+<p>g. Multiple-choice: Which conclusion is most appropriate about the relationship between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p>
+<p>(A) Higher temperature causes more ice cream consumption.</p>
+<p>(B) More ice consumption causes higher temperature.</p>
+<p>(C) The data suggest the positive linear relationship between ice cream consumption and temperature.</p>
+<p>(D) Due to the small sample size, there is a lack of statistical significance for the positive linear relationship.</p>
+<p>h. Fill in the blank: It is an [o… s…] because researchers could not control the temperature of each region in the United States.</p>
+<p>i. Multiple-choice: What does <span class="math inline">\(\alpha = 0.05\)</span> in the context?</p>
+<p>(A) If <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> are linearly related, we allowed a probability of 0.05 for concluding no linear relationship between them.</p>
+<p>(B) If <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> are not linearly related, we allowed a probability of 0.05 for concluding a positive linear relationship between them.</p>
+<p>(C) It is the probability that <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> have a positive linear relationship.</p>
+<p>(D) It is the probability that <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> have no linear relationship.</p>
+<p>(E) None of the above</p>
+</section>
+<section id="assignment" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="assignment"><span class="header-section-number">12</span> Assignment</h2>
+<p><em><strong>Instruction 1:</strong> You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAIV_qc08SGBdpaQf9puSiPUrCyEx1ND3x_PkEofFirs18vw/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
+<p><em><strong>Instruction 2:</strong> You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</em></p>
+<p><strong>Problem 1.</strong> Suppose we have four hypothetical samples as shown below.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="19-correlation_files/figure-html/unnamed-chunk-17-1.png" style="width:100.0%;height:100.0%" alt="Four hypothetical samples" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>a. Multiple-choice: Which sample results in a sample correlation closest to +1?</p>
+<p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
+<p>b. Multiple-choice: Which sample results in a sample correlation closest to –1?</p>
+<p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
+<p>c. Multiple-choice: Which sample results in a sample correlation closest to 0?</p>
+<p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
+<p><strong>Problem 2.</strong> Suppose we have five hypothetical samples as follows:</p>
+<ul>
+<li><p>Sample 1: <span class="math inline">\(R_{XY} = 0.9\)</span> and <span class="math inline">\(n = 5\)</span></p></li>
+<li><p>Sample 2: <span class="math inline">\(R_{XY} = 0.5\)</span> and <span class="math inline">\(n = 50\)</span></p></li>
+<li><p>Sample 3: <span class="math inline">\(R_{XY} = 0.1\)</span> and <span class="math inline">\(n = 5000\)</span></p></li>
+<li><p>Sample 4: <span class="math inline">\(R_{XY} = -0.5\)</span> and <span class="math inline">\(n = 50\)</span></p></li>
+<li><p>Sample 5: <span class="math inline">\(R_{XY} = -0.9\)</span> and <span class="math inline">\(n = 5\)</span></p></li>
+</ul>
+<p>a. Calculate T statistic for Sample 1.</p>
+<p>b. Which sample provides the strongest evidence for a positive linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5</p>
+<p>c. Which sample provides the strongest evidence for a negative linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5</p>
+<p><strong>Problem 3.</strong> The dataset <span class="math inline">\(\texttt{Guber99.csv}\)</span> provides information about expenditures of public elementary and secondary schools and SAT scores in the 50 states for the academic year of 1994-95. It is a state-level data, and each row is the average measure of each state. The column <span class="math inline">\(\texttt{verbal}\)</span> is the average SAT verbal score in each state, <span class="math inline">\(\texttt{math}\)</span> is the average SAT math score in each state, <span class="math inline">\(\texttt{perctakers}\)</span> is the percent of eligible students who took SAT in each state, and <span class="math inline">\(\texttt{expendpp}\)</span> is the annual expenditure in public elementary and secondary schools (in $1,000 per student). The researchers want to know whether the state-average SAT math score can be explained by expenditures of public elementary and secondary schools. It is believed that public education spending should help students’ math skills measured by the SAT math score. Answer the following questions.</p>
+<p>a. Multiple-choice: Which column represents the explanatory variable of interest?</p>
+<p>(A) <span class="math inline">\(\texttt{verbal}\)</span>; (B) <span class="math inline">\(\texttt{math}\)</span>; (C) <span class="math inline">\(\texttt{perctakers}\)</span>; (D) <span class="math inline">\(\texttt{expendpp}\)</span></p>
+<p>b. Multiple-choice: Which column represents the response variable of interest?</p>
+<p>(A) <span class="math inline">\(\texttt{verbal}\)</span>; (B) <span class="math inline">\(\texttt{math}\)</span>; (C) <span class="math inline">\(\texttt{perctakers}\)</span>; (D) <span class="math inline">\(\texttt{expendpp}\)</span></p>
+<p>c. Multiple-choice: Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the explanatory variable and response variable of interest, respectively. Which of the following represents the null hypothesis for the correlation test?</p>
+<p>(A) <span class="math inline">\(\rho_{XY} = 0\)</span>, (B) <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, (C) <span class="math inline">\(\rho_{XY} &lt; 0\)</span>, (D) <span class="math inline">\(\rho_{XY} \ne 0\)</span></p>
+<p>d. Multiple-choice: Which of the following represents the alternative hypothesis for the correlation test?</p>
+<p>(A) <span class="math inline">\(\rho_{XY} = 0\)</span>, (B) <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, (C) <span class="math inline">\(\rho_{XY} &lt; 0\)</span>, (D) <span class="math inline">\(\rho_{XY} \ne 0\)</span></p>
+<p>e. Multiple-choice: Choose the best description about this study.</p>
+<p>(A) It is an experimental study which can show the linear relationship (correlation) between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>(B) It is an experimental study which can show the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>(C) It is an observational study which can show the linear relationship (correlation) between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>(D) It is an observational study which can show the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>(E) It can be either study depending on how we analyze the data.</p>
+<p>f. Report the p-value for the correlation test.</p>
+<p>*g. State the conclusion in the context at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. (Use the concluding statements in the case studies as a template.)</p>
+<p>h. Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{perctakers}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
+<p>i. Provide the scatterplot of <span class="math inline">\(\texttt{perctakers}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
+<p>j. Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
+<p>*k. If you conducted the correlation test correctly in the previous part, you probably failed to provide evidence for the alternative hypothesis. Instead, the observed direction of the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is the opposite of the alternative hypothesis. Explain this weird result by summarizing your findings in the previous parts. (You are recommended to use the following key words: observational study, explanatory variable, response variable, confounding variable, correlation, causation.)</p>
+
+
+<script type="webr-data">
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC42LjAvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImdnZm9ybXVsYSIsIm1vc2FpYyIsInRpZHl2ZXJzZSJdLCJyZXBvcyI6WyJodHRwczovL3Byb2plY3Rtb3NhaWMuci11bml2ZXJzZS5kZXYiXX0sInJlbmRlcl9kZiI6ImRlZmF1bHQifQ==
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8yO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJfd2Vicl92YWx1ZV8yID0ge1xuICBjb25zdCB7IGhpZ2hsaWdodFIsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV2YWx1YXRpb24gY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7XG4gICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgZWNobzogdHJ1ZSxcbiAgICBvdXRwdXQ6IHRydWVcbiAgfSwgYmxvY2suYXR0cik7XG5cbiAgLy8gRXZhbHVhdGUgdGhlIHByb3ZpZGVkIFIgY29kZVxuICBjb25zdCByZXN1bHQgPSB3ZWJST2pzLnByb2Nlc3Moe2NvZGU6IGJsb2NrLmNvZGUsIG9wdGlvbnN9LCB7fSk7XG5cbiAgLy8gRWFybHkgeWllbGQgd2hpbGUgd2Ugd2FpdCBmb3IgdGhlIGZpcnN0IGV2YWx1YXRpb24gYW5kIHJlbmRlclxuICBpZiAob3B0aW9ucy5vdXRwdXQgJiYgIShcIjJcIiBpbiB3ZWJST2pzLnJlbmRlcmVkT2pzKSkge1xuICAgIGNvbnN0IGNvbnRhaW5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG4gICAgY29uc3Qgc3Bpbm5lciA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIik7XG5cbiAgICBpZiAob3B0aW9ucy5lY2hvKSB7XG4gICAgICAvLyBTaG93IG91dHB1dCBhcyBoaWdobGlnaHRlZCBzb3VyY2VcbiAgICAgIGNvbnN0IHByZUVsZW0gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwicHJlXCIpO1xuICAgICAgY29udGFpbmVyLmNsYXNzTmFtZSA9IFwic291cmNlQ29kZVwiO1xuICAgICAgcHJlRWxlbS5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGUgclwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChoaWdobGlnaHRSKGJsb2NrLmNvZGUpKTtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWdyb3cgc3Bpbm5lci1ncm93LXNtIG0tMiBwb3NpdGlvbi1hYnNvbHV0ZSB0b3AtMCBlbmQtMFwiO1xuICAgICAgcHJlRWxlbS5hcHBlbmRDaGlsZChzcGlubmVyKTtcbiAgICAgIGNvbnRhaW5lci5hcHBlbmRDaGlsZChwcmVFbGVtKTtcbiAgICB9IGVsc2Uge1xuICAgICAgc3Bpbm5lci5jbGFzc05hbWUgPSBcInNwaW5uZXItYm9yZGVyIHNwaW5uZXItYm9yZGVyLXNtXCI7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgfVxuXG4gICAgeWllbGQgY29udGFpbmVyO1xuICB9XG5cbiAgd2ViUk9qcy5yZW5kZXJlZE9qc1tcIjJcIl0gPSB0cnVlO1xuICB5aWVsZCBhd2FpdCByZXN1bHQ7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoiX3dlYnJfdmFsdWVfMSA9IHtcbiAgY29uc3QgeyBoaWdobGlnaHRSLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBldmFsdWF0aW9uIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oe1xuICAgIGlkOiBcIndlYnItMS1jb250ZW50c1wiLFxuICAgIGVjaG86IHRydWUsXG4gICAgb3V0cHV0OiB0cnVlXG4gIH0sIGJsb2NrLmF0dHIpO1xuXG4gIC8vIEV2YWx1YXRlIHRoZSBwcm92aWRlZCBSIGNvZGVcbiAgY29uc3QgcmVzdWx0ID0gd2ViUk9qcy5wcm9jZXNzKHtjb2RlOiBibG9jay5jb2RlLCBvcHRpb25zfSwge30pO1xuXG4gIC8vIEVhcmx5IHlpZWxkIHdoaWxlIHdlIHdhaXQgZm9yIHRoZSBmaXJzdCBldmFsdWF0aW9uIGFuZCByZW5kZXJcbiAgaWYgKG9wdGlvbnMub3V0cHV0ICYmICEoXCIxXCIgaW4gd2ViUk9qcy5yZW5kZXJlZE9qcykpIHtcbiAgICBjb25zdCBjb250YWluZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuICAgIGNvbnN0IHNwaW5uZXIgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpO1xuXG4gICAgaWYgKG9wdGlvbnMuZWNobykge1xuICAgICAgLy8gU2hvdyBvdXRwdXQgYXMgaGlnaGxpZ2h0ZWQgc291cmNlXG4gICAgICBjb25zdCBwcmVFbGVtID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcInByZVwiKTtcbiAgICAgIGNvbnRhaW5lci5jbGFzc05hbWUgPSBcInNvdXJjZUNvZGVcIjtcbiAgICAgIHByZUVsZW0uY2xhc3NOYW1lID0gXCJzb3VyY2VDb2RlIHJcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoaGlnaGxpZ2h0UihibG9jay5jb2RlKSk7XG4gICAgICBzcGlubmVyLmNsYXNzTmFtZSA9IFwic3Bpbm5lci1ncm93IHNwaW5uZXItZ3Jvdy1zbSBtLTIgcG9zaXRpb24tYWJzb2x1dGUgdG9wLTAgZW5kLTBcIjtcbiAgICAgIHByZUVsZW0uYXBwZW5kQ2hpbGQoc3Bpbm5lcik7XG4gICAgICBjb250YWluZXIuYXBwZW5kQ2hpbGQocHJlRWxlbSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHNwaW5uZXIuY2xhc3NOYW1lID0gXCJzcGlubmVyLWJvcmRlciBzcGlubmVyLWJvcmRlci1zbVwiO1xuICAgICAgY29udGFpbmVyLmFwcGVuZENoaWxkKHNwaW5uZXIpO1xuICAgIH1cblxuICAgIHlpZWxkIGNvbnRhaW5lcjtcbiAgfVxuXG4gIHdlYlJPanMucmVuZGVyZWRPanNbXCIxXCJdID0gdHJ1ZTtcbiAgeWllbGQgYXdhaXQgcmVzdWx0O1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../note-outlines";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/jcanner\.github\.io\/math-320");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Copyright 2025, Judith Canner</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
