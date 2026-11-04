@@ -89,6 +89,8 @@ website:
         text: "Multiple Comparisons"  
       - href: note-outlines/18-conditions-post-hoc-anova.qmd
         text: "Conditions and Post-Hoc Tests"  
+      - href: note-outlines/19-correlation.qmd
+        text: "Correlation Analysis"  
         
 format:
   html:

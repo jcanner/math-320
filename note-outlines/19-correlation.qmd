@@ -64,7 +64,7 @@ The research question is whether the expected weight increases with respect to h
 ```{r}
 #| label: read-bulls
 bulls <- read_csv("data/chicago-bulls-1996-97.csv", show_col_types = FALSE) ### read data
-bulls ### print all data (15 rows)
+head(bulls) # print rows
 ```
 
 The column $\texttt{Wt}$ is the body weight in pounds, and the column $\texttt{Ht}$ is the height in inches. As our objective is to explain the weight ($\texttt{Wt}$) by the height ($\texttt{Ht}$), the weight is the response variable, and the height is the explanatory variable in our analysis. The two numeric variables can be visualized using the **scatterplot**. Can we see any linear pattern in the random data points?
@@ -109,6 +109,7 @@ bulls_cov |>
 The calculated sample covariance of $\texttt{Ht}$ and $\texttt{Wt}$ is $+66.5$. Its unit is inches $\times$ pound, and it is not easy to be interpreted in the context. At least, its sign ($+$) indicates that the player's weight is expected to be above the average weight (219 pounds) when the player's height is above average (80 inches). The sample covariance can be simply calculated by the $\texttt{cov}$ function.
 
 ```{r}
+#| label: bull-cov-r
 cov( Wt ~ Ht, data = bulls ) ### sample covariance of height and weight
 ```
 
@@ -132,7 +133,7 @@ $$
 are the sample standard deviations of each variable. Continuing from the calculation of sample covariance of $\texttt{Ht}$ and $\texttt{Wt}$, below is the calculation of sample correlation of $\texttt{Ht}$ and $\texttt{Wt}$.
 
 ```{r}
-
+#| label: cor-cov
 bulls_cov |> 
   summarize(covariance = sum(dev_ht_wt/(n()-1)),
             correlation = covariance/(sd(~Ht)*sd(~Wt)))
@@ -141,6 +142,7 @@ bulls_cov |>
 Alternatively, the sample correlation can be calculated by the $\texttt{cor}$ function.
 
 ```{r}
+#| label: cor-bulls
 cor( Wt ~ Ht, data = bulls ) ### sample correlation of height and weight
 ```
 
@@ -160,19 +162,34 @@ The sample correlation 0.719 is a unitless statistic, so it does not have a clea
 
 ## Case Study 2: Units and Study Hours
 
-The dataset $\texttt{studyhours.csv}$ is a sample of \$n = 110\$ college students in an introductory statistics course. The column $\texttt{units}$ is the number of units taking in the semester, $\texttt{hours}$ is the study hours per week outside of classroom, and both $\texttt{units}$ and $\texttt{hour}$ are numeric variables. Can study hours be explained by units?
+The dataset $\texttt{studyhours.csv}$ is a sample of $n = 110$ college students in an introductory statistics course. The column $\texttt{units}$ is the number of units taking in the semester, $\texttt{hours}$ is the study hours per week outside of classroom, and both $\texttt{units}$ and $\texttt{hour}$ are numeric variables. Can study hours be explained by units?
 
-```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Scatterplot of units and study hours"}
-studyhours = read.csv("Data/studyhours.csv")
-plot( hours ~ units, data = studyhours,
-      main = "Students in Introductory Statistics Course",
+```{r}
+#| label: study-hours-data
+studyhours <- read_csv("data/studyhours.csv", show_col_types = FALSE)
+```
+
+```{r}
+#| label: study-hours-plot
+gf_point(hours ~ units, data = studyhours,
+      title = "Students in Introductory Statistics Course",
       xlab = "Semester units",
-      ylab = "Study hours per week" )
-abline( lm( hours ~ units, data = studyhours ), col = 2 )
+      ylab = "Study hours per week" ) |> 
+  gf_lm()
+```
+
+```{r}
+#| label: corr-study-hours
 cor( hours ~ units, data = studyhours ) ### sample correlation of units and study hours
 ```
 
-The sample correlation of 0.196 indicates that the units and study hours of college students have a weak positive correlation. The expected study hours per week (linearly) increases with respect to units, but the (linear) relationship is weak.
+Interpret the sample correlation for units and hours studied.
+
+
+
+
+
+
 
 ## Properties of Sample Correlation
 
@@ -186,65 +203,63 @@ The sample correlation is a universal statistic for quantifying the direction an
 
 Below are scatterplots of hypothetical samples and their sample correlations.
 
-```{r, echo = FALSE, fig.height = 7, fig.width = 14, out.height = "100%", out.width = "100%", fig.alt = "Scatterplot of hypothetical samples and their sample correlations"}
-par( mfrow=c(2,4) )
+```{r}
+#| label: corr-examples
+#| echo: false
+library(patchwork)
+
+N <- 10000
 
 set.seed(123)
-N = 10000
-x = rnorm(N,0,1)
-y = x
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == 1) )
+x <- rnorm(N)
 
 set.seed(1243)
-y = 0.75*x + rnorm(N)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == 0.6) )
+y_pos_075 <- 0.75 * x + rnorm(N)
 
 set.seed(12434)
-y = 0.25*x + rnorm(N)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == 0.25) )
+y_pos_025 <- 0.25 * x + rnorm(N)
 
 set.seed(12)
-y = rnorm(N)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == 0) )
+y_zero <- rnorm(N)
 
-y = -x
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == -1) )
+y_neg_1 <- -x
 
 set.seed(1243)
-y = -0.75*x + rnorm(N)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == -0.6) )
+y_neg_075 <- -0.75 * x + rnorm(N)
 
 set.seed(1243)
-y = -0.25*x + rnorm(N)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,10) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == -0.25) )
+y_neg_025 <- -0.25 * x + rnorm(N)
 
 set.seed(12345678)
-y = x^2 + rnorm(N,0.5)
-plot( x, y, pch=".", col="grey", cex=2, xlab="", ylab="", axes=FALSE )
-axis( 1, c(-10,10) )
-axis( 2, c(-10,100) )
-mtext( side=3, line=1, adj=0.5, text=expression(R[XY] == 0) )
+y_squared <- x^2 + rnorm(N, mean = 0.5)
+
+plot_data <- list(
+  list(y = x,        label = "1",      ylim = c(-10, 10)),
+  list(y = y_pos_075, label = "0.6",    ylim = c(-10, 10)),
+  list(y = y_pos_025, label = "0.25",   ylim = c(-10, 10)),
+  list(y = y_zero,    label = "0",      ylim = c(-10, 10)),
+  list(y = y_neg_1,   label = "-1",     ylim = c(-10, 10)),
+  list(y = y_neg_075, label = "-0.6",   ylim = c(-10, 10)),
+  list(y = y_neg_025, label = "-0.25",  ylim = c(-10, 10)),
+  list(y = y_squared, label = "0",      ylim = c(-10, 10))
+)
+
+plots <- lapply(plot_data, function(d) {
+  ggplot(data.frame(x = x, y = d$y), aes(x, y)) +
+    geom_point(color = "grey", shape = ".", size = 2) +
+    annotate(
+      "text", x = 0, y = Inf,
+      label = paste0("R[XY] == ", d$label),
+      parse = TRUE, vjust = 1.5
+    ) +
+    scale_x_continuous(breaks = c(-10, 10), limits = c(-10, 10)) +
+    scale_y_continuous(breaks = c(-10, 10)) +
+    coord_cartesian(ylim = d$ylim) +
+    labs(x = NULL, y = NULL) +
+    theme_bw() 
+})
+
+wrap_plots(plots, nrow = 2, ncol = 4)
 ```
 
 ## Correlation Test
@@ -269,7 +284,7 @@ $$
 T = \frac{R_{XY} - 0}{ \texttt{SE} }
 $$
 
-which is called a **T statistic** (for testing correlation). The denominator $\texttt{SE}$ is the **standard erro**r which quantifies the uncertainty of sample correlation $R_{XY}$, and it is given by
+which is called a **T statistic** (for testing correlation). The denominator $\texttt{SE}$ is the **standard error** which quantifies the uncertainty of sample correlation $R_{XY}$, and it is given by
 
 $$
 \texttt{SE} = \sqrt{ \frac{1 - (R_{XY})^2}{ n - 2 } } \, . 
@@ -285,88 +300,27 @@ Given $T = \texttt{t}$, the calculation of p-value depends on the direction of $
 - [Left-sided test]{.underline}: p = $\texttt{pt}(\texttt{t}, \nu)$
 - [Two-sided test]{.underline}: p = $2 * \texttt{pt}(\texttt{t}, \nu)$ if $\texttt{t} < 0$ or p = $2 * (1 - \texttt{pt}(\texttt{t}, \nu))$ if $\texttt{t} > 0$
 
-```{r, echo = FALSE, fig.height = 3, fig.width = 10, out.height = "100%", out.width = "100%", fig.alt = "P-value calculation"}
-par( mfrow=c( 1, 3 ) )
-
-###
-x = seq( -4, 4, 0.001 )
-
-plot( x, dt( x, 5 ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "T Statistic", ylab = "", main = "Left-sided Test" )
-abline( h = 0 )
-
-a = -5; b = -1.5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dt( grid[i], 5 ) )
-   lines( x.temp, y.temp, col = "gold" ) }
-
-z = b
-axis( 1, c( -10, 0, z, 10 ), label = c( "", "0", "t", "" ) )
-
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
-
-###
-
-x = seq( -4, 4, 0.001 )
-
-plot( x, dt( x, 5 ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "T Statistic", ylab = "", main = "Right-sided Test" )
-abline( h = 0 )
-
-a = 1.5; b = 5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dt( grid[i], 5 ) )
-   lines( x.temp, y.temp, col = "gold" ) }
-
-z = a
-axis( 1, c( -10, 0, z, 10 ), label = c( "", "0", "t", "" ) )
-
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
-
-###
-
-x = seq( -4, 4, 0.001 )
-
-plot( x, dt( x, 5 ), type = "l", axes = FALSE, xlim = c( -4, 4 ), xlab = "T Statistic", ylab = "", main = "Two-sided Test" )
-abline( h = 0 )
-
-a = 1.5; b = 5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dt( grid[i], 5 ) )
-   lines( x.temp, y.temp, col = "gold" ) }
-
-z = a
-axis( 1, c( -10, -z, 0, z, 10 ), label = c( "", "-|t|", "0", "|t|", "" ) )
-
-a = -5; b = -1.5
-grid = seq( a, b, 0.01 )
-for ( i in 1:length(grid) ) {
-   x.temp = c( grid[i], grid[i] )
-   y.temp = c( 0, dt( grid[i], 5 ) )
-   lines( x.temp, y.temp, col = "gold" ) }
-
-legend( "topright", lwd = 5, col = "gold", legend = "P-value", bty = "n" )
-```
 
 If p-value is less than a fixed significance level of $\alpha$, we conclude $H_1$. Otherwise, we conclude $H_0$. The universal definition of p-value is the probability of observing the currently observed test statistic or stronger evidence for $H_1$ under the assumption of $H_0$. To this end, if p-value is small, it is evidence against $H_0$ and supports $H_1$.
 
-### Example
+#### Example
 
-For the purpose of demonstration, let $X$ be the semester units and $Y$ be the study hours per week in the population of college students. The parameter of interest is $\rho_{XY}$, the population correlation between $X$ and $Y$, and we calculated a sample correlation of $R_{XY} = 0.196$ in a sample of size $n = 110$. We can perform the right-sided correlation test, $H_0$: $\rho_{XY} = 0$ versus $H_1$: $\rho_{XY} > 0$, as follows.
+For the purpose of demonstration, let $X$ be the semester units and $Y$ be the study hours per week in the population of college students. The parameter of interest is $\rho_{XY}$, the population correlation between $X$ and $Y$, and we calculated a sample correlation of $R_{XY} = 0.196$ in a sample of size $n = 110$. We can perform the right-sided correlation test, 
+
+- $H_0$: $\rho_{XY} = 0$ 
+
+- $H_1$: $\rho_{XY} > 0$
 
 ```{r}
-( r = cor( hours ~ units, data = studyhours ) ) ### sample correlation
-( n = dim(studyhours)[1] ) ### sample size (number of rows in the data)
-( se = sqrt( (1 - r^2) / (n - 2) ) ) ### standard error
-( t = ( r - 0 ) / se ) ### T statistic
-( p = ( 1 - pt(t, n - 2) ) ) ### p-value
+#| label: hand-calc-corr
+( r <- cor( hours ~ units, data = studyhours ) ) ### sample correlation
+( n <- nrow(studyhours) ) ### sample size (number of rows in the data)
+( se <- sqrt( (1 - r^2) / (n - 2) ) ) ### standard error
+( t <- ( r - 0 ) / se ) ### T statistic
+( p <- ( 1 - pt(t, n - 2) ) ) ### p-value
 ```
 
-Even though we observed a weak positive correlation (@tbl-cor), at a significance level of $\alpha = 0.05$, the sample (110 college students) is statistically significant evidence that the semester units and study hours have a positive linear relationship (T = 2.075, DF = 108, and p = 0.020).
+Even though we observed a weak positive correlation (@tbl-cor), at a significance level of $\alpha = 0.05$, the sample (110 college students) strong evidence against the null in favor of the alternative that the true correlation is greater than 0 and the semester units and study hours have a positive linear relationship (T = 2.075, DF = 108, and p = 0.020, $\alpha = 0.05$).
 
 ### Using $\texttt{cor.test}$ Function in R
 
@@ -379,37 +333,76 @@ The $\texttt{cor.test}$ function is useful for the correlation test.
 - $\texttt{alternative}$ is the direction of alternative hypothesis. Specify $\texttt{"greater"}$ for a right-sided test, $\texttt{"less"}$ for a left-sided test, or $\texttt{"two.sided"}$ for a two-sided test.
 
 ```{r}
-cor.test( hours ~ units, data = studyhours, alternative = "greater" )
+#| label: cor-test-study
+cor.test( hours ~ units, data = studyhours, alternative = "greater")
 ```
+
+We can also extra a confidence interval:
+
+```{r}
+#| label: cor-ci-study
+cor.test( hours ~ units, data = studyhours, conf.level = 0.95)$conf.int
+```
+
+How was the confidence interval constructed?
+
+
+
+
+Interpret the confidence interval in context. 
+
+
+
 
 ## Case Study 3: Vietnam War Draft
 
 During the Vietnam War (1955-1975), the U.S. Selective Service drafted about 2.2 million men between 1964 and 1973. The U.S. Selective Service randomly matched birth dates and lottery numbers, and men who had a lottery number of 195 or below should be on reserve. The question of interest is whether the lottery was truly random or not. Let us take a look at the dataset $\texttt{draft1969.csv}$.
 
 ```{r}
-draft = read.csv("Data/draft1969.csv") ### read data
+#| label: read-draft
+draft <- read_csv("data/draft1969.csv", show_col_types = FALSE) ### read data
 head(draft, 5) ### first 5 lines
 tail(draft, 5) ### last 5 lines
 ```
 
-The column $\texttt{DateNumeric}$ is the numeric birth date (e.g., 1 to 366 for January 1 to December 31), and the column $\texttt{Lottery}$ is the randomly matched lottery number (1 to 366). For example, healthy men who were born on January 1 were not drafted ($\texttt{Lottery} = 305$) and healthy men who were born on December 31 were drafted ($\texttt{Lottery} = 100$). To investigate whether the lottery was fair (purely random) or not, the correlation test can be applied with $H_0$: $\rho_{XY} = 0$ (zero correlation between the two numeric variables) and $H_1$: $\rho_{XY} \ne 0$ (non-zero correlation) where $X$ and $Y$ denote the numeric birth date and lottery number, respectively. The below scatterplot presents the data visually.
+The column $\texttt{DateNumeric}$ is the numeric birth date (e.g., 1 to 366 for January 1 to December 31), and the column $\texttt{Lottery}$ is the randomly matched lottery number (1 to 366). For example, healthy men who were born on January 1 were not drafted ($\texttt{Lottery} = 305$) and healthy men who were born on December 31 were drafted ($\texttt{Lottery} = 100$). To investigate whether the lottery was fair (purely random) or not, the correlation test can be applied where $X$ and $Y$ denote the numeric birth date and lottery number, respectively
 
-```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Vietnam War Draft in 1969"}
-plot( Lottery ~ DateNumeric, data = draft, cex = 0.5,
+$H_0$: $\rho_{XY} = 0$ 
+
+
+$H_1$: $\rho_{XY} \ne 0$ 
+
+
+
+```{r}
+#| label: draft-scatter
+gf_point( Lottery ~ DateNumeric, data = draft,
       xlab = "Numeric birth date",
       ylab = "Lottery number",
-      main = "Vietnam War Draft (Dec. 1, 1969)" )
-abline( h = 195, col = 2, lty = 2 ) ### horizontal dotted line at 195
-abline( lm(Lottery ~ DateNumeric, data = draft), col = 4, lty = 1  ) ### fit a line to data points
+      title = "Vietnam War Draft (Dec. 1, 1969)" ) |> 
+  gf_lm()
+
+cor(Lottery ~ DateNumeric, data = draft)
 ```
 
 Let us conduct the correlation test (two-sided) using the $\texttt{cor.test}$ function.
 
 ```{r}
+#| label: cor-test-draft
 cor.test( Lottery ~ DateNumeric, data = draft, alternative = "two.sided" )
 ```
 
-The sample correlation –0.226 indicates a weak negative correlation, and it is evidence that the chance of being drafted is higher for men of later birth dates. At a significance level of $\alpha = 0.05$, the result is statistically significant that the draft was not pair, particularly against men of later birth dates (T = –4.420, DF = 364, and p \< 0.0001). If the null hypothesis was true (zero correlation between numeric birth date and lottery number), the probability of observing this result or stronger evidence for the alternative hypothesis (non-zero correlation) is 0.000013, so it is hard to believe the null hypothesis, and we conclude the alternative hypothesis.
+Using $\alpha = 0.05$ interpret the results of the test in context. Is the draft "fair"?
+
+
+
+
+
+
+
+
+
+
 
 ## Case Study 4: Cigarette Consumption and Price in the United States {#sec-cig}
 
@@ -421,58 +414,109 @@ The dataset $\texttt{cigarettes.csv}$ is state-level data (46 states) aggregated
 
 **Note:** Each row is not a person. It is the estimated average per person in each state.
 
-The objective of data analysis is to test whether the expected cigarette consumption is lower when the price is higher or not. Let $X$ and $Y$ be the explanatory variable ($\texttt{price}$) and response variable ($\texttt{packs}$), and let $\rho_{XY}$ be the true correlation (parameter to be tested). Given the objective, the null hypothesis is $H_0$: $\rho_{XY} = 0$, and the alternative hypothesis is $H_1$: $\rho_{XY} < 0$ (left-sided test). Below are the scatterplot and correlation test.
+The objective of data analysis is to test whether the expected cigarette consumption is lower when the price is higher or not. Let $X$ and $Y$ be the explanatory variable ($\texttt{price}$) and response variable ($\texttt{packs}$), and let $\rho_{XY}$ be the true correlation (parameter to be tested). Given the objective, the null hypothesis is 
 
-```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Vietnam War Draft in 1969"}
-cig = read.csv( "Data/cigarettes.csv" )
+- $H_0$: $\rho_{XY} = 0$
+
+- $H_1$: $\rho_{XY} < 0$ (left-sided test). 
+
+
+Below are the scatterplot and correlation test.
+```{r}
+#| label: read-cig
+cig <- read_csv("data/cigarettes.csv", show_col_types = FALSE)
 head(cig, 5)
 tail(cig, 5)
-plot( packs ~ price, data = cig,
+```
+
+```{r}
+#| label: plot-cig
+gf_point( packs ~ price, data = cig,
       xlab = "Average price (dollars per pack)",
       ylab = "Aerage consumption (packs per person)",
-      main = "Cigarette Price and Consumption by State" )
-abline( lm(packs ~ price, data = cig), col = 4, lty = 1  )
+      title = "Cigarette Price and Consumption by State" ) |> 
+  gf_lm()
+```
+
+```{r}
+#| label: cor-cig
 cor.test( packs ~ price, data = cig, alternative = "less" )
 ```
 
-The sample correlation –0.533 indicates a moderate negative correlation between cigarette price and consumption. At a significance level of $\alpha = 0.05$, the result of correlation test is statistically significant that the expected cigarette consumption is lower when the price is higher (T = –4.1797, DF = 44, and p \< 0.0001).
+Using $\alpha = 0.05$ interpret the results of the test in context. How does cost affect smoking?
+
+
+
+
+
+
 
 ## Correlation vs. Causation
 
-Let $X$ be an explanatory variable and $Y$ be a response variable. We say that $X$ and $Y$ have a **causal relationship** when the change (manipulation) of $X$ results in the change of $Y$. The sample correlation quantifies the linear relationship between $X$ and $Y$, and it does not verify whether the relationship is causal or not. In other words, [correlation does not imply causation]{.underline}.
+Let $X$ be an explanatory variable and $Y$ be a response variable. We say that $X$ and $Y$ have a **causal relationship** when the change of $X$ results in the change of $Y$. The sample correlation quantifies the linear relationship between $X$ and $Y$, and it does not verify whether the relationship is causal or not. In other words, [correlation does not imply causation]{.underline}.
 
-When researchers manipulate $X$ and measure $Y$, it is called an **experimental study**. Otherwise, (i.e., researchers observe $X$ and $Y$ without controlling $X$), it is called an **observational study**. An experimental study can verify a causal relationship if experimenters can manipulate $X$ and do it carefully. An observational study cannot verify a causal relationship, and sometimes it results in a significant correlation between $X$ and $Y$ even when they are not causally related.
+When researchers control the value $X$ and randomly assign it to cases to then measure its effect on $Y$, it is called an **experimental study**. Otherwise, (i.e., researchers observe $X$ and $Y$ without controlling/randomly assigning $X$), it is called an **observational study**. An experimental study can verify a causal relationship if experimenters can randomly assign $X$ to each case and do it carefully. An observational study cannot verify a causal relationship, and sometimes it results in a significant correlation between $X$ and $Y$ even when they are not causally related.
 
 Does long hair cause long lifetime of human? Here is a hypothetical experiment. Suppose an experimenter samples people from the population and randomly assigns Group 1 or 2. Group 1 is forced to keep their hair short, Group 2 is forced to keep their hair long, and the experimenter records their lifetime. Disregarding the fact that this hypothetical experiment is unrealistic (taking about 100 years) and unethical (forcing human subjects), the experimenter probably will not obtain evidence for the causal relationship between hair length and lifetime.
 
 In an observational study, however, we may observe a positive correlation between hair length and lifetime. It is because women have longer hair than men on average, and the expected lifetime of women is longer than of men. The correlation between the explanatory variable (hair length) and the response variable (lifetime) exists through the third variable (sex). When a third variable is related to both explanatory variable and response variable, the third variable is called a **confounding variable** or **confounder**. In an observational study, we may observe a correlation between the explanatory variable and the response variable because of a confounding variable. Therefore, it is dangerous to claim a causal relationship based on the correlation observed in an observational study.
 
-In this regard, we shall carefully state the conclusion of Case Study 4 (@sec-cig). We observed a statistically significant correlation between cigarette price and consumption, but it is [not]{.underline} evidence for the causation that lower cigarette price will reduce cigarette consumption (even if it is true). In order to obtain evidence for the causal relationship, we shall manipulate the cigarette price of each state and see if it affects the cigarette consumption. Can any researcher manipulate the cigarette price of each state in the United States? As such, conducting an experiment is challenging or sometimes nearly impossible in practice.
+In this regard, we shall carefully state the conclusion of Case Study 4 (@sec-cig). We observed a statistically meaningful correlation between cigarette price and consumption, but it is [not]{.underline} evidence for the causation that lower cigarette price will reduce cigarette consumption (even if it is true). In order to obtain evidence for the causal relationship, we shall manipulate the cigarette price of each state and see if it affects the cigarette consumption. Can any researcher manipulate the cigarette price of each state in the United States? As such, conducting an experiment is challenging or sometimes nearly impossible in practice.
 
 The following case study is another observational study, and demonstrates the caveat of an observational study.
 
 ## Case Study 5: Speed Limit and Car Accident Rate
 
-The top three causes of car accidents are known to be distracted driving, speeding, and driving under influence. This analysis focuses on speeding, specifically the relationship between speed limit and accident rate on highways in Minnesota. The dataset $\texttt{highway.csv}$ is a sample of 39 highway sections in Minnesota, and the data were collected in 1973. The column $\texttt{rate}$ is the accident rate per million vehicle miles in each highway section (response variable), and the column $\texttt{slim}$ is the speed limit of the highway section (explanatory variable). The objective is to test $H_0$: $\rho_{XY} = 0$ (no correlation between speed limit and accident rate) versus $H_1$: $\rho_{XY} > 0$ (more accidents in high speed limit section) at a significance level of $\alpha = 0.05$.
+The top three causes of car accidents are known to be distracted driving, speeding, and driving under influence. This analysis focuses on speeding, specifically the relationship between speed limit and accident rate on highways in Minnesota. The dataset $\texttt{highway.csv}$ is a sample of 39 highway sections in Minnesota, and the data were collected in 1973. The column $\texttt{rate}$ is the accident rate per million vehicle miles in each highway section (response variable), and the column $\texttt{slim}$ is the speed limit of the highway section (explanatory variable). The objective is to test at a significance level of $\alpha = 0.05$
 
-```{r, fig.height = 5, fig.width = 5, out.height = "50%", out.width = "50%", fig.alt = "Highways in Minnesota in 1973"}
-highway = read.csv( "Data/highway.csv" )
+- $H_0$: $\rho_{XY} = 0$
+
+
+
+- $H_1$: $\rho_{XY} > 0$ 
+
+
+
+```{r}
+#| label: read-highway
+highway <- read_csv( "data/highway.csv", show_col_types =  )
 head( highway, 5 )
-plot( rate ~ slim, data = highway,
-      main = "Minnesota Highways in 1973",
+```
+
+```{r}
+#| label: plot-highway
+gf_point( rate ~ slim, data = highway,
+      title = "Minnesota Highways in 1973",
       xlab = "Speed limit (mph)",
-      ylab = "Accident rate (per million vehicle miles)" )
-abline( lm(rate ~ slim, data = highway), col = 4, lty = 1  )
+      ylab = "Accident rate (per million vehicle miles)" ) |> 
+  gf_lm()
+```
+
+
+```{r}
+#| label: cor-highway
 cor.test( rate ~ slim, data = highway, alternative = "greater" )
 ```
 
-The data do not support the positive correlation between speed limit and accident rate (T = –5.657, DF = 37, and p = 1.0000). Instead, the scatterplot and sample correlation of -0.68 suggest a moderate negative correlation.
+Interpret the p-value.
 
-Does the data suggest that low speed limit causes more accidents? No. The researchers did not manipulate the speed limit of highway sections, so it is an observational study. Then why is low speed limit is associated with high accident rate? Let us analyze pairwise correlations among other variables in the data.
+
+
+Evaluate the strength of evidence against the null hypothesis.
+
+
+Can you claim that the data suggest that low speed limit causes more accidents? 
+
+
+
+
+Let us analyze pairwise correlations among other variables in the data: 
 
 ```{r}
-data_num = highway[ , c("rate", "slim", "shld", "sigs1", "acpt") ] ### extract the five columns
-round( cor(data_num), 3 ) ### pairwise correlation between the five numeric variables
+#| label: cor-matrix
+highway |> 
+  select(rate, slim, shld, sigs1, acpt) |> 
+  cor()
 ```
 
 Potential confounding variables (moderately to strongly correlated with $\texttt{rate}$ and $\texttt{slim}$) are:
@@ -485,47 +529,51 @@ Potential confounding variables (moderately to strongly correlated with $\texttt
 
 Perhaps, the above potential confounding variables (risk factors) have causal relationships with accidents ($\texttt{rate}$) while the speed limit ($\texttt{slim}$) was lowered due to the risk factors. The take-home message is that it is very difficult to verify the causal relationship with an observational study, and the sample correlation may results in the opposite direction of the expected direction.
 
-## Warm-up
+## Wrap-up
 
-*You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSdH856VtAPHEUHg5c0tEqTsHqEvzl-fAquN-5MgVYTxqFTwzw/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.
 
-**Problem 1.** Fill in the blank: The sample correlation measures the direction and strength of the \[a\] between two numeric variables, and it is bounded between \[b\] and \[c\].
+#### Problem 1 
+Fill in the blank: The sample correlation measures the direction and strength of the \[a\] between two numeric variables, and it is bounded between \[b\] and \[c\].
 
 Word bank: –1, 0, 1, 100, causal relationship, confounder, correlation, linear relationship, non-linear relationship, quadratic, strength
 
-**Problem 2.** Below are statements about the sample correlation between two numeric variables $X$ and $Y$. True or false?
+#### Problem 2 
+Below are statements about the sample correlation between two numeric variables $X$ and $Y$. True or false?
 
-a\. Its unit is the product of the unit of $X$ and the unit of $Y$.
+a. Its unit is the product of the unit of $X$ and the unit of $Y$.
 
-b\. It quantifies only the linear relationship between $X$ and $Y$ in an observational study, and it quantifies the non-linear relationship between $X$ and $Y$ in an experimental study.
+b. It quantifies only the linear relationship between $X$ and $Y$ in an observational study, and it quantifies the non-linear relationship between $X$ and $Y$ in an experimental study.
 
-c\. It verifies the causal relationship between $X$ and $Y$.
+c. It verifies the causal relationship between $X$ and $Y$.
 
-d\. It can be calculated when the sample covariance of $X$ and $Y$ and the sample standard deviations of $X$ and $Y$ are given.
+d. It can be calculated when the sample covariance of $X$ and $Y$ and the sample standard deviations of $X$ and $Y$ are given.
 
-e\. When the sample correlation is small (e.g., 0.1) and the sample size is large (e.g., 10,000), it can result in a statistically significant evidence for the linear relationship between $X$ and $Y$.
+e. When the sample correlation is small (e.g., 0.1) and the sample size is large (e.g., 10,000), it can result in a statistically significant evidence for the linear relationship between $X$ and $Y$.
 
-**Problem 3.** Fill in the blank: Let $X$ be an explanatory variable and $Y$ be a response variable. We say that $X$ and $Y$ have a(n) \[a\] relationship when the change of $X$ leads to the change of $Y$. If researchers manipulate $X$ to study this relationship, it is referred to as a(n) \[b\]. Otherwise, it is referred as a(n) \[c\]. A third variable which is related to both $X$ and $Y$ in an observational study is called a(n) \[d\], and it may create an unexpected relationship between $X$ and $Y$ even when $X$ does not cause $Y$. Therefore, \[e\] does not imply \[f\].
+#### Problem 3 
+Fill in the blank: Let $X$ be an explanatory variable and $Y$ be a response variable. We say that $X$ and $Y$ have a(n) \[a\] relationship when the change of $X$ leads to the change of $Y$. If researchers control and randomly assign $X$ to a case to study this relationship with $Y$, it is referred to as a(n) \[b\]. Otherwise, it is referred as a(n) \[c\]. A third variable which is related to both $X$ and $Y$ in an observational study is called a(n) \[d\], and it may create an unexpected relationship between $X$ and $Y$ even when $X$ does not cause $Y$. Therefore, \[e\] does not imply \[f\].
 
 Word bank: causal, causation, confounding variable, correlation, covariance, experimental study, explanatory variable, linear relationship, non-linear relationship, observational study, response variable
 
-**Problem 4.** The dataset $\texttt{icecream.csv}$ is a sample of 30 randomly selected regions at random months between 1951 and 1953 in the United States. Each data point represents a region, and each column represents the average measure in the region. The column named $\texttt{cons}$ is the average consumption of ice cream per person (in pints), $\texttt{income}$ is the average weekly income per family (in dollars); $\texttt{price}$ is the average price of ice cream (dollars per pint); and $\texttt{temp}$ is the average temperature in the region (in Fahrenheit). Answer the following questions.
+#### Problem 4 
+The dataset $\texttt{icecream.csv}$ is a sample of 30 randomly selected regions at random months between 1951 and 1953 in the United States. Each data point represents a region, and each column represents the average measure in the region. The column named $\texttt{cons}$ is the average consumption of ice cream per person (in pints), $\texttt{income}$ is the average weekly income per family (in dollars); $\texttt{price}$ is the average price of ice cream (dollars per pint); and $\texttt{temp}$ is the average temperature in the region (in Fahrenheit). Answer the following questions.
 
-a\. Calculate the correlation between $\texttt{cons}$ and $\texttt{income}$.
+a. Calculate the correlation between $\texttt{cons}$ and $\texttt{income}$.
 
-b\. Calculate the correlation between $\texttt{cons}$ and $\texttt{price}$.
+b. Calculate the correlation between $\texttt{cons}$ and $\texttt{price}$.
 
-c\. Calculate the correlation between $\texttt{cons}$ and $\texttt{temp}$.
+c. Calculate the correlation between $\texttt{cons}$ and $\texttt{temp}$.
 
-d\. Calculate the correlation between $\texttt{temp}$ and $\texttt{cons}$.
+d. Calculate the correlation between $\texttt{temp}$ and $\texttt{cons}$.
 
-e\. Calculate the correlation between $\texttt{cons}$ and $\texttt{cons}$.
+e. Calculate the correlation between $\texttt{cons}$ and $\texttt{cons}$.
 
 For the following parts, let $\rho_{XY}$ be the true correlation between $X = \texttt{temp}$ (explanatory variable) and $Y = \texttt{cons}$ (response variable), and the objective is to test $H_0$: $\rho_{XY} = 0$ versus $H_1$: $\rho_{XY} > 0$ at a significance level of $\alpha = 0.05$.
 
-f\. Report the p-value for the correlation test.
+f. Report the p-value for the correlation test.
 
-g\. Multiple-choice: Which conclusion is most appropriate about the relationship between $\texttt{cons}$ and $\texttt{temp}$.
+g. Multiple-choice: Which conclusion is most appropriate about the relationship between $\texttt{cons}$ and $\texttt{temp}$.
 
 \(A\) Higher temperature causes more ice cream consumption.
 
@@ -535,9 +583,9 @@ g\. Multiple-choice: Which conclusion is most appropriate about the relationship
 
 \(D\) Due to the small sample size, there is a lack of statistical significance for the positive linear relationship.
 
-h\. Fill in the blank: It is an \[o... s...\] because researchers could not control the temperature of each region in the United States.
+h. Fill in the blank: It is an \[o... s...\] because researchers could not control the temperature of each region in the United States.
 
-i\. Multiple-choice: What does $\alpha = 0.05$ in the context?
+i. Multiple-choice: What does $\alpha = 0.05$ in the context?
 
 \(A\) If $\texttt{temp}$ and $\texttt{cons}$ are linearly related, we allowed a probability of 0.05 for concluding no linear relationship between them.
 
@@ -549,15 +597,19 @@ i\. Multiple-choice: What does $\alpha = 0.05$ in the context?
 
 \(E\) None of the above
 
+
+
 ## Assignment
 
-***Instruction 1:** You must input your answers in the [Google form](https://docs.google.com/forms/d/e/1FAIpQLSeAIV_qc08SGBdpaQf9puSiPUrCyEx1ND3x_PkEofFirs18vw/viewform?usp=dialog). All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.*
+You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).
 
-***Instruction 2:** You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the [CSUMB Academic Integrity Policy](https://csumb.edu/policy/academic-integrity-policy/).*
 
-**Problem 1.** Suppose we have four hypothetical samples as shown below.
+#### Problem 1 
+Suppose we have four hypothetical samples as shown below.
 
-```{r, echo = FALSE, fig.height = 2.5, fig.width = 10, out.height = "100%", out.width = "100%", fig.alt = "Four hypothetical samples"}
+```{r}
+#| label: cor-samples
+#| echo: false
 par( mfrow=c(1,4) )
 
 n = 30
@@ -596,19 +648,20 @@ axis( 2, seq( -100, 100, 200 ) )
 
 ```
 
-a\. Multiple-choice: Which sample results in a sample correlation closest to +1?
+a. Multiple-choice: Which sample results in a sample correlation closest to +1?
 
 \(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4
 
-b\. Multiple-choice: Which sample results in a sample correlation closest to –1?
+b. Multiple-choice: Which sample results in a sample correlation closest to –1?
 
 \(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4
 
-c\. Multiple-choice: Which sample results in a sample correlation closest to 0?
+c. Multiple-choice: Which sample results in a sample correlation closest to 0?
 
 \(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4
 
-**Problem 2.** Suppose we have five hypothetical samples as follows:
+#### Problem 2 
+Suppose we have five hypothetical samples as follows:
 
 - Sample 1: $R_{XY} = 0.9$ and $n = 5$
 
@@ -620,35 +673,36 @@ c\. Multiple-choice: Which sample results in a sample correlation closest to 0?
 
 - Sample 5: $R_{XY} = -0.9$ and $n = 5$
 
-a\. Calculate T statistic for Sample 1.
+a. Calculate T statistic for Sample 1.
 
-b\. Which sample provides the strongest evidence for a positive linear relationship between $X$ and $Y$?
-
-\(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5
-
-c\. Which sample provides the strongest evidence for a negative linear relationship between $X$ and $Y$?
+b. Which sample provides the strongest evidence for a positive linear relationship between $X$ and $Y$?
 
 \(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5
 
-**Problem 3.** The dataset $\texttt{Guber99.csv}$ provides information about expenditures of public elementary and secondary schools and SAT scores in the 50 states for the academic year of 1994-95. It is a state-level data, and each row is the average measure of each state. The column $\texttt{verbal}$ is the average SAT verbal score in each state, $\texttt{math}$ is the average SAT math score in each state, $\texttt{perctakers}$ is the percent of eligible students who took SAT in each state, and $\texttt{expendpp}$ is the annual expenditure in public elementary and secondary schools (in \$1,000 per student). The researchers want to know whether the state-average SAT math score can be explained by expenditures of public elementary and secondary schools. It is believed that public education spending should help students' math skills measured by the SAT math score. Answer the following questions.
+c. Which sample provides the strongest evidence for a negative linear relationship between $X$ and $Y$?
 
-a\. Multiple-choice: Which column represents the explanatory variable of interest?
+\(A\) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5
+
+#### Problem 3 
+The dataset $\texttt{Guber99.csv}$ provides information about expenditures of public elementary and secondary schools and SAT scores in the 50 states for the academic year of 1994-95. It is a state-level data, and each row is the average measure of each state. The column $\texttt{verbal}$ is the average SAT verbal score in each state, $\texttt{math}$ is the average SAT math score in each state, $\texttt{perctakers}$ is the percent of eligible students who took SAT in each state, and $\texttt{expendpp}$ is the annual expenditure in public elementary and secondary schools (in \$1,000 per student). The researchers want to know whether the state-average SAT math score can be explained by expenditures of public elementary and secondary schools. It is believed that public education spending should help students' math skills measured by the SAT math score. Answer the following questions.
+
+a. Multiple-choice: Which column represents the explanatory variable of interest?
 
 \(A\) $\texttt{verbal}$; (B) $\texttt{math}$; (C) $\texttt{perctakers}$; (D) $\texttt{expendpp}$
 
-b\. Multiple-choice: Which column represents the response variable of interest?
+b. Multiple-choice: Which column represents the response variable of interest?
 
 \(A\) $\texttt{verbal}$; (B) $\texttt{math}$; (C) $\texttt{perctakers}$; (D) $\texttt{expendpp}$
 
-c\. Multiple-choice: Let $X$ and $Y$ denote the explanatory variable and response variable of interest, respectively. Which of the following represents the null hypothesis for the correlation test?
+c. Multiple-choice: Let $X$ and $Y$ denote the explanatory variable and response variable of interest, respectively. Which of the following represents the null hypothesis for the correlation test?
 
 \(A\) $\rho_{XY} = 0$, (B) $\rho_{XY} > 0$, (C) $\rho_{XY} < 0$, (D) $\rho_{XY} \ne 0$
 
-d\. Multiple-choice: Which of the following represents the alternative hypothesis for the correlation test?
+d. Multiple-choice: Which of the following represents the alternative hypothesis for the correlation test?
 
 \(A\) $\rho_{XY} = 0$, (B) $\rho_{XY} > 0$, (C) $\rho_{XY} < 0$, (D) $\rho_{XY} \ne 0$
 
-e\. Multiple-choice: Choose the best description about this study.
+e. Multiple-choice: Choose the best description about this study.
 
 \(A\) It is an experimental study which can show the linear relationship (correlation) between $X$ and $Y$.
 
@@ -660,14 +714,14 @@ e\. Multiple-choice: Choose the best description about this study.
 
 \(E\) It can be either study depending on how we analyze the data.
 
-f\. Report the p-value for the correlation test.
+f. Report the p-value for the correlation test.
 
-\*g. State the conclusion in the context at a significance level of $\alpha = 0.05$. (Use the concluding statements in the case studies as a template.)
+g. State the conclusion in the context at a significance level of $\alpha = 0.05$. (Use the concluding statements in the case studies as a template.)
 
-h\. Provide the scatterplot of $\texttt{expendpp}$ (x-axis) and $\texttt{perctakers}$ (y-axis). In the Google form, report their sample correlation.
+h. Provide the scatterplot of $\texttt{expendpp}$ (x-axis) and $\texttt{perctakers}$ (y-axis). Calculate their sample correlation.
 
-i\. Provide the scatterplot of $\texttt{perctakers}$ (x-axis) and $\texttt{math}$ (y-axis). In the Google form, report their sample correlation.
+i. Provide the scatterplot of $\texttt{perctakers}$ (x-axis) and $\texttt{math}$ (y-axis).Calculate their sample correlation.
 
-j\. Provide the scatterplot of $\texttt{expendpp}$ (x-axis) and $\texttt{math}$ (y-axis). In the Google form, report their sample correlation.
+j. Provide the scatterplot of $\texttt{expendpp}$ (x-axis) and $\texttt{math}$ (y-axis). Calculate their sample correlation.
 
-\*k. If you conducted the correlation test correctly in the previous part, you probably failed to provide evidence for the alternative hypothesis. Instead, the observed direction of the linear relationship between $X$ and $Y$ is the opposite of the alternative hypothesis. Explain this weird result by summarizing your findings in the previous parts. (You are recommended to use the following key words: observational study, explanatory variable, response variable, confounding variable, correlation, causation.)
+k. If you conducted the correlation test correctly in the previous part, you would not find evidence in favor of the alternative hypothesis. Instead, the observed direction of the linear relationship between $X$ and $Y$ is the opposite of the alternative hypothesis. Explain this weird result by summarizing your findings in the previous parts. (You are recommended to use the following key words: observational study, explanatory variable, response variable, confounding variable, correlation, causation.)

@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../note-outlines/18-conditions-post-hoc-anova.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -149,9 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
-      MATH 320: Applied Probability and Statistics
-      </li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/19-correlation.html">Correlation Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -216,13 +215,13 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Note Outlines</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../note-outlines/1-intro-r-quarto.html" class="sidebar-item-text sidebar-link">
@@ -331,6 +330,12 @@ window.Quarto = {
  <span class="menu-text">Conditions and Post-Hoc Tests</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../note-outlines/19-correlation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Correlation Analysis</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -353,14 +358,13 @@ window.Quarto = {
   <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses"><span class="header-section-number">6.1</span> Hypotheses</a></li>
   <li><a href="#test-statistic" id="toc-test-statistic" class="nav-link" data-scroll-target="#test-statistic"><span class="header-section-number">6.2</span> Test Statistic</a></li>
   <li><a href="#p-value" id="toc-p-value" class="nav-link" data-scroll-target="#p-value"><span class="header-section-number">6.3</span> P-value</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">6.4</span> Example</a></li>
-  <li><a href="#using-textttcor.test-function-in-r" id="toc-using-textttcor.test-function-in-r" class="nav-link" data-scroll-target="#using-textttcor.test-function-in-r"><span class="header-section-number">6.5</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</a></li>
+  <li><a href="#using-textttcor.test-function-in-r" id="toc-using-textttcor.test-function-in-r" class="nav-link" data-scroll-target="#using-textttcor.test-function-in-r"><span class="header-section-number">6.4</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</a></li>
   </ul></li>
   <li><a href="#case-study-3-vietnam-war-draft" id="toc-case-study-3-vietnam-war-draft" class="nav-link" data-scroll-target="#case-study-3-vietnam-war-draft"><span class="header-section-number">7</span> Case Study 3: Vietnam War Draft</a></li>
   <li><a href="#sec-cig" id="toc-sec-cig" class="nav-link" data-scroll-target="#sec-cig"><span class="header-section-number">8</span> Case Study 4: Cigarette Consumption and Price in the United States</a></li>
   <li><a href="#correlation-vs.-causation" id="toc-correlation-vs.-causation" class="nav-link" data-scroll-target="#correlation-vs.-causation"><span class="header-section-number">9</span> Correlation vs.&nbsp;Causation</a></li>
   <li><a href="#case-study-5-speed-limit-and-car-accident-rate" id="toc-case-study-5-speed-limit-and-car-accident-rate" class="nav-link" data-scroll-target="#case-study-5-speed-limit-and-car-accident-rate"><span class="header-section-number">10</span> Case Study 5: Speed Limit and Car Accident Rate</a></li>
-  <li><a href="#warm-up" id="toc-warm-up" class="nav-link" data-scroll-target="#warm-up"><span class="header-section-number">11</span> Warm-up</a></li>
+  <li><a href="#wrap-up" id="toc-wrap-up" class="nav-link" data-scroll-target="#wrap-up"><span class="header-section-number">11</span> Wrap-up</a></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">12</span> Assignment</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/jcanner/math-320/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -368,7 +372,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../note-outlines/1-intro-r-quarto.html">Note Outlines</a></li><li class="breadcrumb-item"><a href="../note-outlines/19-correlation.html">Correlation Analysis</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Correlation</h1>
 </div>
@@ -413,26 +417,17 @@ eyJhdHRyIjp7ImNvbXBsZXRpb24iOmZhbHNlLCJlY2hvIjpmYWxzZSwiZWRpdCI6ZmFsc2UsImV2YWwi
 <p>The research question is whether the expected weight increases with respect to height or not among basketball players. The dataset <span class="math inline">\(\texttt{chicago-bulls-1996-97.csv}\)</span> is the roster of <span class="math inline">\(n = 15\)</span> players of Chicago Bulls in the season of 1996-97.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bulls <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/chicago-bulls-1996-97.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bulls <span class="do">### print all data (15 rows)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bulls) <span class="co"># print rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 7
-      No Player          Position    Ht    Wt `Birth Date`   Exp
-   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
- 1     1 Randy Brown     PG          74   190 5/22/1968        5
- 2    30 Jud Buechler    SF          78   220 6/19/1968        6
- 3    35 Jason Caffey    PF          80   255 6/12/1973        1
- 4    18 Bison Dele      C           81   235 4/6/1969         5
- 5     9 Ron Harper      PG          78   185 1/20/1964       10
- 6    23 Michael Jordan  SG          78   198 2/17/1963       11
- 7    25 Steve Kerr      PG          75   175 9/27/1965        8
- 8     7 Toni Kukoc      SF          82   192 9/18/1968        3
- 9    13 Luc Longley     C           86   265 1/19/1969        5
-10     0 Robert Parish   C           85   230 8/30/1953       20
-11    33 Scottie Pippen  SF          80   210 9/25/1965        9
-12    91 Dennis Rodman   PF          79   210 5/13/1961       10
-13     8 Dickey Simpkins PF          81   248 4/6/1972         2
-14     6 Matt Steigenga  SF          79   225 3/27/1970        0
-15    34 Bill Wennington C           84   245 4/26/1963        9</code></pre>
+<pre><code># A tibble: 6 × 7
+     No Player         Position    Ht    Wt `Birth Date`   Exp
+  &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt;
+1     1 Randy Brown    PG          74   190 5/22/1968        5
+2    30 Jud Buechler   SF          78   220 6/19/1968        6
+3    35 Jason Caffey   PF          80   255 6/12/1973        1
+4    18 Bison Dele     C           81   235 4/6/1969         5
+5     9 Ron Harper     PG          78   185 1/20/1964       10
+6    23 Michael Jordan SG          78   198 2/17/1963       11</code></pre>
 </div>
 </div>
 <p>The column <span class="math inline">\(\texttt{Wt}\)</span> is the body weight in pounds, and the column <span class="math inline">\(\texttt{Ht}\)</span> is the height in inches. As our objective is to explain the weight (<span class="math inline">\(\texttt{Wt}\)</span>) by the height (<span class="math inline">\(\texttt{Ht}\)</span>), the weight is the response variable, and the height is the explanatory variable in our analysis. The two numeric variables can be visualized using the <strong>scatterplot</strong>. Can we see any linear pattern in the random data points?</p>
@@ -579,27 +574,31 @@ S_Y &amp; = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (Y_i - \bar{Y})^2 }
 </section>
 <section id="case-study-2-units-and-study-hours" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="case-study-2-units-and-study-hours"><span class="header-section-number">4</span> Case Study 2: Units and Study Hours</h2>
-<p>The dataset <span class="math inline">\(\texttt{studyhours.csv}\)</span> is a sample of $n = 110$ college students in an introductory statistics course. The column <span class="math inline">\(\texttt{units}\)</span> is the number of units taking in the semester, <span class="math inline">\(\texttt{hours}\)</span> is the study hours per week outside of classroom, and both <span class="math inline">\(\texttt{units}\)</span> and <span class="math inline">\(\texttt{hour}\)</span> are numeric variables. Can study hours be explained by units?</p>
+<p>The dataset <span class="math inline">\(\texttt{studyhours.csv}\)</span> is a sample of <span class="math inline">\(n = 110\)</span> college students in an introductory statistics course. The column <span class="math inline">\(\texttt{units}\)</span> is the number of units taking in the semester, <span class="math inline">\(\texttt{hours}\)</span> is the study hours per week outside of classroom, and both <span class="math inline">\(\texttt{units}\)</span> and <span class="math inline">\(\texttt{hour}\)</span> are numeric variables. Can study hours be explained by units?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>studyhours <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/studyhours.csv"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Students in Introductory Statistics Course"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Semester units"</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Study hours per week"</span> )</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ), <span class="at">col =</span> <span class="dv">2</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>studyhours <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/studyhours.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Students in Introductory Statistics Course"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Semester units"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Study hours per week"</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-6-1.png" style="width:50.0%;height:50.0%" alt="Scatterplot of units and study hours" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/study-hours-plot-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Students in Introductory Statistics Course”." width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) <span class="do">### sample correlation of units and study hours</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) <span class="do">### sample correlation of units and study hours</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1958239</code></pre>
 </div>
 </div>
-<p>The sample correlation of 0.196 indicates that the units and study hours of college students have a weak positive correlation. The expected study hours per week (linearly) increases with respect to units, but the (linear) relationship is weak.</p>
+<p>Interpret the sample correlation for units and hours studied.</p>
 </section>
 <section id="properties-of-sample-correlation" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="properties-of-sample-correlation"><span class="header-section-number">5</span> Properties of Sample Correlation</h2>
@@ -616,7 +615,7 @@ S_Y &amp; = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (Y_i - \bar{Y})^2 }
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-7-1.png" style="width:100.0%;height:100.0%" alt="Scatterplot of hypothetical samples and their sample correlations" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/corr-examples-1.png" class="img-fluid figure-img" alt="Scatter plot." width="672"></p>
 </figure>
 </div>
 </div>
@@ -640,7 +639,7 @@ S_Y &amp; = \sqrt{ \frac{1}{n-1} \sum_{i=1}^n (Y_i - \bar{Y})^2 }
 <p><span class="math display">\[
 T = \frac{R_{XY} - 0}{ \texttt{SE} }
 \]</span></p>
-<p>which is called a <strong>T statistic</strong> (for testing correlation). The denominator <span class="math inline">\(\texttt{SE}\)</span> is the <strong>standard erro</strong>r which quantifies the uncertainty of sample correlation <span class="math inline">\(R_{XY}\)</span>, and it is given by</p>
+<p>which is called a <strong>T statistic</strong> (for testing correlation). The denominator <span class="math inline">\(\texttt{SE}\)</span> is the <strong>standard error</strong> which quantifies the uncertainty of sample correlation <span class="math inline">\(R_{XY}\)</span>, and it is given by</p>
 <p><span class="math display">\[
 \texttt{SE} = \sqrt{ \frac{1 - (R_{XY})^2}{ n - 2 } } \, .
 \]</span></p>
@@ -654,46 +653,41 @@ T = \frac{R_{XY} - 0}{ \texttt{SE} }
 <li><u>Left-sided test</u>: p = <span class="math inline">\(\texttt{pt}(\texttt{t}, \nu)\)</span></li>
 <li><u>Two-sided test</u>: p = <span class="math inline">\(2 * \texttt{pt}(\texttt{t}, \nu)\)</span> if <span class="math inline">\(\texttt{t} &lt; 0\)</span> or p = <span class="math inline">\(2 * (1 - \texttt{pt}(\texttt{t}, \nu))\)</span> if <span class="math inline">\(\texttt{t} &gt; 0\)</span></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-8-1.png" style="width:100.0%;height:100.0%" alt="P-value calculation" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>If p-value is less than a fixed significance level of <span class="math inline">\(\alpha\)</span>, we conclude <span class="math inline">\(H_1\)</span>. Otherwise, we conclude <span class="math inline">\(H_0\)</span>. The universal definition of p-value is the probability of observing the currently observed test statistic or stronger evidence for <span class="math inline">\(H_1\)</span> under the assumption of <span class="math inline">\(H_0\)</span>. To this end, if p-value is small, it is evidence against <span class="math inline">\(H_0\)</span> and supports <span class="math inline">\(H_1\)</span>.</p>
-</section>
-<section id="example" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="example"><span class="header-section-number">6.4</span> Example</h3>
-<p>For the purpose of demonstration, let <span class="math inline">\(X\)</span> be the semester units and <span class="math inline">\(Y\)</span> be the study hours per week in the population of college students. The parameter of interest is <span class="math inline">\(\rho_{XY}\)</span>, the population correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we calculated a sample correlation of <span class="math inline">\(R_{XY} = 0.196\)</span> in a sample of size <span class="math inline">\(n = 110\)</span>. We can perform the right-sided correlation test, <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, as follows.</p>
+<section id="example" class="level4" data-number="6.3.1">
+<h4 data-number="6.3.1" class="anchored" data-anchor-id="example"><span class="header-section-number">6.3.1</span> Example</h4>
+<p>For the purpose of demonstration, let <span class="math inline">\(X\)</span> be the semester units and <span class="math inline">\(Y\)</span> be the study hours per week in the population of college students. The parameter of interest is <span class="math inline">\(\rho_{XY}\)</span>, the population correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and we calculated a sample correlation of <span class="math inline">\(R_{XY} = 0.196\)</span> in a sample of size <span class="math inline">\(n = 110\)</span>. We can perform the right-sided correlation test,</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span></p></li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">r =</span> <span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) ) <span class="do">### sample correlation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>( r <span class="ot">&lt;-</span> <span class="fu">cor</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours ) ) <span class="do">### sample correlation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1958239</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">n =</span> <span class="fu">dim</span>(studyhours)[<span class="dv">1</span>] ) <span class="do">### sample size (number of rows in the data)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>( n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(studyhours) ) <span class="do">### sample size (number of rows in the data)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 110</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">se =</span> <span class="fu">sqrt</span>( (<span class="dv">1</span> <span class="sc">-</span> r<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### standard error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>( se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>( (<span class="dv">1</span> <span class="sc">-</span> r<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### standard error</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.09436204</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">t =</span> ( r <span class="sc">-</span> <span class="dv">0</span> ) <span class="sc">/</span> se ) <span class="do">### T statistic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>( t <span class="ot">&lt;-</span> ( r <span class="sc">-</span> <span class="dv">0</span> ) <span class="sc">/</span> se ) <span class="do">### T statistic</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.07524</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>( <span class="at">p =</span> ( <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>( p <span class="ot">&lt;-</span> ( <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, n <span class="sc">-</span> <span class="dv">2</span>) ) ) <span class="do">### p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02016997</code></pre>
 </div>
 </div>
-<p>Even though we observed a weak positive correlation (<strong>?@tbl-cor</strong>), at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the sample (110 college students) is statistically significant evidence that the semester units and study hours have a positive linear relationship (T = 2.075, DF = 108, and p = 0.020).</p>
+<p>Even though we observed a weak positive correlation (<strong>?@tbl-cor</strong>), at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the sample (110 college students) strong evidence against the null in favor of the alternative that the true correlation is greater than 0 and the semester units and study hours have a positive linear relationship (T = 2.075, DF = 108, and p = 0.020, <span class="math inline">\(\alpha = 0.05\)</span>).</p>
 </section>
-<section id="using-textttcor.test-function-in-r" class="level3" data-number="6.5">
-<h3 data-number="6.5" class="anchored" data-anchor-id="using-textttcor.test-function-in-r"><span class="header-section-number">6.5</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</h3>
+</section>
+<section id="using-textttcor.test-function-in-r" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="using-textttcor.test-function-in-r"><span class="header-section-number">6.4</span> Using <span class="math inline">\(\texttt{cor.test}\)</span> Function in R</h3>
 <p>The <span class="math inline">\(\texttt{cor.test}\)</span> function is useful for the correlation test.</p>
 <ul>
 <li><p>The first argument is <span class="math inline">\(\texttt{y} \sim \texttt{x}\)</span> where <span class="math inline">\(\texttt{x}\)</span> and <span class="math inline">\(\texttt{y}\)</span> are numeric variables.</p></li>
@@ -701,7 +695,7 @@ T = \frac{R_{XY} - 0}{ \texttt{SE} }
 <li><p><span class="math inline">\(\texttt{alternative}\)</span> is the direction of alternative hypothesis. Specify <span class="math inline">\(\texttt{"greater"}\)</span> for a right-sided test, <span class="math inline">\(\texttt{"less"}\)</span> for a left-sided test, or <span class="math inline">\(\texttt{"two.sided"}\)</span> for a two-sided test.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours, <span class="at">alternative =</span> <span class="st">"greater"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -716,51 +710,71 @@ sample estimates:
 0.1958239 </code></pre>
 </div>
 </div>
+<p>We can also extra a confidence interval:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( hours <span class="sc">~</span> units, <span class="at">data =</span> studyhours, <span class="at">conf.level =</span> <span class="fl">0.95</span>)<span class="sc">$</span>conf.int</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.008909048 0.369516498
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>How was the confidence interval constructed?</p>
+<p>Interpret the confidence interval in context.</p>
 </section>
 </section>
 <section id="case-study-3-vietnam-war-draft" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="case-study-3-vietnam-war-draft"><span class="header-section-number">7</span> Case Study 3: Vietnam War Draft</h2>
 <p>During the Vietnam War (1955-1975), the U.S. Selective Service drafted about 2.2 million men between 1964 and 1973. The U.S. Selective Service randomly matched birth dates and lottery numbers, and men who had a lottery number of 195 or below should be on reserve. The question of interest is whether the lottery was truly random or not. Let us take a look at the dataset <span class="math inline">\(\texttt{draft1969.csv}\)</span>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>draft <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"Data/draft1969.csv"</span>) <span class="do">### read data</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(draft, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>draft <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/draft1969.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="do">### read data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(draft, <span class="dv">5</span>) <span class="do">### first 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  BirthMonth BirthDay DateNumeric Lottery
+<pre><code># A tibble: 5 × 4
+  BirthMonth BirthDay DateNumeric Lottery
+       &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
 1          1        1           1     305
 2          1        2           2     159
 3          1        3           3     251
 4          1        4           4     215
 5          1        5           5     101</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(draft, <span class="dv">5</span>) <span class="do">### last 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(draft, <span class="dv">5</span>) <span class="do">### last 5 lines</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    BirthMonth BirthDay DateNumeric Lottery
-362         12       27         362      78
-363         12       28         363     123
-364         12       29         364      16
-365         12       30         365       3
-366         12       31         366     100</code></pre>
+<pre><code># A tibble: 5 × 4
+  BirthMonth BirthDay DateNumeric Lottery
+       &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+1         12       27         362      78
+2         12       28         363     123
+3         12       29         364      16
+4         12       30         365       3
+5         12       31         366     100</code></pre>
 </div>
 </div>
-<p>The column <span class="math inline">\(\texttt{DateNumeric}\)</span> is the numeric birth date (e.g., 1 to 366 for January 1 to December 31), and the column <span class="math inline">\(\texttt{Lottery}\)</span> is the randomly matched lottery number (1 to 366). For example, healthy men who were born on January 1 were not drafted (<span class="math inline">\(\texttt{Lottery} = 305\)</span>) and healthy men who were born on December 31 were drafted (<span class="math inline">\(\texttt{Lottery} = 100\)</span>). To investigate whether the lottery was fair (purely random) or not, the correlation test can be applied with <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> (zero correlation between the two numeric variables) and <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} \ne 0\)</span> (non-zero correlation) where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the numeric birth date and lottery number, respectively. The below scatterplot presents the data visually.</p>
+<p>The column <span class="math inline">\(\texttt{DateNumeric}\)</span> is the numeric birth date (e.g., 1 to 366 for January 1 to December 31), and the column <span class="math inline">\(\texttt{Lottery}\)</span> is the randomly matched lottery number (1 to 366). For example, healthy men who were born on January 1 were not drafted (<span class="math inline">\(\texttt{Lottery} = 305\)</span>) and healthy men who were born on December 31 were drafted (<span class="math inline">\(\texttt{Lottery} = 100\)</span>). To investigate whether the lottery was fair (purely random) or not, the correlation test can be applied where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the numeric birth date and lottery number, respectively</p>
+<p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span></p>
+<p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} \ne 0\)</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft, <span class="at">cex =</span> <span class="fl">0.5</span>,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Numeric birth date"</span>,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Lottery number"</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Vietnam War Draft (Dec. 1, 1969)"</span> )</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">h =</span> <span class="dv">195</span>, <span class="at">col =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span> ) <span class="do">### horizontal dotted line at 195</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  ) <span class="do">### fit a line to data points</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Numeric birth date"</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Lottery number"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Vietnam War Draft (Dec. 1, 1969)"</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-12-1.png" style="width:50.0%;height:50.0%" alt="Vietnam War Draft in 1969" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/draft-scatter-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Vietnam War Draft (Dec. 1, 1969)”." width="672"></p>
 </figure>
 </div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.2256861</code></pre>
 </div>
 </div>
 <p>Let us conduct the correlation test (two-sided) using the <span class="math inline">\(\texttt{cor.test}\)</span> function.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft, <span class="at">alternative =</span> <span class="st">"two.sided"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( Lottery <span class="sc">~</span> DateNumeric, <span class="at">data =</span> draft, <span class="at">alternative =</span> <span class="st">"two.sided"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -775,7 +789,7 @@ sample estimates:
 -0.2256861 </code></pre>
 </div>
 </div>
-<p>The sample correlation –0.226 indicates a weak negative correlation, and it is evidence that the chance of being drafted is higher for men of later birth dates. At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the result is statistically significant that the draft was not pair, particularly against men of later birth dates (T = –4.420, DF = 364, and p &lt; 0.0001). If the null hypothesis was true (zero correlation between numeric birth date and lottery number), the probability of observing this result or stronger evidence for the alternative hypothesis (non-zero correlation) is 0.000013, so it is hard to believe the null hypothesis, and we conclude the alternative hypothesis.</p>
+<p>Using <span class="math inline">\(\alpha = 0.05\)</span> interpret the results of the test in context. Is the draft “fair”?</p>
 </section>
 <section id="sec-cig" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="sec-cig"><span class="header-section-number">8</span> Case Study 4: Cigarette Consumption and Price in the United States</h2>
@@ -785,40 +799,53 @@ sample estimates:
 <li><p><span class="math inline">\(\texttt{price}\)</span>: average price of one pack of cigarettes</p></li>
 </ul>
 <p><strong>Note:</strong> Each row is not a person. It is the estimated average per person in each state.</p>
-<p>The objective of data analysis is to test whether the expected cigarette consumption is lower when the price is higher or not. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be the explanatory variable (<span class="math inline">\(\texttt{price}\)</span>) and response variable (<span class="math inline">\(\texttt{packs}\)</span>), and let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation (parameter to be tested). Given the objective, the null hypothesis is <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span>, and the alternative hypothesis is <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &lt; 0\)</span> (left-sided test). Below are the scatterplot and correlation test.</p>
+<p>The objective of data analysis is to test whether the expected cigarette consumption is lower when the price is higher or not. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be the explanatory variable (<span class="math inline">\(\texttt{price}\)</span>) and response variable (<span class="math inline">\(\texttt{packs}\)</span>), and let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation (parameter to be tested). Given the objective, the null hypothesis is</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &lt; 0\)</span> (left-sided test).</p></li>
+</ul>
+<p>Below are the scatterplot and correlation test.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cig <span class="ot">=</span> <span class="fu">read.csv</span>( <span class="st">"Data/cigarettes.csv"</span> )</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>cig <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/cigarettes.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  state packs price
-1    AL 142.9  1.60
-2    AZ 106.0  1.47
-3    AR 165.2  1.71
-4    CA  90.4  2.31
-5    CT 106.7  2.10</code></pre>
+<pre><code># A tibble: 5 × 3
+  state packs price
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 AL    143.   1.6 
+2 AZ    106    1.47
+3 AR    165.   1.71
+4 CA     90.4  2.31
+5 CT    107.   2.1 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(cig, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   state packs price
-42    VA 138.5  1.31
-43    WA 105.8  2.24
-44    WV 124.5  1.32
-45    WI 125.2  1.70
-46    WY 148.5  1.26</code></pre>
+<pre><code># A tibble: 5 × 3
+  state packs price
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 VA     138.  1.31
+2 WA     106.  2.24
+3 WV     124.  1.32
+4 WI     125.  1.7 
+5 WY     148.  1.26</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig,</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Average price (dollars per pack)"</span>,</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Aerage consumption (packs per person)"</span>,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Cigarette Price and Consumption by State"</span> )</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(packs <span class="sc">~</span> price, <span class="at">data =</span> cig), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Average price (dollars per pack)"</span>,</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Aerage consumption (packs per person)"</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Cigarette Price and Consumption by State"</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-14-1.png" style="width:50.0%;height:50.0%" alt="Vietnam War Draft in 1969" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/plot-cig-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Cigarette Price and Consumption by State”." width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig, <span class="at">alternative =</span> <span class="st">"less"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( packs <span class="sc">~</span> price, <span class="at">data =</span> cig, <span class="at">alternative =</span> <span class="st">"less"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -833,44 +860,54 @@ sample estimates:
 -0.5331066 </code></pre>
 </div>
 </div>
-<p>The sample correlation –0.533 indicates a moderate negative correlation between cigarette price and consumption. At a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, the result of correlation test is statistically significant that the expected cigarette consumption is lower when the price is higher (T = –4.1797, DF = 44, and p &lt; 0.0001).</p>
+<p>Using <span class="math inline">\(\alpha = 0.05\)</span> interpret the results of the test in context. How does cost affect smoking?</p>
 </section>
 <section id="correlation-vs.-causation" class="level2" data-number="9">
 <h2 data-number="9" class="anchored" data-anchor-id="correlation-vs.-causation"><span class="header-section-number">9</span> Correlation vs.&nbsp;Causation</h2>
-<p>Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a <strong>causal relationship</strong> when the change (manipulation) of <span class="math inline">\(X\)</span> results in the change of <span class="math inline">\(Y\)</span>. The sample correlation quantifies the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and it does not verify whether the relationship is causal or not. In other words, <u>correlation does not imply causation</u>.</p>
-<p>When researchers manipulate <span class="math inline">\(X\)</span> and measure <span class="math inline">\(Y\)</span>, it is called an <strong>experimental study</strong>. Otherwise, (i.e., researchers observe <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> without controlling <span class="math inline">\(X\)</span>), it is called an <strong>observational study</strong>. An experimental study can verify a causal relationship if experimenters can manipulate <span class="math inline">\(X\)</span> and do it carefully. An observational study cannot verify a causal relationship, and sometimes it results in a significant correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when they are not causally related.</p>
+<p>Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a <strong>causal relationship</strong> when the change of <span class="math inline">\(X\)</span> results in the change of <span class="math inline">\(Y\)</span>. The sample correlation quantifies the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, and it does not verify whether the relationship is causal or not. In other words, <u>correlation does not imply causation</u>.</p>
+<p>When researchers control the value <span class="math inline">\(X\)</span> and randomly assign it to cases to then measure its effect on <span class="math inline">\(Y\)</span>, it is called an <strong>experimental study</strong>. Otherwise, (i.e., researchers observe <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> without controlling/randomly assigning <span class="math inline">\(X\)</span>), it is called an <strong>observational study</strong>. An experimental study can verify a causal relationship if experimenters can randomly assign <span class="math inline">\(X\)</span> to each case and do it carefully. An observational study cannot verify a causal relationship, and sometimes it results in a significant correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when they are not causally related.</p>
 <p>Does long hair cause long lifetime of human? Here is a hypothetical experiment. Suppose an experimenter samples people from the population and randomly assigns Group 1 or 2. Group 1 is forced to keep their hair short, Group 2 is forced to keep their hair long, and the experimenter records their lifetime. Disregarding the fact that this hypothetical experiment is unrealistic (taking about 100 years) and unethical (forcing human subjects), the experimenter probably will not obtain evidence for the causal relationship between hair length and lifetime.</p>
 <p>In an observational study, however, we may observe a positive correlation between hair length and lifetime. It is because women have longer hair than men on average, and the expected lifetime of women is longer than of men. The correlation between the explanatory variable (hair length) and the response variable (lifetime) exists through the third variable (sex). When a third variable is related to both explanatory variable and response variable, the third variable is called a <strong>confounding variable</strong> or <strong>confounder</strong>. In an observational study, we may observe a correlation between the explanatory variable and the response variable because of a confounding variable. Therefore, it is dangerous to claim a causal relationship based on the correlation observed in an observational study.</p>
-<p>In this regard, we shall carefully state the conclusion of Case Study 4 (<a href="#sec-cig" class="quarto-xref">Section&nbsp;8</a>). We observed a statistically significant correlation between cigarette price and consumption, but it is <u>not</u> evidence for the causation that lower cigarette price will reduce cigarette consumption (even if it is true). In order to obtain evidence for the causal relationship, we shall manipulate the cigarette price of each state and see if it affects the cigarette consumption. Can any researcher manipulate the cigarette price of each state in the United States? As such, conducting an experiment is challenging or sometimes nearly impossible in practice.</p>
+<p>In this regard, we shall carefully state the conclusion of Case Study 4 (<a href="#sec-cig" class="quarto-xref">Section&nbsp;8</a>). We observed a statistically meaningful correlation between cigarette price and consumption, but it is <u>not</u> evidence for the causation that lower cigarette price will reduce cigarette consumption (even if it is true). In order to obtain evidence for the causal relationship, we shall manipulate the cigarette price of each state and see if it affects the cigarette consumption. Can any researcher manipulate the cigarette price of each state in the United States? As such, conducting an experiment is challenging or sometimes nearly impossible in practice.</p>
 <p>The following case study is another observational study, and demonstrates the caveat of an observational study.</p>
 </section>
 <section id="case-study-5-speed-limit-and-car-accident-rate" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="case-study-5-speed-limit-and-car-accident-rate"><span class="header-section-number">10</span> Case Study 5: Speed Limit and Car Accident Rate</h2>
-<p>The top three causes of car accidents are known to be distracted driving, speeding, and driving under influence. This analysis focuses on speeding, specifically the relationship between speed limit and accident rate on highways in Minnesota. The dataset <span class="math inline">\(\texttt{highway.csv}\)</span> is a sample of 39 highway sections in Minnesota, and the data were collected in 1973. The column <span class="math inline">\(\texttt{rate}\)</span> is the accident rate per million vehicle miles in each highway section (response variable), and the column <span class="math inline">\(\texttt{slim}\)</span> is the speed limit of the highway section (explanatory variable). The objective is to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> (no correlation between speed limit and accident rate) versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span> (more accidents in high speed limit section) at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p>The top three causes of car accidents are known to be distracted driving, speeding, and driving under influence. This analysis focuses on speeding, specifically the relationship between speed limit and accident rate on highways in Minnesota. The dataset <span class="math inline">\(\texttt{highway.csv}\)</span> is a sample of 39 highway sections in Minnesota, and the data were collected in 1973. The column <span class="math inline">\(\texttt{rate}\)</span> is the accident rate per million vehicle miles in each highway section (response variable), and the column <span class="math inline">\(\texttt{slim}\)</span> is the speed limit of the highway section (explanatory variable). The objective is to test at a significance level of <span class="math inline">\(\alpha = 0.05\)</span></p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span></p></li>
+<li><p><span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span></p></li>
+</ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>highway <span class="ot">=</span> <span class="fu">read.csv</span>( <span class="st">"Data/highway.csv"</span> )</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( highway, <span class="dv">5</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>highway <span class="ot">&lt;-</span> <span class="fu">read_csv</span>( <span class="st">"data/highway.csv"</span>, <span class="at">show_col_types =</span>  )</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>( highway, <span class="dv">5</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  rate   len adt trks      sigs1 slim shld lane acpt  itg lwid htype
-1 4.58  4.99  69    8 0.20040080   55   10    8  4.6 1.20   12   FAI
-2 2.86 16.11  73    8 0.06207325   60   10    4  4.4 1.43   12   FAI
-3 3.02  9.75  49   10 0.10256410   60   10    4  4.7 1.54   12   FAI
-4 2.29 10.65  61   13 0.09389671   65   10    6  3.8 0.94   12   FAI
-5 1.61 20.01  28   12 0.04997501   70   10    4  2.2 0.65   12   FAI</code></pre>
+<pre><code># A tibble: 5 × 12
+   rate   len   adt  trks  sigs1  slim  shld  lane  acpt   itg  lwid htype
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1  4.58  4.99    69     8 0.200     55    10     8   4.6  1.2     12 FAI  
+2  2.86 16.1     73     8 0.0621    60    10     4   4.4  1.43    12 FAI  
+3  3.02  9.75    49    10 0.103     60    10     4   4.7  1.54    12 FAI  
+4  2.29 10.6     61    13 0.0939    65    10     6   3.8  0.94    12 FAI  
+5  1.61 20.0     28    12 0.0500    70    10     4   2.2  0.65    12 FAI  </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway,</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Minnesota Highways in 1973"</span>,</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Speed limit (mph)"</span>,</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Accident rate (per million vehicle miles)"</span> )</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="fu">lm</span>(rate <span class="sc">~</span> slim, <span class="at">data =</span> highway), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">1</span>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway,</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Minnesota Highways in 1973"</span>,</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"Speed limit (mph)"</span>,</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab =</span> <span class="st">"Accident rate (per million vehicle miles)"</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-15-1.png" style="width:50.0%;height:50.0%" alt="Highways in Minnesota in 1973" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/plot-highway-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Minnesota Highways in 1973”." width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway, <span class="at">alternative =</span> <span class="st">"greater"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>( rate <span class="sc">~</span> slim, <span class="at">data =</span> highway, <span class="at">alternative =</span> <span class="st">"greater"</span> )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -885,18 +922,21 @@ sample estimates:
 -0.6809836 </code></pre>
 </div>
 </div>
-<p>The data do not support the positive correlation between speed limit and accident rate (T = –5.657, DF = 37, and p = 1.0000). Instead, the scatterplot and sample correlation of -0.68 suggest a moderate negative correlation.</p>
-<p>Does the data suggest that low speed limit causes more accidents? No.&nbsp;The researchers did not manipulate the speed limit of highway sections, so it is an observational study. Then why is low speed limit is associated with high accident rate? Let us analyze pairwise correlations among other variables in the data.</p>
+<p>Interpret the p-value.</p>
+<p>Evaluate the strength of evidence against the null hypothesis.</p>
+<p>Can you claim that the data suggest that low speed limit causes more accidents?</p>
+<p>Let us analyze pairwise correlations among other variables in the data:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>data_num <span class="ot">=</span> highway[ , <span class="fu">c</span>(<span class="st">"rate"</span>, <span class="st">"slim"</span>, <span class="st">"shld"</span>, <span class="st">"sigs1"</span>, <span class="st">"acpt"</span>) ] <span class="do">### extract the five columns</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>( <span class="fu">cor</span>(data_num), <span class="dv">3</span> ) <span class="do">### pairwise correlation between the five numeric variables</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>highway <span class="sc">|&gt;</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rate, slim, shld, sigs1, acpt) <span class="sc">|&gt;</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        rate   slim   shld  sigs1   acpt
-rate   1.000 -0.681 -0.387  0.603  0.752
-slim  -0.681  1.000  0.689 -0.424 -0.682
-shld  -0.387  0.689  1.000 -0.124 -0.425
-sigs1  0.603 -0.424 -0.124  1.000  0.513
-acpt   0.752 -0.682 -0.425  0.513  1.000</code></pre>
+<pre><code>            rate       slim       shld      sigs1       acpt
+rate   1.0000000 -0.6809836 -0.3869072  0.6031906  0.7520255
+slim  -0.6809836  1.0000000  0.6890086 -0.4244150 -0.6815205
+shld  -0.3869072  0.6890086  1.0000000 -0.1241032 -0.4249513
+sigs1  0.6031906 -0.4244150 -0.1241032  1.0000000  0.5134606
+acpt   0.7520255 -0.6815205 -0.4249513  0.5134606  1.0000000</code></pre>
 </div>
 </div>
 <p>Potential confounding variables (moderately to strongly correlated with <span class="math inline">\(\texttt{rate}\)</span> and <span class="math inline">\(\texttt{slim}\)</span>) are:</p>
@@ -907,61 +947,91 @@ acpt   0.752 -0.682 -0.425  0.513  1.000</code></pre>
 </ul>
 <p>Perhaps, the above potential confounding variables (risk factors) have causal relationships with accidents (<span class="math inline">\(\texttt{rate}\)</span>) while the speed limit (<span class="math inline">\(\texttt{slim}\)</span>) was lowered due to the risk factors. The take-home message is that it is very difficult to verify the causal relationship with an observational study, and the sample correlation may results in the opposite direction of the expected direction.</p>
 </section>
-<section id="warm-up" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="warm-up"><span class="header-section-number">11</span> Warm-up</h2>
-<p><em>You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSdH856VtAPHEUHg5c0tEqTsHqEvzl-fAquN-5MgVYTxqFTwzw/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
-<p><strong>Problem 1.</strong> Fill in the blank: The sample correlation measures the direction and strength of the [a] between two numeric variables, and it is bounded between [b] and [c].</p>
+<section id="wrap-up" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="wrap-up"><span class="header-section-number">11</span> Wrap-up</h2>
+<p>In your groups work on the following problems. You can check your answers below. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Be ready to show your work on the board.</p>
+<section id="problem-1" class="level4" data-number="11.0.1">
+<h4 data-number="11.0.1" class="anchored" data-anchor-id="problem-1"><span class="header-section-number">11.0.1</span> Problem 1</h4>
+<p>Fill in the blank: The sample correlation measures the direction and strength of the [a] between two numeric variables, and it is bounded between [b] and [c].</p>
 <p>Word bank: –1, 0, 1, 100, causal relationship, confounder, correlation, linear relationship, non-linear relationship, quadratic, strength</p>
-<p><strong>Problem 2.</strong> Below are statements about the sample correlation between two numeric variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. True or false?</p>
-<p>a. Its unit is the product of the unit of <span class="math inline">\(X\)</span> and the unit of <span class="math inline">\(Y\)</span>.</p>
-<p>b. It quantifies only the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study, and it quantifies the non-linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an experimental study.</p>
-<p>c. It verifies the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<p>d. It can be calculated when the sample covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and the sample standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are given.</p>
-<p>e. When the sample correlation is small (e.g., 0.1) and the sample size is large (e.g., 10,000), it can result in a statistically significant evidence for the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<p><strong>Problem 3.</strong> Fill in the blank: Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a(n) [a] relationship when the change of <span class="math inline">\(X\)</span> leads to the change of <span class="math inline">\(Y\)</span>. If researchers manipulate <span class="math inline">\(X\)</span> to study this relationship, it is referred to as a(n) [b]. Otherwise, it is referred as a(n) [c]. A third variable which is related to both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study is called a(n) [d], and it may create an unexpected relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when <span class="math inline">\(X\)</span> does not cause <span class="math inline">\(Y\)</span>. Therefore, [e] does not imply [f].</p>
+</section>
+<section id="problem-2" class="level4" data-number="11.0.2">
+<h4 data-number="11.0.2" class="anchored" data-anchor-id="problem-2"><span class="header-section-number">11.0.2</span> Problem 2</h4>
+<p>Below are statements about the sample correlation between two numeric variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. True or false?</p>
+<ol type="a">
+<li><p>Its unit is the product of the unit of <span class="math inline">\(X\)</span> and the unit of <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>It quantifies only the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study, and it quantifies the non-linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an experimental study.</p></li>
+<li><p>It verifies the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p></li>
+<li><p>It can be calculated when the sample covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and the sample standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are given.</p></li>
+<li><p>When the sample correlation is small (e.g., 0.1) and the sample size is large (e.g., 10,000), it can result in a statistically significant evidence for the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p></li>
+</ol>
+</section>
+<section id="problem-3" class="level4" data-number="11.0.3">
+<h4 data-number="11.0.3" class="anchored" data-anchor-id="problem-3"><span class="header-section-number">11.0.3</span> Problem 3</h4>
+<p>Fill in the blank: Let <span class="math inline">\(X\)</span> be an explanatory variable and <span class="math inline">\(Y\)</span> be a response variable. We say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have a(n) [a] relationship when the change of <span class="math inline">\(X\)</span> leads to the change of <span class="math inline">\(Y\)</span>. If researchers control and randomly assign <span class="math inline">\(X\)</span> to a case to study this relationship with <span class="math inline">\(Y\)</span>, it is referred to as a(n) [b]. Otherwise, it is referred as a(n) [c]. A third variable which is related to both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> in an observational study is called a(n) [d], and it may create an unexpected relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> even when <span class="math inline">\(X\)</span> does not cause <span class="math inline">\(Y\)</span>. Therefore, [e] does not imply [f].</p>
 <p>Word bank: causal, causation, confounding variable, correlation, covariance, experimental study, explanatory variable, linear relationship, non-linear relationship, observational study, response variable</p>
-<p><strong>Problem 4.</strong> The dataset <span class="math inline">\(\texttt{icecream.csv}\)</span> is a sample of 30 randomly selected regions at random months between 1951 and 1953 in the United States. Each data point represents a region, and each column represents the average measure in the region. The column named <span class="math inline">\(\texttt{cons}\)</span> is the average consumption of ice cream per person (in pints), <span class="math inline">\(\texttt{income}\)</span> is the average weekly income per family (in dollars); <span class="math inline">\(\texttt{price}\)</span> is the average price of ice cream (dollars per pint); and <span class="math inline">\(\texttt{temp}\)</span> is the average temperature in the region (in Fahrenheit). Answer the following questions.</p>
-<p>a. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{income}\)</span>.</p>
-<p>b. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{price}\)</span>.</p>
-<p>c. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p>
-<p>d. Calculate the correlation between <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p>
-<p>e. Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p>
+</section>
+<section id="problem-4" class="level4" data-number="11.0.4">
+<h4 data-number="11.0.4" class="anchored" data-anchor-id="problem-4"><span class="header-section-number">11.0.4</span> Problem 4</h4>
+<p>The dataset <span class="math inline">\(\texttt{icecream.csv}\)</span> is a sample of 30 randomly selected regions at random months between 1951 and 1953 in the United States. Each data point represents a region, and each column represents the average measure in the region. The column named <span class="math inline">\(\texttt{cons}\)</span> is the average consumption of ice cream per person (in pints), <span class="math inline">\(\texttt{income}\)</span> is the average weekly income per family (in dollars); <span class="math inline">\(\texttt{price}\)</span> is the average price of ice cream (dollars per pint); and <span class="math inline">\(\texttt{temp}\)</span> is the average temperature in the region (in Fahrenheit). Answer the following questions.</p>
+<ol type="a">
+<li><p>Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{income}\)</span>.</p></li>
+<li><p>Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{price}\)</span>.</p></li>
+<li><p>Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p></li>
+<li><p>Calculate the correlation between <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p></li>
+<li><p>Calculate the correlation between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{cons}\)</span>.</p></li>
+</ol>
 <p>For the following parts, let <span class="math inline">\(\rho_{XY}\)</span> be the true correlation between <span class="math inline">\(X = \texttt{temp}\)</span> (explanatory variable) and <span class="math inline">\(Y = \texttt{cons}\)</span> (response variable), and the objective is to test <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\rho_{XY} = 0\)</span> versus <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\rho_{XY} &gt; 0\)</span> at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>.</p>
-<p>f. Report the p-value for the correlation test.</p>
-<p>g. Multiple-choice: Which conclusion is most appropriate about the relationship between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p>
+<ol start="6" type="a">
+<li><p>Report the p-value for the correlation test.</p></li>
+<li><p>Multiple-choice: Which conclusion is most appropriate about the relationship between <span class="math inline">\(\texttt{cons}\)</span> and <span class="math inline">\(\texttt{temp}\)</span>.</p></li>
+</ol>
 <p>(A) Higher temperature causes more ice cream consumption.</p>
 <p>(B) More ice consumption causes higher temperature.</p>
 <p>(C) The data suggest the positive linear relationship between ice cream consumption and temperature.</p>
 <p>(D) Due to the small sample size, there is a lack of statistical significance for the positive linear relationship.</p>
-<p>h. Fill in the blank: It is an [o… s…] because researchers could not control the temperature of each region in the United States.</p>
-<p>i. Multiple-choice: What does <span class="math inline">\(\alpha = 0.05\)</span> in the context?</p>
+<ol start="8" type="a">
+<li><p>Fill in the blank: It is an [o… s…] because researchers could not control the temperature of each region in the United States.</p></li>
+<li><p>Multiple-choice: What does <span class="math inline">\(\alpha = 0.05\)</span> in the context?</p></li>
+</ol>
 <p>(A) If <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> are linearly related, we allowed a probability of 0.05 for concluding no linear relationship between them.</p>
 <p>(B) If <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> are not linearly related, we allowed a probability of 0.05 for concluding a positive linear relationship between them.</p>
 <p>(C) It is the probability that <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> have a positive linear relationship.</p>
 <p>(D) It is the probability that <span class="math inline">\(\texttt{temp}\)</span> and <span class="math inline">\(\texttt{cons}\)</span> have no linear relationship.</p>
 <p>(E) None of the above</p>
 </section>
+</section>
 <section id="assignment" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="assignment"><span class="header-section-number">12</span> Assignment</h2>
-<p><em><strong>Instruction 1:</strong> You must input your answers in the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAIV_qc08SGBdpaQf9puSiPUrCyEx1ND3x_PkEofFirs18vw/viewform?usp=dialog">Google form</a>. All calculations (numeric answers) must be rounded to four decimals (e.g., 0.6667 instead of 2/3, 0.5 or 0.5000 instead of 1/2) unless specified. Any typo will result in point deduction in the auto-grading system. Any submission after the due date specified in Canvas will not be graded.</em></p>
-<p><em><strong>Instruction 2:</strong> You must submit an html file generated by Quarto in Canvas. Regardless of your answers in the Google form, 25% of the assignment will be graded based on the quality of the html document (e.g., completeness, organization, easiness to read, use of complete sentences and accurate notation). If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</em></p>
-<p><strong>Problem 1.</strong> Suppose we have four hypothetical samples as shown below.</p>
+<p>You must submit an html file generated by Quarto in Canvas. While you can check numeric answers here, complete work is expected for the problems below. The assignment will be graded based on the quality of the html document (e.g., completeness and organization. If an R code which is not demonstrated in the course material is used, it will be regarded as use of unacceptable sources and/or aids, and it will result in zero in the assignment. Such a case may be reported according to the <a href="https://csumb.edu/policy/academic-integrity-policy/">CSUMB Academic Integrity Policy</a>.</p>
+<section id="problem-1-1" class="level4" data-number="12.0.1">
+<h4 data-number="12.0.1" class="anchored" data-anchor-id="problem-1-1"><span class="header-section-number">12.0.1</span> Problem 1</h4>
+<p>Suppose we have four hypothetical samples as shown below.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="19-correlation_files/figure-html/unnamed-chunk-17-1.png" style="width:100.0%;height:100.0%" alt="Four hypothetical samples" class="figure-img"></p>
+<p><img src="19-correlation_files/figure-html/cor-samples-1.png" class="img-fluid figure-img" alt="Combined chart with scatter plot and chart, titled “Minnesota Highways in 1973”." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>a. Multiple-choice: Which sample results in a sample correlation closest to +1?</p>
+<ol type="a">
+<li>Multiple-choice: Which sample results in a sample correlation closest to +1?</li>
+</ol>
 <p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
-<p>b. Multiple-choice: Which sample results in a sample correlation closest to –1?</p>
+<ol start="2" type="a">
+<li>Multiple-choice: Which sample results in a sample correlation closest to –1?</li>
+</ol>
 <p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
-<p>c. Multiple-choice: Which sample results in a sample correlation closest to 0?</p>
+<ol start="3" type="a">
+<li>Multiple-choice: Which sample results in a sample correlation closest to 0?</li>
+</ol>
 <p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4</p>
-<p><strong>Problem 2.</strong> Suppose we have five hypothetical samples as follows:</p>
+</section>
+<section id="problem-2-1" class="level4" data-number="12.0.2">
+<h4 data-number="12.0.2" class="anchored" data-anchor-id="problem-2-1"><span class="header-section-number">12.0.2</span> Problem 2</h4>
+<p>Suppose we have five hypothetical samples as follows:</p>
 <ul>
 <li><p>Sample 1: <span class="math inline">\(R_{XY} = 0.9\)</span> and <span class="math inline">\(n = 5\)</span></p></li>
 <li><p>Sample 2: <span class="math inline">\(R_{XY} = 0.5\)</span> and <span class="math inline">\(n = 50\)</span></p></li>
@@ -969,32 +1039,51 @@ acpt   0.752 -0.682 -0.425  0.513  1.000</code></pre>
 <li><p>Sample 4: <span class="math inline">\(R_{XY} = -0.5\)</span> and <span class="math inline">\(n = 50\)</span></p></li>
 <li><p>Sample 5: <span class="math inline">\(R_{XY} = -0.9\)</span> and <span class="math inline">\(n = 5\)</span></p></li>
 </ul>
-<p>a. Calculate T statistic for Sample 1.</p>
-<p>b. Which sample provides the strongest evidence for a positive linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<ol type="a">
+<li><p>Calculate T statistic for Sample 1.</p></li>
+<li><p>Which sample provides the strongest evidence for a positive linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p></li>
+</ol>
 <p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5</p>
-<p>c. Which sample provides the strongest evidence for a negative linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<ol start="3" type="a">
+<li>Which sample provides the strongest evidence for a negative linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</li>
+</ol>
 <p>(A) Sample 1; (B) Sample 2; (C) Sample 3; (D) Sample 4; (E) Sample 5</p>
-<p><strong>Problem 3.</strong> The dataset <span class="math inline">\(\texttt{Guber99.csv}\)</span> provides information about expenditures of public elementary and secondary schools and SAT scores in the 50 states for the academic year of 1994-95. It is a state-level data, and each row is the average measure of each state. The column <span class="math inline">\(\texttt{verbal}\)</span> is the average SAT verbal score in each state, <span class="math inline">\(\texttt{math}\)</span> is the average SAT math score in each state, <span class="math inline">\(\texttt{perctakers}\)</span> is the percent of eligible students who took SAT in each state, and <span class="math inline">\(\texttt{expendpp}\)</span> is the annual expenditure in public elementary and secondary schools (in $1,000 per student). The researchers want to know whether the state-average SAT math score can be explained by expenditures of public elementary and secondary schools. It is believed that public education spending should help students’ math skills measured by the SAT math score. Answer the following questions.</p>
-<p>a. Multiple-choice: Which column represents the explanatory variable of interest?</p>
+</section>
+<section id="problem-3-1" class="level4" data-number="12.0.3">
+<h4 data-number="12.0.3" class="anchored" data-anchor-id="problem-3-1"><span class="header-section-number">12.0.3</span> Problem 3</h4>
+<p>The dataset <span class="math inline">\(\texttt{Guber99.csv}\)</span> provides information about expenditures of public elementary and secondary schools and SAT scores in the 50 states for the academic year of 1994-95. It is a state-level data, and each row is the average measure of each state. The column <span class="math inline">\(\texttt{verbal}\)</span> is the average SAT verbal score in each state, <span class="math inline">\(\texttt{math}\)</span> is the average SAT math score in each state, <span class="math inline">\(\texttt{perctakers}\)</span> is the percent of eligible students who took SAT in each state, and <span class="math inline">\(\texttt{expendpp}\)</span> is the annual expenditure in public elementary and secondary schools (in $1,000 per student). The researchers want to know whether the state-average SAT math score can be explained by expenditures of public elementary and secondary schools. It is believed that public education spending should help students’ math skills measured by the SAT math score. Answer the following questions.</p>
+<ol type="a">
+<li>Multiple-choice: Which column represents the explanatory variable of interest?</li>
+</ol>
 <p>(A) <span class="math inline">\(\texttt{verbal}\)</span>; (B) <span class="math inline">\(\texttt{math}\)</span>; (C) <span class="math inline">\(\texttt{perctakers}\)</span>; (D) <span class="math inline">\(\texttt{expendpp}\)</span></p>
-<p>b. Multiple-choice: Which column represents the response variable of interest?</p>
+<ol start="2" type="a">
+<li>Multiple-choice: Which column represents the response variable of interest?</li>
+</ol>
 <p>(A) <span class="math inline">\(\texttt{verbal}\)</span>; (B) <span class="math inline">\(\texttt{math}\)</span>; (C) <span class="math inline">\(\texttt{perctakers}\)</span>; (D) <span class="math inline">\(\texttt{expendpp}\)</span></p>
-<p>c. Multiple-choice: Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the explanatory variable and response variable of interest, respectively. Which of the following represents the null hypothesis for the correlation test?</p>
+<ol start="3" type="a">
+<li>Multiple-choice: Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> denote the explanatory variable and response variable of interest, respectively. Which of the following represents the null hypothesis for the correlation test?</li>
+</ol>
 <p>(A) <span class="math inline">\(\rho_{XY} = 0\)</span>, (B) <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, (C) <span class="math inline">\(\rho_{XY} &lt; 0\)</span>, (D) <span class="math inline">\(\rho_{XY} \ne 0\)</span></p>
-<p>d. Multiple-choice: Which of the following represents the alternative hypothesis for the correlation test?</p>
+<ol start="4" type="a">
+<li>Multiple-choice: Which of the following represents the alternative hypothesis for the correlation test?</li>
+</ol>
 <p>(A) <span class="math inline">\(\rho_{XY} = 0\)</span>, (B) <span class="math inline">\(\rho_{XY} &gt; 0\)</span>, (C) <span class="math inline">\(\rho_{XY} &lt; 0\)</span>, (D) <span class="math inline">\(\rho_{XY} \ne 0\)</span></p>
-<p>e. Multiple-choice: Choose the best description about this study.</p>
+<ol start="5" type="a">
+<li>Multiple-choice: Choose the best description about this study.</li>
+</ol>
 <p>(A) It is an experimental study which can show the linear relationship (correlation) between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p>(B) It is an experimental study which can show the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p>(C) It is an observational study which can show the linear relationship (correlation) between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p>(D) It is an observational study which can show the causal relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p>(E) It can be either study depending on how we analyze the data.</p>
-<p>f. Report the p-value for the correlation test.</p>
-<p>*g. State the conclusion in the context at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. (Use the concluding statements in the case studies as a template.)</p>
-<p>h. Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{perctakers}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
-<p>i. Provide the scatterplot of <span class="math inline">\(\texttt{perctakers}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
-<p>j. Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis). In the Google form, report their sample correlation.</p>
-<p>*k. If you conducted the correlation test correctly in the previous part, you probably failed to provide evidence for the alternative hypothesis. Instead, the observed direction of the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is the opposite of the alternative hypothesis. Explain this weird result by summarizing your findings in the previous parts. (You are recommended to use the following key words: observational study, explanatory variable, response variable, confounding variable, correlation, causation.)</p>
+<ol start="6" type="a">
+<li><p>Report the p-value for the correlation test.</p></li>
+<li><p>State the conclusion in the context at a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. (Use the concluding statements in the case studies as a template.)</p></li>
+<li><p>Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{perctakers}\)</span> (y-axis). Calculate their sample correlation.</p></li>
+<li><p>Provide the scatterplot of <span class="math inline">\(\texttt{perctakers}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis).Calculate their sample correlation.</p></li>
+<li><p>Provide the scatterplot of <span class="math inline">\(\texttt{expendpp}\)</span> (x-axis) and <span class="math inline">\(\texttt{math}\)</span> (y-axis). Calculate their sample correlation.</p></li>
+<li><p>If you conducted the correlation test correctly in the previous part, you would not find evidence in favor of the alternative hypothesis. Instead, the observed direction of the linear relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is the opposite of the alternative hypothesis. Explain this weird result by summarizing your findings in the previous parts. (You are recommended to use the following key words: observational study, explanatory variable, response variable, confounding variable, correlation, causation.)</p></li>
+</ol>
 
 
 <script type="webr-data">
@@ -1014,6 +1103,7 @@ eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0yIiwiaW5saW5lIjpmYWxzZSwibWV0
 <script type="vfs-file">
 W10=
 </script>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1428,6 +1518,15 @@ window._ojs.runtime.interpretFromScriptTags();
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../note-outlines/18-conditions-post-hoc-anova.html" class="pagination-link" aria-label="Conditions and Post-Hoc Tests">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Conditions and Post-Hoc Tests</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
