@@ -1,0 +1,182 @@
+---
+title: "Exam 2 R Practicum"
+format: 
+  live-html:
+    webr:
+      packages: 
+        - ggformula
+        - mosaic
+        - tidyverse
+      repos:
+        - https://projectmosaic.r-universe.dev
+      resources:
+        - https://raw.githubusercontent.com/jcanner/math-320/refs/heads/master/note-outlines/data/bike-commute.csv
+      cell-options:
+        warning: true
+        completion: false
+execute: 
+  warning: false 
+  message: false
+  echo: true
+embed-resources: false
+code-copy: true
+code-overflow: wrap
+toc: true
+number-sections: true
+css: ../styles.css
+---
+
+{{< include ../_extensions/r-wasm/live/_knitr.qmd >}}  
+{{< include ../_extensions/r-wasm/live/_gradethis.qmd >}}  
+
+```{webr}
+#| label: theme
+#| include: false
+#| edit: false
+library(ggplot2)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+```
+
+```{r}
+#| label: setup-checkdown
+#| include: false
+library(checkdown)
+library(ggformula)
+library(mosaic)
+library(tidyverse)
+theme_set(theme_light())
+options(ggplot2.continuous.color = scale_color_viridis_c, 
+        ggplot2.continuous.fill = scale_fill_viridis_c,
+        ggplot2.discrete.color = scale_color_viridis_d,
+        ggplot2.discrete.fill = scale_fill_viridis_d)
+study_hours <- read_csv("8-intro-to-stats/study-hours.csv", show_col_types = FALSE) 
+
+```
+
+
+
+```{webr}
+#| label: setup
+library(ggformula) #graphics
+library(mosaic)    #stats
+library(tidyverse) #data cleaning
+```
+
+
+
+## Introduction
+
+For the following questions be sure to:
+
+1. Use only functions used in class from `ggformula`, `mosaic`, and `tidyverse`.  
+2. Do not use AI to generate code or answers.  
+3. Label each code chunk using kebab-case like so: `#| label: read-data`  
+4. On any graphs, be sure to label axes with the appropriate information. 
+5. Provide a complete answers as appropriate.  
+
+
+
+## Scenario
+In 2010, a professor wanted to see which of his bicycles allowed him to have the faster commute.
+
+From January 2010 to July 2010, when he commuted to campus (approximately 27 miles - see the `distance` variable for exact values per day), he would flip a coin to choose either his **Steel** framed bike or his **Carbon** framed bike for his commute that day. 
+
+He then recorded the actual `distance`, the `time` (total commute time in hours:minutes:seconds), `minutes` (total commute time converted to minutes), `avg_speed` (the average speed during the ride in mph), `top_speed` (maximum speed on the ride in mph), `seconds` (total commute time converted to seconds), and `month` he took the ride, and `date` of the ride, and finally under `bike` if it was Carbon or Steel framed.  
+
+The data are found in the data folder as `bike-commute.csv`.  
+
+### Import the Data and Packages
+
+Import the data as the object `bike_commute`, be sure to hide any unnecessary output.  
+
+```{webr}
+
+```
+
+
+
+
+
+### Descriptive Statistics
+Use the R code taught in class do produce the following.
+
+#### Table 1
+Appropriate summary statistics to compare the average speed (`avg_speed`) for the different bike frames, Carbon or Steel (`bike`).  
+
+```{webr}
+
+```
+
+
+#### Graph 1
+An appropriate graph, well labeled, to compare the average speed (`avg_speed`) for the different bike frames, Carbon or Steel (`bike`).  
+```{webr}
+
+```
+
+
+#### Table 2
+Appropriate summary statistics for the proportion of the recorded commute times were with Carbon vs. Steel framed bikes (`bike`).  
+
+```{webr}
+
+```
+
+
+#### Graph 2
+A plot that allows us to compare if there was similar use of each frame type (`bike`) across months (`month`).
+
+```{webr}
+
+```
+
+
+
+### Confidence Interval
+Calculate a confidence interval to estimate the difference between Carbon and Steel true mean average speeds.  
+
+```{webr}
+
+```
+
+
+
+
+### Hypothesis Test  
+Calculate the hypothesis test to determine if there is a difference between Carbon and Steel true mean average speeds.
+
+```{webr}
+
+```
+
+
+### Summary of Results
+Write up a report for the professor to answer the question, "Does the Carbon or the Steel framed bike offer the faster commutes?"  Be sure to address the following.
+
+- Interpretations and evaluations of the confidence interval and hypothesis test, being sure to cite specific values.  
+- Considerations for the summary statistics and what they show, citing specific values.  
+- Evaluation of generalizability of the study and if it is possible to infer causality.  
+- Limitations and confounding variables that may impact your ability to use the results to adequately inform if one bike type is faster than the other.  
+
+
+You are welcome to offer additional plots or tables to support any claims you make, but it is not necessary.  
+
+
+
+## Submission and Grading
+Once complete, render as an HTML document.  
+Submit the HTML AND submit a zipped file of your R Project as well.
+
+Each requested R code is worth 1 points.  
+The summary is worth 3 points and will be graded on a rubric with   
+0 - no response,  
+1 - some attempt, but incomplete,  
+2 - addresses all components, but some details missing  
+3 - addresses all components with necessary details  
+
+
+
