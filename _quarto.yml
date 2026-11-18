@@ -91,6 +91,8 @@ website:
         text: "Conditions and Post-Hoc Tests"  
       - href: note-outlines/19-correlation.qmd
         text: "Correlation Analysis"  
+      - href: note-outlines/20-linear-models.qmd
+        text: "Regression Analysis"  
         
 format:
   html:
